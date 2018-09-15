@@ -79,7 +79,7 @@ export class Dsh1SecondNoreleasePage {
     //       this.masukinDatabaru("'"+element.name+"'","'"+element.summary+"'","'"+element.company+"'");
     //    });
     //  });
-    // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+    this.masukinDatabaru("Piter","Zakirnaik","Dedat");
 
 
 
@@ -126,18 +126,18 @@ export class Dsh1SecondNoreleasePage {
 
       var querySql ="SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
       // var data=this.database.selectData(querySql,[]);
-      let getDataQry=this.dp.selectData(querySql,[]);
+      let getDataQry=this.dp.selectData(querySql);
       // getDataQry.then((data)=>{
         //alert('message' + msq);
 
         // this.rsltData=data;
         getDataQry.then(data=>{
-          // setTimeout(()=> {
+          setTimeout(()=> {
             // console.log(this.rsltData);
-            console.log(data);
+            // console.log(data);
             this.rows =data;
             // console.log(data);
-          // },1000);
+          },500);
         });
 
         // return data;

@@ -18,5 +18,11 @@ ver 1.0.0
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <preference name="SplashShowOnlyFirstTime" value="false" />
-7. 
+7. Install Toast
+    # ionic cordova plugin add cordova-plugin-x-toast
+    # npm install --save @ionic-native/toast
+8. tslint
+   #npm install -g tslint
+9. 
+
 ````

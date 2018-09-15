@@ -161,6 +161,7 @@ export class DatabaseProvider {
   * tabel    : adalah tabel yang sudah di create sebelumnya.
   * querySql : Sql Query Syntak
   * Author   : ptr.nov@gmail.com
+  * Promise  : Resolve data
   * var querySql ="SELECT id, usr FROM piter ORDER BY id DESC";
     this.database.selectData(querySql,[]).then((data)=>{
       console.log(data);
@@ -169,15 +170,14 @@ export class DatabaseProvider {
   * ListUser deklarasi  private ListUser: any;
   * ListUser send to html
   */
-  public selectData(querySql,bindings){
+  public selectData(querySql){
     let aryRsltInternal=[];
-    bindings = typeof bindings !== 'undefined' ? bindings : [];
     return new Promise((resolve, reject)=>{
       this.platform.ready().then(() => {
-        console.log('platform Select Indentification1');
         if (this.platform._platforms[0] == 'cordova') {
-            console.log('Sqlite on device CordovaMobile, Command=' + querySql);
-            console.log(querySql);
+            console.log('START_SELECT-MODUL');
+            console.log('Flatform - CordovaMobile Sqlite');
+            console.log('COMMAND="' + querySql + '"');
             let srcRsltData=this.database.executeSql(querySql,[]);
             srcRsltData.then((results) => {
               if(results.rows.length > 0) {
@@ -194,45 +194,23 @@ export class DatabaseProvider {
                     //   COMPANY: results.rows.item(i).COMPANY
                     // });
                 };
-
-                // console.log(results);
-                // setTimeout(()=> {
-                  return results;
-                // },1000);
-
+                console.log(aryRsltInternal);
+                console.log('END_SELECT-MODUL: Show_Data');
+                resolve(aryRsltInternal);
               }else{
-                console.log('no data');
-                return false;
+                console.log('END_SELECT-MODUL: No_Data');
+                resolve([]);
               }
               //console.log(JSON.stringify(aryRslt2));
-              //setTimeout(()=> {
-              // resolve(this.aryRslt);
-              //},100);
-
-              //resolve(JSON.stringify(aryRslt2));
-              // resolve(this.aryRslt);
             },(error)=>{
                  console.log(error);
             }).catch(e => console.log(e));
-            // ,(error)=>{
-            //   console.log(error);
-            //   resolve(false);
-            // }).catch((error) => {
-            //   console.log(error);
-            // }
-
-            // .catch((error) => {
-            //   console.log(error);
-            // });
-          // });
-          // return aryRsltInternal;
-          resolve(aryRsltInternal);
         }else{
-
-            console.log('WebSql Browser Flatform');
             this._db.transaction(function (tx){
-                console.log(querySql);
-                tx.executeSql(querySql,bindings, function(tx, results) {
+                console.log('Flatform - WebSql Browser');
+                console.log('START_SELECT-MODUL');
+                console.log('COMMAND="' + querySql + '"');
+                tx.executeSql(querySql,[], function(tx, results) {
                     if(results.rows.length > 0) {
                       for(let i = 0; i < results.rows.length; i++) {
                           var item = results.rows.item(i);
@@ -241,19 +219,20 @@ export class DatabaseProvider {
                           }
                           aryRsltInternal.push(item);
                       }
-                   }
-                }
-                // ,function(tx, error){
-                //   resolve(error);
-                // }
-                );
+                      console.log(aryRsltInternal);
+                      console.log('END_SELECT-MODUL: Show_Data');
+                      resolve(aryRsltInternal);
+                    }else{
+                      console.log('END_SELECT-MODUL: No-Data');
+                      resolve([]);
+                    }
+                },function(tx, error){
+                  resolve(error);
+                });
             });
-            // this.aryRslt=aryRsltInternal;
-            // return aryRsltInternal;
-            resolve(aryRsltInternal);
         }
       });
-      });
+    });
   }
 
   public matchData(querySql,bindings,key){
