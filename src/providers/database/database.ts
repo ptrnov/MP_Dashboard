@@ -33,21 +33,26 @@ export class DatabaseProvider {
           this.storage = new SQLite;
           this.storage.create({ name: DB_NAME ,location:"default" }).then( ( db: SQLiteObject ) => {
               this.database = db;
-              let qry="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-              db.executeSql(qry,[]).then(()=>{
-                console.log("Create Table Success");
-              });
+              // let qry="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+              // db.executeSql(qry,[]).then(()=>{
+              //   console.log("Create Table Success");
+              // });
               // var qryTbl="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT, NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-              var qryTbl="CREATE TABLE IF NOT EXISTS piter (NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+              var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
               this.createTable(qryTbl,[]);
+              var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
+              this.createTable(qryTblUniqe,[]);
+
           }).catch((error) => {
             console.log(error);
           });
       } else {
         console.warn('Storage: WebSql Browser Flatform');
         this._db = win.openDatabase(DB_NAME, '1.0', '', 5 * 1024 * 1024);
-        var qryTbl="CREATE TABLE IF NOT EXISTS piter (NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+        var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
         this.createTable(qryTbl,[]);
+        var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
+        this.createTable(qryTblUniqe,[]);
       }
     });
 

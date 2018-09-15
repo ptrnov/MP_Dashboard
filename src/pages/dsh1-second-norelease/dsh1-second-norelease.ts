@@ -70,16 +70,19 @@ export class Dsh1SecondNoreleasePage {
   }
 
   ionViewDidLoad(){
-    // this.dashboarAll.getCobaData().subscribe(data=>{
-    //   //console.log(data.technologies[0]['name']);
-    //   // this.ambilDataRrows = data;
-    //   //this.rows=data.technologies;
-    //     data.technologies.forEach(element => {
-    //       // console.log('data=' + element.summary);
-    //       this.masukinDatabaru("'"+element.name+"'","'"+element.summary+"'","'"+element.company+"'");
-    //    });
-    //  });
-    this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+    this.dashboarAll.getCobaData().subscribe(data=>{
+      // console.log(data);
+      //console.log(data.technologies[0]['name']);
+      // this.ambilDataRrows = data;
+      //this.rows=data.technologies;
+        data.technologies.forEach(element => {
+          // console.log(element);
+          // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+          // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+          this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
+       });
+     });
+    // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
 
 
 
@@ -116,10 +119,11 @@ export class Dsh1SecondNoreleasePage {
     this.navCtrl.push(SettingsPage);
   }
 
-  masukinDatabaru(name:string,summary:string,company:string){
+  masukinDatabaru(uniqId:any,name:any,summary:any,company:any){
     // console.log('data=' + name);
-    let qry="INSERT INTO piter (NAME,SUMMARY,COMPANY) VALUES (?,?,?)";
-    this.dp.insertData(qry,["Piter","Zakirnaik","Dedat"]);
+    // let qry="INSERT INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+    let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+    this.dp.insertData(qry,[uniqId,name,summary,company]);
   }
 
   ambilDataBaru(){
