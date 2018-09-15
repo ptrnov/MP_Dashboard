@@ -1,0 +1,35 @@
+<ion-header color="primary">
+    <ion-navbar color="primary">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+          <div style="width:100%; text-align: center">
+              <div class="norepease-logo"></div>
+              <ion-label>Colaction & Reseller Dashboard</ion-label>
+          </div>
+      </ion-title>
+      <ion-buttons end>
+        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->
+        <!-- <button ion-button  class="circle"> -->
+            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->
+          <!-- <ion-icon name="notifications"></ion-icon> -->
+        <!-- </button> -->
+        <!-- <button ion-button tappable>
+            <img class="home-satelit" src="assets/img/satellite.png">
+        </button> -->
+        <button ion-button tappable (click)="goToAccount()">
+            <ion-icon name="cog"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content class="common-bg">
+      <ion-scroll scrollY="true">
+        <ion-row>
+
+
+        </ion-row>
+      </ion-scroll>
+  </ion-content>

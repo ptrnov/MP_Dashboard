@@ -1,0 +1,152 @@
+<ion-header color="primary">
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+        <div style="width:100%; text-align: center">
+            <div class="afterrfi-logo"></div>
+            <ion-label>After RFI Details</ion-label>
+        </div>
+    </ion-title>
+    <ion-buttons end>
+      <!-- <button ion-button tappable>
+          <img class="home-satelit" src="assets/img/satellite.png">
+      </button> -->
+      <button ion-button tappable (click)="goToAccount()">
+          <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="common-bg">
+    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">
+      <ion-row class="full-width" style="margin-top: -20px">
+        <!-- All Project -->
+        <ion-col col-3>
+            <ion-card class="card full-width">
+                <div id="divSecond[3]">
+                  <ion-card-header class="header-title">
+                    All Project
+                  </ion-card-header>
+                  <ion-card-content>
+                      <div class="row">
+                            <div class="left-icon">
+                              <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">
+                              <!-- <ion-icon class="fa-home"></ion-icon> -->
+                              <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                            </div>
+                            <div class="right-text">
+                                <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>
+                            </div>
+                      </div>
+                  </ion-card-content>
+                </div>
+                <ion-row class="footer-color-block">
+                    <div class="row">
+                      <ion-col class="footer-title">
+                            Total
+                      </ion-col>
+                    </div>
+                </ion-row>
+            </ion-card>
+          </ion-col>
+          <!-- NOT RELEASE -->
+          <ion-col col-3 id="divId_noRelease">
+              <ion-card class="card full-width">
+                  <div id="divSecond[0]">
+                    <ion-card-header class="header-title">
+                      Not Release
+                    </ion-card-header>
+                    <ion-card-content>
+                      <div class="row">
+                        <div  class="left-icon">
+                            <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">
+                            <!-- <ion-icon class="fa fa-home"></ion-icon> -->
+                            <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                        </div>
+                        <div class="right-text" >
+                            <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>
+                        </div>
+                        <!-- <ion-icon   name="lock" ></ion-icon> -->
+                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->
+                      </div>
+                    </ion-card-content>
+                  </div>
+                  <ion-row class="footer-color-block">
+                      <div class="row">
+                        <ion-col class="footer-title">
+                              Total
+                        </ion-col>
+                      </div>
+                  </ion-row>
+                </ion-card>
+          </ion-col>
+          <!-- PROJECT ON PIPE -->
+          <ion-col col-3>
+              <ion-card class="card full-width">
+                  <div id="divSecond[1]">
+                    <ion-card-header class="header-title">
+                    Prj on Pipe
+                    </ion-card-header>
+                    <ion-card-content>
+                      <div class="row">
+                        <div class="left-icon">
+                            <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">
+                            <!-- <ion-icon class="fa-home"></ion-icon> -->
+                            <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                        </div>
+                        <div class="right-text">
+                            <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>
+                        </div>
+                        <!-- <ion-icon   name="lock" ></ion-icon> -->
+                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->
+                      </div>
+                    </ion-card-content>
+                  </div>
+                  <ion-row class="footer-color-block">
+                      <div class="row">
+                        <ion-col class="footer-title">
+                              Total
+                        </ion-col>
+                      </div>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+          <!-- RFI -->
+          <ion-col col-3>
+              <ion-card class="card full-width">
+                  <div id="divSecond[2]">
+                    <ion-card-header class="header-title">
+                      After Rfi
+                    </ion-card-header>
+                    <ion-card-content>
+                        <div class="row">
+                              <div class="left-icon">
+                                <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">
+                                <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                              </div>
+                              <div class="right-text">
+                                  <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>
+                              </div>
+                        </div>
+                    </ion-card-content>
+                  </div>
+                  <ion-row class="footer-color-block">
+                      <div class="row">
+                        <ion-col class="footer-title">
+                              Total
+                        </ion-col>
+                      </div>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>

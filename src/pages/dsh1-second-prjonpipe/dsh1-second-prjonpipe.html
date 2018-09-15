@@ -1,0 +1,44 @@
+
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-header style="background-color:#FA8633">
+             <ion-title>
+                <div style="width:100%; text-align: center; float:left;">
+                    <div class="prjonpipe-logo"></div>
+                    <ion-label>Project On Pipe</ion-label>
+                </div>
+                <i class="fa fa-remove fa-1x"  style="margin-left:-10px" (click)="closeModal()"></i>
+            </ion-title>
+      </ion-header>
+    </ion-row>
+    <ion-row>
+        <ion-col style="margin-top:50px">
+          <ion-list>
+              <ion-item *ngFor="let item of dataArys" style="color:black;background-color:white">
+                  <ion-grid>
+                    <ion-row style="height:10px;">
+                      <ion-col col-6 style="margin-top:-10px">{{item.persen}}</ion-col>
+                      <ion-col col-6 style="margin-top:-10px">{{item.nilai}}</ion-col>
+                    </ion-row>
+                </ion-grid>
+              </ion-item>
+          </ion-list>
+        </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col width-50>
+        <button ion-button block  outline (click)="closeModal()">Cancel</button>
+      </ion-col>
+
+      <ion-col width-50>
+        <button ion-button block  type="submit">Ok</button>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+
+
+
+
+</ion-content>

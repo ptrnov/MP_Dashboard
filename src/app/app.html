@@ -1,0 +1,64 @@
+<ion-menu side="left" id="authenticated" [content]="content">
+  <ion-header>
+    <ion-toolbar class="user-profile">
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+              <div class="user-avatar">
+                <img src="assets/img/avatar.jpeg">
+              </div>
+          </ion-col>
+          <ion-col padding-top col-8>
+            <h3 ion-text class="no-margin bold text-white">
+              Piter Novian
+            </h3>
+            <span ion-text color="putih">Super Admin</span><br>
+            <!-- <span ion-text color="putih">Area</span> -->
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row no-padding class="other-data">
+          <ion-col no-padding class="column">
+            <!-- <button ion-button icon-left small full menuClose enable>
+              <ion-icon name="contact"></ion-icon>
+              Edit Profile
+            </button> -->
+          </ion-col>
+          <ion-col no-padding class="column">
+            <button ion-button icon-left small full  menuClose (click)="logout()">
+              <ion-icon class="fa fa-power-off"></ion-icon>
+              Log Out
+            </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content color="hitam">
+    <!-- <ion-scroll scrollY="true"> -->
+            <ion-list class="user-list" >
+                <button ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)">
+                    <ion-icon item-left [name]="menuItem.icon" style="color:antiquewhite"></ion-icon>
+                    <span ion-text color="putih">{{menuItem.title}}</span>
+                </button>
+            </ion-list>
+    <!-- </ion-scroll> -->
+    
+  </ion-content>
+
+</ion-menu>
+
+<!-- <div *ngIf="showSplash" class="splash">
+        <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div> -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

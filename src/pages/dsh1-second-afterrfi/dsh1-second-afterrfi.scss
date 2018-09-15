@@ -1,0 +1,87 @@
+page-dsh1-second-afterrfi{
+  on-scroll {
+    width: 100%;
+    font-size: 40px;
+    height: 100%;
+    white-space: nowrap;
+  }
+
+  body{
+    cursor: url('../assets/img/cursorFinger.png'), auto;
+    font-family: "Open Sans" !important;
+  }
+
+  h1, h2, button {
+  font-family: "Open Sans" !important;
+  }
+
+  .home {
+    ion-list {
+      border-radius: 1rem;
+      overflow: hidden;
+
+      ion-item,
+      .item:first-child,
+      .item:last-child {
+        border: none;
+      }
+
+      ion-datetime {
+        padding-left: 0;
+      }
+    }
+  }
+  .afterrfi-logo{
+    background-image: url('../assets/img/new/BAPS_m.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    height: 20px;
+    width: 20px;
+    float: left;
+    margin-top:0px;
+  }
+
+  .home-satelit{
+    height: 26px;
+    width: 26px;
+  }
+  // SECOND ROWS
+  .card{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    .left-icon{
+      width : 50%;
+      //height: 50%;
+      margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+      float: left;
+    }
+    .right-text{
+      width : 50%;
+      font-size:50%;
+      font-weight: bold;
+      width : 60%;
+      margin-left: 20px;
+      text-align: right;
+      vertical-align: center;
+      //padding-right: -20px;
+    // float: left;
+      //padding:5px 10px 0px 20px;
+    }
+    .footer-color-block{
+      background-color: #E9E9E9
+    }
+    .footer-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+  }
+}
