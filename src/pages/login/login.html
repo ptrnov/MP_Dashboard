@@ -1,0 +1,72 @@
+<!-- -->
+<ion-content padding >
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+       <div class="header-logo"></div>
+       <div class="login-logo"></div>
+       <h6 ion-text class="text-logo">
+        Mitratel Project Management Information System
+      </h6>
+    </div>
+
+    <!-- Login form -->
+    <form class="list-form" >
+      <ion-item >
+        <ion-label floating >
+          <ion-icon name="ios-person" item-start color="hitam"></ion-icon>
+          Username
+        </ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock" item-start color="hitam"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+    </form>
+
+    <!-- <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p> -->
+
+    <div>
+      <button ion-button icon-start block color="hitam" tappable (click)="login()">
+        <ion-icon name="log-in"></ion-icon>
+        LOGIN
+      </button>
+
+      <!-- <p text-center ion-text color="secondary">Or Sign in with:</p>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <button ion-button icon-only block class="btn-facebook">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-only block class="btn-twitter">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-only block class="btn-gplus">
+              <ion-icon name="logo-googleplus"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+
+    </div>
+
+
+    <!-- Other links -->
+    <!-- <div text-center margin-top>
+      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>
+    </div> -->
+
+  </div>
+</ion-content>

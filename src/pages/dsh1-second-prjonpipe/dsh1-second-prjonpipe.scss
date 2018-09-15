@@ -1,0 +1,92 @@
+page-dsh1-second-prjonpipe {
+
+
+
+on-scroll {
+  width: 100%;
+  font-size: 40px;
+  height: 100%;
+  white-space: nowrap;
+}
+
+body{
+  cursor: url('../assets/img/cursorFinger.png'), auto;
+  font-family: "Open Sans" !important;
+}
+
+h1, h2, button {
+font-family: "Open Sans" !important;
+}
+
+.home {
+  ion-list {
+    border-radius: 1rem;
+    overflow: hidden;
+
+    ion-item,
+    .item:first-child,
+    .item:last-child {
+      border: none;
+    }
+
+    ion-datetime {
+      padding-left: 0;
+    }
+  }
+}
+.prjonpipe-logo{
+  background-image: url('../assets/img/new/PoP_m.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  height: 20px;
+  width: 20px;
+  float: left;
+  margin-top:15px;
+}
+
+.home-satelit{
+  height: 26px;
+  width: 26px;
+}
+
+
+ion-content {
+      &.content {
+          div.scroll-content {
+              top: 10%;
+              left: 10%;
+              width: 80%;
+              height: 50%;
+              overflow:hidden;
+          }
+      }
+
+      // &.content-ios {
+      //     background-color: rgba(0, 0, 0, 0.3);
+
+      //     div.scroll-content {
+      //         background-color: #eb1010cb;
+      //         border-radius: 13px;
+      //         padding: 16px;
+      //     }
+      // }
+
+      &.content-md {
+          background-color: rgba(0, 0, 0, 0.5);
+
+          div.scroll-content {
+              background-color: #fafafa;
+              border-radius: 2px;
+              box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+              padding: 0px;
+          }
+      }
+      &.ion-list-header{
+        background-color: yellow;
+      }
+  }
+
+
+
+}

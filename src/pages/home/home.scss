@@ -1,0 +1,333 @@
+// page-home,
+// .content-ios:not([no-bounce])>.scroll-content::before { bottom: 0; }
+// .page-home ion-content scroll-content {
+//   margin-top:0px !important;
+//   margin-left: 0px !important;
+//   // overflow : hidden !important;
+// }
+//$font-family-base: "Open Sans", sans-serif !default;
+// ion-scroll {
+//   white-space: nowrap;
+//   height: 400px;
+//  // overflow:scroll !important;
+// }
+
+page-home {
+  ion-scroll {
+    width: 100%;
+    font-size: 40px;
+    height: 100%;
+    white-space: nowrap;
+    // padding: 10px;
+    // line-height: 40px;
+  }
+
+  body{
+    cursor: url('../assets/img/cursorFinger.png'), auto;
+    font-family: "Open Sans" !important;
+    // overflow : hidden !important;
+    //font-weight: 400 !important;
+    //overflow-y: scroll !important;
+  }
+
+  h1, h2, button {
+  font-family: "Open Sans" !important;
+  }
+
+  .home {
+    ion-list {
+      border-radius: 1rem;
+      overflow: hidden;
+
+      ion-item,
+      .item:first-child,
+      .item:last-child {
+        border: none;
+      }
+
+      ion-datetime {
+        padding-left: 0;
+      }
+    }
+  }
+  .home-logo{
+    background-image: url('../assets/img/logo_mproject.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 130px;
+    height: 30px;
+    width: 100%;
+  }
+
+  .home-satelit{
+    //float: left;
+  // height: 40px;
+  // margin-right: 30px;
+  // width: 40px;
+    //margin-top: -5px;
+    height: 26px;
+    width: 26px;
+  }
+
+  // .home-indikator{
+  //   background-image: url('../assets/img/circle_btn_red');
+  //   background-repeat: no-repeat;
+  // }
+
+  .circle {
+    border-radius: 50%;
+    background-color: lightgreen;
+    width: 14px;
+    height: 14px;
+
+
+  }
+
+  .card-box-dashboard{
+    background-color:#FFFF;
+    border-radius: 7px 7px 0px 0px;
+    border : 1px solid #e2e2e2;
+  }
+
+  // FIRST ROWS
+  .first-card{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      width : 80%;
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+      vertical-align: top;
+      //margin-left: 50px;
+      float: right;
+    }
+    .left-icon{
+      width : 20%;
+      height: 20%;
+      //margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+    // vertical-align: center;
+      float: left;
+    }
+    .right-text{
+      font-size: 8px;
+      width : 100%;
+      height: -60px;
+      text-align: right;
+      font-weight: bold;
+      margin-top: -20px;
+    }
+
+    #first-card-footer-PrjAll{
+      background-color: #E9E9E9
+    }
+
+    .first-column-tanggal{
+      background-color: #FAFBFC;
+      padding-top: 20px;
+      margin-left: 5px;
+    }
+  }
+
+  // SECOND ROWS
+  .second-card{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    .left-icon{
+      width : 50%;
+      //height: 50%;
+      margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+      float: left;
+    }
+    .right-text{
+      width : 50%;
+      font-size:50%;
+      font-weight: bold;
+      width : 60%;
+      margin-left: 20px;
+      text-align: right;
+      vertical-align: center;
+      //padding-right: -20px;
+    // float: left;
+      //padding:5px 10px 0px 20px;
+    }
+    .footer-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    //DIV ID - SECOND-FOOTER
+    #card-footer-release{
+      background-color: #E9E9E9
+    }
+    #card-footer-onPipe{
+      background-color: #E9E9E9
+    }
+    #card-footer-onRfi{
+      background-color: #E9E9E9
+    }
+    #card-footer-onAfterRfi{
+      background-color: #E9E9E9
+    }
+  }
+
+  // THREE ROWS
+  .three-card{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    .left-icon{
+      width : 50%;
+      //height: 50%;
+      margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+      float: left;
+    }
+    .right-text{
+      width : 50%;
+      font-size:50%;
+      font-weight: bold;
+      width : 60%;
+      margin-left: 20px;
+      text-align: right;
+      vertical-align: center;
+    }
+    .footer-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+     //DIV ID - THREE-FOOTER | PER-UBIS
+    #three-card-footer-b2c{
+      background-color: #E9E9E9
+    }
+    #three-card-footer-core{
+      background-color: #E9E9E9
+    }
+    #three-card-footer-microcell{
+      background-color: #E9E9E9
+    }
+    #three-card-footer-specialPrj{
+      background-color: #E9E9E9
+    }
+  }
+
+  // FOURTH ROWS
+  .fourth-card{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    .left-icon{
+      width : 50%;
+      //height: 50%;
+      margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+      float: left;
+    }
+    .right-text{
+      width : 50%;
+      font-size:50%;
+      font-weight: bold;
+      width : 60%;
+      margin-left: 20px;
+      text-align: right;
+      vertical-align: center;
+    }
+    .footer-title{
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+    }
+    //DIV ID - FOURTH-FOOTER | PER-AREA
+    #fourth-card-footer-area1{
+      background-color: #E9E9E9
+    }
+    #fourth-card-footer-area2{
+      background-color: #E9E9E9
+    }
+    #fourth-card-footer-area3{
+      background-color: #E9E9E9;
+    }
+    #fourth-card-footer-area4{
+      background-color: #E9E9E9
+    }
+  }
+}
+  // MODAL
+  .alertModal{
+    // .alert-wrapper{
+
+    //   }
+    .alert-head{
+      background-color: #B1232D;
+      //height: 30px;
+      color: white;
+      //margin-bottom: 10px;
+      vertical-align: center;
+      margin-top:-30px;
+      margin-bottom:-30px;
+      //text-align: center;
+    }
+    .alert-message{
+      height: 120px;
+      font-size: 20px;
+      background-color: #e2e2e2;
+      //text-align: justify;
+      // text-justify: inter-word;
+    }
+    .alertModal{
+      border-radius: 50ps;
+      background-color: transparent;
+      box-shadow:#ff0000;
+      color:red;
+    }
+  }
+
+  .alertDanger {
+    border-radius: 30px !important;
+    padding-left: 30px !important;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    border: 1px solid #ffffff;
+    border-bottom: 0px !important;
+    box-shadow: none !important;
+    // text color for basic alerts
+    color: white;
+
+    // alert modal page bg color. Warning this will remove the alert transparency
+    //background-color: white;
+
+    button {
+        color: white !important; // button text color
+        background-color: color($colors, secondary, base) !important;
+            //button bg color
+    }
+
+    // .alert-message {
+    //     color: white; // text color for confirm alerts
+    // }
+
+    // .alert-wrapper {
+    //     background-color: color($colors, dark, base); // bg color of alert content
+    // }
+  }
+
