@@ -4,6 +4,9 @@ import { Platform,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
 // import { ChartingService } from '../../services/charting-service';
 /**
  * Generated class for the Dsh1SecondNoreleasePage page.
@@ -37,6 +40,8 @@ export class Dsh1SecondNoreleasePage {
   public config : Config;
   public aryRslt: any;
   private rsltData:any;//:{};// rsltData;
+  private subscription1;
+  private subscription2;
 
   constructor(
       public navCtrl: NavController,
@@ -68,21 +73,42 @@ export class Dsh1SecondNoreleasePage {
 
      });
   }
+  ngOnInit() {
+    // this.dashboarAll.getCobaData();
+    // this.dashboarAll.getCobaData().subscribe(data=>{
+    //   // console.log(data);
+    //   //console.log(data.technologies[0]['name']);
+    //   // this.ambilDataRrows = data;
+    //   //this.rows=data.technologies;
+    //     data.technologies.forEach(element => {
+    //       // console.log(element);
+    //       // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+    //       // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+    //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
+    //    });
+    //  });
+    // // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+  }
 
   ionViewDidLoad(){
-    this.dashboarAll.getCobaData().subscribe(data=>{
-      // console.log(data);
-      //console.log(data.technologies[0]['name']);
-      // this.ambilDataRrows = data;
-      //this.rows=data.technologies;
-        data.technologies.forEach(element => {
-          // console.log(element);
-          // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-          // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-          this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
-       });
-     });
-    // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+      this.dashboarAll.getCobaData();
+    // this.dashboarAll.getCobaData().subscribe(data=>{
+    //    data.technologies.forEach(element => {
+    //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
+    //    });
+    //  });
+
+      this.subscription1 = Observable.timer(30000, 30000).subscribe(x => {
+        // console.log('run-Disply');
+        this.dashboarAll.getCobaData();
+      });
+
+      this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+        console.log('run-Disply');
+        this.ambilDataBaru();
+      });
+
+
 
 
 
@@ -98,18 +124,19 @@ export class Dsh1SecondNoreleasePage {
     //       console.log(data.technologies);
     //   });
 
-    this.ambilDataBaru();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           this.ambilDataBaru();
-    // setTimeout(()=> {
-    //    console.log(this.rsltData);
-        // this.rows =this.rsltData;
-    // },50);
 
-    //
+    // this.ambilDataBaru();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.ambilDataBaru();
 
 
 
 
   }
+
+  ionViewWillLeave() {
+    console.log("Previus page")
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
+   }
 
   // getCobaData(){
   //   this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
