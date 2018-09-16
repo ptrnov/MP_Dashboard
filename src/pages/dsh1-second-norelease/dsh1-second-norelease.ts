@@ -4,6 +4,8 @@ import { Platform,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
+// import { JalankanService } from '../../services/jalankan-service';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
@@ -51,7 +53,8 @@ export class Dsh1SecondNoreleasePage {
       private dp: DatabaseProvider,
       // private dbCharting: ChartingService,
       private zone: NgZone,
-      public platform: Platform,
+      public platform: Platform//,
+      // private jalankanService:JalankanService
   ) {
         this.columns = [
           { prop: 'NAME' },
@@ -73,7 +76,7 @@ export class Dsh1SecondNoreleasePage {
 
      });
   }
-  ngOnInit() {
+  // ngOnInit() {
     // this.dashboarAll.getCobaData();
     // this.dashboarAll.getCobaData().subscribe(data=>{
     //   // console.log(data);
@@ -88,19 +91,20 @@ export class Dsh1SecondNoreleasePage {
     //    });
     //  });
     // // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
-  }
+  // }
 
   ionViewDidLoad(){
-      this.dashboarAll.getCobaData();
+      // this.dashboarAll.getCobaData();
     // this.dashboarAll.getCobaData().subscribe(data=>{
     //    data.technologies.forEach(element => {
     //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
     //    });
     //  });
 
-      this.subscription1 = Observable.timer(30000, 30000).subscribe(x => {
+      this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
         // console.log('run-Disply');
         this.dashboarAll.getCobaData();
+        // this.jalankanService.loadPeriodik_coba();
       });
 
       this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {

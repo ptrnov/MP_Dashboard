@@ -202,13 +202,13 @@ export class HomePage {
 
   //    }
 
-  getDataAll(){
-    this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
-  }
+  // getDataAll(){
+  //   this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
+  // }
 
-  getCobaData(){
-    this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
-  }
+  // getCobaData(){
+  //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
+  // }
 
   ionViewDidLoad() {
     //== Mouse Over - Change Color ==

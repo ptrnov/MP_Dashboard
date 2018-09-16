@@ -7,8 +7,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
-import { ajax } from 'rxjs/observable/dom/ajax';
-import { Observable, } from 'rxjs/Observable';
+// import { ajax } from 'rxjs/observable/dom/ajax';
+import { Observable } from 'rxjs/Observable';
 import { DatabaseProvider } from '../../providers/database/database';
 
 
@@ -26,6 +26,7 @@ export class DashboardAllProvider {
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
   // private subscription2;
+  private caba:any;
 
   constructor(
       public httpClient: HttpClient,
@@ -47,24 +48,32 @@ export class DashboardAllProvider {
     .do(res => console.log(res));
   }
 
+  // getResUrl_coba(){
+  //   return this.http.get(this.url + "mobile_dashboard/coba")
+  //   // .do(res => {return res.json();});
+  //   // .do(res => console.log('coba data=' + res))
+  //   .map(res => { return res.json();});
+  // }
+
   getCobaData():void{
-    // return this.http.get(this.url + "mobile_dashboard/coba")
-    // // .do(res => console.log('coba data=' + res))
-    // .map(res => { return res.json();});
-    this.http.get(this.url + "mobile_dashboard/coba")
-    .subscribe(res => {
-      var qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-      var data=res.json();
-      data.technologies.forEach(element => {
-          this.database.insertData(qry,[
-            element.uniq_id,
-            element.name,
-            element.summary,
-            element.company
-          ]);
-        });
-      console.log("success load Api");
-    });
+      // this.getResUrl_coba();
+       // this.getResUrl_coba().subscribe(x => {
+      var x=this.http.get(this.url + "mobile_dashboard/coba").map(res => { return res.json();});
+          x.subscribe(data => {
+            // var data=res.json();
+            var qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+            data.technologies.forEach(element => {
+              this.database.insertData(qry,[
+                element.uniq_id,
+                element.name,
+                element.summary,
+                element.company
+              ]);
+            });
+            console.log("success load Api");
+          });
+      //
+    // });
   }
 
 
