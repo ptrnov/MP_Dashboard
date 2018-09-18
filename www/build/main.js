@@ -16,7 +16,9 @@ webpackJsonp([12],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_database_database__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_database_database__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -35,6 +37,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { ajax } from 'rxjs/observable/dom/ajax';
+
 
 var DashboardAllProvider = (function () {
     function DashboardAllProvider(httpClient, http, database) {
@@ -43,9 +47,16 @@ var DashboardAllProvider = (function () {
         this.database = database;
         // private url: string ="http://mproject.mitratel.int/";
         // private url: string ="http://192.168.100.5/";
-        this.url = "http://192.168.1.135/";
+        this.url = "http://192.168.1.7/";
         console.log('Hello DashboardAllProvider Provider');
     }
+    DashboardAllProvider.prototype.catchError = function (error) {
+        console.log(error);
+        return __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["Observable"].throw(error.json().error || "server error.");
+    };
+    DashboardAllProvider.prototype.logResponse = function (res) {
+        console.log(res);
+    };
     DashboardAllProvider.prototype.getDataAll = function () {
         return this.http.get(this.url + "mobile_dashboard/user_login/field_eng1@mitratel.co.id/password")
             .do(function (res) { return console.log(res); });
@@ -60,8 +71,8 @@ var DashboardAllProvider = (function () {
     DashboardAllProvider.prototype.getCobaData = function () {
         var _this = this;
         // var x=this.http.get(this.url + "mobile_dashboard/coba").map(res => { return res.json();});
-        var x = this.http.get(this.url + "mobile_dashboard/coba").map(function (res) { return res.json(); });
-        x.subscribe(function (data) {
+        var x = this.http.get(this.url + "mobile_dashboard/coba");
+        x.map(function (res) { return res.json(); }).subscribe(function (data) {
             // var data=res.json();
             var qry = "INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
             data.technologies.forEach(function (element) {
@@ -74,6 +85,8 @@ var DashboardAllProvider = (function () {
             });
             console.log("success load Api");
         });
+        x.do(this.logResponse);
+        x.catch(this.catchError);
     };
     /* All Project
       * Event     : ViewLoad & ViewInit (Observable)
@@ -87,13 +100,14 @@ var DashboardAllProvider = (function () {
         var x1 = this.http.get(this.url + "mobile_dashboard/coba2").map(function (res) { return res.json(); });
         x1.subscribe(function (data) {
             // var data=res.json();
-            var qry = "INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?)";
+            var qry = "INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?)";
             data.dsh1.forEach(function (element) {
                 _this.database.insertData(qry, [
                     element.URUTAN,
                     element.SEQ,
                     element.GRP,
                     element.NILAI,
+                    element.PERSEN,
                     element.AREA1,
                     element.AREA2,
                     element.AREA3,
@@ -107,7 +121,7 @@ var DashboardAllProvider = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */],
-            __WEBPACK_IMPORTED_MODULE_7__providers_database_database__["a" /* DatabaseProvider */]])
+            __WEBPACK_IMPORTED_MODULE_8__providers_database_database__["a" /* DatabaseProvider */]])
     ], DashboardAllProvider);
     return DashboardAllProvider;
 }());
@@ -581,7 +595,7 @@ var Dsh3HomePage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh5HomePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh4HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
@@ -598,32 +612,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 /**
- * Generated class for the Dsh5HomePage page.
+ * Generated class for the Dsh4HomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var Dsh5HomePage = (function () {
-    function Dsh5HomePage(navCtrl, navParams) {
+var Dsh4HomePage = (function () {
+    function Dsh4HomePage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
     }
-    Dsh5HomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad Dsh5HomePage');
+    Dsh4HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad Dsh4HomePage');
     };
-    Dsh5HomePage.prototype.goToAccount = function () {
+    Dsh4HomePage.prototype.goToAccount = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
     };
-    Dsh5HomePage = __decorate([
+    Dsh4HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh5-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Special Project Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/,
+            selector: 'page-dsh4-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Microcell Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
-    ], Dsh5HomePage);
-    return Dsh5HomePage;
+    ], Dsh4HomePage);
+    return Dsh4HomePage;
 }());
 
-//# sourceMappingURL=dsh5-home.js.map
+//# sourceMappingURL=dsh4-home.js.map
 
 /***/ }),
 
@@ -731,7 +745,7 @@ var Dsh7HomePage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh4HomePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh5HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
@@ -748,32 +762,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 /**
- * Generated class for the Dsh4HomePage page.
+ * Generated class for the Dsh5HomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var Dsh4HomePage = (function () {
-    function Dsh4HomePage(navCtrl, navParams) {
+var Dsh5HomePage = (function () {
+    function Dsh5HomePage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
     }
-    Dsh4HomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad Dsh4HomePage');
+    Dsh5HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad Dsh5HomePage');
     };
-    Dsh4HomePage.prototype.goToAccount = function () {
+    Dsh5HomePage.prototype.goToAccount = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
     };
-    Dsh4HomePage = __decorate([
+    Dsh5HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh4-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Microcell Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/,
+            selector: 'page-dsh5-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Special Project Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
-    ], Dsh4HomePage);
-    return Dsh4HomePage;
+    ], Dsh5HomePage);
+    return Dsh5HomePage;
 }());
 
-//# sourceMappingURL=dsh4-home.js.map
+//# sourceMappingURL=dsh5-home.js.map
 
 /***/ }),
 
@@ -807,7 +821,7 @@ var map = {
 		10
 	],
 	"../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module": [
-		712,
+		710,
 		9
 	],
 	"../pages/dsh1-second-rfi/dsh1-second-rfi.module": [
@@ -815,7 +829,7 @@ var map = {
 		8
 	],
 	"../pages/dsh2-home/dsh2-home.module": [
-		710,
+		712,
 		7
 	],
 	"../pages/dsh3-home/dsh3-home.module": [
@@ -823,11 +837,11 @@ var map = {
 		6
 	],
 	"../pages/dsh4-home/dsh4-home.module": [
-		717,
+		714,
 		5
 	],
 	"../pages/dsh5-home/dsh5-home.module": [
-		714,
+		718,
 		4
 	],
 	"../pages/dsh6-home/dsh6-home.module": [
@@ -839,7 +853,7 @@ var map = {
 		2
 	],
 	"../pages/peta/peta.module": [
-		718,
+		717,
 		1
 	],
 	"../pages/welcome/welcome.module": [
@@ -1141,8 +1155,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_dsh1_second_afterrfi_dsh1_second_afterrfi__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_dsh2_home_dsh2_home__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_dsh3_home_dsh3_home__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_dsh6_home_dsh6_home__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_dsh7_home_dsh7_home__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable__ = __webpack_require__(447);
@@ -1239,15 +1253,15 @@ var AppModule = (function () {
                     links: [
                         { loadChildren: '../pages/dsh1-second-afterrfi/dsh1-second-afterrfi.module#Dsh1SecondAfterrfiPageModule', name: 'Dsh1SecondAfterrfiPage', segment: 'dsh1-second-afterrfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh3-home/dsh3-home.module#Dsh3HomePageModule', name: 'Dsh3HomePage', segment: 'dsh3-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh7-home/dsh7-home.module#Dsh7HomePageModule', name: 'Dsh7HomePage', segment: 'dsh7-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/peta/peta.module#PetaPageModule', name: 'PetaPage', segment: 'peta', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -1369,8 +1383,8 @@ var ACTIVITIES = [];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_dsh2_home_dsh2_home__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_dsh3_home_dsh3_home__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh5_home_dsh5_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh4_home_dsh4_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh5_home_dsh5_home__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_dsh6_home_dsh6_home__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_dsh7_home_dsh7_home__ = __webpack_require__(169);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1940,6 +1954,12 @@ var DatabaseProvider = (function () {
         */
         platform.ready().then(function () {
             console.warn('platform Indentification');
+            //TBL TEST
+            var qryTbl = "CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+            var qryTblUniqe = "CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
+            // TBL ALL PRJ
+            var ALL_PRJ_tbl = "CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, PERSEN REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+            var ALL_PRJ_Uniqe = "CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
             if (platform._platforms[0] == 'cordova') {
                 console.warn('Storage: Sqlite cordova/Mobile Flatform - Create DB ');
                 _this.storage = new __WEBPACK_IMPORTED_MODULE_2__ionic_native_sqlite__["a" /* SQLite */];
@@ -1950,12 +1970,8 @@ var DatabaseProvider = (function () {
                     //   console.log("Create Table Success");
                     // });
                     // var qryTbl="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT, NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-                    var qryTbl = "CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
                     _this.createTable(qryTbl, []);
-                    var qryTblUniqe = "CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
                     _this.createTable(qryTblUniqe, []);
-                    var ALL_PRJ_tbl = "CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
-                    var ALL_PRJ_Uniqe = "CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
                     _this.createTable(ALL_PRJ_tbl, []);
                     _this.createTable(ALL_PRJ_Uniqe, []);
                 }).catch(function (error) {
@@ -1965,13 +1981,10 @@ var DatabaseProvider = (function () {
             else {
                 console.warn('Storage: WebSql Browser Flatform');
                 _this._db = win.openDatabase(DB_NAME, '1.0', '', 5 * 1024 * 1024);
-                var qryTbl = "CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+                // TABLE TEST
                 _this.createTable(qryTbl, []);
-                var qryTblUniqe = "CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
                 _this.createTable(qryTblUniqe, []);
                 // TABLE ALL PROJECT
-                var ALL_PRJ_tbl = "CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
-                var ALL_PRJ_Uniqe = "CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
                 _this.createTable(ALL_PRJ_tbl, []);
                 _this.createTable(ALL_PRJ_Uniqe, []);
             }
@@ -2319,7 +2332,7 @@ var HomePage = (function () {
     };
     HomePage.prototype.ionViewDidLoad = function () {
         //== Mouse Over - Change Color ==
-        this.nilaiDispyValue1();
+        // this.nilaiDispyValue1();
         this.firstCardEventMouse();
         this.secondEventMousehover();
         this.trheeEventMousehover();
@@ -2329,16 +2342,17 @@ var HomePage = (function () {
         this.drilldown();
     };
     HomePage.prototype.ionViewDidEnter = function () {
+        var _this = this;
         this.subscription2 = __WEBPACK_IMPORTED_MODULE_10_rxjs_Observable__["Observable"].timer(3000, 3000).subscribe(function (x) {
             console.log('run-Disply');
-            // this.nilaiDispyValue1();
+            _this.nilaiDispyValue1();
         });
     };
     HomePage.prototype.nilaiDispyValue1 = function () {
         /**
          * Load Sqlite data periodik.
          */
-        var querySql = "SELECT URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+        var querySql = "SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
             + " ORDER BY SEQ,GRP DESC,URUTAN ASC";
         var getDataQry = this.database.selectData(querySql);
         getDataQry.then(function (data) {
@@ -2346,9 +2360,11 @@ var HomePage = (function () {
             var ary_Header = [];
             var aryB2S_AREA = [];
             setTimeout(function () {
+                aryRslt = [];
                 aryRslt.push(data);
                 // console.log(aryRslt);
                 //-Set ARRAY GROUP - HEADER
+                ary_Header = [];
                 ary_Header.push(aryRslt[0].filter(function (headerObj) {
                     return headerObj.SEQ.indexOf("HEADER") > -1;
                 }));
@@ -2362,33 +2378,168 @@ var HomePage = (function () {
                     return 0;
                 });
                 //-Set ARRAY GROUP - B2S
+                aryB2S_AREA = [];
                 aryB2S_AREA.push(aryRslt[0].filter(function (b2cAreaObj) {
                     return b2cAreaObj.SEQ.indexOf("B2S") > -1;
                 }));
                 // - NOT RELEASE
+                aryB2S_AREA_NOT_RELEASE = [];
                 aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function (notReleaseObj) {
                     return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1;
                 }));
                 // - PROJECT ON PIPE
+                aryB2S_AREA_PRJ_ON_PIPE = [];
                 aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function (pipeObj) {
                     return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1;
                 }));
                 // - RFI
+                aryRFI = [];
                 aryRFI.push(aryB2S_AREA[0].filter(function (rfiObj) {
                     return rfiObj.GRP.indexOf("RFI") > -1;
                 }));
                 // -AFTER RFI
+                aryARFI = [];
                 aryARFI.push(aryB2S_AREA[0].filter(function (arfiObj) {
                     return arfiObj.GRP.indexOf("ARFI") > -1;
                 }));
+                console.log(" varSecond0=" + varSecond0 +
+                    ",varSecond1=" + varSecond1 +
+                    ",varSecond2=" + varSecond2 +
+                    ",varSecond3=" + varSecond3);
+                // First layer
+                document.getElementById("allPrjLabel").innerHTML = ary_Header[0][0].NILAI != null ? ary_Header[0][0].NILAI : 0;
                 // - VIEWER
                 // console.log(aryB2S_AREA_NOT_RELEASE[1]);
                 // this.nilaiDispyValue1();
-                console.log('Check=' + ary_Header[0][0].NILAI);
+                // console.log('Check='+ ary_Header[0][0].NILAI);
                 document.getElementById("secondValue[0]").innerHTML = ary_Header[0][1].NILAI != null ? ary_Header[0][1].NILAI + " %" : "0%";
                 document.getElementById("secondValue[1]").innerHTML = ary_Header[0][2].NILAI != null ? ary_Header[0][2].NILAI + " %" : "0%";
                 document.getElementById("secondValue[2]").innerHTML = ary_Header[0][3].NILAI != null ? ary_Header[0][3].NILAI + " %" : "0%";
                 document.getElementById("secondValue[3]").innerHTML = ary_Header[0][4].NILAI != null ? ary_Header[0][4].NILAI + " %" : "0%";
+                //NO-RELEASE
+                if (varSecond0 == 1) {
+                    document.getElementById("threeValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][3].NILAI : 0;
+                    if (varSecond0 == 1 && varPerubisCol_1 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA4 : 0;
+                    }
+                    if (varSecond0 == 1 && varPerubisCol_2 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA4 : 0;
+                    }
+                    if (varSecond0 == 1 && varPerubisCol_3 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA4 : 0;
+                    }
+                    if (varSecond0 == 1 && varPerubisCol_4 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA4 : 0;
+                    }
+                }
+                //PIPE
+                if (varSecond1 == 1) {
+                    document.getElementById("threeValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI : 0;
+                    if (varSecond1 == 1 && varPerubisCol_1 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 : 0;
+                    }
+                    if (varSecond1 == 1 && varPerubisCol_2 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 : 0;
+                    }
+                    if (varSecond1 == 1 && varPerubisCol_3 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 : 0;
+                    }
+                    if (varSecond1 == 1 && varPerubisCol_4 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 : 0;
+                    }
+                }
+                //RFI
+                if (varSecond2 == 1) {
+                    document.getElementById("threeValue[0]").innerText = aryRFI[0][0].NILAI != null ? aryRFI[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryRFI[0][1].NILAI != null ? aryRFI[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryRFI[0][2].NILAI != null ? aryRFI[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryRFI[0][3].NILAI != null ? aryRFI[0][3].NILAI : 0;
+                    if (varSecond2 == 1 && varPerubisCol_1 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][0].AREA1 != null ? aryRFI[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][0].AREA2 != null ? aryRFI[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][0].AREA3 != null ? aryRFI[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][0].AREA4 != null ? aryRFI[0][0].AREA4 : 0;
+                    }
+                    if (varSecond2 == 1 && varPerubisCol_2 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][1].AREA1 != null ? aryRFI[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][1].AREA2 != null ? aryRFI[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][1].AREA3 != null ? aryRFI[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][1].AREA4 != null ? aryRFI[0][1].AREA4 : 0;
+                    }
+                    if (varSecond2 == 1 && varPerubisCol_3 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][2].AREA1 != null ? aryRFI[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][2].AREA2 != null ? aryRFI[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][2].AREA3 != null ? aryRFI[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][2].AREA4 != null ? aryRFI[0][2].AREA4 : 0;
+                    }
+                    if (varSecond2 == 1 && varPerubisCol_4 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][3].AREA1 != null ? aryRFI[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][3].AREA2 != null ? aryRFI[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][3].AREA3 != null ? aryRFI[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][3].AREA4 != null ? aryRFI[0][3].AREA4 : 0;
+                    }
+                }
+                //-ARFI
+                if (varSecond3 == 1) {
+                    document.getElementById("threeValue[0]").innerText = aryARFI[0][0].NILAI != null ? aryARFI[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryARFI[0][1].NILAI != null ? aryARFI[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryARFI[0][2].NILAI != null ? aryARFI[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryARFI[0][3].NILAI != null ? aryARFI[0][3].NILAI : 0;
+                    if (varSecond3 == 1 && varPerubisCol_1 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][0].AREA1 != null ? aryARFI[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][0].AREA2 != null ? aryARFI[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][0].AREA3 != null ? aryARFI[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][0].AREA4 != null ? aryARFI[0][0].AREA4 : 0;
+                    }
+                    if (varSecond3 == 1 && varPerubisCol_2 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][1].AREA1 != null ? aryARFI[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][1].AREA2 != null ? aryARFI[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][1].AREA3 != null ? aryARFI[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][1].AREA4 != null ? aryARFI[0][1].AREA4 : 0;
+                    }
+                    if (varSecond3 == 1 && varPerubisCol_3 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][2].AREA1 != null ? aryARFI[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][2].AREA2 != null ? aryARFI[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][2].AREA3 != null ? aryARFI[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][2].AREA4 != null ? aryARFI[0][2].AREA4 : 0;
+                    }
+                    if (varSecond3 == 1 && varPerubisCol_4 == 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][3].AREA1 != null ? aryARFI[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][3].AREA2 != null ? aryARFI[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][3].AREA3 != null ? aryARFI[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][3].AREA4 != null ? aryARFI[0][3].AREA4 : 0;
+                    }
+                }
             }, 500);
         });
     };
@@ -2539,36 +2690,6 @@ var HomePage = (function () {
     //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
     // }
     HomePage.prototype.firstCardEventMouse = function () {
-        // SECOND TO THREE
-        // == Not Release
-        // var defaultUrlImg="assets/img/new/";
-        // var varSecond0=0;
-        // var varSecond1=0;
-        // var varSecond2=0;
-        // var varSecond3=0;
-        // var varPerubisCol_1=0;
-        // var varPerubisCol_2=0;
-        // var varPerubisCol_3=0;
-        // var varPerubisCol_4=0;
-        // var ObjSecondNotRelease= <HTMLImageElement>document.getElementById("divId_header_notRelease");
-        //     ObjSecondNotRelease.addEventListener('click', function () {
-        //       switch(expression) {
-        //         case 0:
-        //             document.getElementById("divPerUbis").hidden = false;
-        //             // var objScoundImg1= <HTMLImageElement>document.getElementById("second-img-4");
-        //             // objScoundImg1.src = "assets/img/new/PoP_m.png";
-        //             expression = 1;
-        //             break;
-        //         case 1:
-        //              document.getElementById("divPerUbis").hidden = true;
-        //              document.getElementById("divPerArea").hidden = true;
-        //              expression = 0;
-        //              varPerubisCol_1=0;
-        //             break;
-        //         default:
-        //             document.getElementById("divPerUbis").hidden = true;
-        //     }
-        // });
         //=>SeCOND DIFINITION
         var ObjSecond0 = document.getElementById("divSecond[0]");
         var ObjSecond1 = document.getElementById("divSecond[1]");
@@ -2604,12 +2725,20 @@ var HomePage = (function () {
         var firstLabel1 = document.getElementById("firstLabel[1]"); //image
         var firstLabel2 = document.getElementById("firstLabel[2]"); //Value
         var firstLabel3 = document.getElementById("firstLabel[3]"); //text footer
+        firstLabel0.innerText = "";
+        firstLabel1.src = ""; // defaultUrlImg + "All_Project_m.png";
+        firstLabel2.innerText = ""; //getfrom API
+        firstLabel3.innerText = "";
         // SECOND TO THREE
         // == PER-UBIS -> B2S
         //== divSecond[0]
         ObjSecond0.addEventListener('click', function () {
             switch (varSecond0) {
                 case 0:
+                    varSecond0 = 1;
+                    varSecond1 = 0;
+                    varSecond2 = 0;
+                    varSecond3 = 0;
                     ObjSecond0.style.backgroundColor = "#83D7F1";
                     ObjSecond1.style.backgroundColor = "#FFFFFF";
                     ObjSecond2.style.backgroundColor = "#FFFFFF";
@@ -2619,10 +2748,6 @@ var HomePage = (function () {
                     ObjThree2.style.backgroundColor = "#FFFFFF";
                     ObjThree3.style.backgroundColor = "#FFFFFF";
                     document.getElementById("divPerUbis").hidden = false;
-                    varSecond0 = 1;
-                    varSecond1 = 0;
-                    varSecond2 = 0;
-                    varSecond3 = 0;
                     var srcScoundImgName0 = objScoundImg0.src;
                     var aryScoundImgName0 = srcScoundImgName0.split("/");
                     var ScoundImgName0 = aryScoundImgName0.reverse()[0];
@@ -2650,11 +2775,12 @@ var HomePage = (function () {
                     document.getElementById("threeValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][1].NILAI : 0;
                     document.getElementById("threeValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][2].NILAI : 0;
                     document.getElementById("threeValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][3].NILAI : 0;
+                    console.log(aryB2S_AREA_NOT_RELEASE);
                     break;
                 case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel0.innerText = "";
+                    firstLabel1.src = ""; //defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = ""; //getfrom API
                     firstLabel3.innerText = "";
                     ObjSecond0.style.backgroundColor = "#FFFFFF";
                     ObjThree0.style.backgroundColor = "#FFFFFF";
@@ -2714,9 +2840,9 @@ var HomePage = (function () {
                     document.getElementById("threeValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI : 0;
                     break;
                 case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel0.innerText = "";
+                    firstLabel1.src = ""; // defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = ""; //getfrom API
                     firstLabel3.innerText = "";
                     ObjSecond1.style.backgroundColor = "#FFFFFF";
                     ObjThree0.style.backgroundColor = "#FFFFFF";
@@ -2776,9 +2902,9 @@ var HomePage = (function () {
                     document.getElementById("threeValue[3]").innerText = aryRFI[0][3].NILAI != null ? aryRFI[0][3].NILAI : 0;
                     break;
                 case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel0.innerText = "";
+                    firstLabel1.src = ""; //defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = ""; //getfrom API
                     firstLabel3.innerText = "";
                     ObjSecond2.style.backgroundColor = "#FFFFFF";
                     ObjThree0.style.backgroundColor = "#FFFFFF";
@@ -2838,8 +2964,8 @@ var HomePage = (function () {
                     document.getElementById("threeValue[3]").innerText = aryARFI[0][3].NILAI != null ? aryARFI[0][3].NILAI : 0;
                     break;
                 case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
+                    firstLabel0.innerText = "";
+                    firstLabel1.src = ""; //  defaultUrlImg + "All_Project_m.png";
                     firstLabel2.innerText = ""; //getfrom API
                     firstLabel3.innerText = "";
                     ObjSecond3.style.backgroundColor = "#FFFFFF";
@@ -2888,25 +3014,25 @@ var HomePage = (function () {
                     firstLabel2.innerText = "";
                     firstLabel3.innerText = "PER-AREA";
                     //
-                    if (varSecond0 = 1) {
+                    if (varSecond0 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA4 : 0;
                     }
-                    if (varSecond1 = 1) {
+                    if (varSecond1 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 : 0;
                     }
-                    if (varSecond2 = 1) {
+                    if (varSecond2 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryRFI[0][0].AREA1 != null ? aryRFI[0][0].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryRFI[0][0].AREA2 != null ? aryRFI[0][0].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryRFI[0][0].AREA3 != null ? aryRFI[0][0].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryRFI[0][0].AREA4 != null ? aryRFI[0][0].AREA4 : 0;
                     }
-                    if (varSecond3 = 1) {
+                    if (varSecond3 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryARFI[0][0].AREA1 != null ? aryARFI[0][0].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryARFI[0][0].AREA2 != null ? aryARFI[0][0].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryARFI[0][0].AREA3 != null ? aryARFI[0][0].AREA3 : 0;
@@ -2952,25 +3078,25 @@ var HomePage = (function () {
                     firstLabel2.innerText = "";
                     firstLabel3.innerText = "PER-AREA";
                     //VALUE
-                    if (varSecond0 = 1) {
+                    if (varSecond0 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA4 : 0;
                     }
-                    if (varSecond1 = 1) {
+                    if (varSecond1 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 : 0;
                     }
-                    if (varSecond2 = 1) {
+                    if (varSecond2 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryRFI[0][1].AREA1 != null ? aryRFI[0][1].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryRFI[0][1].AREA2 != null ? aryRFI[0][1].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryRFI[0][1].AREA3 != null ? aryRFI[0][1].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryRFI[0][1].AREA4 != null ? aryRFI[0][1].AREA4 : 0;
                     }
-                    if (varSecond3 = 1) {
+                    if (varSecond3 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryARFI[0][1].AREA1 != null ? aryARFI[0][1].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryARFI[0][1].AREA2 != null ? aryARFI[0][1].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryARFI[0][1].AREA3 != null ? aryARFI[0][1].AREA3 : 0;
@@ -3015,25 +3141,25 @@ var HomePage = (function () {
                     firstLabel1.src = defaultUrlImg + ThreeImgName2;
                     firstLabel2.innerText = "";
                     firstLabel3.innerText = "PER-AREA";
-                    if (varSecond0 = 1) {
+                    if (varSecond0 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA4 : 0;
                     }
-                    if (varSecond1 = 1) {
+                    if (varSecond1 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 : 0;
                     }
-                    if (varSecond2 = 1) {
+                    if (varSecond2 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryRFI[0][2].AREA1 != null ? aryRFI[0][2].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryRFI[0][2].AREA2 != null ? aryRFI[0][2].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryRFI[0][2].AREA3 != null ? aryRFI[0][2].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryRFI[0][2].AREA4 != null ? aryRFI[0][2].AREA4 : 0;
                     }
-                    if (varSecond3 = 1) {
+                    if (varSecond3 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryARFI[0][2].AREA1 != null ? aryARFI[0][2].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryARFI[0][2].AREA2 != null ? aryARFI[0][2].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryARFI[0][2].AREA3 != null ? aryARFI[0][2].AREA3 : 0;
@@ -3078,25 +3204,25 @@ var HomePage = (function () {
                     firstLabel1.src = defaultUrlImg + ThreeImgName3;
                     firstLabel2.innerText = "";
                     firstLabel3.innerText = "PER-AREA";
-                    if (varSecond0 = 1) {
+                    if (varSecond0 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA4 : 0;
                     }
-                    if (varSecond1 = 1) {
+                    if (varSecond1 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 : 0;
                     }
-                    if (varSecond2 = 1) {
+                    if (varSecond2 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryRFI[0][3].AREA1 != null ? aryRFI[0][3].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryRFI[0][3].AREA2 != null ? aryRFI[0][3].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryRFI[0][3].AREA3 != null ? aryRFI[0][3].AREA3 : 0;
                         document.getElementById("fourthValue[3]").innerText = aryRFI[0][3].AREA4 != null ? aryRFI[0][3].AREA4 : 0;
                     }
-                    if (varSecond3 = 1) {
+                    if (varSecond3 == 1) {
                         document.getElementById("fourthValue[0]").innerText = aryARFI[0][3].AREA1 != null ? aryARFI[0][3].AREA1 : 0;
                         document.getElementById("fourthValue[1]").innerText = aryARFI[0][3].AREA2 != null ? aryARFI[0][3].AREA2 : 0;
                         document.getElementById("fourthValue[2]").innerText = aryARFI[0][3].AREA3 != null ? aryARFI[0][3].AREA3 : 0;
@@ -3320,12 +3446,16 @@ var HomePage = (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/'\n<ion-header color="primary">\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n        <div class="home-logo"></div>\n        <!-- <strong>Ionic </strong> Start Theme -->\n    </ion-title>\n    <ion-buttons end>\n      <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n      <!-- <button ion-button  class="circle"> -->\n          <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n        <!-- <ion-icon name="notifications"></ion-icon> -->\n      <!-- </button> -->\n      <!-- <button ion-button tappable (click)="goToAccount()"> -->\n      <!-- <button ion-button tappable>\n          <img class="home-satelit" src="assets/img/satellite.png">\n      </button> -->\n      <button ion-button tappable (click)="goToAccount()">\n          <ion-icon name="cog"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content class="common-bg">\n  <ion-scroll scrollY="true">\n    <ion-row>\n      <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n          <ion-row class="full-width">\n              <ion-col col-6 >\n                  <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->\n                  <ion-card class="first-card">\n                      <ion-card-header id="divId_allProject">\n                          <div class="row">\n                              <div class="left-icon">\n                                  <img  id="firstLabel[1]" src="assets/img/new/All_Project_m.png">\n                              </div>\n                            <div id="firstLabel[0]"class="header-title">All Project</div>\n                           </div>\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="right-text">\n                              <ion-label id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="first-card-footer-PrjAll">\n                          <div class="row" style="height:20px">\n                              <ion-col class="first-card-header-title">\n                                  <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n\n              </ion-col>\n              <ion-col col-6>\n                  <ion-list>\n                      <!-- <ion-item class="first-column-tanggal">\n                         <ion-input placeholder="Filter Month/Year" [value]="dataInicial | date:\'MM/yyyy\'" (click)="open()"></ion-input>\n                      </ion-item>\n\n                      <ion-item no-lines hidden="true">\n                        <ion-datetime #datePicker displayFormat="MMMM/MM/YYYY" (ionCancel)="this.dataInicial  = null" [(ngModel)]="dataInicial" doneText="Feito" cancelText="Cancelar" [max]="maxDate">\n                        </ion-datetime>\n                      </ion-item> -->\n                    </ion-list>\n              </ion-col >\n          </ion-row>\n          <!-- SECOND -->\n          <ion-row class="full-width" style="margin-top: -20px">\n            <!-- NOT RELEASE -->\n            <ion-col col-3 id="divId_noRelease">\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[0]">\n                      <ion-card-header class="header-title">\n                        Not Release\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div  class="left-icon">\n                              <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text" >\n                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-release" (click)="secondAlertInfo1()">\n                      <!-- <div class="row" onClick="alertInfo()"> -->\n                      <div class="row" >\n                        <ion-col class="footer-title">\n                            <!-- <button id="hidden-button" (click)="alertInfo()">Total </button> -->\n                            Total\n                        </ion-col>\n                      </div>\n                    </ion-row>\n                  </ion-card>\n            </ion-col>\n            <!-- PROJECT ON PIPE -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[1]">\n                      <ion-card-header class="header-title">\n                      Prj on Pipe\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onPipe" (click)="secondAlertInfo2()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[2]">\n                      <ion-card-header class="header-title">\n                        Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onRfi" (click)="secondAlertInfo3()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- AFTER RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[3]">\n                      <ion-card-header class="header-title">\n                        After Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-3" src="assets/img/new/BAPS_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onAfterRfi" (click)="secondAlertInfo4()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n          </ion-row>\n          <!-- THREE - PerUbis -->\n          <ion-row id="divPerUbis" class="full-width" style="margin-top: -20px">\n              <!-- B2C -->\n              <ion-col col-3>\n                  <ion-card  id="divThree[0]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-0" src="assets/img/new/Not_Release_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-b2c">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[0]" style="margin-top: -1px" >Build To Suit</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                    </ion-card>\n              </ion-col>\n              <!-- CORE -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[1]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-1" src="assets/img/new/PoP_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-core">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[1]" style="margin-top: -1px" >CORE</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- MICROCELL -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[2]" class="three-card full-width">\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="three-img-2" src="assets/img/new/Rfi_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-microcell">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[2]" style="margin-top: -1px" >Microcell</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- Special Project -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[3]" class="three-card full-width">\n                     <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img id="three-img-3" src="assets/img/new/BAPS_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-specialPrj">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[3]" style="margin-top: -1px" >Special Project</ion-label>\n                              </ion-col>\n                            </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n            </ion-row>\n            <!-- FOURTH - PerArea -->\n            <ion-row id="divPerArea" class="full-width" style="margin-top: -20px">\n                <!-- Area 1 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img  id="fourth-img-0" src="assets/img/new/Not_Release_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area1">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[0]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                      </ion-card>\n                </ion-col>\n                <!-- AREA 2 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img id="fourth-img-1" src="assets/img/new/PoP_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area2">\n                              <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[1]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 3 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-2"  src="assets/img/new/Rfi_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area3">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="fourthFooterLabelLeft[2]" style="margin-top: -1px" >Area 3</ion-label>\n                              </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 4 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                       <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-3"  src="assets/img/new/BAPS_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area4">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[3]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n              </ion-row>\n        </ion-grid>\n      </ion-row>\n      <div id="testChart1" style = " display : block ; " > </div>\n  </ion-scroll>\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/'\n<ion-header color="primary">\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n        <div class="home-logo"></div>\n        <!-- <strong>Ionic </strong> Start Theme -->\n    </ion-title>\n    <ion-buttons end>\n      <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n      <!-- <button ion-button  class="circle"> -->\n          <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n        <!-- <ion-icon name="notifications"></ion-icon> -->\n      <!-- </button> -->\n      <!-- <button ion-button tappable (click)="goToAccount()"> -->\n      <!-- <button ion-button tappable>\n          <img class="home-satelit" src="assets/img/satellite.png">\n      </button> -->\n      <button ion-button tappable (click)="goToAccount()">\n          <ion-icon name="cog"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content class="common-bg">\n  <ion-scroll scrollY="true">\n    <ion-row>\n      <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n          <ion-row class="full-width">\n              <ion-col col-6 >\n                  <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->\n                  <ion-card class="first-card1 full-width">\n                      <ion-card-header id="divId_allProject">\n                          <div class="row">\n                              <div class="left-icon">\n                                  <img src="assets/img/new/All_Project_m.png">\n                              </div>\n                            <div class="header-title">All Project</div>\n                           </div>\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="right-text">\n                              <ion-label  id="allPrjLabel" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="first-card1-footer-PrjAll">\n                          <div class="row" style="height:20px">\n                              <ion-col class="first-card-header-title">\n                                  <ion-label  style="margin-top: -2px;"></ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <ion-col col-6 >\n                  <!-- Per-UBIS/ Per-AREA -->\n                  <ion-card class="first-card2 full-width">\n                      <ion-card-header id="divId_allProject">\n                          <div class="row">\n                              <div class="left-icon">\n                                  <img  id="firstLabel[1]" src="assets/img/new/All_Project_m.png">\n                              </div>\n                            <div id="firstLabel[0]"class="header-title">All Project</div>\n                           </div>\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="right-text">\n                              <ion-label   id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="first-card2-footer-PrjAll">\n                          <div class="row" style="height:20px">\n                              <ion-col class="first-card-header-title">\n                                  <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n          </ion-row>\n          <!-- SECOND -->\n          <ion-row class="full-width" style="margin-top: -20px">\n            <!-- NOT RELEASE -->\n            <ion-col col-3 id="divId_noRelease">\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[0]">\n                      <ion-card-header class="header-title">\n                        Not Release\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div  class="left-icon">\n                              <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text" >\n                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-release" (click)="secondAlertInfo1()">\n                      <!-- <div class="row" onClick="alertInfo()"> -->\n                      <div class="row" >\n                        <ion-col class="footer-title">\n                            <!-- <button id="hidden-button" (click)="alertInfo()">Total </button> -->\n                            Total\n                        </ion-col>\n                      </div>\n                    </ion-row>\n                  </ion-card>\n            </ion-col>\n            <!-- PROJECT ON PIPE -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[1]">\n                      <ion-card-header class="header-title">\n                      Prj on Pipe\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onPipe" (click)="secondAlertInfo2()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[2]">\n                      <ion-card-header class="header-title">\n                        Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onRfi" (click)="secondAlertInfo3()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- AFTER RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[3]">\n                      <ion-card-header class="header-title">\n                        After Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-3" src="assets/img/new/BAPS_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onAfterRfi" (click)="secondAlertInfo4()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n          </ion-row>\n          <!-- THREE - PerUbis -->\n          <ion-row id="divPerUbis" class="full-width" style="margin-top: -20px">\n              <!-- B2C -->\n              <ion-col col-3>\n                  <ion-card  id="divThree[0]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-0" src="assets/img/new/Not_Release_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-b2c">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[0]" style="margin-top: -1px" >Build To Suit</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                    </ion-card>\n              </ion-col>\n              <!-- CORE -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[1]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-1" src="assets/img/new/PoP_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-core">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[1]" style="margin-top: -1px" >CORE</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- MICROCELL -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[2]" class="three-card full-width">\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="three-img-2" src="assets/img/new/Rfi_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-microcell">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[2]" style="margin-top: -1px" >Microcell</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- Special Project -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[3]" class="three-card full-width">\n                     <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img id="three-img-3" src="assets/img/new/BAPS_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-specialPrj">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[3]" style="margin-top: -1px" >Special Project</ion-label>\n                              </ion-col>\n                            </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n            </ion-row>\n            <!-- FOURTH - PerArea -->\n            <ion-row id="divPerArea" class="full-width" style="margin-top: -20px">\n                <!-- Area 1 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img  id="fourth-img-0" src="assets/img/new/Not_Release_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area1">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[0]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                      </ion-card>\n                </ion-col>\n                <!-- AREA 2 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img id="fourth-img-1" src="assets/img/new/PoP_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area2">\n                              <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[1]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 3 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-2"  src="assets/img/new/Rfi_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area3">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="fourthFooterLabelLeft[2]" style="margin-top: -1px" >Area 3</ion-label>\n                              </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 4 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                       <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-3"  src="assets/img/new/BAPS_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area4">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[3]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n              </ion-row>\n        </ion-grid>\n      </ion-row>\n      <div id="testChart1" style = " display : block ; " > </div>\n  </ion-scroll>\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //

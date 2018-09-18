@@ -15,7 +15,7 @@ import { DatabaseProvider } from '../../providers/database/database';
 export class DashboardAllProvider {
   // private url: string ="http://mproject.mitratel.int/";
   // private url: string ="http://192.168.100.5/";
-  private url: string ="http://192.168.1.17/";
+  private url: string ="http://192.168.1.7/";
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
   // private subscription2;
@@ -81,7 +81,7 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "mobile_dashboard/coba2").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
@@ -89,6 +89,7 @@ export class DashboardAllProvider {
               element.SEQ,
               element.GRP,
               element.NILAI,
+              element.PERSEN,
               element.AREA1,
               element.AREA2,
               element.AREA3,

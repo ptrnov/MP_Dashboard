@@ -31,7 +31,32 @@
           <ion-row class="full-width">
               <ion-col col-6 >
                   <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->
-                  <ion-card class="first-card">
+                  <ion-card class="first-card1 full-width">
+                      <ion-card-header id="divId_allProject">
+                          <div class="row">
+                              <div class="left-icon">
+                                  <img src="assets/img/new/All_Project_m.png">
+                              </div>
+                            <div class="header-title">All Project</div>
+                           </div>
+                      </ion-card-header>
+                      <ion-card-content>
+                          <div class="right-text">
+                              <ion-label  id="allPrjLabel" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>
+                          </div>
+                      </ion-card-content>
+                      <ion-row id="first-card1-footer-PrjAll">
+                          <div class="row" style="height:20px">
+                              <ion-col class="first-card-header-title">
+                                  <ion-label  style="margin-top: -2px;"></ion-label>
+                              </ion-col>
+                          </div>
+                      </ion-row>
+                  </ion-card>
+              </ion-col>
+              <ion-col col-6 >
+                  <!-- Per-UBIS/ Per-AREA -->
+                  <ion-card class="first-card2 full-width">
                       <ion-card-header id="divId_allProject">
                           <div class="row">
                               <div class="left-icon">
@@ -42,10 +67,10 @@
                       </ion-card-header>
                       <ion-card-content>
                           <div class="right-text">
-                              <ion-label id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>
+                              <ion-label   id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>
                           </div>
                       </ion-card-content>
-                      <ion-row id="first-card-footer-PrjAll">
+                      <ion-row id="first-card2-footer-PrjAll">
                           <div class="row" style="height:20px">
                               <ion-col class="first-card-header-title">
                                   <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>
@@ -53,20 +78,7 @@
                           </div>
                       </ion-row>
                   </ion-card>
-
               </ion-col>
-              <ion-col col-6>
-                  <ion-list>
-                      <!-- <ion-item class="first-column-tanggal">
-                         <ion-input placeholder="Filter Month/Year" [value]="dataInicial | date:'MM/yyyy'" (click)="open()"></ion-input>
-                      </ion-item>
-
-                      <ion-item no-lines hidden="true">
-                        <ion-datetime #datePicker displayFormat="MMMM/MM/YYYY" (ionCancel)="this.dataInicial  = null" [(ngModel)]="dataInicial" doneText="Feito" cancelText="Cancelar" [max]="maxDate">
-                        </ion-datetime>
-                      </ion-item> -->
-                    </ion-list>
-              </ion-col >
           </ion-row>
           <!-- SECOND -->
           <ion-row class="full-width" style="margin-top: -20px">

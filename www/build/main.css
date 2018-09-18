@@ -29942,13 +29942,13 @@ page-home .card-box-dashboard {
   border: 1px solid #e2e2e2;
 }
 
-page-home .first-card {
+page-home .first-card1 {
   background-color: #FFFF;
   border-radius: 7px 7px 7px 7px;
   border: 1px solid #e2e2e2;
 }
 
-page-home .first-card .header-title {
+page-home .first-card1 .header-title {
   width: 80%;
   font-size: 8px;
   text-align: right;
@@ -29957,13 +29957,13 @@ page-home .first-card .header-title {
   float: right;
 }
 
-page-home .first-card .left-icon {
+page-home .first-card1 .left-icon {
   width: 20%;
   height: 20%;
   float: left;
 }
 
-page-home .first-card .right-text {
+page-home .first-card1 .right-text {
   font-size: 8px;
   width: 100%;
   height: -60px;
@@ -29972,11 +29972,51 @@ page-home .first-card .right-text {
   margin-top: -20px;
 }
 
-page-home .first-card #first-card-footer-PrjAll {
+page-home .first-card1 #first-card1-footer-PrjAll {
   background-color: #E9E9E9;
 }
 
-page-home .first-card .first-column-tanggal {
+page-home .first-card1 .first-column-tanggal {
+  background-color: #FAFBFC;
+  padding-top: 20px;
+  margin-left: 5px;
+}
+
+page-home .first-card2 {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+}
+
+page-home .first-card2 .header-title {
+  width: 80%;
+  font-size: 8px;
+  text-align: right;
+  font-weight: bold;
+  vertical-align: top;
+  float: right;
+}
+
+page-home .first-card2 .left-icon {
+  width: 20%;
+  height: 20%;
+  float: left;
+}
+
+page-home .first-card2 .right-text {
+  font-size: 8px;
+  width: 100%;
+  height: -60px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: -20px;
+}
+
+page-home .first-card2 #first-card2-footer-PrjAll {
+  background-color: #E9E9E9;
+}
+
+page-home .first-card2 .first-column-tanggal {
   background-color: #FAFBFC;
   padding-top: 20px;
   margin-left: 5px;

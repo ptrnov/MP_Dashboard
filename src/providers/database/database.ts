@@ -27,6 +27,13 @@ export class DatabaseProvider {
     */
     platform.ready().then(() => {
       console.warn('platform Indentification');
+      //TBL TEST
+      var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+      var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
+      // TBL ALL PRJ
+      var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, PERSEN REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+      var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
+
       if (platform._platforms[0] == 'cordova') {
           console.warn('Storage: Sqlite cordova/Mobile Flatform - Create DB ');
           this.storage = new SQLite;
@@ -37,12 +44,8 @@ export class DatabaseProvider {
               //   console.log("Create Table Success");
               // });
               // var qryTbl="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT, NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-              var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
               this.createTable(qryTbl,[]);
-              var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
               this.createTable(qryTblUniqe,[]);
-              var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
-              var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
               this.createTable(ALL_PRJ_tbl,[]);
               this.createTable(ALL_PRJ_Uniqe,[]);
           }).catch((error) => {
@@ -51,13 +54,10 @@ export class DatabaseProvider {
       } else {
         console.warn('Storage: WebSql Browser Flatform');
         this._db = win.openDatabase(DB_NAME, '1.0', '', 5 * 1024 * 1024);
-        var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
+        // TABLE TEST
         this.createTable(qryTbl,[]);
-        var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
         this.createTable(qryTblUniqe,[]);
         // TABLE ALL PROJECT
-        var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
-        var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
         this.createTable(ALL_PRJ_tbl,[]);
         this.createTable(ALL_PRJ_Uniqe,[]);
       }

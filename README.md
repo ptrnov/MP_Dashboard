@@ -25,5 +25,7 @@ ver 1.0.0
    #npm install -g tslint
 9. SqiIte Sync Api
    On Forlder Provider
+10. Screen Orantion
+    add in config.xml : <preference name="orientation" value="portrait" />
 
 ````
