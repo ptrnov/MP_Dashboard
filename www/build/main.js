@@ -1,22 +1,22 @@
 webpackJsonp([12],{
 
-/***/ 122:
+/***/ 124:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardAllProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_interval__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_timer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_database_database__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_database_database__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -36,40 +36,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/*
-  Generated class for the DashboardAllProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 var DashboardAllProvider = (function () {
     function DashboardAllProvider(httpClient, http, database) {
         this.httpClient = httpClient;
         this.http = http;
         this.database = database;
         // private url: string ="http://mproject.mitratel.int/";
-        this.url = "http://192.168.100.5/";
+        // private url: string ="http://192.168.100.5/";
+        this.url = "http://192.168.1.135/";
         console.log('Hello DashboardAllProvider Provider');
     }
-    // promiseDelay= function(ms:any):Promise<{}>{
-    //   return new Promise(resolve => {
-    //     setTimeout(() => resolve('done'), ms);
-    //   });
-    // };
     DashboardAllProvider.prototype.getDataAll = function () {
         return this.http.get(this.url + "mobile_dashboard/user_login/field_eng1@mitratel.co.id/password")
             .do(function (res) { return console.log(res); });
     };
-    // getResUrl_coba(){
-    //   return this.http.get(this.url + "mobile_dashboard/coba")
-    //   // .do(res => {return res.json();});
-    //   // .do(res => console.log('coba data=' + res))
-    //   .map(res => { return res.json();});
-    // }
+    /* Testing Function
+     * Event     : ViewLoad & ViewInit (Observable)
+     * Rest Api  : Request & respon
+     * SQLite    : Live Mobile Storage.
+     * WebSql    : Develompent debug database,table,query.
+     * Author    : ptr.nov@gmail.com
+     */
     DashboardAllProvider.prototype.getCobaData = function () {
         var _this = this;
-        // this.getResUrl_coba();
-        // this.getResUrl_coba().subscribe(x => {
+        // var x=this.http.get(this.url + "mobile_dashboard/coba").map(res => { return res.json();});
         var x = this.http.get(this.url + "mobile_dashboard/coba").map(function (res) { return res.json(); });
         x.subscribe(function (data) {
             // var data=res.json();
@@ -84,8 +74,34 @@ var DashboardAllProvider = (function () {
             });
             console.log("success load Api");
         });
-        //
-        // });
+    };
+    /* All Project
+      * Event     : ViewLoad & ViewInit (Observable)
+      * Rest Api  : Request & respon
+      * SQLite    : Live Mobile Storage.
+      * WebSql    : Develompent debug database,table,query.
+      * Author    : ptr.nov@gmail.com
+      */
+    DashboardAllProvider.prototype.getAllPrj = function () {
+        var _this = this;
+        var x1 = this.http.get(this.url + "mobile_dashboard/coba2").map(function (res) { return res.json(); });
+        x1.subscribe(function (data) {
+            // var data=res.json();
+            var qry = "INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?)";
+            data.dsh1.forEach(function (element) {
+                _this.database.insertData(qry, [
+                    element.URUTAN,
+                    element.SEQ,
+                    element.GRP,
+                    element.NILAI,
+                    element.AREA1,
+                    element.AREA2,
+                    element.AREA3,
+                    element.AREA4,
+                ]);
+            });
+            console.log("success load Api - All Project");
+        });
     };
     DashboardAllProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
@@ -203,17 +219,16 @@ var Dsh1SecondAfterrfiPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh1SecondNoreleasePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__settings_settings__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_dashboard_all_dashboard_all__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_database_database__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_interval__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_interval___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_interval__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_observable_timer__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_observable_timer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_interval__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_interval___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_observable_interval__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_timer__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_observable_timer__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -229,25 +244,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import { JalankanService } from '../../services/jalankan-service';
-
 
 
 // var rsltData: any;
 var promises = [];
 var Dsh1SecondNoreleasePage = (function () {
-    function Dsh1SecondNoreleasePage(navCtrl, navParams, _HTTP, dashboarAll, dp, 
-        // private dbCharting: ChartingService,
-        zone, platform //,
-        // private jalankanService:JalankanService
-    ) {
+    function Dsh1SecondNoreleasePage(navCtrl, navParams, 
+        // private _HTTP   	: HttpClient,
+        dashboarAll, dp, 
+        // private zone: NgZone,
+        platform) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this._HTTP = _HTTP;
         this.dashboarAll = dashboarAll;
         this.dp = dp;
-        this.zone = zone;
-        this.platform = platform; //,
+        this.platform = platform;
         this.columns = [
             { prop: 'NAME' },
             { prop: 'SUMMARY' },
@@ -266,36 +277,31 @@ var Dsh1SecondNoreleasePage = (function () {
         platform.ready().then(function () {
         });
     }
-    // ngOnInit() {
-    // this.dashboarAll.getCobaData();
-    // this.dashboarAll.getCobaData().subscribe(data=>{
-    //   // console.log(data);
-    //   //console.log(data.technologies[0]['name']);
-    //   // this.ambilDataRrows = data;
-    //   //this.rows=data.technologies;
-    //     data.technologies.forEach(element => {
-    //       // console.log(element);
-    //       // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-    //       // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-    //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
-    //    });
-    //  });
-    // // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
-    // }
-    Dsh1SecondNoreleasePage.prototype.ionViewDidLoad = function () {
-        // this.dashboarAll.getCobaData();
+    Dsh1SecondNoreleasePage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscription1 = __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["Observable"].timer(10000, 10000).subscribe(function (x) {
+            console.log('run-Disply');
+            _this.dashboarAll.getCobaData();
+        });
         // this.dashboarAll.getCobaData().subscribe(data=>{
-        //    data.technologies.forEach(element => {
+        //   // console.log(data);
+        //   // this.ambilDataRrows = data;
+        //   //this.rows=data.technologies;
+        //     data.technologies.forEach(element => {
+        //       // console.log(element);
+        //       // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+        //       // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
         //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
         //    });
         //  });
+        // // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+    };
+    Dsh1SecondNoreleasePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.subscription1 = __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__["Observable"].timer(10000, 10000).subscribe(function (x) {
-            // console.log('run-Disply');
-            _this.dashboarAll.getCobaData();
-            // this.jalankanService.loadPeriodik_coba();
-        });
-        this.subscription2 = __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__["Observable"].timer(3000, 3000).subscribe(function (x) {
+        /**
+         * Load Sqlite data periodik.
+         */
+        this.subscription2 = __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["Observable"].timer(3000, 3000).subscribe(function (x) {
             console.log('run-Disply');
             _this.ambilDataBaru();
         });
@@ -310,18 +316,18 @@ var Dsh1SecondNoreleasePage = (function () {
         //     //  alert(data);
         //       console.log(data.technologies);
         //   });
-        // this.ambilDataBaru();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.ambilDataBaru();
+        // this.ambilDataBaru();
     };
+    /**
+     * Event Back / close Page
+     */
     Dsh1SecondNoreleasePage.prototype.ionViewWillLeave = function () {
         console.log("Previus page");
         this.subscription1.unsubscribe();
         this.subscription2.unsubscribe();
     };
-    // getCobaData(){
-    //   this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
-    // }
     Dsh1SecondNoreleasePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__settings_settings__["a" /* SettingsPage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
     };
     Dsh1SecondNoreleasePage.prototype.masukinDatabaru = function (uniqId, name, summary, company) {
         // console.log('data=' + name);
@@ -332,11 +338,7 @@ var Dsh1SecondNoreleasePage = (function () {
     Dsh1SecondNoreleasePage.prototype.ambilDataBaru = function () {
         var _this = this;
         var querySql = "SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
-        // var data=this.database.selectData(querySql,[]);
         var getDataQry = this.dp.selectData(querySql);
-        // getDataQry.then((data)=>{
-        //alert('message' + msq);
-        // this.rsltData=data;
         getDataQry.then(function (data) {
             setTimeout(function () {
                 // console.log(this.rsltData);
@@ -345,30 +347,16 @@ var Dsh1SecondNoreleasePage = (function () {
                 // console.log(data);
             }, 500);
         });
-        // return data;
-        // });
-        // .then((data)=>{
-        //  console.log(data);
-        //  this.aryRslt=data;
-        // return data.rows.;
-        // this.rows =data;
-        // this.rsltData=data;
-        // var datax: any=data;
-        // });
     };
     Dsh1SecondNoreleasePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-dsh1-second-norelease',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh1-second-norelease\dsh1-second-norelease.html"*/'<ion-header color="primary">\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n        <div style="width:100%; text-align: center">\n            <div class="norepease-logo"></div>\n            <ion-label>No Release Detail</ion-label>\n        </div>\n    </ion-title>\n    <ion-buttons end>\n      <!-- <button ion-button tappable>\n          <img class="home-satelit" src="assets/img/satellite.png">\n      </button> -->\n      <button ion-button tappable (click)="goToAccount()">\n          <ion-icon name="cog"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="common-bg">\n    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n      <ion-row class="full-width" style="margin-top: -20px">\n        <!-- All Project -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[3]">\n                  <ion-card-header class="header-title">\n                    All Project\n                  </ion-card-header>\n                  <ion-card-content>\n                      <div class="row">\n                            <div class="left-icon">\n                              <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>\n                            </div>\n                      </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n          </ion-col>\n          <!-- NOT RELEASE -->\n          <ion-col col-3 id="divId_noRelease">\n              <ion-card class="card full-width">\n                  <div id="divSecond[0]">\n                    <ion-card-header class="header-title">\n                      Not Release\n                    </ion-card-header>\n                    <ion-card-content>\n                      <div class="row">\n                        <div  class="left-icon">\n                            <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                        </div>\n                        <div class="right-text" >\n                            <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>\n                        </div>\n                        <!-- <ion-icon   name="lock" ></ion-icon> -->\n                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n                </ion-card>\n          </ion-col>\n          <!-- PROJECT ON PIPE -->\n          <ion-col col-3>\n              <ion-card class="card full-width">\n                  <div id="divSecond[1]">\n                    <ion-card-header class="header-title">\n                    Prj on Pipe\n                    </ion-card-header>\n                    <ion-card-content>\n                      <div class="row">\n                        <div class="left-icon">\n                            <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                        </div>\n                        <div class="right-text">\n                            <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>\n                        </div>\n                        <!-- <ion-icon   name="lock" ></ion-icon> -->\n                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n          <!-- RFI -->\n          <ion-col col-3>\n              <ion-card class="card full-width">\n                  <div id="divSecond[2]">\n                    <ion-card-header class="header-title">\n                      After Rfi\n                    </ion-card-header>\n                    <ion-card-content>\n                        <div class="row">\n                              <div class="left-icon">\n                                <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              </div>\n                              <div class="right-text">\n                                  <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>\n                              </div>\n                        </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col style="margin-left:2%">\n            <ngx-datatable\n              [sortType]="multi"\n              [headerHeight]="50"\n              [footerHeight]="50"\n              [rowHeight]="50"\n              [rows]="rows"\n              [columns]="columns"\n              [columnMode]="\'force\'"\n              [limit]="10">\n            </ngx-datatable>\n          </ion-col>\n\n        </ion-row>\n      </ion-grid>\n\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh1-second-norelease\dsh1-second-norelease.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_database_database__["a" /* DatabaseProvider */],
-            __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Platform */] //,
-            // private jalankanService:JalankanService
-        ])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
     ], Dsh1SecondNoreleasePage);
     return Dsh1SecondNoreleasePage;
 }());
@@ -593,56 +581,6 @@ var Dsh3HomePage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh4HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the Dsh4HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var Dsh4HomePage = (function () {
-    function Dsh4HomePage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    Dsh4HomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad Dsh4HomePage');
-    };
-    Dsh4HomePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
-    };
-    Dsh4HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh4-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Microcell Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
-    ], Dsh4HomePage);
-    return Dsh4HomePage;
-}());
-
-//# sourceMappingURL=dsh4-home.js.map
-
-/***/ }),
-
-/***/ 168:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh5HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
@@ -689,7 +627,7 @@ var Dsh5HomePage = (function () {
 
 /***/ }),
 
-/***/ 169:
+/***/ 168:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -739,7 +677,7 @@ var Dsh6HomePage = (function () {
 
 /***/ }),
 
-/***/ 170:
+/***/ 169:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -789,6 +727,56 @@ var Dsh7HomePage = (function () {
 
 /***/ }),
 
+/***/ 170:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh4HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the Dsh4HomePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var Dsh4HomePage = (function () {
+    function Dsh4HomePage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    Dsh4HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad Dsh4HomePage');
+    };
+    Dsh4HomePage.prototype.goToAccount = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
+    };
+    Dsh4HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-dsh4-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Microcell Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh4-home\dsh4-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    ], Dsh4HomePage);
+    return Dsh4HomePage;
+}());
+
+//# sourceMappingURL=dsh4-home.js.map
+
+/***/ }),
+
 /***/ 183:
 /***/ (function(module, exports) {
 
@@ -815,27 +803,27 @@ var map = {
 		11
 	],
 	"../pages/dsh1-second-norelease/dsh1-second-norelease.module": [
-		718,
+		709,
 		10
 	],
 	"../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module": [
-		709,
+		712,
 		9
 	],
 	"../pages/dsh1-second-rfi/dsh1-second-rfi.module": [
-		710,
+		711,
 		8
 	],
 	"../pages/dsh2-home/dsh2-home.module": [
-		711,
+		710,
 		7
 	],
 	"../pages/dsh3-home/dsh3-home.module": [
-		712,
+		713,
 		6
 	],
 	"../pages/dsh4-home/dsh4-home.module": [
-		713,
+		717,
 		5
 	],
 	"../pages/dsh5-home/dsh5-home.module": [
@@ -851,7 +839,7 @@ var map = {
 		2
 	],
 	"../pages/peta/peta.module": [
-		717,
+		718,
 		1
 	],
 	"../pages/welcome/welcome.module": [
@@ -1125,8 +1113,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__ = __webpack_require__(234);
@@ -1146,20 +1134,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_trips_trips__ = __webpack_require__(434);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_local_weather_local_weather__ = __webpack_require__(435);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_rest_rest__ = __webpack_require__(446);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_dashboard_all_dashboard_all__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_dashboard_all_dashboard_all__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_dsh1_second_norelease_dsh1_second_norelease__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_dsh1_second_prjonpipe_dsh1_second_prjonpipe__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_dsh1_second_rfi_dsh1_second_rfi__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_dsh1_second_afterrfi_dsh1_second_afterrfi__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_dsh2_home_dsh2_home__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_dsh3_home_dsh3_home__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(167);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_dsh6_home_dsh6_home__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_dsh7_home_dsh7_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_dsh6_home_dsh6_home__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_dsh7_home_dsh7_home__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable__ = __webpack_require__(447);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__providers_database_database__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__providers_database_database__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1250,16 +1238,16 @@ var AppModule = (function () {
                 }, {
                     links: [
                         { loadChildren: '../pages/dsh1-second-afterrfi/dsh1-second-afterrfi.module#Dsh1SecondAfterrfiPageModule', name: 'Dsh1SecondAfterrfiPage', segment: 'dsh1-second-afterrfi', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh3-home/dsh3-home.module#Dsh3HomePageModule', name: 'Dsh3HomePage', segment: 'dsh3-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh7-home/dsh7-home.module#Dsh7HomePageModule', name: 'Dsh7HomePage', segment: 'dsh7-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/peta/peta.module#PetaPageModule', name: 'PetaPage', segment: 'peta', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -1376,15 +1364,15 @@ var ACTIVITIES = [];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_database_database__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_database_database__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_dsh2_home_dsh2_home__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_dsh3_home_dsh3_home__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh4_home_dsh4_home__ = __webpack_require__(167);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh5_home_dsh5_home__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_dsh6_home_dsh6_home__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_dsh7_home_dsh7_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh5_home_dsh5_home__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_dsh6_home_dsh6_home__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_dsh7_home_dsh7_home__ = __webpack_require__(169);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1817,7 +1805,7 @@ var LocalWeatherPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WeatherProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operators__ = __webpack_require__(148);
@@ -1879,7 +1867,7 @@ var WeatherProvider = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RestProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1914,921 +1902,12 @@ var RestProvider = (function () {
 
 /***/ }),
 
-/***/ 57:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dsh1_second_norelease_dsh1_second_norelease__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dsh1_second_prjonpipe_dsh1_second_prjonpipe__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dsh1_second_rfi_dsh1_second_rfi__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__dsh1_second_afterrfi_dsh1_second_afterrfi__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_highcharts__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_highcharts__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-// import {Storage} from '@ionic/storage';
-// import { DOCUMENT} from '@angular/common';
-// import {NotificationsPage} from "../notifications/notifications";
-
-// import {TripsPage} from "../trips/trips";
-//import {SearchLocationPage} from "../search-location/search-location";
-
-// import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
-
-
-
-
-
-// import HighCharts from 'highcharts'
-// import addMore from "highcharts/highcharts-more";
-// addMore(Highcharts)
-var HomePage = (function () {
-    // search condition
-    // public search = {
-    //   name: "Rio de Janeiro, Brazil",
-    //   date: new Date().toISOString()
-    // }
-    //today;
-    // dataInicial: any;
-    // maxDate: string;
-    // @ViewChild(Content) content: Content
-    function HomePage(
-        // private storage: Storage,
-        navCtrl, popoverCtrl, dashboarAll, alertCtrl, modalCtrl
-        // private pageScrollService: PageScrollService
-        // ,@Inject(DOCUMENT)
-        // private document: any
-    ) {
-        //this.today = new Date().toISOString();
-        // this.getDataAll();
-        this.navCtrl = navCtrl;
-        this.popoverCtrl = popoverCtrl;
-        this.dashboarAll = dashboarAll;
-        this.alertCtrl = alertCtrl;
-        this.modalCtrl = modalCtrl;
-        // this.getCobaData();
-    }
-    HomePage.prototype.secondAlertInfo1 = function () {
-        var _this = this;
-        var alert1 = this.alertCtrl.create({
-            title: '<p>Warning<p>',
-            //subTitle:'subtitle',
-            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
-            cssClass: 'alertModal',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'alertSucess',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Continue',
-                    cssClass: 'alertDangger',
-                    handler: function (data) {
-                        // console.log('Items Removed!');
-                        //  alert("suksess");
-                        //Call you API to remove Items here.
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__dsh1_second_norelease_dsh1_second_norelease__["a" /* Dsh1SecondNoreleasePage */]);
-                    }
-                }
-            ]
-        });
-        alert1.present();
-    };
-    HomePage.prototype.secondAlertInfo2 = function () {
-        var _this = this;
-        //var data = { message : 'hello world' };
-        var ModalAdduser = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__dsh1_second_prjonpipe_dsh1_second_prjonpipe__["a" /* Dsh1SecondPrjonpipePage */]);
-        ModalAdduser.onDidDismiss(function () {
-            _this.ionViewDidLoad();
-        });
-        ModalAdduser.present();
-        // let alert1= this.alertCtrl.create({
-        //   title: '<p>Warning<p>',
-        //   //subTitle:'subtitle',
-        //   message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
-        //   cssClass:'alertModal',
-        //   buttons: [
-        //     {
-        //       text: 'Cancel',
-        //       role: 'cancel',
-        //       cssClass:'alertSucess',
-        //       handler: () => {
-        //         console.log('Cancel clicked');
-        //       }
-        //     },
-        //     {
-        //       text: 'Continue',
-        //       cssClass:'alertDangger',
-        //       handler: data => {
-        //         this.navCtrl.push(Dsh1SecondPrjonpipePage);
-        //       }
-        //     }
-        //   ]
-        // });
-        // alert1.present();
-    };
-    HomePage.prototype.secondAlertInfo3 = function () {
-        var _this = this;
-        var alert1 = this.alertCtrl.create({
-            title: '<p>Warning<p>',
-            //subTitle:'subtitle',
-            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
-            cssClass: 'alertModal',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'alertSucess',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Continue',
-                    cssClass: 'alertDangger',
-                    handler: function (data) {
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__dsh1_second_rfi_dsh1_second_rfi__["a" /* Dsh1SecondRfiPage */]);
-                    }
-                }
-            ]
-        });
-        alert1.present();
-    };
-    HomePage.prototype.secondAlertInfo4 = function () {
-        var _this = this;
-        var alert1 = this.alertCtrl.create({
-            title: '<p>Warning<p>',
-            //subTitle:'subtitle',
-            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
-            cssClass: 'alertModal',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'alertSucess',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Continue',
-                    cssClass: 'alertDangger',
-                    handler: function (data) {
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__dsh1_second_afterrfi_dsh1_second_afterrfi__["a" /* Dsh1SecondAfterrfiPage */]);
-                    }
-                }
-            ]
-        });
-        alert1.present();
-    };
-    // public goToHead2(): void {
-    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this.document, '#container-scroll');
-    //     this.pageScrollService.start(pageScrollInstance);
-    // };
-    // public scrollSomewhereHorizontally(): void {
-    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({document: this.document, scrollTarget: '#targetToTheRight', verticalScrolling: false});
-    //     this.pageScrollService.start(pageScrollInstance);
-    // };
-    // public goToHeadingInContainer(): void {
-    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({document: this.document, scrollTarget: '.headingClass', scrollingViews: [this.container.nativeElement]});
-    //     this.pageScrollService.start(pageScrollInstance);
-    // };
-    // @ViewChild('datePicker') datePicker;
-    //    open() {
-    //        if (!this.dataInicial) {
-    //            this.dataInicial = new Date().toJSON().split('T')[0];
-    //            setTimeout(() => {
-    //                this.datePicker.open();
-    //            }, 50)
-    //        } else {
-    //            this.datePicker.open();
-    //        }
-    //    }
-    // getDataAll(){
-    //   this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
-    // }
-    // getCobaData(){
-    //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
-    // }
-    HomePage.prototype.ionViewDidLoad = function () {
-        //== Mouse Over - Change Color ==
-        this.firstCardEventMouse();
-        this.secondEventMousehover();
-        this.trheeEventMousehover();
-        document.getElementById("divPerUbis").hidden = true;
-        this.fourthEventMousehover();
-        document.getElementById("divPerArea").hidden = true;
-        this.drilldown();
-        // var objRelease=document.getElementById("card-footer-release");
-        // objRelease.addEventListener('click', function (){
-        //   alert("test");
-        // });
-    };
-    HomePage.prototype.firstCardEventMouse = function () {
-        // SECOND TO THREE
-        // == Not Release
-        var defaultUrlImg = "assets/img/new/";
-        var varSecond0 = 0;
-        var varSecond1 = 0;
-        var varSecond2 = 0;
-        var varSecond3 = 0;
-        var varPerubisCol_1 = 0;
-        var varPerubisCol_2 = 0;
-        var varPerubisCol_3 = 0;
-        var varPerubisCol_4 = 0;
-        // var ObjSecondNotRelease= <HTMLImageElement>document.getElementById("divId_header_notRelease");
-        //     ObjSecondNotRelease.addEventListener('click', function () {
-        //       switch(expression) {
-        //         case 0:
-        //             document.getElementById("divPerUbis").hidden = false;
-        //             // var objScoundImg1= <HTMLImageElement>document.getElementById("second-img-4");
-        //             // objScoundImg1.src = "assets/img/new/PoP_m.png";
-        //             expression = 1;
-        //             break;
-        //         case 1:
-        //              document.getElementById("divPerUbis").hidden = true;
-        //              document.getElementById("divPerArea").hidden = true;
-        //              expression = 0;
-        //              varPerubisCol_1=0;
-        //             break;
-        //         default:
-        //             document.getElementById("divPerUbis").hidden = true;
-        //     }
-        // });
-        //=>SeCOND DIFINITION
-        var ObjSecond0 = document.getElementById("divSecond[0]");
-        var ObjSecond1 = document.getElementById("divSecond[1]");
-        var ObjSecond2 = document.getElementById("divSecond[2]");
-        var ObjSecond3 = document.getElementById("divSecond[3]");
-        //=>THREE DIFINITION
-        var ObjThree0 = document.getElementById("divThree[0]");
-        var ObjThree1 = document.getElementById("divThree[1]");
-        var ObjThree2 = document.getElementById("divThree[2]");
-        var ObjThree3 = document.getElementById("divThree[3]");
-        //=> IMAGE DEFINITION
-        var objScoundImg0 = document.getElementById("second-img-0");
-        var objScoundImg1 = document.getElementById("second-img-1");
-        var objScoundImg2 = document.getElementById("second-img-2");
-        var objScoundImg3 = document.getElementById("second-img-3");
-        var objThreeImg0 = document.getElementById("three-img-0");
-        var objThreeImg1 = document.getElementById("three-img-1");
-        var objThreeImg2 = document.getElementById("three-img-2");
-        var objThreeImg3 = document.getElementById("three-img-3");
-        var objFourthImg0 = document.getElementById("fourth-img-0");
-        var objFourthImg1 = document.getElementById("fourth-img-1");
-        var objFourthImg2 = document.getElementById("fourth-img-2");
-        var objFourthImg3 = document.getElementById("fourth-img-3");
-        var objFourthFooterLabelLeft0 = document.getElementById("fourthFooterLabelLeft[0]");
-        var objFourthFooterLabelLeft1 = document.getElementById("fourthFooterLabelLeft[1]");
-        var objFourthFooterLabelLeft2 = document.getElementById("fourthFooterLabelLeft[2]");
-        var objFourthFooterLabelLeft3 = document.getElementById("fourthFooterLabelLeft[3]");
-        var threeFooterLabelLeft0 = document.getElementById("threeFooterLabelLeft[0]");
-        var threeFooterLabelLeft1 = document.getElementById("threeFooterLabelLeft[1]");
-        var threeFooterLabelLeft2 = document.getElementById("threeFooterLabelLeft[2]");
-        var threeFooterLabelLeft3 = document.getElementById("threeFooterLabelLeft[3]");
-        var firstLabel0 = document.getElementById("firstLabel[0]"); //text header
-        var firstLabel1 = document.getElementById("firstLabel[1]"); //image
-        var firstLabel2 = document.getElementById("firstLabel[2]"); //Value
-        var firstLabel3 = document.getElementById("firstLabel[3]"); //text footer
-        // SECOND TO THREE
-        // == PER-UBIS -> B2S
-        //== divSecond[0]
-        ObjSecond0.addEventListener('click', function () {
-            switch (varSecond0) {
-                case 0:
-                    ObjSecond0.style.backgroundColor = "#83D7F1";
-                    ObjSecond1.style.backgroundColor = "#FFFFFF";
-                    ObjSecond2.style.backgroundColor = "#FFFFFF";
-                    ObjSecond3.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = false;
-                    varSecond0 = 1;
-                    varSecond1 = 0;
-                    varSecond2 = 0;
-                    varSecond3 = 0;
-                    var srcScoundImgName0 = objScoundImg0.src;
-                    var aryScoundImgName0 = srcScoundImgName0.split("/");
-                    var ScoundImgName0 = aryScoundImgName0.reverse()[0];
-                    objThreeImg0.src = defaultUrlImg + ScoundImgName0;
-                    objThreeImg1.src = defaultUrlImg + ScoundImgName0;
-                    objThreeImg2.src = defaultUrlImg + ScoundImgName0;
-                    objThreeImg3.src = defaultUrlImg + ScoundImgName0;
-                    firstLabel0.innerText = "Not Release";
-                    firstLabel1.src = defaultUrlImg + ScoundImgName0;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    threeFooterLabelLeft0.innerText = "Build To Suit";
-                    threeFooterLabelLeft1.innerText = "CORE";
-                    threeFooterLabelLeft2.innerText = "Microcell";
-                    threeFooterLabelLeft3.innerText = "Special Project";
-                    objFourthFooterLabelLeft0.innerText = "Area1";
-                    objFourthFooterLabelLeft1.innerText = "Area2";
-                    objFourthFooterLabelLeft2.innerText = "Area3";
-                    objFourthFooterLabelLeft3.innerText = "Area4";
-                    break;
-                case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
-                    firstLabel3.innerText = "";
-                    ObjSecond0.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = true;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond0 = 0;
-                    varPerubisCol_1 = 0;
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        //== divSecond[0]
-        ObjSecond1.addEventListener('click', function () {
-            switch (varSecond1) {
-                case 0:
-                    ObjSecond0.style.backgroundColor = "#FFFFFF";
-                    ObjSecond1.style.backgroundColor = "#83D7F1";
-                    ObjSecond2.style.backgroundColor = "#FFFFFF";
-                    ObjSecond3.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = false;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond0 = 0;
-                    varSecond1 = 1;
-                    varSecond2 = 0;
-                    varSecond3 = 0;
-                    var srcScoundImgName1 = objScoundImg1.src;
-                    var aryScoundImgName1 = srcScoundImgName1.split("/");
-                    var ScoundImgName1 = aryScoundImgName1.reverse()[0];
-                    objThreeImg0.src = defaultUrlImg + ScoundImgName1;
-                    objThreeImg1.src = defaultUrlImg + ScoundImgName1;
-                    objThreeImg2.src = defaultUrlImg + ScoundImgName1;
-                    objThreeImg3.src = defaultUrlImg + ScoundImgName1;
-                    firstLabel0.innerText = "Prj On Pipe";
-                    firstLabel1.src = defaultUrlImg + ScoundImgName1;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    threeFooterLabelLeft0.innerText = "Build To Suit";
-                    threeFooterLabelLeft1.innerText = "CORE";
-                    threeFooterLabelLeft2.innerText = "Microcell";
-                    threeFooterLabelLeft3.innerText = "Special Project";
-                    objFourthFooterLabelLeft0.innerText = "Area1";
-                    objFourthFooterLabelLeft1.innerText = "Area2";
-                    objFourthFooterLabelLeft2.innerText = "Area3";
-                    objFourthFooterLabelLeft3.innerText = "Area4";
-                    break;
-                case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
-                    firstLabel3.innerText = "";
-                    ObjSecond1.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = true;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond1 = 0;
-                    varPerubisCol_1 = 0;
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        //== divSecond[0]
-        ObjSecond2.addEventListener('click', function () {
-            switch (varSecond2) {
-                case 0:
-                    ObjSecond0.style.backgroundColor = "#FFFFFF";
-                    ObjSecond1.style.backgroundColor = "#FFFFFF";
-                    ObjSecond2.style.backgroundColor = "#83D7F1";
-                    ObjSecond3.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = false;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond0 = 0;
-                    varSecond1 = 0;
-                    varSecond2 = 1;
-                    varSecond3 = 0;
-                    var srcScoundImgName2 = objScoundImg2.src;
-                    var aryScoundImgName2 = srcScoundImgName2.split("/");
-                    var ScoundImgName2 = aryScoundImgName2.reverse()[0];
-                    objThreeImg0.src = defaultUrlImg + ScoundImgName2;
-                    objThreeImg1.src = defaultUrlImg + ScoundImgName2;
-                    objThreeImg2.src = defaultUrlImg + ScoundImgName2;
-                    objThreeImg3.src = defaultUrlImg + ScoundImgName2;
-                    firstLabel0.innerText = "RFI";
-                    firstLabel1.src = defaultUrlImg + ScoundImgName2;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    threeFooterLabelLeft0.innerText = "Build To Suit";
-                    threeFooterLabelLeft1.innerText = "CORE";
-                    threeFooterLabelLeft2.innerText = "Microcell";
-                    threeFooterLabelLeft3.innerText = "Special Project";
-                    objFourthFooterLabelLeft0.innerText = "Area1";
-                    objFourthFooterLabelLeft1.innerText = "Area2";
-                    objFourthFooterLabelLeft2.innerText = "Area3";
-                    objFourthFooterLabelLeft3.innerText = "Area4";
-                    break;
-                case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = "1000"; //getfrom API
-                    firstLabel3.innerText = "";
-                    ObjSecond2.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = true;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond2 = 0;
-                    varPerubisCol_1 = 0;
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        //== divSecond[0]
-        ObjSecond3.addEventListener('click', function () {
-            switch (varSecond3) {
-                case 0:
-                    ObjSecond0.style.backgroundColor = "#FFFFFF";
-                    ObjSecond1.style.backgroundColor = "#FFFFFF";
-                    ObjSecond2.style.backgroundColor = "#FFFFFF";
-                    ObjSecond3.style.backgroundColor = "#83D7F1";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = false;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond0 = 0;
-                    varSecond1 = 0;
-                    varSecond2 = 0;
-                    varSecond3 = 1;
-                    var srcScoundImgName3 = objScoundImg3.src;
-                    var aryScoundImgName3 = srcScoundImgName3.split("/");
-                    var ScoundImgName3 = aryScoundImgName3.reverse()[0];
-                    objThreeImg0.src = defaultUrlImg + ScoundImgName3;
-                    objThreeImg1.src = defaultUrlImg + ScoundImgName3;
-                    objThreeImg2.src = defaultUrlImg + ScoundImgName3;
-                    objThreeImg3.src = defaultUrlImg + ScoundImgName3;
-                    firstLabel0.innerText = "AFTER RFI";
-                    firstLabel1.src = defaultUrlImg + ScoundImgName3;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    threeFooterLabelLeft0.innerText = "BAUT";
-                    threeFooterLabelLeft1.innerText = "BAST 1";
-                    threeFooterLabelLeft2.innerText = "BAST 2";
-                    threeFooterLabelLeft3.innerText = "Close";
-                    objFourthFooterLabelLeft0.innerText = "BAUK";
-                    objFourthFooterLabelLeft1.innerText = "BAPS";
-                    objFourthFooterLabelLeft2.innerText = "Invoice";
-                    objFourthFooterLabelLeft3.innerText = "close";
-                    break;
-                case 1:
-                    firstLabel0.innerText = "All Project";
-                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
-                    firstLabel2.innerText = ""; //getfrom API
-                    firstLabel3.innerText = "";
-                    ObjSecond3.style.backgroundColor = "#FFFFFF";
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerUbis").hidden = true;
-                    document.getElementById("divPerArea").hidden = true;
-                    varSecond3 = 0;
-                    varPerubisCol_1 = 0;
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        // THREE TO FOURTH
-        // == PER-UBIS -> B2S
-        ObjThree0.addEventListener('click', function () {
-            var srcThreeImgName0 = objThreeImg0.src;
-            var aryThreeImgName0 = srcThreeImgName0.split("/");
-            var ThreeImgName0 = aryThreeImgName0.reverse()[0];
-            switch (varPerubisCol_1) {
-                case 0:
-                    document.getElementById("divPerArea").hidden = false;
-                    varPerubisCol_1 = 1;
-                    varPerubisCol_2 = 0;
-                    varPerubisCol_3 = 0;
-                    varPerubisCol_4 = 0;
-                    ObjThree0.style.backgroundColor = "#83D7F1";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    //==Aditional Attribute on Change ==
-                    // var ImgName1 = strName1.replace(srcUrlImg,"");
-                    // alert("url=" + objScoundImg1.src);
-                    // alert("Name=" + ImgName1);
-                    // alert("last=" + rlst);
-                    objFourthImg0.src = defaultUrlImg + ThreeImgName0;
-                    objFourthImg1.src = defaultUrlImg + ThreeImgName0;
-                    objFourthImg2.src = defaultUrlImg + ThreeImgName0;
-                    objFourthImg3.src = defaultUrlImg + ThreeImgName0;
-                    // alert("text tree=" + threeFooterLabelLeft0.textContent);
-                    firstLabel0.innerText = threeFooterLabelLeft0.textContent; //"BUILD TO SUIT";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName0;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-AREA";
-                    break;
-                case 1:
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    document.getElementById("divPerArea").hidden = true;
-                    varPerubisCol_1 = 0;
-                    firstLabel0.innerText = threeFooterLabelLeft0.textContent; //"BUILD TO SUIT";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName0;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        // == PER-UBIS -> CORE
-        ObjThree1.addEventListener('click', function () {
-            var srcThreeImgName1 = objThreeImg1.src;
-            var aryThreeImgName1 = srcThreeImgName1.split("/");
-            var ThreeImgName1 = aryThreeImgName1.reverse()[0];
-            switch (varPerubisCol_2) {
-                case 0:
-                    document.getElementById("divPerArea").hidden = false;
-                    varPerubisCol_1 = 0;
-                    varPerubisCol_2 = 1;
-                    varPerubisCol_3 = 0;
-                    varPerubisCol_4 = 0;
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#83D7F1";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    //==Aditional Attribute on Change ==
-                    objFourthImg0.src = defaultUrlImg + ThreeImgName1;
-                    objFourthImg1.src = defaultUrlImg + ThreeImgName1;
-                    objFourthImg2.src = defaultUrlImg + ThreeImgName1;
-                    objFourthImg3.src = defaultUrlImg + ThreeImgName1;
-                    firstLabel0.innerText = threeFooterLabelLeft1.textContent; //"CORE";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName1;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-AREA";
-                    break;
-                case 1:
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    varPerubisCol_2 = 0;
-                    document.getElementById("divPerArea").hidden = true;
-                    firstLabel0.innerText = threeFooterLabelLeft1.textContent; //"CORE";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName1;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        // == PER-UBIS -> Microcell
-        ObjThree2.addEventListener('click', function () {
-            var srcThreeImgName2 = objThreeImg2.src;
-            var aryThreeImgName2 = srcThreeImgName2.split("/");
-            var ThreeImgName2 = aryThreeImgName2.reverse()[0];
-            switch (varPerubisCol_3) {
-                case 0:
-                    document.getElementById("divPerArea").hidden = false;
-                    varPerubisCol_1 = 0;
-                    varPerubisCol_2 = 0;
-                    varPerubisCol_3 = 1;
-                    varPerubisCol_4 = 0;
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#83D7F1";
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    //==Aditional Attribute on Change ==
-                    objFourthImg0.src = defaultUrlImg + ThreeImgName2;
-                    objFourthImg1.src = defaultUrlImg + ThreeImgName2;
-                    objFourthImg2.src = defaultUrlImg + ThreeImgName2;
-                    objFourthImg3.src = defaultUrlImg + ThreeImgName2;
-                    firstLabel0.innerText = threeFooterLabelLeft2.textContent; //"Microcell";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName2;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-AREA";
-                    break;
-                case 1:
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    varPerubisCol_3 = 0;
-                    document.getElementById("divPerArea").hidden = true;
-                    firstLabel0.innerText = threeFooterLabelLeft2.textContent; //"Microcell";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName2;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-        // == PER-UBIS -> Special Project
-        ObjThree3.addEventListener('click', function () {
-            var srcThreeImgName3 = objThreeImg3.src;
-            var aryThreeImgName3 = srcThreeImgName3.split("/");
-            var ThreeImgName3 = aryThreeImgName3.reverse()[0];
-            switch (varPerubisCol_4) {
-                case 0:
-                    document.getElementById("divPerArea").hidden = false;
-                    varPerubisCol_1 = 0;
-                    varPerubisCol_2 = 0;
-                    varPerubisCol_3 = 0;
-                    varPerubisCol_4 = 1;
-                    ObjThree0.style.backgroundColor = "#FFFFFF";
-                    ObjThree1.style.backgroundColor = "#FFFFFF";
-                    ObjThree2.style.backgroundColor = "#FFFFFF";
-                    ObjThree3.style.backgroundColor = "#83D7F1";
-                    //==Aditional Attribute on Change ==
-                    objFourthImg0.src = defaultUrlImg + ThreeImgName3;
-                    objFourthImg1.src = defaultUrlImg + ThreeImgName3;
-                    objFourthImg2.src = defaultUrlImg + ThreeImgName3;
-                    objFourthImg3.src = defaultUrlImg + ThreeImgName3;
-                    firstLabel0.innerText = threeFooterLabelLeft3.textContent; //"Special Project";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName3;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-AREA";
-                    break;
-                case 1:
-                    ObjThree3.style.backgroundColor = "#FFFFFF";
-                    varPerubisCol_4 = 0;
-                    document.getElementById("divPerArea").hidden = true;
-                    firstLabel0.innerText = threeFooterLabelLeft3.textContent; //"Special Project";
-                    firstLabel1.src = defaultUrlImg + ThreeImgName3;
-                    firstLabel2.innerText = "";
-                    firstLabel3.innerText = "PER-UBIS";
-                    break;
-                default:
-                    document.getElementById("divPerUbis").hidden = true;
-            }
-        });
-    };
-    HomePage.prototype.secondEventMousehover = function () {
-        // NOT-RELEASE
-        var objRelease = document.getElementById("card-footer-release");
-        objRelease.onmouseover = function () {
-            objRelease.style.backgroundColor = "#FA8633";
-        };
-        objRelease.onmouseout = function () {
-            objRelease.style.backgroundColor = "#E9E9E9";
-        };
-        // ON PIPE
-        var objOnPipe = document.getElementById("card-footer-onPipe");
-        objOnPipe.onmouseover = function () {
-            objOnPipe.style.backgroundColor = "#FA8633";
-        };
-        objOnPipe.onmouseout = function () {
-            objOnPipe.style.backgroundColor = "#E9E9E9";
-        };
-        //RFI
-        var objRfi = document.getElementById("card-footer-onRfi");
-        objRfi.onmouseover = function () {
-            objRfi.style.backgroundColor = "#FA8633";
-        };
-        objRfi.onmouseout = function () {
-            objRfi.style.backgroundColor = "#E9E9E9";
-        };
-        // BEFORE RFI
-        var onAfterRfi = document.getElementById("card-footer-onAfterRfi");
-        onAfterRfi.onmouseover = function () {
-            onAfterRfi.style.backgroundColor = "#FA8633";
-        };
-        onAfterRfi.onmouseout = function () {
-            onAfterRfi.style.backgroundColor = "#E9E9E9";
-        };
-    };
-    //THREE - PerUbis
-    HomePage.prototype.trheeEventMousehover = function () {
-        // BUILT TO SUIT
-        var objB2c = document.getElementById("three-card-footer-b2c");
-        objB2c.onmouseover = function () {
-            objB2c.style.backgroundColor = "#FA8633";
-        };
-        objB2c.onmouseout = function () {
-            objB2c.style.backgroundColor = "#E9E9E9";
-        };
-        // CORE
-        var objCore = document.getElementById("three-card-footer-core");
-        objCore.onmouseover = function () {
-            objCore.style.backgroundColor = "#FA8633";
-        };
-        objCore.onmouseout = function () {
-            objCore.style.backgroundColor = "#E9E9E9";
-        };
-        //MICROCELL
-        var objMicrocell = document.getElementById("three-card-footer-microcell");
-        objMicrocell.onmouseover = function () {
-            objMicrocell.style.backgroundColor = "#FA8633";
-        };
-        objMicrocell.onmouseout = function () {
-            objMicrocell.style.backgroundColor = "#E9E9E9";
-        };
-        // SPECIAL PROJECT
-        var ObjSprj = document.getElementById("three-card-footer-specialPrj");
-        ObjSprj.onmouseover = function () {
-            ObjSprj.style.backgroundColor = "#FA8633";
-        };
-        ObjSprj.onmouseout = function () {
-            ObjSprj.style.backgroundColor = "#E9E9E9";
-        };
-    };
-    //FOURTH - PerArea
-    HomePage.prototype.fourthEventMousehover = function () {
-        // AREA 1
-        var objArea1 = document.getElementById("fourth-card-footer-area1");
-        objArea1.onmouseover = function () {
-            objArea1.style.backgroundColor = "#FA8633";
-        };
-        objArea1.onmouseout = function () {
-            objArea1.style.backgroundColor = "#E9E9E9";
-        };
-        // AREA 2
-        var objArea2 = document.getElementById("fourth-card-footer-area2");
-        objArea2.onmouseover = function () {
-            objArea2.style.backgroundColor = "#FA8633";
-        };
-        objArea2.onmouseout = function () {
-            objArea2.style.backgroundColor = "#E9E9E9";
-        };
-        //AREA 3
-        var objArea3 = document.getElementById("fourth-card-footer-area3");
-        objArea3.onmouseover = function () {
-            objArea3.style.backgroundColor = "#FA8633";
-        };
-        objArea3.onmouseout = function () {
-            objArea3.style.backgroundColor = "#E9E9E9";
-        };
-        // AREA 4
-        var ObjArea4 = document.getElementById("fourth-card-footer-area4");
-        ObjArea4.onmouseover = function () {
-            ObjArea4.style.backgroundColor = "#FA8633";
-        };
-        ObjArea4.onmouseout = function () {
-            ObjArea4.style.backgroundColor = "#E9E9E9";
-        };
-    };
-    HomePage.prototype.drilldown = function () {
-        var myChart = __WEBPACK_IMPORTED_MODULE_8_highcharts__["chart"]('testChart1', {
-            chart: {
-                zoomType: 'x',
-                panning: true,
-                panKey: 'shift',
-                type: 'areaspline'
-            },
-            title: {
-                text: "Project Summary of 10 September 2018",
-                style: {
-                    fontSize: '15px'
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                categories: ["W1-Jan-2018", "W2-Jan-2018", "W3-Jan-2018", "W4-Jan-2018", "W5-Jan-2018", "W1-Feb-2018", "W2-Feb-2018", "W3-Feb-2018", "W4-Feb-2018", "W5-Feb-2018", "W1-Mar-2018", "W2-Mar-2018", "W3-Mar-2018", "W4-Mar-2018", "W5-Mar-2018", "W1-Apr-2018", "W2-Apr-2018", "W3-Apr-2018", "W4-Apr-2018", "W5-Apr-2018", "W6-Apr-2018", "W1-May-2018", "W2-May-2018", "W3-May-2018", "W4-May-2018", "W5-May-2018", "W1-Jun-2018", "W2-Jun-2018", "W3-Jun-2018", "W4-Jun-2018", "W5-Jun-2018", "W1-Jul-2018", "W2-Jul-2018", "W3-Jul-2018", "W4-Jul-2018", "W5-Jul-2018", "W6-Jul-2018", "W1-Aug-2018", "W2-Aug-2018", "W3-Aug-2018", "W4-Aug-2018", "W5-Aug-2018", "W1-Sep-2018", "W2-Sep-2018", "W3-Sep-2018", "W4-Sep-2018", "W5-Sep-2018", "W1-Oct-2018", "W2-Oct-2018", "W3-Oct-2018", "W4-Oct-2018", "W5-Oct-2018", "W1-Nov-2018", "W2-Nov-2018", "W3-Nov-2018"],
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Total Project'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' '
-            },
-            plotOptions: {
-                spline: {
-                    lineWidth: 3,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false
-                    }
-                }
-            },
-            series: [{
-                    // type: 'spline',
-                    name: 'Target RFI',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, 16, 61, 302, 382, 394, 411, 421, 873, 885, 886, 900, 1195, 1233, 1251, 1401, 1422, 1447, 1449, 1459, 1461, 1461, 1487, 1487, 1489, 1530, 1560, 1564, 1577, 1586, 1606, 1610, 1610, 1613, 1613, 1613, 1615, 1650, 1650, 1654, 1712, 1716, 1716, 1721],
-                    color: '#2c303e',
-                }, {
-                    // type: 'spline',
-                    name: 'Actual RFI',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, 22, 56, 123, 206, 209, 259, 303, 331, 339, 343, 343, 350, 353, 354, 356, 357, 359, 362, 362, 362, 363, 367, 372, 399, 403, 408, 456],
-                    color: '#a50500',
-                }, {
-                    type: 'column',
-                    name: 'Target',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 45, 241, 80, 12, 17, 10, 452, 12, 1, 14, 295, 38, 18, 150, 21, 25, 2, 10, 2, 0, 26, 0, 2, 41, 30, 4, 13, 9, 20, 4, 0, 3, 0, 0, 2, 35, 0, 4, 58, 4, 0, 5, 0],
-                    color: '#2F69C5'
-                }, {
-                    type: 'column',
-                    name: 'Actual',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 34, 67, 83, 3, 50, 44, 28, 8, 4, 0, 7, 3, 1, 2, 1, 2, 3, 0, 0, 1, 4, 5, 27, 4, 5, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    color: '#FF9735'
-                }],
-            navigation: {
-                menuItemStyle: {
-                    fontSize: '10px'
-                }
-            }
-        });
-    };
-    // ionViewWillEnter() {
-    //   // this.search.pickup = "Rio de Janeiro, Brazil";
-    //   // this.search.dropOff = "Same as pickup";
-    //   this.storage.get('pickup').then((val) => {
-    //     if (val === null) {
-    //       this.search.name = "Rio de Janeiro, Brazil"
-    //     } else {
-    //       this.search.name = val;
-    //     }
-    //   }).catch((err) => {
-    //     console.log(err)
-    //   });
-    // }
-    // // go to result page
-    // doSearch() {
-    //   this.nav.push(TripsPage);
-    // }
-    // // choose place
-    // choosePlace(from) {
-    //   this.nav.push(SearchLocationPage, from);
-    // }
-    // to go account page
-    HomePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
-    };
-    HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/'\n<ion-header color="primary">\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n        <div class="home-logo"></div>\n        <!-- <strong>Ionic </strong> Start Theme -->\n    </ion-title>\n    <ion-buttons end>\n      <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n      <!-- <button ion-button  class="circle"> -->\n          <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n        <!-- <ion-icon name="notifications"></ion-icon> -->\n      <!-- </button> -->\n      <!-- <button ion-button tappable (click)="goToAccount()"> -->\n      <!-- <button ion-button tappable>\n          <img class="home-satelit" src="assets/img/satellite.png">\n      </button> -->\n      <button ion-button tappable (click)="goToAccount()">\n          <ion-icon name="cog"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content class="common-bg">\n  <ion-scroll scrollY="true">\n    <ion-row>\n      <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n          <ion-row class="full-width">\n              <ion-col col-6 >\n                  <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->\n                  <ion-card class="first-card">\n                      <ion-card-header id="divId_allProject">\n                          <div class="row">\n                              <div class="left-icon">\n                                  <img  id="firstLabel[1]" src="assets/img/new/All_Project_m.png">\n                              </div>\n                            <div id="firstLabel[0]"class="header-title">All Project</div>\n                           </div>\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="right-text">\n                              <ion-label id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">10.000</ion-label>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="first-card-footer-PrjAll">\n                          <div class="row" style="height:20px">\n                              <ion-col class="first-card-header-title">\n                                  <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n\n              </ion-col>\n              <ion-col col-6>\n                  <ion-list>\n                      <!-- <ion-item class="first-column-tanggal">\n                         <ion-input placeholder="Filter Month/Year" [value]="dataInicial | date:\'MM/yyyy\'" (click)="open()"></ion-input>\n                      </ion-item>\n\n                      <ion-item no-lines hidden="true">\n                        <ion-datetime #datePicker displayFormat="MMMM/MM/YYYY" (ionCancel)="this.dataInicial  = null" [(ngModel)]="dataInicial" doneText="Feito" cancelText="Cancelar" [max]="maxDate">\n                        </ion-datetime>\n                      </ion-item> -->\n                    </ion-list>\n              </ion-col >\n          </ion-row>\n          <!-- SECOND -->\n          <ion-row class="full-width" style="margin-top: -20px">\n            <!-- NOT RELEASE -->\n            <ion-col col-3 id="divId_noRelease">\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[0]">\n                      <ion-card-header class="header-title">\n                        Not Release\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div  class="left-icon">\n                              <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text" >\n                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-release" (click)="secondAlertInfo1()">\n                      <!-- <div class="row" onClick="alertInfo()"> -->\n                      <div class="row" >\n                        <ion-col class="footer-title">\n                            <!-- <button id="hidden-button" (click)="alertInfo()">Total </button> -->\n                            Total\n                        </ion-col>\n                      </div>\n                    </ion-row>\n                  </ion-card>\n            </ion-col>\n            <!-- PROJECT ON PIPE -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[1]">\n                      <ion-card-header class="header-title">\n                      Prj on Pipe\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onPipe" (click)="secondAlertInfo2()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[2]">\n                      <ion-card-header class="header-title">\n                        Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onRfi" (click)="secondAlertInfo3()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- AFTER RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[3]">\n                      <ion-card-header class="header-title">\n                        After Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-3" src="assets/img/new/BAPS_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onAfterRfi" (click)="secondAlertInfo4()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n          </ion-row>\n          <!-- THREE - PerUbis -->\n          <ion-row id="divPerUbis" class="full-width" style="margin-top: -20px">\n              <!-- B2C -->\n              <ion-col col-3>\n                  <ion-card  id="divThree[0]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-0" src="assets/img/new/Not_Release_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">33</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-b2c">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[0]" style="margin-top: -1px" >Build To Suit</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                    </ion-card>\n              </ion-col>\n              <!-- CORE -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[1]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-1" src="assets/img/new/PoP_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">323</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-core">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[1]" style="margin-top: -1px" >CORE</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- MICROCELL -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[2]" class="three-card full-width">\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="three-img-2" src="assets/img/new/Rfi_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">456</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-microcell">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[2]" style="margin-top: -1px" >Microcell</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- Special Project -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[3]" class="three-card full-width">\n                     <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img id="three-img-3" src="assets/img/new/BAPS_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">1123</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-specialPrj">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[3]" style="margin-top: -1px" >Special Project</ion-label>\n                              </ion-col>\n                            </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n            </ion-row>\n            <!-- FOURTH - PerArea -->\n            <ion-row id="divPerArea" class="full-width" style="margin-top: -20px">\n                <!-- Area 1 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img  id="fourth-img-0" src="assets/img/new/Not_Release_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">444</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area1">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[0]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                      </ion-card>\n                </ion-col>\n                <!-- AREA 2 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img id="fourth-img-1" src="assets/img/new/PoP_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">999</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area2">\n                              <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[1]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 3 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-2"  src="assets/img/new/Rfi_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">777</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area3">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="fourthFooterLabelLeft[2]" style="margin-top: -1px" >Area 3</ion-label>\n                              </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 4 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                       <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-3"  src="assets/img/new/BAPS_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">555</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area4">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[3]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n              </ion-row>\n        </ion-grid>\n      </ion-row>\n      <div id="testChart1" style = " display : block ; " > </div>\n  </ion-scroll>\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]
-            // private pageScrollService: PageScrollService
-            // ,@Inject(DOCUMENT)
-            // private document: any
-        ])
-    ], HomePage);
-    return HomePage;
-}());
-
-//
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 61:
+/***/ 46:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatabaseProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_sqlite__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(11);
@@ -2841,7 +1920,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-// import { HttpClient } from '@angular/common/http';
 
 
 
@@ -2876,6 +1954,10 @@ var DatabaseProvider = (function () {
                     _this.createTable(qryTbl, []);
                     var qryTblUniqe = "CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
                     _this.createTable(qryTblUniqe, []);
+                    var ALL_PRJ_tbl = "CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+                    var ALL_PRJ_Uniqe = "CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
+                    _this.createTable(ALL_PRJ_tbl, []);
+                    _this.createTable(ALL_PRJ_Uniqe, []);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -2887,6 +1969,11 @@ var DatabaseProvider = (function () {
                 _this.createTable(qryTbl, []);
                 var qryTblUniqe = "CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
                 _this.createTable(qryTblUniqe, []);
+                // TABLE ALL PROJECT
+                var ALL_PRJ_tbl = "CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+                var ALL_PRJ_Uniqe = "CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
+                _this.createTable(ALL_PRJ_tbl, []);
+                _this.createTable(ALL_PRJ_Uniqe, []);
             }
         });
     }
@@ -3135,6 +2222,1117 @@ var DatabaseProvider = (function () {
 
 /***/ }),
 
+/***/ 57:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dsh1_second_norelease_dsh1_second_norelease__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dsh1_second_prjonpipe_dsh1_second_prjonpipe__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__dsh1_second_rfi_dsh1_second_rfi__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__dsh1_second_afterrfi_dsh1_second_afterrfi__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_highcharts__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_Observable__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rxjs_add_observable_interval__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rxjs_add_observable_interval___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_rxjs_add_observable_interval__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rxjs_add_observable_timer__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rxjs_add_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_rxjs_add_observable_timer__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+// import {Storage} from '@ionic/storage';
+// import { DOCUMENT} from '@angular/common';
+// import {NotificationsPage} from "../notifications/notifications";
+
+// import {TripsPage} from "../trips/trips";
+//import {SearchLocationPage} from "../search-location/search-location";
+
+
+// import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
+
+
+
+
+
+
+
+
+// import HighCharts from 'highcharts'
+// import addMore from "highcharts/highcharts-more";
+// addMore(Highcharts)
+var defaultUrlImg = "assets/img/new/";
+var varSecond0 = 0;
+var varSecond1 = 0;
+var varSecond2 = 0;
+var varSecond3 = 0;
+var varPerubisCol_1 = 0;
+var varPerubisCol_2 = 0;
+var varPerubisCol_3 = 0;
+var varPerubisCol_4 = 0;
+var aryB2S_AREA_NOT_RELEASE = [];
+var aryB2S_AREA_PRJ_ON_PIPE = [];
+var aryRFI = [];
+var aryARFI = [];
+var HomePage = (function () {
+    function HomePage(
+        // private storage: Storage,
+        navCtrl, popoverCtrl, dashboarAll, alertCtrl, modalCtrl, database) {
+        //this.today = new Date().toISOString();
+        // this.getDataAll();
+        this.navCtrl = navCtrl;
+        this.popoverCtrl = popoverCtrl;
+        this.dashboarAll = dashboarAll;
+        this.alertCtrl = alertCtrl;
+        this.modalCtrl = modalCtrl;
+        this.database = database;
+        // this.getCobaData();
+    }
+    HomePage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscription1 = __WEBPACK_IMPORTED_MODULE_10_rxjs_Observable__["Observable"].timer(10000, 10000).subscribe(function (x) {
+            console.log('run-Disply');
+            _this.dashboarAll.getAllPrj();
+        });
+    };
+    /**
+    * Event Back / close Page
+    */
+    HomePage.prototype.ionViewWillUnload = function () {
+        console.log("Previus page");
+        this.subscription1.unsubscribe();
+        this.subscription2.unsubscribe();
+    };
+    HomePage.prototype.ionViewDidLoad = function () {
+        //== Mouse Over - Change Color ==
+        this.nilaiDispyValue1();
+        this.firstCardEventMouse();
+        this.secondEventMousehover();
+        this.trheeEventMousehover();
+        document.getElementById("divPerUbis").hidden = true;
+        this.fourthEventMousehover();
+        document.getElementById("divPerArea").hidden = true;
+        this.drilldown();
+    };
+    HomePage.prototype.ionViewDidEnter = function () {
+        this.subscription2 = __WEBPACK_IMPORTED_MODULE_10_rxjs_Observable__["Observable"].timer(3000, 3000).subscribe(function (x) {
+            console.log('run-Disply');
+            // this.nilaiDispyValue1();
+        });
+    };
+    HomePage.prototype.nilaiDispyValue1 = function () {
+        /**
+         * Load Sqlite data periodik.
+         */
+        var querySql = "SELECT URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+            + " ORDER BY SEQ,GRP DESC,URUTAN ASC";
+        var getDataQry = this.database.selectData(querySql);
+        getDataQry.then(function (data) {
+            var aryRslt = [];
+            var ary_Header = [];
+            var aryB2S_AREA = [];
+            setTimeout(function () {
+                aryRslt.push(data);
+                // console.log(aryRslt);
+                //-Set ARRAY GROUP - HEADER
+                ary_Header.push(aryRslt[0].filter(function (headerObj) {
+                    return headerObj.SEQ.indexOf("HEADER") > -1;
+                }));
+                // ary_Header[0].sort("URUTAN");
+                // - ORDER SORT
+                ary_Header[0].sort(function (a, b) {
+                    if (a.URUTAN < b.URUTAN)
+                        return -1;
+                    if (a.URUTAN > b.URUTAN)
+                        return 1;
+                    return 0;
+                });
+                //-Set ARRAY GROUP - B2S
+                aryB2S_AREA.push(aryRslt[0].filter(function (b2cAreaObj) {
+                    return b2cAreaObj.SEQ.indexOf("B2S") > -1;
+                }));
+                // - NOT RELEASE
+                aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function (notReleaseObj) {
+                    return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1;
+                }));
+                // - PROJECT ON PIPE
+                aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function (pipeObj) {
+                    return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1;
+                }));
+                // - RFI
+                aryRFI.push(aryB2S_AREA[0].filter(function (rfiObj) {
+                    return rfiObj.GRP.indexOf("RFI") > -1;
+                }));
+                // -AFTER RFI
+                aryARFI.push(aryB2S_AREA[0].filter(function (arfiObj) {
+                    return arfiObj.GRP.indexOf("ARFI") > -1;
+                }));
+                // - VIEWER
+                // console.log(aryB2S_AREA_NOT_RELEASE[1]);
+                // this.nilaiDispyValue1();
+                console.log('Check=' + ary_Header[0][0].NILAI);
+                document.getElementById("secondValue[0]").innerHTML = ary_Header[0][1].NILAI != null ? ary_Header[0][1].NILAI + " %" : "0%";
+                document.getElementById("secondValue[1]").innerHTML = ary_Header[0][2].NILAI != null ? ary_Header[0][2].NILAI + " %" : "0%";
+                document.getElementById("secondValue[2]").innerHTML = ary_Header[0][3].NILAI != null ? ary_Header[0][3].NILAI + " %" : "0%";
+                document.getElementById("secondValue[3]").innerHTML = ary_Header[0][4].NILAI != null ? ary_Header[0][4].NILAI + " %" : "0%";
+            }, 500);
+        });
+    };
+    HomePage.prototype.secondAlertInfo1 = function () {
+        var _this = this;
+        var alert1 = this.alertCtrl.create({
+            title: '<p>Warning<p>',
+            //subTitle:'subtitle',
+            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+            cssClass: 'alertModal',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'alertSucess',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Continue',
+                    cssClass: 'alertDangger',
+                    handler: function (data) {
+                        // console.log('Items Removed!');
+                        //  alert("suksess");
+                        //Call you API to remove Items here.
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__dsh1_second_norelease_dsh1_second_norelease__["a" /* Dsh1SecondNoreleasePage */]);
+                    }
+                }
+            ]
+        });
+        alert1.present();
+    };
+    HomePage.prototype.secondAlertInfo2 = function () {
+        var _this = this;
+        //var data = { message : 'hello world' };
+        var ModalAdduser = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_6__dsh1_second_prjonpipe_dsh1_second_prjonpipe__["a" /* Dsh1SecondPrjonpipePage */]);
+        ModalAdduser.onDidDismiss(function () {
+            _this.ionViewDidLoad();
+        });
+        ModalAdduser.present();
+        // let alert1= this.alertCtrl.create({
+        //   title: '<p>Warning<p>',
+        //   //subTitle:'subtitle',
+        //   message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+        //   cssClass:'alertModal',
+        //   buttons: [
+        //     {
+        //       text: 'Cancel',
+        //       role: 'cancel',
+        //       cssClass:'alertSucess',
+        //       handler: () => {
+        //         console.log('Cancel clicked');
+        //       }
+        //     },
+        //     {
+        //       text: 'Continue',
+        //       cssClass:'alertDangger',
+        //       handler: data => {
+        //         this.navCtrl.push(Dsh1SecondPrjonpipePage);
+        //       }
+        //     }
+        //   ]
+        // });
+        // alert1.present();
+    };
+    HomePage.prototype.secondAlertInfo3 = function () {
+        var _this = this;
+        var alert1 = this.alertCtrl.create({
+            title: '<p>Warning<p>',
+            //subTitle:'subtitle',
+            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+            cssClass: 'alertModal',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'alertSucess',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Continue',
+                    cssClass: 'alertDangger',
+                    handler: function (data) {
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__dsh1_second_rfi_dsh1_second_rfi__["a" /* Dsh1SecondRfiPage */]);
+                    }
+                }
+            ]
+        });
+        alert1.present();
+    };
+    HomePage.prototype.secondAlertInfo4 = function () {
+        var _this = this;
+        var alert1 = this.alertCtrl.create({
+            title: '<p>Warning<p>',
+            //subTitle:'subtitle',
+            message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+            cssClass: 'alertModal',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'alertSucess',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Continue',
+                    cssClass: 'alertDangger',
+                    handler: function (data) {
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_8__dsh1_second_afterrfi_dsh1_second_afterrfi__["a" /* Dsh1SecondAfterrfiPage */]);
+                    }
+                }
+            ]
+        });
+        alert1.present();
+    };
+    // public goToHead2(): void {
+    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this.document, '#container-scroll');
+    //     this.pageScrollService.start(pageScrollInstance);
+    // };
+    // public scrollSomewhereHorizontally(): void {
+    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({document: this.document, scrollTarget: '#targetToTheRight', verticalScrolling: false});
+    //     this.pageScrollService.start(pageScrollInstance);
+    // };
+    // public goToHeadingInContainer(): void {
+    //     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({document: this.document, scrollTarget: '.headingClass', scrollingViews: [this.container.nativeElement]});
+    //     this.pageScrollService.start(pageScrollInstance);
+    // };
+    // @ViewChild('datePicker') datePicker;
+    //    open() {
+    //        if (!this.dataInicial) {
+    //            this.dataInicial = new Date().toJSON().split('T')[0];
+    //            setTimeout(() => {
+    //                this.datePicker.open();
+    //            }, 50)
+    //        } else {
+    //            this.datePicker.open();
+    //        }
+    //    }
+    // getDataAll(){
+    //   this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
+    // }
+    // getCobaData(){
+    //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
+    // }
+    HomePage.prototype.firstCardEventMouse = function () {
+        // SECOND TO THREE
+        // == Not Release
+        // var defaultUrlImg="assets/img/new/";
+        // var varSecond0=0;
+        // var varSecond1=0;
+        // var varSecond2=0;
+        // var varSecond3=0;
+        // var varPerubisCol_1=0;
+        // var varPerubisCol_2=0;
+        // var varPerubisCol_3=0;
+        // var varPerubisCol_4=0;
+        // var ObjSecondNotRelease= <HTMLImageElement>document.getElementById("divId_header_notRelease");
+        //     ObjSecondNotRelease.addEventListener('click', function () {
+        //       switch(expression) {
+        //         case 0:
+        //             document.getElementById("divPerUbis").hidden = false;
+        //             // var objScoundImg1= <HTMLImageElement>document.getElementById("second-img-4");
+        //             // objScoundImg1.src = "assets/img/new/PoP_m.png";
+        //             expression = 1;
+        //             break;
+        //         case 1:
+        //              document.getElementById("divPerUbis").hidden = true;
+        //              document.getElementById("divPerArea").hidden = true;
+        //              expression = 0;
+        //              varPerubisCol_1=0;
+        //             break;
+        //         default:
+        //             document.getElementById("divPerUbis").hidden = true;
+        //     }
+        // });
+        //=>SeCOND DIFINITION
+        var ObjSecond0 = document.getElementById("divSecond[0]");
+        var ObjSecond1 = document.getElementById("divSecond[1]");
+        var ObjSecond2 = document.getElementById("divSecond[2]");
+        var ObjSecond3 = document.getElementById("divSecond[3]");
+        //=>THREE DIFINITION
+        var ObjThree0 = document.getElementById("divThree[0]");
+        var ObjThree1 = document.getElementById("divThree[1]");
+        var ObjThree2 = document.getElementById("divThree[2]");
+        var ObjThree3 = document.getElementById("divThree[3]");
+        //=> IMAGE DEFINITION
+        var objScoundImg0 = document.getElementById("second-img-0");
+        var objScoundImg1 = document.getElementById("second-img-1");
+        var objScoundImg2 = document.getElementById("second-img-2");
+        var objScoundImg3 = document.getElementById("second-img-3");
+        var objThreeImg0 = document.getElementById("three-img-0");
+        var objThreeImg1 = document.getElementById("three-img-1");
+        var objThreeImg2 = document.getElementById("three-img-2");
+        var objThreeImg3 = document.getElementById("three-img-3");
+        var objFourthImg0 = document.getElementById("fourth-img-0");
+        var objFourthImg1 = document.getElementById("fourth-img-1");
+        var objFourthImg2 = document.getElementById("fourth-img-2");
+        var objFourthImg3 = document.getElementById("fourth-img-3");
+        var objFourthFooterLabelLeft0 = document.getElementById("fourthFooterLabelLeft[0]");
+        var objFourthFooterLabelLeft1 = document.getElementById("fourthFooterLabelLeft[1]");
+        var objFourthFooterLabelLeft2 = document.getElementById("fourthFooterLabelLeft[2]");
+        var objFourthFooterLabelLeft3 = document.getElementById("fourthFooterLabelLeft[3]");
+        var threeFooterLabelLeft0 = document.getElementById("threeFooterLabelLeft[0]");
+        var threeFooterLabelLeft1 = document.getElementById("threeFooterLabelLeft[1]");
+        var threeFooterLabelLeft2 = document.getElementById("threeFooterLabelLeft[2]");
+        var threeFooterLabelLeft3 = document.getElementById("threeFooterLabelLeft[3]");
+        var firstLabel0 = document.getElementById("firstLabel[0]"); //text header
+        var firstLabel1 = document.getElementById("firstLabel[1]"); //image
+        var firstLabel2 = document.getElementById("firstLabel[2]"); //Value
+        var firstLabel3 = document.getElementById("firstLabel[3]"); //text footer
+        // SECOND TO THREE
+        // == PER-UBIS -> B2S
+        //== divSecond[0]
+        ObjSecond0.addEventListener('click', function () {
+            switch (varSecond0) {
+                case 0:
+                    ObjSecond0.style.backgroundColor = "#83D7F1";
+                    ObjSecond1.style.backgroundColor = "#FFFFFF";
+                    ObjSecond2.style.backgroundColor = "#FFFFFF";
+                    ObjSecond3.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = false;
+                    varSecond0 = 1;
+                    varSecond1 = 0;
+                    varSecond2 = 0;
+                    varSecond3 = 0;
+                    var srcScoundImgName0 = objScoundImg0.src;
+                    var aryScoundImgName0 = srcScoundImgName0.split("/");
+                    var ScoundImgName0 = aryScoundImgName0.reverse()[0];
+                    objThreeImg0.src = defaultUrlImg + ScoundImgName0;
+                    objThreeImg1.src = defaultUrlImg + ScoundImgName0;
+                    objThreeImg2.src = defaultUrlImg + ScoundImgName0;
+                    objThreeImg3.src = defaultUrlImg + ScoundImgName0;
+                    firstLabel0.innerText = "Not Release";
+                    firstLabel1.src = defaultUrlImg + ScoundImgName0;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    threeFooterLabelLeft0.innerText = "Build To Suit";
+                    threeFooterLabelLeft1.innerText = "CORE";
+                    threeFooterLabelLeft2.innerText = "Microcell";
+                    threeFooterLabelLeft3.innerText = "Special Project";
+                    objFourthFooterLabelLeft0.innerText = "Area1";
+                    objFourthFooterLabelLeft1.innerText = "Area2";
+                    objFourthFooterLabelLeft2.innerText = "Area3";
+                    objFourthFooterLabelLeft3.innerText = "Area4";
+                    //aryB2S_AREA_NOT_RELEASE
+                    //aryB2S_AREA_PRJ_ON_PIPE
+                    //aryRFI
+                    //aryARFI
+                    document.getElementById("threeValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].NILAI != null ? aryB2S_AREA_NOT_RELEASE[0][3].NILAI : 0;
+                    break;
+                case 1:
+                    firstLabel0.innerText = "All Project";
+                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel3.innerText = "";
+                    ObjSecond0.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = true;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond0 = 0;
+                    varPerubisCol_1 = 0;
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        //== divSecond[0]
+        ObjSecond1.addEventListener('click', function () {
+            switch (varSecond1) {
+                case 0:
+                    ObjSecond0.style.backgroundColor = "#FFFFFF";
+                    ObjSecond1.style.backgroundColor = "#83D7F1";
+                    ObjSecond2.style.backgroundColor = "#FFFFFF";
+                    ObjSecond3.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = false;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond0 = 0;
+                    varSecond1 = 1;
+                    varSecond2 = 0;
+                    varSecond3 = 0;
+                    var srcScoundImgName1 = objScoundImg1.src;
+                    var aryScoundImgName1 = srcScoundImgName1.split("/");
+                    var ScoundImgName1 = aryScoundImgName1.reverse()[0];
+                    objThreeImg0.src = defaultUrlImg + ScoundImgName1;
+                    objThreeImg1.src = defaultUrlImg + ScoundImgName1;
+                    objThreeImg2.src = defaultUrlImg + ScoundImgName1;
+                    objThreeImg3.src = defaultUrlImg + ScoundImgName1;
+                    firstLabel0.innerText = "Prj On Pipe";
+                    firstLabel1.src = defaultUrlImg + ScoundImgName1;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    threeFooterLabelLeft0.innerText = "Build To Suit";
+                    threeFooterLabelLeft1.innerText = "CORE";
+                    threeFooterLabelLeft2.innerText = "Microcell";
+                    threeFooterLabelLeft3.innerText = "Special Project";
+                    objFourthFooterLabelLeft0.innerText = "Area1";
+                    objFourthFooterLabelLeft1.innerText = "Area2";
+                    objFourthFooterLabelLeft2.innerText = "Area3";
+                    objFourthFooterLabelLeft3.innerText = "Area4";
+                    //VALUE B2S - AREA_PRJ_ON_PIPE
+                    document.getElementById("threeValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI : 0;
+                    break;
+                case 1:
+                    firstLabel0.innerText = "All Project";
+                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel3.innerText = "";
+                    ObjSecond1.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = true;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond1 = 0;
+                    varPerubisCol_1 = 0;
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        //== divSecond[0]
+        ObjSecond2.addEventListener('click', function () {
+            switch (varSecond2) {
+                case 0:
+                    ObjSecond0.style.backgroundColor = "#FFFFFF";
+                    ObjSecond1.style.backgroundColor = "#FFFFFF";
+                    ObjSecond2.style.backgroundColor = "#83D7F1";
+                    ObjSecond3.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = false;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond0 = 0;
+                    varSecond1 = 0;
+                    varSecond2 = 1;
+                    varSecond3 = 0;
+                    var srcScoundImgName2 = objScoundImg2.src;
+                    var aryScoundImgName2 = srcScoundImgName2.split("/");
+                    var ScoundImgName2 = aryScoundImgName2.reverse()[0];
+                    objThreeImg0.src = defaultUrlImg + ScoundImgName2;
+                    objThreeImg1.src = defaultUrlImg + ScoundImgName2;
+                    objThreeImg2.src = defaultUrlImg + ScoundImgName2;
+                    objThreeImg3.src = defaultUrlImg + ScoundImgName2;
+                    firstLabel0.innerText = "RFI";
+                    firstLabel1.src = defaultUrlImg + ScoundImgName2;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    threeFooterLabelLeft0.innerText = "Build To Suit";
+                    threeFooterLabelLeft1.innerText = "CORE";
+                    threeFooterLabelLeft2.innerText = "Microcell";
+                    threeFooterLabelLeft3.innerText = "Special Project";
+                    objFourthFooterLabelLeft0.innerText = "Area1";
+                    objFourthFooterLabelLeft1.innerText = "Area2";
+                    objFourthFooterLabelLeft2.innerText = "Area3";
+                    objFourthFooterLabelLeft3.innerText = "Area4";
+                    // VALUE RFI
+                    document.getElementById("threeValue[0]").innerText = aryRFI[0][0].NILAI != null ? aryRFI[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryRFI[0][1].NILAI != null ? aryRFI[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryRFI[0][2].NILAI != null ? aryRFI[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryRFI[0][3].NILAI != null ? aryRFI[0][3].NILAI : 0;
+                    break;
+                case 1:
+                    firstLabel0.innerText = "All Project";
+                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = "1000"; //getfrom API
+                    firstLabel3.innerText = "";
+                    ObjSecond2.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = true;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond2 = 0;
+                    varPerubisCol_1 = 0;
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        //== divSecond[0]
+        ObjSecond3.addEventListener('click', function () {
+            switch (varSecond3) {
+                case 0:
+                    ObjSecond0.style.backgroundColor = "#FFFFFF";
+                    ObjSecond1.style.backgroundColor = "#FFFFFF";
+                    ObjSecond2.style.backgroundColor = "#FFFFFF";
+                    ObjSecond3.style.backgroundColor = "#83D7F1";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = false;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond0 = 0;
+                    varSecond1 = 0;
+                    varSecond2 = 0;
+                    varSecond3 = 1;
+                    var srcScoundImgName3 = objScoundImg3.src;
+                    var aryScoundImgName3 = srcScoundImgName3.split("/");
+                    var ScoundImgName3 = aryScoundImgName3.reverse()[0];
+                    objThreeImg0.src = defaultUrlImg + ScoundImgName3;
+                    objThreeImg1.src = defaultUrlImg + ScoundImgName3;
+                    objThreeImg2.src = defaultUrlImg + ScoundImgName3;
+                    objThreeImg3.src = defaultUrlImg + ScoundImgName3;
+                    firstLabel0.innerText = "AFTER RFI";
+                    firstLabel1.src = defaultUrlImg + ScoundImgName3;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    threeFooterLabelLeft0.innerText = "BAUT";
+                    threeFooterLabelLeft1.innerText = "BAST 1";
+                    threeFooterLabelLeft2.innerText = "BAST 2";
+                    threeFooterLabelLeft3.innerText = "Close";
+                    objFourthFooterLabelLeft0.innerText = "BAUK";
+                    objFourthFooterLabelLeft1.innerText = "BAPS";
+                    objFourthFooterLabelLeft2.innerText = "Invoice";
+                    objFourthFooterLabelLeft3.innerText = "close";
+                    //VALUE - aryARFI
+                    document.getElementById("threeValue[0]").innerText = aryARFI[0][0].NILAI != null ? aryARFI[0][0].NILAI : 0;
+                    document.getElementById("threeValue[1]").innerText = aryARFI[0][1].NILAI != null ? aryARFI[0][1].NILAI : 0;
+                    document.getElementById("threeValue[2]").innerText = aryARFI[0][2].NILAI != null ? aryARFI[0][2].NILAI : 0;
+                    document.getElementById("threeValue[3]").innerText = aryARFI[0][3].NILAI != null ? aryARFI[0][3].NILAI : 0;
+                    break;
+                case 1:
+                    firstLabel0.innerText = "All Project";
+                    firstLabel1.src = defaultUrlImg + "All_Project_m.png";
+                    firstLabel2.innerText = ""; //getfrom API
+                    firstLabel3.innerText = "";
+                    ObjSecond3.style.backgroundColor = "#FFFFFF";
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerUbis").hidden = true;
+                    document.getElementById("divPerArea").hidden = true;
+                    varSecond3 = 0;
+                    varPerubisCol_1 = 0;
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        // THREE TO FOURTH
+        // == PER-UBIS -> B2S
+        ObjThree0.addEventListener('click', function () {
+            var srcThreeImgName0 = objThreeImg0.src;
+            var aryThreeImgName0 = srcThreeImgName0.split("/");
+            var ThreeImgName0 = aryThreeImgName0.reverse()[0];
+            switch (varPerubisCol_1) {
+                case 0:
+                    document.getElementById("divPerArea").hidden = false;
+                    varPerubisCol_1 = 1;
+                    varPerubisCol_2 = 0;
+                    varPerubisCol_3 = 0;
+                    varPerubisCol_4 = 0;
+                    ObjThree0.style.backgroundColor = "#83D7F1";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    //==Aditional Attribute on Change ==
+                    // var ImgName1 = strName1.replace(srcUrlImg,"");
+                    // alert("url=" + objScoundImg1.src);
+                    // alert("Name=" + ImgName1);
+                    // alert("last=" + rlst);
+                    objFourthImg0.src = defaultUrlImg + ThreeImgName0;
+                    objFourthImg1.src = defaultUrlImg + ThreeImgName0;
+                    objFourthImg2.src = defaultUrlImg + ThreeImgName0;
+                    objFourthImg3.src = defaultUrlImg + ThreeImgName0;
+                    // alert("text tree=" + threeFooterLabelLeft0.textContent);
+                    firstLabel0.innerText = threeFooterLabelLeft0.textContent; //"BUILD TO SUIT";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName0;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-AREA";
+                    //
+                    if (varSecond0 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][0].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][0].AREA4 : 0;
+                    }
+                    if (varSecond1 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4 : 0;
+                    }
+                    if (varSecond2 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][0].AREA1 != null ? aryRFI[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][0].AREA2 != null ? aryRFI[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][0].AREA3 != null ? aryRFI[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][0].AREA4 != null ? aryRFI[0][0].AREA4 : 0;
+                    }
+                    if (varSecond3 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][0].AREA1 != null ? aryARFI[0][0].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][0].AREA2 != null ? aryARFI[0][0].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][0].AREA3 != null ? aryARFI[0][0].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][0].AREA4 != null ? aryARFI[0][0].AREA4 : 0;
+                    }
+                    break;
+                case 1:
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    document.getElementById("divPerArea").hidden = true;
+                    varPerubisCol_1 = 0;
+                    firstLabel0.innerText = threeFooterLabelLeft0.textContent; //"BUILD TO SUIT";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName0;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        // == PER-UBIS -> CORE
+        ObjThree1.addEventListener('click', function () {
+            var srcThreeImgName1 = objThreeImg1.src;
+            var aryThreeImgName1 = srcThreeImgName1.split("/");
+            var ThreeImgName1 = aryThreeImgName1.reverse()[0];
+            switch (varPerubisCol_2) {
+                case 0:
+                    document.getElementById("divPerArea").hidden = false;
+                    varPerubisCol_1 = 0;
+                    varPerubisCol_2 = 1;
+                    varPerubisCol_3 = 0;
+                    varPerubisCol_4 = 0;
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#83D7F1";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    //==Aditional Attribute on Change ==
+                    objFourthImg0.src = defaultUrlImg + ThreeImgName1;
+                    objFourthImg1.src = defaultUrlImg + ThreeImgName1;
+                    objFourthImg2.src = defaultUrlImg + ThreeImgName1;
+                    objFourthImg3.src = defaultUrlImg + ThreeImgName1;
+                    firstLabel0.innerText = threeFooterLabelLeft1.textContent; //"CORE";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName1;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-AREA";
+                    //VALUE
+                    if (varSecond0 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][1].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][1].AREA4 : 0;
+                    }
+                    if (varSecond1 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4 : 0;
+                    }
+                    if (varSecond2 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][1].AREA1 != null ? aryRFI[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][1].AREA2 != null ? aryRFI[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][1].AREA3 != null ? aryRFI[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][1].AREA4 != null ? aryRFI[0][1].AREA4 : 0;
+                    }
+                    if (varSecond3 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][1].AREA1 != null ? aryARFI[0][1].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][1].AREA2 != null ? aryARFI[0][1].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][1].AREA3 != null ? aryARFI[0][1].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][1].AREA4 != null ? aryARFI[0][1].AREA4 : 0;
+                    }
+                    break;
+                case 1:
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    varPerubisCol_2 = 0;
+                    document.getElementById("divPerArea").hidden = true;
+                    firstLabel0.innerText = threeFooterLabelLeft1.textContent; //"CORE";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName1;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        // == PER-UBIS -> Microcell
+        ObjThree2.addEventListener('click', function () {
+            var srcThreeImgName2 = objThreeImg2.src;
+            var aryThreeImgName2 = srcThreeImgName2.split("/");
+            var ThreeImgName2 = aryThreeImgName2.reverse()[0];
+            switch (varPerubisCol_3) {
+                case 0:
+                    document.getElementById("divPerArea").hidden = false;
+                    varPerubisCol_1 = 0;
+                    varPerubisCol_2 = 0;
+                    varPerubisCol_3 = 1;
+                    varPerubisCol_4 = 0;
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#83D7F1";
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    //==Aditional Attribute on Change ==
+                    objFourthImg0.src = defaultUrlImg + ThreeImgName2;
+                    objFourthImg1.src = defaultUrlImg + ThreeImgName2;
+                    objFourthImg2.src = defaultUrlImg + ThreeImgName2;
+                    objFourthImg3.src = defaultUrlImg + ThreeImgName2;
+                    firstLabel0.innerText = threeFooterLabelLeft2.textContent; //"Microcell";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName2;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-AREA";
+                    if (varSecond0 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][2].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][2].AREA4 : 0;
+                    }
+                    if (varSecond1 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4 : 0;
+                    }
+                    if (varSecond2 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][2].AREA1 != null ? aryRFI[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][2].AREA2 != null ? aryRFI[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][2].AREA3 != null ? aryRFI[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][2].AREA4 != null ? aryRFI[0][2].AREA4 : 0;
+                    }
+                    if (varSecond3 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][2].AREA1 != null ? aryARFI[0][2].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][2].AREA2 != null ? aryARFI[0][2].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][2].AREA3 != null ? aryARFI[0][2].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][2].AREA4 != null ? aryARFI[0][2].AREA4 : 0;
+                    }
+                    break;
+                case 1:
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    varPerubisCol_3 = 0;
+                    document.getElementById("divPerArea").hidden = true;
+                    firstLabel0.innerText = threeFooterLabelLeft2.textContent; //"Microcell";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName2;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+        // == PER-UBIS -> Special Project
+        ObjThree3.addEventListener('click', function () {
+            var srcThreeImgName3 = objThreeImg3.src;
+            var aryThreeImgName3 = srcThreeImgName3.split("/");
+            var ThreeImgName3 = aryThreeImgName3.reverse()[0];
+            switch (varPerubisCol_4) {
+                case 0:
+                    document.getElementById("divPerArea").hidden = false;
+                    varPerubisCol_1 = 0;
+                    varPerubisCol_2 = 0;
+                    varPerubisCol_3 = 0;
+                    varPerubisCol_4 = 1;
+                    ObjThree0.style.backgroundColor = "#FFFFFF";
+                    ObjThree1.style.backgroundColor = "#FFFFFF";
+                    ObjThree2.style.backgroundColor = "#FFFFFF";
+                    ObjThree3.style.backgroundColor = "#83D7F1";
+                    //==Aditional Attribute on Change ==
+                    objFourthImg0.src = defaultUrlImg + ThreeImgName3;
+                    objFourthImg1.src = defaultUrlImg + ThreeImgName3;
+                    objFourthImg2.src = defaultUrlImg + ThreeImgName3;
+                    objFourthImg3.src = defaultUrlImg + ThreeImgName3;
+                    firstLabel0.innerText = threeFooterLabelLeft3.textContent; //"Special Project";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName3;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-AREA";
+                    if (varSecond0 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA1 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA2 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA3 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_NOT_RELEASE[0][3].AREA4 != null ? aryB2S_AREA_NOT_RELEASE[0][3].AREA4 : 0;
+                    }
+                    if (varSecond1 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 != null ? aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4 : 0;
+                    }
+                    if (varSecond2 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryRFI[0][3].AREA1 != null ? aryRFI[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryRFI[0][3].AREA2 != null ? aryRFI[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryRFI[0][3].AREA3 != null ? aryRFI[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryRFI[0][3].AREA4 != null ? aryRFI[0][3].AREA4 : 0;
+                    }
+                    if (varSecond3 = 1) {
+                        document.getElementById("fourthValue[0]").innerText = aryARFI[0][3].AREA1 != null ? aryARFI[0][3].AREA1 : 0;
+                        document.getElementById("fourthValue[1]").innerText = aryARFI[0][3].AREA2 != null ? aryARFI[0][3].AREA2 : 0;
+                        document.getElementById("fourthValue[2]").innerText = aryARFI[0][3].AREA3 != null ? aryARFI[0][3].AREA3 : 0;
+                        document.getElementById("fourthValue[3]").innerText = aryARFI[0][3].AREA4 != null ? aryARFI[0][3].AREA4 : 0;
+                    }
+                    break;
+                case 1:
+                    ObjThree3.style.backgroundColor = "#FFFFFF";
+                    varPerubisCol_4 = 0;
+                    document.getElementById("divPerArea").hidden = true;
+                    firstLabel0.innerText = threeFooterLabelLeft3.textContent; //"Special Project";
+                    firstLabel1.src = defaultUrlImg + ThreeImgName3;
+                    firstLabel2.innerText = "";
+                    firstLabel3.innerText = "PER-UBIS";
+                    break;
+                default:
+                    document.getElementById("divPerUbis").hidden = true;
+            }
+        });
+    };
+    HomePage.prototype.secondEventMousehover = function () {
+        // NOT-RELEASE
+        var objRelease = document.getElementById("card-footer-release");
+        objRelease.onmouseover = function () {
+            objRelease.style.backgroundColor = "#FA8633";
+        };
+        objRelease.onmouseout = function () {
+            objRelease.style.backgroundColor = "#E9E9E9";
+        };
+        // ON PIPE
+        var objOnPipe = document.getElementById("card-footer-onPipe");
+        objOnPipe.onmouseover = function () {
+            objOnPipe.style.backgroundColor = "#FA8633";
+        };
+        objOnPipe.onmouseout = function () {
+            objOnPipe.style.backgroundColor = "#E9E9E9";
+        };
+        //RFI
+        var objRfi = document.getElementById("card-footer-onRfi");
+        objRfi.onmouseover = function () {
+            objRfi.style.backgroundColor = "#FA8633";
+        };
+        objRfi.onmouseout = function () {
+            objRfi.style.backgroundColor = "#E9E9E9";
+        };
+        // BEFORE RFI
+        var onAfterRfi = document.getElementById("card-footer-onAfterRfi");
+        onAfterRfi.onmouseover = function () {
+            onAfterRfi.style.backgroundColor = "#FA8633";
+        };
+        onAfterRfi.onmouseout = function () {
+            onAfterRfi.style.backgroundColor = "#E9E9E9";
+        };
+    };
+    //THREE - PerUbis
+    HomePage.prototype.trheeEventMousehover = function () {
+        // BUILT TO SUIT
+        var objB2c = document.getElementById("three-card-footer-b2c");
+        objB2c.onmouseover = function () {
+            objB2c.style.backgroundColor = "#FA8633";
+        };
+        objB2c.onmouseout = function () {
+            objB2c.style.backgroundColor = "#E9E9E9";
+        };
+        // CORE
+        var objCore = document.getElementById("three-card-footer-core");
+        objCore.onmouseover = function () {
+            objCore.style.backgroundColor = "#FA8633";
+        };
+        objCore.onmouseout = function () {
+            objCore.style.backgroundColor = "#E9E9E9";
+        };
+        //MICROCELL
+        var objMicrocell = document.getElementById("three-card-footer-microcell");
+        objMicrocell.onmouseover = function () {
+            objMicrocell.style.backgroundColor = "#FA8633";
+        };
+        objMicrocell.onmouseout = function () {
+            objMicrocell.style.backgroundColor = "#E9E9E9";
+        };
+        // SPECIAL PROJECT
+        var ObjSprj = document.getElementById("three-card-footer-specialPrj");
+        ObjSprj.onmouseover = function () {
+            ObjSprj.style.backgroundColor = "#FA8633";
+        };
+        ObjSprj.onmouseout = function () {
+            ObjSprj.style.backgroundColor = "#E9E9E9";
+        };
+    };
+    //FOURTH - PerArea
+    HomePage.prototype.fourthEventMousehover = function () {
+        // AREA 1
+        var objArea1 = document.getElementById("fourth-card-footer-area1");
+        objArea1.onmouseover = function () {
+            objArea1.style.backgroundColor = "#FA8633";
+        };
+        objArea1.onmouseout = function () {
+            objArea1.style.backgroundColor = "#E9E9E9";
+        };
+        // AREA 2
+        var objArea2 = document.getElementById("fourth-card-footer-area2");
+        objArea2.onmouseover = function () {
+            objArea2.style.backgroundColor = "#FA8633";
+        };
+        objArea2.onmouseout = function () {
+            objArea2.style.backgroundColor = "#E9E9E9";
+        };
+        //AREA 3
+        var objArea3 = document.getElementById("fourth-card-footer-area3");
+        objArea3.onmouseover = function () {
+            objArea3.style.backgroundColor = "#FA8633";
+        };
+        objArea3.onmouseout = function () {
+            objArea3.style.backgroundColor = "#E9E9E9";
+        };
+        // AREA 4
+        var ObjArea4 = document.getElementById("fourth-card-footer-area4");
+        ObjArea4.onmouseover = function () {
+            ObjArea4.style.backgroundColor = "#FA8633";
+        };
+        ObjArea4.onmouseout = function () {
+            ObjArea4.style.backgroundColor = "#E9E9E9";
+        };
+    };
+    HomePage.prototype.drilldown = function () {
+        var myChart = __WEBPACK_IMPORTED_MODULE_9_highcharts__["chart"]('testChart1', {
+            chart: {
+                zoomType: 'x',
+                panning: true,
+                panKey: 'shift',
+                type: 'areaspline'
+            },
+            title: {
+                text: "Project Summary of 10 September 2018",
+                style: {
+                    fontSize: '15px'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: ["W1-Jan-2018", "W2-Jan-2018", "W3-Jan-2018", "W4-Jan-2018", "W5-Jan-2018", "W1-Feb-2018", "W2-Feb-2018", "W3-Feb-2018", "W4-Feb-2018", "W5-Feb-2018", "W1-Mar-2018", "W2-Mar-2018", "W3-Mar-2018", "W4-Mar-2018", "W5-Mar-2018", "W1-Apr-2018", "W2-Apr-2018", "W3-Apr-2018", "W4-Apr-2018", "W5-Apr-2018", "W6-Apr-2018", "W1-May-2018", "W2-May-2018", "W3-May-2018", "W4-May-2018", "W5-May-2018", "W1-Jun-2018", "W2-Jun-2018", "W3-Jun-2018", "W4-Jun-2018", "W5-Jun-2018", "W1-Jul-2018", "W2-Jul-2018", "W3-Jul-2018", "W4-Jul-2018", "W5-Jul-2018", "W6-Jul-2018", "W1-Aug-2018", "W2-Aug-2018", "W3-Aug-2018", "W4-Aug-2018", "W5-Aug-2018", "W1-Sep-2018", "W2-Sep-2018", "W3-Sep-2018", "W4-Sep-2018", "W5-Sep-2018", "W1-Oct-2018", "W2-Oct-2018", "W3-Oct-2018", "W4-Oct-2018", "W5-Oct-2018", "W1-Nov-2018", "W2-Nov-2018", "W3-Nov-2018"],
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Project'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' '
+            },
+            plotOptions: {
+                spline: {
+                    lineWidth: 3,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                    // type: 'spline',
+                    name: 'Target RFI',
+                    data: [null, null, null, null, null, null, null, null, null, null, null, 16, 61, 302, 382, 394, 411, 421, 873, 885, 886, 900, 1195, 1233, 1251, 1401, 1422, 1447, 1449, 1459, 1461, 1461, 1487, 1487, 1489, 1530, 1560, 1564, 1577, 1586, 1606, 1610, 1610, 1613, 1613, 1613, 1615, 1650, 1650, 1654, 1712, 1716, 1716, 1721],
+                    color: '#2c303e',
+                }, {
+                    // type: 'spline',
+                    name: 'Actual RFI',
+                    data: [null, null, null, null, null, null, null, null, null, null, null, 22, 56, 123, 206, 209, 259, 303, 331, 339, 343, 343, 350, 353, 354, 356, 357, 359, 362, 362, 362, 363, 367, 372, 399, 403, 408, 456],
+                    color: '#a50500',
+                }, {
+                    type: 'column',
+                    name: 'Target',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 45, 241, 80, 12, 17, 10, 452, 12, 1, 14, 295, 38, 18, 150, 21, 25, 2, 10, 2, 0, 26, 0, 2, 41, 30, 4, 13, 9, 20, 4, 0, 3, 0, 0, 2, 35, 0, 4, 58, 4, 0, 5, 0],
+                    color: '#2F69C5'
+                }, {
+                    type: 'column',
+                    name: 'Actual',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 34, 67, 83, 3, 50, 44, 28, 8, 4, 0, 7, 3, 1, 2, 1, 2, 3, 0, 0, 1, 4, 5, 27, 4, 5, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    color: '#FF9735'
+                }],
+            navigation: {
+                menuItemStyle: {
+                    fontSize: '10px'
+                }
+            }
+        });
+    };
+    // ionViewWillEnter() {
+    //   // this.search.pickup = "Rio de Janeiro, Brazil";
+    //   // this.search.dropOff = "Same as pickup";
+    //   this.storage.get('pickup').then((val) => {
+    //     if (val === null) {
+    //       this.search.name = "Rio de Janeiro, Brazil"
+    //     } else {
+    //       this.search.name = val;
+    //     }
+    //   }).catch((err) => {
+    //     console.log(err)
+    //   });
+    // }
+    // // go to result page
+    // doSearch() {
+    //   this.nav.push(TripsPage);
+    // }
+    // // choose place
+    // choosePlace(from) {
+    //   this.nav.push(SearchLocationPage, from);
+    // }
+    // to go account page
+    HomePage.prototype.goToAccount = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
+    };
+    HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/'\n<ion-header color="primary">\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n        <div class="home-logo"></div>\n        <!-- <strong>Ionic </strong> Start Theme -->\n    </ion-title>\n    <ion-buttons end>\n      <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n      <!-- <button ion-button  class="circle"> -->\n          <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n        <!-- <ion-icon name="notifications"></ion-icon> -->\n      <!-- </button> -->\n      <!-- <button ion-button tappable (click)="goToAccount()"> -->\n      <!-- <button ion-button tappable>\n          <img class="home-satelit" src="assets/img/satellite.png">\n      </button> -->\n      <button ion-button tappable (click)="goToAccount()">\n          <ion-icon name="cog"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content class="common-bg">\n  <ion-scroll scrollY="true">\n    <ion-row>\n      <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n          <ion-row class="full-width">\n              <ion-col col-6 >\n                  <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->\n                  <ion-card class="first-card">\n                      <ion-card-header id="divId_allProject">\n                          <div class="row">\n                              <div class="left-icon">\n                                  <img  id="firstLabel[1]" src="assets/img/new/All_Project_m.png">\n                              </div>\n                            <div id="firstLabel[0]"class="header-title">All Project</div>\n                           </div>\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="right-text">\n                              <ion-label id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="first-card-footer-PrjAll">\n                          <div class="row" style="height:20px">\n                              <ion-col class="first-card-header-title">\n                                  <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n\n              </ion-col>\n              <ion-col col-6>\n                  <ion-list>\n                      <!-- <ion-item class="first-column-tanggal">\n                         <ion-input placeholder="Filter Month/Year" [value]="dataInicial | date:\'MM/yyyy\'" (click)="open()"></ion-input>\n                      </ion-item>\n\n                      <ion-item no-lines hidden="true">\n                        <ion-datetime #datePicker displayFormat="MMMM/MM/YYYY" (ionCancel)="this.dataInicial  = null" [(ngModel)]="dataInicial" doneText="Feito" cancelText="Cancelar" [max]="maxDate">\n                        </ion-datetime>\n                      </ion-item> -->\n                    </ion-list>\n              </ion-col >\n          </ion-row>\n          <!-- SECOND -->\n          <ion-row class="full-width" style="margin-top: -20px">\n            <!-- NOT RELEASE -->\n            <ion-col col-3 id="divId_noRelease">\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[0]">\n                      <ion-card-header class="header-title">\n                        Not Release\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div  class="left-icon">\n                              <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text" >\n                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-release" (click)="secondAlertInfo1()">\n                      <!-- <div class="row" onClick="alertInfo()"> -->\n                      <div class="row" >\n                        <ion-col class="footer-title">\n                            <!-- <button id="hidden-button" (click)="alertInfo()">Total </button> -->\n                            Total\n                        </ion-col>\n                      </div>\n                    </ion-row>\n                  </ion-card>\n            </ion-col>\n            <!-- PROJECT ON PIPE -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[1]">\n                      <ion-card-header class="header-title">\n                      Prj on Pipe\n                      </ion-card-header>\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                          </div>\n                          <!-- <ion-icon   name="lock" ></ion-icon> -->\n                          <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                        </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onPipe" (click)="secondAlertInfo2()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[2]">\n                      <ion-card-header class="header-title">\n                        Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onRfi" (click)="secondAlertInfo3()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n            <!-- AFTER RFI -->\n            <ion-col col-3>\n                <ion-card class="second-card full-width">\n                    <div id="divSecond[3]">\n                      <ion-card-header class="header-title">\n                        After Rfi\n                      </ion-card-header>\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="second-img-3" src="assets/img/new/BAPS_m.png" style="margin-top:-10px;">\n                                  <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                  <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                  <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">0 %</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                    </div>\n                    <ion-row id="card-footer-onAfterRfi" (click)="secondAlertInfo4()">\n                        <div class="row">\n                          <ion-col class="footer-title">\n                                Total\n                          </ion-col>\n                        </div>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n          </ion-row>\n          <!-- THREE - PerUbis -->\n          <ion-row id="divPerUbis" class="full-width" style="margin-top: -20px">\n              <!-- B2C -->\n              <ion-col col-3>\n                  <ion-card  id="divThree[0]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-0" src="assets/img/new/Not_Release_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-b2c">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[0]" style="margin-top: -1px" >Build To Suit</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                    </ion-card>\n              </ion-col>\n              <!-- CORE -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[1]" class="three-card full-width">\n                      <ion-card-content>\n                        <div class="row">\n                          <div class="left-icon">\n                              <img  id="three-img-1" src="assets/img/new/PoP_m.png">\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                          </div>\n                        </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-core">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[1]" style="margin-top: -1px" >CORE</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- MICROCELL -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[2]" class="three-card full-width">\n                      <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img  id="three-img-2" src="assets/img/new/Rfi_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-microcell">\n                          <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[2]" style="margin-top: -1px" >Microcell</ion-label>\n                              </ion-col>\n                          </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n              <!-- Special Project -->\n              <ion-col col-3 >\n                  <ion-card id="divThree[3]" class="three-card full-width">\n                     <ion-card-content>\n                          <div class="row">\n                                <div class="left-icon">\n                                  <img id="three-img-3" src="assets/img/new/BAPS_m.png">\n                                </div>\n                                <div class="right-text">\n                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                </div>\n                          </div>\n                      </ion-card-content>\n                      <ion-row id="three-card-footer-specialPrj">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="threeFooterLabelLeft[3]" style="margin-top: -1px" >Special Project</ion-label>\n                              </ion-col>\n                            </div>\n                      </ion-row>\n                  </ion-card>\n              </ion-col>\n            </ion-row>\n            <!-- FOURTH - PerArea -->\n            <ion-row id="divPerArea" class="full-width" style="margin-top: -20px">\n                <!-- Area 1 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img  id="fourth-img-0" src="assets/img/new/Not_Release_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area1">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[0]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                      </ion-card>\n                </ion-col>\n                <!-- AREA 2 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                          <div class="row">\n                            <div class="left-icon">\n                                <img id="fourth-img-1" src="assets/img/new/PoP_m.png">\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                            </div>\n                          </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area2">\n                              <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[1]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                              </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 3 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                        <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-2"  src="assets/img/new/Rfi_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area3">\n                            <div class="row" style="height:20px">\n                              <ion-col class="footer-title">\n                                  <ion-label id="fourthFooterLabelLeft[2]" style="margin-top: -1px" >Area 3</ion-label>\n                              </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n                <!-- AREA 4 -->\n                <ion-col col-3>\n                    <ion-card class="fourth-card full-width">\n                       <ion-card-content>\n                            <div class="row">\n                                  <div class="left-icon">\n                                    <img id="fourth-img-3"  src="assets/img/new/BAPS_m.png">\n                                  </div>\n                                  <div class="right-text">\n                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>\n                                  </div>\n                            </div>\n                        </ion-card-content>\n                        <ion-row id="fourth-card-footer-area4">\n                            <div class="row" style="height:20px">\n                                <ion-col class="footer-title">\n                                    <ion-label id="fourthFooterLabelLeft[3]" style="margin-top: -1px" >Area 3</ion-label>\n                                </ion-col>\n                            </div>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n              </ion-row>\n        </ion-grid>\n      </ion-row>\n      <div id="testChart1" style = " display : block ; " > </div>\n  </ion-scroll>\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\home\home.html"*/
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]) === "function" && _f || Object])
+    ], HomePage);
+    return HomePage;
+    var _a, _b, _c, _d, _e, _f;
+}());
+
+//
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
 /***/ 75:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3144,7 +3342,7 @@ var DatabaseProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

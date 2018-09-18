@@ -11,18 +11,11 @@ import 'rxjs/add/observable/timer';
 import { Observable } from 'rxjs/Observable';
 import { DatabaseProvider } from '../../providers/database/database';
 
-
-/*
-  Generated class for the DashboardAllProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DashboardAllProvider {
   // private url: string ="http://mproject.mitratel.int/";
-  private url: string ="http://192.168.100.5/";
-  // private url: string ="http://192.168.1.135/";
+  // private url: string ="http://192.168.100.5/";
+  private url: string ="http://192.168.1.17/";
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
   // private subscription2;
@@ -34,32 +27,33 @@ export class DashboardAllProvider {
       private database:DatabaseProvider
   ) {
     console.log('Hello DashboardAllProvider Provider');
-
   }
 
-  // promiseDelay= function(ms:any):Promise<{}>{
-  //   return new Promise(resolve => {
-  //     setTimeout(() => resolve('done'), ms);
-  //   });
-  // };
+  private catchError(error:Response | any){
+    console.log(error);
+    return Observable.throw(error.json().error || "server error.");
+  }
+
+  private logResponse(res:Response | any){
+    console.log(res);
+  }
 
   getDataAll(){
     return this.http.get(this.url + "mobile_dashboard/user_login/field_eng1@mitratel.co.id/password")
     .do(res => console.log(res));
   }
 
-  // getResUrl_coba(){
-  //   return this.http.get(this.url + "mobile_dashboard/coba")
-  //   // .do(res => {return res.json();});
-  //   // .do(res => console.log('coba data=' + res))
-  //   .map(res => { return res.json();});
-  // }
-
-  getCobaData():void{
-      // this.getResUrl_coba();
-       // this.getResUrl_coba().subscribe(x => {
-      var x=this.http.get(this.url + "mobile_dashboard/coba").map(res => { return res.json();});
-          x.subscribe(data => {
+   /* Testing Function
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+  getCobaData(){
+    // var x=this.http.get(this.url + "mobile_dashboard/coba").map(res => { return res.json();});
+    let x=this.http.get(this.url + "mobile_dashboard/coba");
+        x.map(res => res.json()).subscribe(data => {
             // var data=res.json();
             var qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
             data.technologies.forEach(element => {
@@ -72,53 +66,36 @@ export class DashboardAllProvider {
             });
             console.log("success load Api");
           });
-      //
-    // });
+        x.do(this.logResponse);
+        x.catch(this.catchError);
   }
 
+  /* All Project
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getAllPrj():void{
+    var x1=this.http.get(this.url + "mobile_dashboard/coba2").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?)";
 
-
-  // runServiceEventLoadView(){
-    // var result = Observable.fromPromise(
-    //   // fetch(this.url + "mobile_dashboard/coba")
-    //   this.getCobaData().subscribe(data=>{
-
-    //   });
-    // );
-    // result.subscribe(x => console.log(x), e => console.error(e));
-
-
-    // let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-    // var subscription1 = Observable.timer(10000, 10000);
-    // subscription1.subscribe(function (result){
-
-    // })
-
-    // .subscribe(x => {
-    //   this.getCobaData().subscribe(data=>{
-    //     data.technologies.forEach(element => {
-    //       this.database.insertData(qry,[
-    //         element.uniq_id,
-    //         element.name,
-    //         element.summary,
-    //         element.company
-    //       ]);
-    //     });
-    //   });
-    // });
-  // }
-
-  //insertToTable(){
-
-
-    // let qry="INSERT INTO piter (usr,psw)  VALUES (?,?)";
-    // this.database.insertData(qry,[data['usr'],data['psw']]).then((msq)=>{
-    //   //alert('message' + msq);
-    //   //console.log(msq);
-    // });
-  //}
-
-
-
-
+          data.dsh1.forEach(element => {
+            this.database.insertData(qry,[
+              element.URUTAN,
+              element.SEQ,
+              element.GRP,
+              element.NILAI,
+              element.AREA1,
+              element.AREA2,
+              element.AREA3,
+              element.AREA4,
+            ]);
+          });
+          console.log("success load Api - All Project");
+      });
+  }
 }

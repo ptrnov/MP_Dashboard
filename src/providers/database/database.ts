@@ -1,4 +1,3 @@
-// import { HttpClient } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { SQLite,SQLiteObject } from '@ionic-native/sqlite';
@@ -42,7 +41,10 @@ export class DatabaseProvider {
               this.createTable(qryTbl,[]);
               var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
               this.createTable(qryTblUniqe,[]);
-
+              var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+              var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
+              this.createTable(ALL_PRJ_tbl,[]);
+              this.createTable(ALL_PRJ_Uniqe,[]);
           }).catch((error) => {
             console.log(error);
           });
@@ -53,6 +55,11 @@ export class DatabaseProvider {
         this.createTable(qryTbl,[]);
         var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
         this.createTable(qryTblUniqe,[]);
+        // TABLE ALL PROJECT
+        var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
+        var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
+        this.createTable(ALL_PRJ_tbl,[]);
+        this.createTable(ALL_PRJ_Uniqe,[]);
       }
     });
 

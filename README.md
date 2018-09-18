@@ -23,6 +23,7 @@ ver 1.0.0
     # npm install --save @ionic-native/toast
 8. tslint
    #npm install -g tslint
-9. 
+9. SqiIte Sync Api
+   On Forlder Provider
 
 ````

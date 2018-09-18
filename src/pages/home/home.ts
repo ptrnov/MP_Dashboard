@@ -7,18 +7,35 @@ import {SettingsPage} from "../settings/settings";
 // import {TripsPage} from "../trips/trips";
 //import {SearchLocationPage} from "../search-location/search-location";
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
+import { DatabaseProvider } from '../../providers/database/database';
 // import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
 import { Dsh1SecondNoreleasePage} from '../dsh1-second-norelease/dsh1-second-norelease';
 import { Dsh1SecondPrjonpipePage } from '../dsh1-second-prjonpipe/dsh1-second-prjonpipe';
 import { Dsh1SecondRfiPage} from '../dsh1-second-rfi/dsh1-second-rfi';
 import { Dsh1SecondAfterrfiPage} from '../dsh1-second-afterrfi/dsh1-second-afterrfi';
 import * as HighCharts from "highcharts";
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
+
 // import HighCharts from 'highcharts'
 // import addMore from "highcharts/highcharts-more";
 
 // addMore(Highcharts)
+let defaultUrlImg="assets/img/new/";
+let varSecond0=0;
+let varSecond1=0;
+let varSecond2=0;
+let varSecond3=0;
+let varPerubisCol_1=0;
+let varPerubisCol_2=0;
+let varPerubisCol_3=0;
+let varPerubisCol_4=0;
 
-
+let aryB2S_AREA_NOT_RELEASE=[];
+  let aryB2S_AREA_PRJ_ON_PIPE=[];
+  let aryRFI=[];
+  let aryARFI=[];
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -27,7 +44,7 @@ import * as HighCharts from "highcharts";
 export class HomePage {
   // search condition
   // public search = {
-  //   name: "Rio de Janeiro, Brazil",
+  //   name: "Piter, Indonesia",
   //   date: new Date().toISOString()
   // }
   //today;
@@ -35,13 +52,19 @@ export class HomePage {
   // maxDate: string;
   // @ViewChild(Content) content: Content
 
+  private subscription1;
+  private subscription2;
+  private cardValue_Header;
+
+
   constructor(
       // private storage: Storage,
       public navCtrl: NavController,
       public popoverCtrl: PopoverController,
       private dashboarAll: DashboardAllProvider,
       public alertCtrl: AlertController,
-      public modalCtrl: ModalController
+      public modalCtrl: ModalController,
+      private database: DatabaseProvider,
       // private pageScrollService: PageScrollService
       // ,@Inject(DOCUMENT)
       // private document: any
@@ -53,7 +76,112 @@ export class HomePage {
 
   }
 
-  public secondAlertInfo1(){
+  ngOnInit() {
+    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      this.dashboarAll.getAllPrj();
+    });
+  }
+   /**
+   * Event Back / close Page
+   */
+  ionViewWillUnload() {
+    console.log("Previus page")
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
+  }
+
+  ionViewDidLoad():void{
+    //== Mouse Over - Change Color ==
+    this.nilaiDispyValue1();
+    this.firstCardEventMouse();
+    this.secondEventMousehover();
+    this.trheeEventMousehover();
+    document.getElementById("divPerUbis").hidden = true;
+    this.fourthEventMousehover();
+    document.getElementById("divPerArea").hidden = true;
+    this.drilldown();
+
+  }
+
+  ionViewDidEnter(){
+    this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+      // this.nilaiDispyValue1();
+    });
+  }
+
+  nilaiDispyValue1(){
+    /**
+     * Load Sqlite data periodik.
+     */
+      var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+                    +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      let getDataQry=this.database.selectData(querySql);
+      getDataQry.then(data=>{
+        var aryRslt=[];
+        var ary_Header=[];
+        var aryB2S_AREA=[];
+        setTimeout(()=> {
+            aryRslt.push(data);
+            // console.log(aryRslt);
+
+            //-Set ARRAY GROUP - HEADER
+            ary_Header.push(aryRslt[0].filter(function(headerObj){
+               return headerObj.SEQ.indexOf("HEADER") > -1
+             })
+            );
+            // ary_Header[0].sort("URUTAN");
+            // - ORDER SORT
+            ary_Header[0].sort((a, b):number=>{
+              if (a.URUTAN < b.URUTAN) return -1;
+              if (a.URUTAN > b.URUTAN) return 1;
+              return 0;
+            });
+
+
+            //-Set ARRAY GROUP - B2S
+            aryB2S_AREA.push(aryRslt[0].filter(function(b2cAreaObj){
+                return b2cAreaObj.SEQ.indexOf("B2S") > -1
+              })
+            );
+            // - NOT RELEASE
+            aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+                return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+              })
+            );
+            // - PROJECT ON PIPE
+            aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
+                return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+              })
+            );
+            // - RFI
+            aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+                return rfiObj.GRP.indexOf("RFI") > -1
+              })
+            );
+            // -AFTER RFI
+            aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+                return arfiObj.GRP.indexOf("ARFI") > -1
+              })
+            );
+
+
+            // - VIEWER
+            // console.log(aryB2S_AREA_NOT_RELEASE[1]);
+            // this.nilaiDispyValue1();
+            console.log('Check='+ ary_Header[0][0].NILAI);
+
+            document.getElementById("secondValue[0]").innerHTML=ary_Header[0][1].NILAI!=null?ary_Header[0][1].NILAI + " %":"0%";
+            document.getElementById("secondValue[1]").innerHTML=ary_Header[0][2].NILAI!=null?ary_Header[0][2].NILAI + " %":"0%";
+            document.getElementById("secondValue[2]").innerHTML=ary_Header[0][3].NILAI!=null?ary_Header[0][3].NILAI + " %":"0%";
+            document.getElementById("secondValue[3]").innerHTML=ary_Header[0][4].NILAI!=null?ary_Header[0][4].NILAI + " %":"0%";
+
+        },500);
+      });
+  }
+
+  private secondAlertInfo1(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -84,7 +212,7 @@ export class HomePage {
     alert1.present();
   }
 
-  public secondAlertInfo2(){
+  private secondAlertInfo2(){
       //var data = { message : 'hello world' };
       var ModalAdduser = this.modalCtrl.create(Dsh1SecondPrjonpipePage);
       ModalAdduser.onDidDismiss(() => {
@@ -119,7 +247,7 @@ export class HomePage {
     // alert1.present();
   }
 
-  public secondAlertInfo3(){
+  private secondAlertInfo3(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -147,7 +275,7 @@ export class HomePage {
     alert1.present();
   }
 
-  public secondAlertInfo4(){
+  private secondAlertInfo4(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -210,35 +338,20 @@ export class HomePage {
   //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
   // }
 
-  ionViewDidLoad() {
-    //== Mouse Over - Change Color ==
-    this.firstCardEventMouse();
-    this.secondEventMousehover();
-    this.trheeEventMousehover();
-    document.getElementById("divPerUbis").hidden = true;
-    this.fourthEventMousehover();
-    document.getElementById("divPerArea").hidden = true;
-    this.drilldown();
 
 
-    // var objRelease=document.getElementById("card-footer-release");
-    // objRelease.addEventListener('click', function (){
-    //   alert("test");
-    // });
-  }
-
-  firstCardEventMouse(){
+  private firstCardEventMouse(){
     // SECOND TO THREE
     // == Not Release
-    var defaultUrlImg="assets/img/new/";
-    var varSecond0=0;
-    var varSecond1=0;
-    var varSecond2=0;
-    var varSecond3=0;
-    var varPerubisCol_1=0;
-    var varPerubisCol_2=0;
-    var varPerubisCol_3=0;
-    var varPerubisCol_4=0;
+    // var defaultUrlImg="assets/img/new/";
+    // var varSecond0=0;
+    // var varSecond1=0;
+    // var varSecond2=0;
+    // var varSecond3=0;
+    // var varPerubisCol_1=0;
+    // var varPerubisCol_2=0;
+    // var varPerubisCol_3=0;
+    // var varPerubisCol_4=0;
     // var ObjSecondNotRelease= <HTMLImageElement>document.getElementById("divId_header_notRelease");
     //     ObjSecondNotRelease.addEventListener('click', function () {
     //       switch(expression) {
@@ -295,7 +408,6 @@ export class HomePage {
     var firstLabel1= <HTMLImageElement>document.getElementById("firstLabel[1]"); //image
     var firstLabel2= <HTMLImageElement>document.getElementById("firstLabel[2]"); //Value
     var firstLabel3= <HTMLImageElement>document.getElementById("firstLabel[3]"); //text footer
-
     // SECOND TO THREE
     // == PER-UBIS -> B2S
     //== divSecond[0]
@@ -338,6 +450,16 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                  //aryB2S_AREA_NOT_RELEASE
+                  //aryB2S_AREA_PRJ_ON_PIPE
+                  //aryRFI
+                  //aryARFI
+                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
+                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
+                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
+                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
+
+
               break;
           case 1:
                 firstLabel0.innerText ="All Project";
@@ -399,6 +521,12 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                //VALUE B2S - AREA_PRJ_ON_PIPE
+                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
+                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
+                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
+                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+
               break;
           case 1:
                 firstLabel0.innerText ="All Project";
@@ -460,6 +588,12 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                // VALUE RFI
+                document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
+                document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
+                document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
+                document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
+
               break;
           case 1:
                 firstLabel0.innerText ="All Project";
@@ -522,6 +656,11 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="BAPS";
                 objFourthFooterLabelLeft2.innerText ="Invoice";
                 objFourthFooterLabelLeft3.innerText ="close";
+                 //VALUE - aryARFI
+                 document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
+                 document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
+                 document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
+                 document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
 
               break;
           case 1:
@@ -576,6 +715,33 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName0;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
+                   //
+                   if (varSecond0=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+                   }
+                   if (varSecond1=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
+                   }
+
+                   if (varSecond2=1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
+                   }
+                   if (varSecond3=1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
+                   }
+
                   break;
             case 1:
                   ObjThree0.style.backgroundColor="#FFFFFF";
@@ -618,6 +784,32 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName1;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
+
+                  //VALUE
+                  if (varSecond0=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                   }
+                   if (varSecond1=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
+                   }
+                   if (varSecond2=1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
+                   }
+                   if (varSecond3=1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
+                   }
                   break;
             case 1:
                   ObjThree1.style.backgroundColor="#FFFFFF";
@@ -658,6 +850,31 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName2;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
+
+                  if (varSecond0=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                  }
+                  if (varSecond1=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
+                  }
+                  if (varSecond2=1){
+                  document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
+                  }
+                  if (varSecond3=1){
+                  document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+                  }
                   break;
             case 1:
                   ObjThree2.style.backgroundColor="#FFFFFF";
@@ -701,6 +918,30 @@ export class HomePage {
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
 
+                  if (varSecond0=1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                  }
+                  if (varSecond1=1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
+                  }
+                  if (varSecond2=1){
+                  document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
+                  }
+                  if (varSecond3=1){
+                  document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+                  }
                   break;
             case 1:
                   ObjThree3.style.backgroundColor="#FFFFFF";
@@ -718,7 +959,7 @@ export class HomePage {
     })
   }
 
-  secondEventMousehover(){
+  private secondEventMousehover(){
     // NOT-RELEASE
     var objRelease= <HTMLImageElement>document.getElementById("card-footer-release");
         objRelease.onmouseover = function () {
@@ -754,7 +995,7 @@ export class HomePage {
   }
 
   //THREE - PerUbis
-  trheeEventMousehover(){
+  private trheeEventMousehover(){
     // BUILT TO SUIT
     var objB2c= <HTMLImageElement>document.getElementById("three-card-footer-b2c");
         objB2c.onmouseover = function () {
@@ -790,7 +1031,7 @@ export class HomePage {
   }
 
   //FOURTH - PerArea
-  fourthEventMousehover(){
+  private fourthEventMousehover(){
     // AREA 1
     var objArea1= <HTMLImageElement>document.getElementById("fourth-card-footer-area1");
         objArea1.onmouseover = function () {
@@ -825,7 +1066,7 @@ export class HomePage {
         }
   }
 
-  drilldown(){
+  private drilldown(){
 
     var myChart = HighCharts.chart('testChart1', {
       chart: {
@@ -928,7 +1169,7 @@ export class HomePage {
   // }
 
   // to go account page
-  goToAccount() {
+  private goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
 
