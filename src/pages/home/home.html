@@ -25,7 +25,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="common-bg">
-  <ion-scroll scrollY="true">
     <ion-row>
       <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">
           <ion-row class="full-width">
@@ -393,6 +392,22 @@
               </ion-row>
         </ion-grid>
       </ion-row>
-      <div id="testChart1" style = " display : block ; " > </div>
-  </ion-scroll>
+      <ion-row>
+        <ion-col>
+            <!-- <ion-card class="card-box-map"> -->
+              <div id="allPrjChart" style="display:block;"></div>
+            <!-- </ion-card> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <!-- <ion-card class="card-box-map-header">
+              <button>sda</button>
+            </ion-card> -->
+            <ion-card class="card-box-map full-width">
+             <div id="map1" style="height: 350px"></div>
+            </ion-card>
+           </ion-col>
+      </ion-row>
+
 </ion-content>

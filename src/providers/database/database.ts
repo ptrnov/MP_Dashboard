@@ -2,65 +2,113 @@ import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { SQLite,SQLiteObject } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
-
+// import { DashboardAllProvider } from '../dashboard-all/dashboard-all';
+// import { RestProvider } from '../rest/rest';
+import {GET_STRING_TABLE} from "./tabel";
+import { defaultDataSetting } from './setting';
+import { defaultDataCardAll } from './cardAll';
+import { defaultNewStyle } from './mapStyle';
 
 const DB_NAME: string = 'data.db';
 const win: any = window;
 
 @Injectable()
 export class DatabaseProvider {
+  private getStrTable:any;
+
+  private apiService: any;
 
   private database: SQLiteObject;   //==database sqlite cordova
   private _db: any;                 //==database websql browser
   public sttPlatform: Boolean;
   aryRslt=[];
+  public _defaultNewStyle=defaultNewStyle;
+
+  public getPageSetting_FilterManthYear;
+  public getAllProject_first;
+
+
 
   constructor(
     public http: Http,
     public storage: SQLite,
-    private platform: Platform
+    private platform: Platform,
+
   ) {
+    this.getStrTable = GET_STRING_TABLE;
+    this.getPageSetting_FilterManthYear=defaultDataSetting.filter;
+    this.getAllProject_first=defaultDataCardAll.dsh1;
+    // console.log(this.getStrTable);
+    // this.apiService=RestProvider
+
     /* Split platform SQLite or WebSql
     * SQLite   : Live Mobile Storage.
     * WebSql   : Develompent debug database,table,query.
     * Author   : ptr.nov@gmail.com
+    * Metode   : 1. Create DB; 2. GetApi->(insert/update data).
     */
-    platform.ready().then(() => {
+   this.platform.ready().then(() => {
       console.warn('platform Indentification');
-      //TBL TEST
-      var qryTbl="CREATE TABLE IF NOT EXISTS piter (UNIQ_ID TEXT NOT NULL,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-      var qryTblUniqe="CREATE UNIQUE INDEX IF NOT EXISTS idx_UNIQ_ID ON piter (UNIQ_ID);";
-      // TBL ALL PRJ
-      var ALL_PRJ_tbl="CREATE TABLE IF NOT EXISTS ALL_PRJ (URUTAN TEXT, SEQ TEXT, GRP TEXT, NILAI REAL, PERSEN REAL, AREA1 REAL,AREA2 REAL,AREA3 REAL,AREA4 REAL)";
-      var ALL_PRJ_Uniqe="CREATE UNIQUE INDEX IF NOT EXISTS ALL_PRJ_UNIQ_ID ON ALL_PRJ (URUTAN,SEQ,GRP);";
-
-      if (platform._platforms[0] == 'cordova') {
+      if (this.platform._platforms[0] == 'cordova') {
           console.warn('Storage: Sqlite cordova/Mobile Flatform - Create DB ');
           this.storage = new SQLite;
           this.storage.create({ name: DB_NAME ,location:"default" }).then( ( db: SQLiteObject ) => {
-              this.database = db;
-              // let qry="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT,NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-              // db.executeSql(qry,[]).then(()=>{
-              //   console.log("Create Table Success");
-              // });
-              // var qryTbl="CREATE TABLE IF NOT EXISTS piter (ID INTEGER NULL PRIMARY KEY AUTOINCREMENT, NAME TEXT,SUMMARY TEXT,COMPANY TEXT)";
-              this.createTable(qryTbl,[]);
-              this.createTable(qryTblUniqe,[]);
-              this.createTable(ALL_PRJ_tbl,[]);
-              this.createTable(ALL_PRJ_Uniqe,[]);
+            this.database = db;
+            /**
+              * CREATE TABLE WITH ARRAY SQLSTR
+            */
+            this.getStrTable.forEach(element => {
+              if (this.getStrTable.length > 0){
+                // console.log(element);
+                this.createTable(element.TABEL,[]);
+                this.createTable(element.UNIQUE,[]);
+              }else{
+                console.log("SQL Definition Not Exist")
+              }
+            });
           }).catch((error) => {
             console.log(error);
           });
       } else {
-        console.warn('Storage: WebSql Browser Flatform');
-        this._db = win.openDatabase(DB_NAME, '1.0', '', 5 * 1024 * 1024);
-        // TABLE TEST
-        this.createTable(qryTbl,[]);
-        this.createTable(qryTblUniqe,[]);
-        // TABLE ALL PROJECT
-        this.createTable(ALL_PRJ_tbl,[]);
-        this.createTable(ALL_PRJ_Uniqe,[]);
+          console.warn('Storage: WebSql Browser Flatform');
+          this._db = win.openDatabase(DB_NAME, '1.0', '', 5 * 1024 * 1024);
+          /**
+           * CREATE TABLE WITH ARRAY SQLSTR
+           */
+          this.getStrTable.forEach(element => {
+            if (this.getStrTable.length > 0){
+              // console.log(element);
+              this.createTable(element.TABEL,[]);
+              this.createTable(element.UNIQUE,[]);
+            }else{
+              console.log("SQL Definition Not Exist")
+            }
+          });
       }
+      /**
+       * INSERT FIRST DATA
+       * CALL API : Ambil data pertama dari API kemudian Insert/Update Data.
+       * Metode   : 1. Check Notify/polling/firebase/socket.io.
+       *            2. Selanjutnya melakukan pemangillan api
+       *            3. TBL_STT[0=tidak ada update; 1= data update dari server].
+       *            4. Disply melakukan pemangilan kembali data dengan TBL_STT=1
+       *               kemudian menampilkan data, selanjutnya update data TBL_STT=0
+       */
+      // this.api.getAllPrj();
+      // this.api.getSetting();
+
+      /**
+       * SELECT INIT FIST HANDLING.
+       * Untuk pertama display load smoth.
+       */
+      //-GET  : public getPageSetting_FilterManthYear
+      //  this.setPageSetting_FilterManthYear();
+      // //-GET  : public  getAllProject_first
+      // this.getAllProject_first=this.setAllProject_first();
+      // this.getPageSetting_FilterManthYear=defaultDataSetting.filter;
+      // this.getAllProject_first=defaultDataCardAll.dsh1;
+      // this.getAllProject_first=this.setAllProject_first();
+
     });
 
 
@@ -100,7 +148,8 @@ export class DatabaseProvider {
             let sql = querySql;
             this._db.transaction(function (tx) {
               tx.executeSql(sql,[],function(tx,results ) {
-                console.log('return=' +  results.rows.item);
+                console.log('Suceess Create Table');
+                // console.log('return=' +  results.rows.item);
                // resolve(results);
               });
             });
@@ -183,7 +232,7 @@ export class DatabaseProvider {
   * ListUser send to html
   */
   public selectData(querySql){
-    let aryRsltInternal=[];
+    var aryRsltInternal=[];
     return new Promise((resolve, reject)=>{
       this.platform.ready().then(() => {
         if (this.platform._platforms[0] == 'cordova') {
@@ -247,6 +296,57 @@ export class DatabaseProvider {
     });
   }
 
+  // public selectData1(querySql){
+
+  //   return new Promise((resolve, reject)=>{
+  //       if (this.platform._platforms[0] == 'cordova') {
+  //           console.log('START_SELECT-MODUL');
+  //           console.log('Flatform - CordovaMobile Sqlite');
+  //           console.log('COMMAND="' + querySql + '"');
+  //           var srcRsltData=this.database.executeSql(querySql,[]);
+  //           srcRsltData.then((results) => {
+  //             var aryRsltInternal=[];
+  //             if(results.rows.length > 0) {
+  //               for(var i = 0; i < results.rows.length; i++) {
+  //                 var item = results.rows.item(i);
+  //                 for (var key in item) {
+  //                   item[key] = item[key];
+  //                 }
+  //                 aryRsltInternal.push(item);
+  //               };
+  //               resolve(aryRsltInternal);
+  //             }else{
+  //               resolve([]);
+  //             }
+  //             //console.log(JSON.stringify(aryRslt2));
+  //           },(error)=>{
+  //                console.log(error);
+  //           }).catch(e => console.log(e));
+  //       }else{
+  //           this._db.transaction(function (tx){
+  //               console.log('Flatform - WebSql Browser');
+  //               console.log('START_SELECT-MODUL');
+  //               console.log('COMMAND="' + querySql + '"');
+  //               tx.executeSql(querySql,[], function(tx, results) {
+  //                 var aryRsltInternal=[];
+  //                   if(results.rows.length > 0) {
+  //                     for(var i = 0; i < results.rows.length; i++) {
+  //                         var item = results.rows.item(i);
+  //                         for (var key in item) {
+  //                           item[key] = item[key];
+  //                         }
+  //                         aryRsltInternal.push(item);
+  //                     }
+  //                     resolve(aryRsltInternal) ;
+  //                   }else{
+  //                     resolve([])
+  //                   }
+  //               });
+  //           });
+  //       }
+  //     });
+  // }
+
   public matchData(querySql,bindings,key){
     bindings = typeof bindings !== 'undefined' ? bindings : [];
     return new Promise((resolve) => {
@@ -291,6 +391,50 @@ export class DatabaseProvider {
         }
       });
     });
+  }
+
+  /**
+   * PageSetting
+   * Method : GET
+   * Array  : getPageSetting_FilterManthYear
+   */
+  private setPageSetting_FilterManthYear():void{
+    var querySql ="SELECT SORT,GRP,NAME,NILAI,STT_ACTIVE FROM APPSETTING"
+      +" ORDER BY GRP,SORT ASC";
+      this.selectData(querySql).then(data=>{
+        // setTimeout(()=>{
+          console.log(data);
+          // return data;
+            //  this.getPageSetting_FilterManthYear=data;
+        // },500);
+    });
+  }
+
+  /**
+   * AllProject
+   * Method : GET
+   * Array  : getPageSetting_FilterManthYear
+   */
+  public setAllProject_first(){
+    // return defaultDataCardAll.dsh1;
+    // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+    //               +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.selectData(querySql).then(data=>{
+    //     // if(data){
+    //       // this.getAllProject_first=data;
+
+    //     // }else{
+    //     //   // this.getAllProject_first=defaultDataCardAll.dsh1;
+    //     //   return defaultDataCardAll.dsh1;
+    //     // }
+    //     setTimeout(()=>{
+    //       return data[0]['dsh1'];
+    //       // console.log(data);
+    //       // return data;
+    //         // this.getAllProject_first=data;
+    //     },500);
+    // });
+
   }
 
 }

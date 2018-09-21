@@ -3,7 +3,7 @@ import {NavController, AlertController, ToastController, MenuController} from "i
 import {HomePage} from "../home/home";
 import {RegisterPage} from "../register/register";
 import { DatabaseProvider } from '../../providers/database/database';
-
+import { DashboardAllProvider } from '../../providers/dashboard-all/dashboard-all';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -15,11 +15,17 @@ export class LoginPage {
       public forgotCtrl: AlertController,
       public menu: MenuController,
       public toastCtrl: ToastController,
-      private database: DatabaseProvider
+      private database: DatabaseProvider,
+      private dashboarAll: DashboardAllProvider,
   ){
     this.menu.swipeEnable(false);
+    // this.dashboarAll.initData();
+    // .getAllPrj();
   }
-
+  ngOnInit() {
+    // this.dashboarAll.getAllPrj();
+    // this.dashboarAll.getSetting();
+  }
   // go to register page
   register() {
     this.nav.setRoot(RegisterPage);

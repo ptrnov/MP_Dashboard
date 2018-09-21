@@ -1,4 +1,4 @@
-import {Component,ViewChild } from "@angular/core";
+import {Component,ViewChild, ElementRef  } from "@angular/core";
 import {NavController, PopoverController,AlertController,ModalController} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
@@ -36,6 +36,12 @@ var aryB2S_AREA_NOT_RELEASE=[];
 var aryB2S_AREA_PRJ_ON_PIPE=[];
 var aryRFI=[];
 var aryARFI=[];
+var valArrayCheck=false;
+
+//Google Variable
+declare var google;
+// var marker = [];
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -54,7 +60,12 @@ export class HomePage {
   private subscription1;
   private subscription2;
   private cardValue_Header;
-
+  //MAP
+  @ViewChild('map1') mapElement2: ElementRef;
+  map1: any;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  mapOptions1:any;
 
   constructor(
       // private storage: Storage,
@@ -63,11 +74,18 @@ export class HomePage {
       private dashboarAll: DashboardAllProvider,
       public alertCtrl: AlertController,
       public modalCtrl: ModalController,
-      private database: DatabaseProvider,
+      private database: DatabaseProvider
       // private pageScrollService: PageScrollService
       // ,@Inject(DOCUMENT)
       // private document: any
-  ) {
+  ){
+    this.mapOptions1={
+      zoom: 4,
+      center: new google.maps.LatLng(-2.209764,117.114258),
+      styles: this.database._defaultNewStyle
+    };
+
+    // this.dashboarAll.getAllPrj();
     //this.today = new Date().toISOString();
     // this.getDataAll();
 
@@ -76,23 +94,24 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    // this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
-      this.dashboarAll.getAllPrj();
-    });
+      // this.dashboarAll.getAllPrj();
+      // this.dashboarAll.getSetting();
+    // });
   }
    /**
    * Event Back / close Page
    */
   ionViewWillUnload() {
     console.log("Previus page")
-    this.subscription1.unsubscribe();
-    this.subscription2.unsubscribe();
+    // this.subscription1.unsubscribe();
+    // this.subscription2.unsubscribe();
   }
 
   ionViewDidLoad():void{
     //== Mouse Over - Change Color ==
-    // this.nilaiDispyValue1();
+    // this.dashboarAll.getAllPrj();
     this.firstCardEventMouse();
     this.secondEventMousehover();
     this.trheeEventMousehover();
@@ -100,221 +119,234 @@ export class HomePage {
     this.fourthEventMousehover();
     document.getElementById("divPerArea").hidden = true;
     this.drilldown();
-
+    this.nilaiDispyValue1();
+    this.initMap();
   }
 
   ionViewDidEnter(){
-    this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+    // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
       console.log('run-Disply');
-       this.nilaiDispyValue1();
-    });
+      //  this.nilaiDispyValue1();
+    // });
+  }
+
+  initMap(){
+    this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
+    this.directionsDisplay.setMap(this.map1);
   }
 
   nilaiDispyValue1(){
     /**
      * Load Sqlite data periodik.
      */
-      var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
-                    +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      let getDataQry=this.database.selectData(querySql);
-      getDataQry.then(data=>{
+    console.log("valAry" +  valArrayCheck);
+      // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+      //               +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      // let getDataQry=this.database.selectData(querySql);
+      // getDataQry.then(data=>{
         var aryRslt=[];
         var ary_Header=[];
         var aryB2S_AREA=[];
-        setTimeout(()=> {
+        // setTimeout(()=> {
             aryRslt=[];
-            aryRslt.push(data);
-            // console.log(aryRslt);
+            aryRslt.push(this.database.setAllProject_first);
+            // aryRslt.push(data);
+            if(aryRslt[0].length > 0) {
+              valArrayCheck=true;
+              // console.log(aryRslt);
 
-            //-Set ARRAY GROUP - HEADER
-            ary_Header=[];
-            ary_Header.push(aryRslt[0].filter(function(headerObj){
-               return headerObj.SEQ.indexOf("HEADER") > -1
-             })
-            );
-            // ary_Header[0].sort("URUTAN");
-            // - ORDER SORT
-            ary_Header[0].sort((a, b):number=>{
-              if (a.URUTAN < b.URUTAN) return -1;
-              if (a.URUTAN > b.URUTAN) return 1;
-              return 0;
-            });
+              //-Set ARRAY GROUP - HEADER
+              ary_Header=[];
+              ary_Header.push(aryRslt[0].filter(function(headerObj){
+                return headerObj.SEQ.indexOf("HEADER") > -1
+              })
+              );
+              // ary_Header[0].sort("URUTAN");
+              // - ORDER SORT
+              ary_Header.sort((a, b):number=>{
+                if (a.URUTAN < b.URUTAN) return -1;
+                if (a.URUTAN > b.URUTAN) return 1;
+                return 0;
+              });
 
 
-            //-Set ARRAY GROUP - B2S
-            aryB2S_AREA=[];
-            aryB2S_AREA.push(aryRslt[0].filter(function(b2cAreaObj){
-                return b2cAreaObj.SEQ.indexOf("B2S") > -1
-              })
-            );
-            // - NOT RELEASE
-            aryB2S_AREA_NOT_RELEASE=[];
-            aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
-                return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
-              })
-            );
-            // - PROJECT ON PIPE
-            aryB2S_AREA_PRJ_ON_PIPE=[];
-            aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
-                return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
-              })
-            );
-            // - RFI
-            aryRFI=[];
-            aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
-                return rfiObj.GRP.indexOf("RFI") > -1
-              })
-            );
-            // -AFTER RFI
-            aryARFI=[];
-            aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
-                return arfiObj.GRP.indexOf("ARFI") > -1
-              })
-            );
-            console.log(
-                " varSecond0="+ varSecond0 +
-                ",varSecond1="+ varSecond1 +
-                ",varSecond2="+ varSecond2 +
-                ",varSecond3="+ varSecond3
-            );
+              //-Set ARRAY GROUP - B2S
+              aryB2S_AREA=[];
+              aryB2S_AREA.push(aryRslt[0].filter(function(b2cAreaObj){
+                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                })
+              );
+              // - NOT RELEASE
+              aryB2S_AREA_NOT_RELEASE=[];
+              aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                })
+              );
+              // - PROJECT ON PIPE
+              aryB2S_AREA_PRJ_ON_PIPE=[];
+              aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
+                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                })
+              );
+              // - RFI
+              aryRFI=[];
+              aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+                  return rfiObj.GRP.indexOf("RFI") > -1
+                })
+              );
+              // -AFTER RFI
+              aryARFI=[];
+              aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+                  return arfiObj.GRP.indexOf("ARFI") > -1
+                })
+              );
+              console.log(
+                  " varSecond0="+ varSecond0 +
+                  ",varSecond1="+ varSecond1 +
+                  ",varSecond2="+ varSecond2 +
+                  ",varSecond3="+ varSecond3
+              );
 
-            // First layer
-            document.getElementById("allPrjLabel").innerHTML=ary_Header[0][0].NILAI!=null?ary_Header[0][0].NILAI:0;
+              // First layer
+              document.getElementById("allPrjLabel").innerHTML=ary_Header[0][0].NILAI!=null?ary_Header[0][0].NILAI:0;
 
-            // - VIEWER
-            // console.log(aryB2S_AREA_NOT_RELEASE[1]);
-            // this.nilaiDispyValue1();
-            // console.log('Check='+ ary_Header[0][0].NILAI);
-            document.getElementById("secondValue[0]").innerHTML=ary_Header[0][1].NILAI!=null?ary_Header[0][1].NILAI + " %":"0%";
-            document.getElementById("secondValue[1]").innerHTML=ary_Header[0][2].NILAI!=null?ary_Header[0][2].NILAI + " %":"0%";
-            document.getElementById("secondValue[2]").innerHTML=ary_Header[0][3].NILAI!=null?ary_Header[0][3].NILAI + " %":"0%";
-            document.getElementById("secondValue[3]").innerHTML=ary_Header[0][4].NILAI!=null?ary_Header[0][4].NILAI + " %":"0%";
-            //NO-RELEASE
-            if (varSecond0==1){
-                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
-                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
-                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
-                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
-                if(varSecond0==1 && varPerubisCol_1==1){
-                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+              // - VIEWER
+              // console.log(aryB2S_AREA_NOT_RELEASE[1]);
+              // this.nilaiDispyValue1();
+              // console.log('Check='+ ary_Header[0][0].NILAI);
+              document.getElementById("secondValue[0]").innerHTML=ary_Header[0][1].NILAI!=null?ary_Header[0][1].NILAI + " %":"0%";
+              document.getElementById("secondValue[1]").innerHTML=ary_Header[0][2].NILAI!=null?ary_Header[0][2].NILAI + " %":"0%";
+              document.getElementById("secondValue[2]").innerHTML=ary_Header[0][3].NILAI!=null?ary_Header[0][3].NILAI + " %":"0%";
+              document.getElementById("secondValue[3]").innerHTML=ary_Header[0][4].NILAI!=null?ary_Header[0][4].NILAI + " %":"0%";
+              //NO-RELEASE
+              if (varSecond0==1){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
+                  if(varSecond0==1 && varPerubisCol_1==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_4==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                  }
+              }
+              //PIPE
+              if (varSecond1==1){
+                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
+                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
+                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
+                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+                if(varSecond1==1 && varPerubisCol_1==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
                 }
-                if(varSecond0==1 && varPerubisCol_2==1){
-                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                if(varSecond1==1 && varPerubisCol_2==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
                 }
-                if(varSecond0==1 && varPerubisCol_3==1){
-                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                if(varSecond1==1 && varPerubisCol_3==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
                 }
-                if(varSecond0==1 && varPerubisCol_4==1){
-                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                if(varSecond1==1 && varPerubisCol_4==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
                 }
             }
-            //PIPE
-            if (varSecond1==1){
-              document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
-              document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
-              document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
-              document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
-              if(varSecond1==1 && varPerubisCol_1==1){
-                document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
-                document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
-                document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
-                document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
+            //RFI
+            if (varSecond2==1){
+              document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
+              document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
+              document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
+              document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
+              if(varSecond2==1 && varPerubisCol_1==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
               }
-              if(varSecond1==1 && varPerubisCol_2==1){
-                document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
-                document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
-                document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
-                document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
+              if(varSecond2==1 && varPerubisCol_2==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
               }
-              if(varSecond1==1 && varPerubisCol_3==1){
-                document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
-                document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
-                document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
-                document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
+              if(varSecond2==1 && varPerubisCol_3==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
               }
-              if(varSecond1==1 && varPerubisCol_4==1){
-                document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
-                document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
-                document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
-                document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
+              if(varSecond2==1 && varPerubisCol_4==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
               }
+            }
+            //-ARFI
+            if (varSecond3==1){
+              document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
+              document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
+              document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
+              document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
+              if(varSecond3==1 && varPerubisCol_1==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_2==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_3==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_4==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+              }
+            }
+          }else{
+            valArrayCheck=false;
           }
-          //RFI
-          if (varSecond2==1){
-            document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
-            document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
-            document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
-            document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
-            if(varSecond2==1 && varPerubisCol_1==1){
-              document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
-            }
-            if(varSecond2==1 && varPerubisCol_2==1){
-              document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
-            }
-            if(varSecond2==1 && varPerubisCol_3==1){
-              document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
-            }
-            if(varSecond2==1 && varPerubisCol_4==1){
-              document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
-            }
-          }
-          //-ARFI
-          if (varSecond3==1){
-            document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
-            document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
-            document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
-            document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
-            if(varSecond3==1 && varPerubisCol_1==1){
-              document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
-            }
-            if(varSecond3==1 && varPerubisCol_2==1){
-              document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
-            }
-            if(varSecond3==1 && varPerubisCol_3==1){
-              document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
-            }
-            if(varSecond3==1 && varPerubisCol_4==1){
-              document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
-              document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
-              document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
-              document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
-            }
-          }
-        },500);
-      });
+        // },500);
+      // });
   }
 
   private secondAlertInfo1(){
@@ -564,12 +596,13 @@ export class HomePage {
                   //aryB2S_AREA_PRJ_ON_PIPE
                   //aryRFI
                   //aryARFI
-                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
-                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
-                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
-                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
-                console.log(aryB2S_AREA_NOT_RELEASE);
-
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
+                // console.log(aryB2S_AREA_NOT_RELEASE);
+                }
               break;
           case 1:
                 firstLabel0.innerText ="";
@@ -632,10 +665,12 @@ export class HomePage {
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
                 //VALUE B2S - AREA_PRJ_ON_PIPE
-                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
-                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
-                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
-                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+                }
 
               break;
           case 1:
@@ -699,11 +734,12 @@ export class HomePage {
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
                 // VALUE RFI
-                document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
-                document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
-                document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
-                document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
-
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
+                }
               break;
           case 1:
                 firstLabel0.innerText ="";
@@ -767,11 +803,12 @@ export class HomePage {
                 objFourthFooterLabelLeft2.innerText ="Invoice";
                 objFourthFooterLabelLeft3.innerText ="close";
                  //VALUE - aryARFI
+                if (valArrayCheck==true){
                  document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
                  document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
                  document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
                  document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
-
+                }
               break;
           case 1:
                 firstLabel0.innerText ="";
@@ -826,31 +863,33 @@ export class HomePage {
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
                    //
-                   if (varSecond0==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
-                   }
-                   if (varSecond1==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
-                   }
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
+                    }
 
-                   if (varSecond2==1){
-                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
-                   }
-                   if (varSecond3==1){
-                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
-                   }
+                    if (varSecond2==1){
+                      document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                      document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
+                    }
+                  }
 
                   break;
             case 1:
@@ -896,31 +935,33 @@ export class HomePage {
                   firstLabel3.innerText ="PER-AREA";
 
                   //VALUE
-                  if (varSecond0==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
-                   }
-                   if (varSecond1==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
-                   }
-                   if (varSecond2==1){
-                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
-                   }
-                   if (varSecond3==1){
-                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
-                   }
-                  break;
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                      document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                      document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
+                    }
+                  }
+              break;
             case 1:
                   ObjThree1.style.backgroundColor="#FFFFFF";
                   varPerubisCol_2= 0;
@@ -960,30 +1001,31 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName2;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
-
-                  if (varSecond0==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
-                  }
-                  if (varSecond1==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
-                  }
-                  if (varSecond2==1){
-                  document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
-                  }
-                  if (varSecond3==1){
-                  document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+                    }
                   }
                   break;
             case 1:
@@ -1027,30 +1069,31 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName3;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
-
-                  if (varSecond0==1){
-                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
-                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
-                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
-                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
-                  }
-                  if (varSecond1==1){
-                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
-                  }
-                  if (varSecond2==1){
-                  document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
-                  }
-                  if (varSecond3==1){
-                  document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
-                  document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
-                  document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
-                  document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+                    }
                   }
                   break;
             case 1:
@@ -1177,8 +1220,7 @@ export class HomePage {
   }
 
   private drilldown(){
-
-    var myChart = HighCharts.chart('testChart1', {
+    var myChart = HighCharts.chart('allPrjChart', {
       chart: {
         zoomType: 'x',
         panning: true,
@@ -1250,6 +1292,8 @@ export class HomePage {
               }
           }
     });
+
+
 
 
   }

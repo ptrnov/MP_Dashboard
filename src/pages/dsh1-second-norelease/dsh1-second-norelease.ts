@@ -2,7 +2,7 @@ import { Component,NgZone} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Platform,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
-import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
+// import { DashboardAllProvider } from "../../providers/database/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
@@ -41,7 +41,7 @@ export class Dsh1SecondNoreleasePage {
       public navCtrl: NavController,
       public navParams: NavParams,
       // private _HTTP   	: HttpClient,
-      private dashboarAll: DashboardAllProvider,
+      // private dashboarAll: DashboardAllProvider,
       private dp: DatabaseProvider,
       // private zone: NgZone,
       public platform: Platform
@@ -69,7 +69,7 @@ export class Dsh1SecondNoreleasePage {
    ngOnInit() {
     this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
-      this.dashboarAll.getCobaData();
+      // this.dashboarAll.getCobaData();
     });
 
     // this.dashboarAll.getCobaData().subscribe(data=>{
@@ -92,7 +92,7 @@ export class Dsh1SecondNoreleasePage {
        */
       this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
         console.log('run-Disply');
-        this.ambilDataBaru();
+        // this.ambilDataBaru();
       });
       // console.log('ionViewDidLoad Dsh1SecondNoreleasePage');
       // this._HTTP
@@ -121,25 +121,25 @@ export class Dsh1SecondNoreleasePage {
     this.navCtrl.push(SettingsPage);
   }
 
-  masukinDatabaru(uniqId:any,name:any,summary:any,company:any){
-    // console.log('data=' + name);
-    // let qry="INSERT INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-    let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-    this.dp.insertData(qry,[uniqId,name,summary,company]);
-  }
+  // masukinDatabaru(uniqId:any,name:any,summary:any,company:any){
+  //   // console.log('data=' + name);
+  //   // let qry="INSERT INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+  //   let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+  //   this.dp.insertData(qry,[uniqId,name,summary,company]);
+  // }
 
-  ambilDataBaru(){
-      var querySql ="SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
-      let getDataQry=this.dp.selectData(querySql);
-          getDataQry.then(data=>{
-            setTimeout(()=> {
-              // console.log(this.rsltData);
-              // console.log(data);
-              this.rows =data;
-              // console.log(data);
-            },500);
-          });
-  }
+  // ambilDataBaru(){
+  //     var querySql ="SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
+  //     let getDataQry=this.dp.selectData(querySql);
+  //         getDataQry.then(data=>{
+  //           setTimeout(()=> {
+  //             // console.log(this.rsltData);
+  //             // console.log(data);
+  //             this.rows =data;
+  //             // console.log(data);
+  //           },500);
+  //         });
+  // }
 
   // ambilDataRslt(){
     // console.log(this.rsltData);

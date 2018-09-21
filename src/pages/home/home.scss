@@ -89,6 +89,27 @@ page-home {
     border : 1px solid #e2e2e2;
   }
 
+  .card-box-map-header{
+    background-color:rgba(255, 253, 253, 0.993);
+    height: 50px;
+    margin-top: -10px;
+    border-radius: 0px 0px 0px 0px;
+    border : 1px solid #e2e2e2;
+    margin-bottom:14px;
+    padding-right: -10px;
+    margin-left: 7px;
+  }
+
+  .card-box-map{
+    background-color:#FFFF;
+    margin-top: -10px;
+    border-radius: 0px 0px 5px 5px;
+    border : 1px solid #e2e2e2;
+    margin-bottom:50px;
+    // padding-right: -10px;
+    margin-left: 7px;
+  }
+
   // FIRST ROWS
   .first-card1{
     background-color:#FFFF;

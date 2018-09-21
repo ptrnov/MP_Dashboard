@@ -3,7 +3,7 @@ import { Platform, Nav } from "ionic-angular";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
-import { DatabaseProvider } from '../providers/database/database';
+// import { DatabaseProvider } from '../providers/database/database';
 import { HomePage } from "../pages/home/home";
 import { LoginPage } from "../pages/login/login";
 // import { timer } from 'rxjs/observable/timer';
@@ -37,18 +37,18 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard,
-    private database: DatabaseProvider
+    // private database: DatabaseProvider
   ) {
     this.initializeApp();
 
     this.appMenuItems = [
       {title: 'All Mitratel Project', component: HomePage, icon: 'ios-list'},
       {title: 'Build To Suit', component: Dsh2HomePage, icon: 'ios-checkmark-circle-outline'},
-      {title: 'Colaction & Reseller ', component: Dsh3HomePage, icon: 'ios-checkmark-circle-outline'},
+      {title: 'Colocation & Reseller ', component: Dsh3HomePage, icon: 'ios-checkmark-circle-outline'},
       {title: 'Microcell ', component: Dsh4HomePage, icon: 'ios-checkmark-circle-outline'},
       {title: 'Special Project ', component: Dsh5HomePage, icon: 'ios-checkmark-circle-outline'},
       {title: 'Mitra ', component: Dsh6HomePage, icon: 'ios-checkmark-circle-outline'},
-      {title: 'Summary ', component: Dsh7HomePage, icon: 'ios-checkmark-circle-outline'}
+    //   {title: 'Summary ', component: Dsh7HomePage, icon: 'ios-checkmark-circle-outline'}
     ];
   }
 

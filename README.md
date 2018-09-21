@@ -27,5 +27,7 @@ ver 1.0.0
    On Forlder Provider
 10. Screen Orantion
     add in config.xml : <preference name="orientation" value="portrait" />
-
+11. Searcable
+    #npm install ionic-select-searchable --save 
+    reff: https://www.npmjs.com/package/ionic-select-searchable
 ````
