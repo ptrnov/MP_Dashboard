@@ -25,13 +25,37 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="common-bg">
-  <ion-scroll scrollY="true">
     <ion-row>
       <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">
           <ion-row class="full-width">
               <ion-col col-6 >
                   <!-- PROJECT ALL/ Per-UBIS/ Per-AREA -->
-                  <ion-card class="first-card">
+                  <ion-card class="first-card1 full-width">
+                      <ion-card-header id="divId_allProject">
+                          <div class="row">
+                              <div class="left-icon">
+                                  <img src="assets/img/new/All_Project_m.png">
+                              </div>
+                            <div class="header-title">All Project</div>
+                           </div>
+                      </ion-card-header>
+                      <ion-card-content>
+                          <div class="right-text">
+                              <ion-label  id="allPrjLabel" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>
+                          </div>
+                      </ion-card-content>
+                      <ion-row id="first-card1-footer-PrjAll">
+                          <div class="row" style="height:20px">
+                              <ion-col class="first-card-header-title">
+                                  <ion-label  style="margin-top: -2px;"></ion-label>
+                              </ion-col>
+                          </div>
+                      </ion-row>
+                  </ion-card>
+              </ion-col>
+              <ion-col col-6 >
+                  <!-- Per-UBIS/ Per-AREA -->
+                  <ion-card class="first-card2 full-width">
                       <ion-card-header id="divId_allProject">
                           <div class="row">
                               <div class="left-icon">
@@ -42,10 +66,10 @@
                       </ion-card-header>
                       <ion-card-content>
                           <div class="right-text">
-                              <ion-label id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">10.000</ion-label>
+                              <ion-label   id="firstLabel[2]" style="margin-top: -7px;margin-bottom: -10px">0</ion-label>
                           </div>
                       </ion-card-content>
-                      <ion-row id="first-card-footer-PrjAll">
+                      <ion-row id="first-card2-footer-PrjAll">
                           <div class="row" style="height:20px">
                               <ion-col class="first-card-header-title">
                                   <ion-label id="firstLabel[3]" style="margin-top: -2px;">Total</ion-label>
@@ -53,20 +77,7 @@
                           </div>
                       </ion-row>
                   </ion-card>
-
               </ion-col>
-              <ion-col col-6>
-                  <ion-list>
-                      <!-- <ion-item class="first-column-tanggal">
-                         <ion-input placeholder="Filter Month/Year" [value]="dataInicial | date:'MM/yyyy'" (click)="open()"></ion-input>
-                      </ion-item>
-
-                      <ion-item no-lines hidden="true">
-                        <ion-datetime #datePicker displayFormat="MMMM/MM/YYYY" (ionCancel)="this.dataInicial  = null" [(ngModel)]="dataInicial" doneText="Feito" cancelText="Cancelar" [max]="maxDate">
-                        </ion-datetime>
-                      </ion-item> -->
-                    </ion-list>
-              </ion-col >
           </ion-row>
           <!-- SECOND -->
           <ion-row class="full-width" style="margin-top: -20px">
@@ -86,7 +97,7 @@
                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
                           </div>
                           <div class="right-text" >
-                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>
+                              <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0</ion-label>
                           </div>
                           <!-- <ion-icon   name="lock" ></ion-icon> -->
                           <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->
@@ -120,7 +131,7 @@
                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
                           </div>
                           <div class="right-text">
-                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>
+                              <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>
                           </div>
                           <!-- <ion-icon   name="lock" ></ion-icon> -->
                           <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->
@@ -152,7 +163,7 @@
                                   <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
                                 </div>
                                 <div class="right-text">
-                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>
+                                    <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">0 %</ion-label>
                                 </div>
                           </div>
                       </ion-card-content>
@@ -182,7 +193,7 @@
                                   <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
                                 </div>
                                 <div class="right-text">
-                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 %</ion-label>
+                                    <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">0 %</ion-label>
                                 </div>
                           </div>
                       </ion-card-content>
@@ -208,7 +219,7 @@
                               <img  id="three-img-0" src="assets/img/new/Not_Release_m.png">
                           </div>
                           <div class="right-text">
-                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">33</ion-label>
+                              <ion-label id="threeValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                           </div>
                         </div>
                       </ion-card-content>
@@ -230,7 +241,7 @@
                               <img  id="three-img-1" src="assets/img/new/PoP_m.png">
                           </div>
                           <div class="right-text">
-                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">323</ion-label>
+                              <ion-label id="threeValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                           </div>
                         </div>
                       </ion-card-content>
@@ -252,7 +263,7 @@
                                   <img  id="three-img-2" src="assets/img/new/Rfi_m.png">
                                 </div>
                                 <div class="right-text">
-                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">456</ion-label>
+                                    <ion-label id="threeValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                                 </div>
                           </div>
                       </ion-card-content>
@@ -274,7 +285,7 @@
                                   <img id="three-img-3" src="assets/img/new/BAPS_m.png">
                                 </div>
                                 <div class="right-text">
-                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">1123</ion-label>
+                                    <ion-label id="threeValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                                 </div>
                           </div>
                       </ion-card-content>
@@ -299,7 +310,7 @@
                                 <img  id="fourth-img-0" src="assets/img/new/Not_Release_m.png">
                             </div>
                             <div class="right-text">
-                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">444</ion-label>
+                                <ion-label id="fourthValue[0]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                             </div>
                           </div>
                         </ion-card-content>
@@ -321,7 +332,7 @@
                                 <img id="fourth-img-1" src="assets/img/new/PoP_m.png">
                             </div>
                             <div class="right-text">
-                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">999</ion-label>
+                                <ion-label id="fourthValue[1]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                             </div>
                           </div>
                         </ion-card-content>
@@ -343,7 +354,7 @@
                                     <img id="fourth-img-2"  src="assets/img/new/Rfi_m.png">
                                   </div>
                                   <div class="right-text">
-                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">777</ion-label>
+                                      <ion-label id="fourthValue[2]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                                   </div>
                             </div>
                         </ion-card-content>
@@ -365,7 +376,7 @@
                                     <img id="fourth-img-3"  src="assets/img/new/BAPS_m.png">
                                   </div>
                                   <div class="right-text">
-                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">555</ion-label>
+                                      <ion-label id="fourthValue[3]" style="margin-right:0px;margin-top: -10px;margin-bottom: -5px">0</ion-label>
                                   </div>
                             </div>
                         </ion-card-content>
@@ -381,6 +392,22 @@
               </ion-row>
         </ion-grid>
       </ion-row>
-      <div id="testChart1" style = " display : block ; " > </div>
-  </ion-scroll>
+      <ion-row>
+        <ion-col>
+            <!-- <ion-card class="card-box-map"> -->
+              <div id="allPrjChart" style="display:block;"></div>
+            <!-- </ion-card> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <!-- <ion-card class="card-box-map-header">
+              <button>sda</button>
+            </ion-card> -->
+            <ion-card class="card-box-map full-width">
+             <div id="map1" style="height: 350px"></div>
+            </ion-card>
+           </ion-col>
+      </ion-row>
+
 </ion-content>

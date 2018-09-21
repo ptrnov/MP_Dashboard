@@ -2,15 +2,12 @@ import { Component,NgZone} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Platform,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
-import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
+// import { DashboardAllProvider } from "../../providers/database/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
-// import { ChartingService } from '../../services/charting-service';
-/**
- * Generated class for the Dsh1SecondNoreleasePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
+
 export interface Config {
 	technologies: string;
 }
@@ -37,16 +34,17 @@ export class Dsh1SecondNoreleasePage {
   public config : Config;
   public aryRslt: any;
   private rsltData:any;//:{};// rsltData;
+  private subscription1;
+  private subscription2;
 
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private _HTTP   	: HttpClient,
-      private dashboarAll: DashboardAllProvider,
+      // private _HTTP   	: HttpClient,
+      // private dashboarAll: DashboardAllProvider,
       private dp: DatabaseProvider,
-      // private dbCharting: ChartingService,
-      private zone: NgZone,
-      public platform: Platform,
+      // private zone: NgZone,
+      public platform: Platform
   ) {
         this.columns = [
           { prop: 'NAME' },
@@ -68,95 +66,80 @@ export class Dsh1SecondNoreleasePage {
 
      });
   }
+   ngOnInit() {
+    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      // this.dashboarAll.getCobaData();
+    });
+
+    // this.dashboarAll.getCobaData().subscribe(data=>{
+    //   // console.log(data);
+    //   // this.ambilDataRrows = data;
+    //   //this.rows=data.technologies;
+    //     data.technologies.forEach(element => {
+    //       // console.log(element);
+    //       // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+    //       // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
+    //       this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
+    //    });
+    //  });
+    // // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
+   }
 
   ionViewDidLoad(){
-    this.dashboarAll.getCobaData().subscribe(data=>{
-      // console.log(data);
-      //console.log(data.technologies[0]['name']);
-      // this.ambilDataRrows = data;
-      //this.rows=data.technologies;
-        data.technologies.forEach(element => {
-          // console.log(element);
-          // console.log('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-          // this.masukinDatabaru('"'+element.name+'"','"'+element.summary+'"','"'+element.company+'"');
-          this.masukinDatabaru(element.uniq_id,element.name,element.summary,element.company);
-       });
-     });
-    // this.masukinDatabaru("Piter","Zakirnaik","Dedat");
-
-
-
-    // console.log('ionViewDidLoad Dsh1SecondNoreleasePage');
-    // this._HTTP
-    //   .get<Config>('../../assets/data/technologies.json')
-    //   .subscribe((data) =>
-    //   {
-    //         // this.rows = data.technologies;
-    //     //  alert(data);
-    //     //   this.rows = this.ambilDataBaru();
-    //     //  alert(data);
-    //       console.log(data.technologies);
-    //   });
-
-    this.ambilDataBaru();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           this.ambilDataBaru();
-    // setTimeout(()=> {
-    //    console.log(this.rsltData);
-        // this.rows =this.rsltData;
-    // },50);
-
-    //
-
-
-
-
+      /**
+       * Load Sqlite data periodik.
+       */
+      this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+        console.log('run-Disply');
+        // this.ambilDataBaru();
+      });
+      // console.log('ionViewDidLoad Dsh1SecondNoreleasePage');
+      // this._HTTP
+      //   .get<Config>('../../assets/data/technologies.json')
+      //   .subscribe((data) =>
+      //   {
+      //         // this.rows = data.technologies;
+      //     //  alert(data);
+      //     //   this.rows = this.ambilDataBaru();
+      //     //  alert(data);
+      //       console.log(data.technologies);
+      //   });
+      // this.ambilDataBaru();
   }
 
-  // getCobaData(){
-  //   this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
-  // }
+  /**
+   * Event Back / close Page
+   */
+  ionViewWillLeave() {
+    console.log("Previus page")
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
+   }
 
   goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
 
-  masukinDatabaru(uniqId:any,name:any,summary:any,company:any){
-    // console.log('data=' + name);
-    // let qry="INSERT INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-    let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
-    this.dp.insertData(qry,[uniqId,name,summary,company]);
-  }
+  // masukinDatabaru(uniqId:any,name:any,summary:any,company:any){
+  //   // console.log('data=' + name);
+  //   // let qry="INSERT INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+  //   let qry="INSERT OR REPLACE INTO piter (UNIQ_ID,NAME,SUMMARY,COMPANY) VALUES (?,?,?,?)";
+  //   this.dp.insertData(qry,[uniqId,name,summary,company]);
+  // }
 
-  ambilDataBaru(){
-
-      var querySql ="SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
-      // var data=this.database.selectData(querySql,[]);
-      let getDataQry=this.dp.selectData(querySql);
-      // getDataQry.then((data)=>{
-        //alert('message' + msq);
-
-        // this.rsltData=data;
-        getDataQry.then(data=>{
-          setTimeout(()=> {
-            // console.log(this.rsltData);
-            // console.log(data);
-            this.rows =data;
-            // console.log(data);
-          },500);
-        });
-
-        // return data;
-      // });
-      // .then((data)=>{
-      //  console.log(data);
-      //  this.aryRslt=data;
-      // return data.rows.;
-      // this.rows =data;
-      // this.rsltData=data;
-      // var datax: any=data;
-
-    // });
-
-  }
+  // ambilDataBaru(){
+  //     var querySql ="SELECT NAME,SUMMARY,COMPANY FROM piter ORDER BY NAME DESC";
+  //     let getDataQry=this.dp.selectData(querySql);
+  //         getDataQry.then(data=>{
+  //           setTimeout(()=> {
+  //             // console.log(this.rsltData);
+  //             // console.log(data);
+  //             this.rows =data;
+  //             // console.log(data);
+  //           },500);
+  //         });
+  // }
 
   // ambilDataRslt(){
     // console.log(this.rsltData);

@@ -8,7 +8,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
-
+import { SelectSearchableModule  } from 'ionic-select-searchable';
 import {ActivityService} from "../services/activity-service";
 // import {TripService} from "../services/trip-service";
 // import {WeatherProvider} from "../services/weather";
@@ -26,7 +26,6 @@ import {TripDetailPage} from "../pages/trip-detail/trip-detail";
 import {TripsPage} from "../pages/trips/trips";
 import {LocalWeatherPage} from "../pages/local-weather/local-weather";
 import { RestProvider } from '../providers/rest/rest';
-import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
 import { Dsh1SecondNoreleasePage } from '../pages/dsh1-second-norelease/dsh1-second-norelease';
 import { Dsh1SecondPrjonpipePage } from '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe';
 import { Dsh1SecondRfiPage} from '../pages/dsh1-second-rfi/dsh1-second-rfi';
@@ -39,6 +38,7 @@ import { Dsh6HomePage} from '../pages/dsh6-home/dsh6-home';
 import { Dsh7HomePage} from '../pages/dsh7-home/dsh7-home';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DatabaseProvider } from '../providers/database/database';
+import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
 // import { ChartingService } from '../services/charting-service';
 // import services
 // end import services
@@ -81,6 +81,7 @@ import { DatabaseProvider } from '../providers/database/database';
       scrollAssist: true,
       autoFocusAssist: false
     }),
+    SelectSearchableModule
     // IonicStorageModule.forRoot({
     //   name: '__ionic3_start_theme',
     //     driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -116,12 +117,11 @@ import { DatabaseProvider } from '../providers/database/database';
     SplashScreen,
     Keyboard,
     ActivityService,
-    SQLite,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    DatabaseProvider,
-    RestProvider,
-    DashboardAllProvider  
-    // ChartingService    
+    SQLite,   
+    DashboardAllProvider, 
+    DatabaseProvider,   
+    RestProvider,    
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 

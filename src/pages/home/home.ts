@@ -1,4 +1,4 @@
-import {Component,ViewChild } from "@angular/core";
+import {Component,ViewChild, ElementRef  } from "@angular/core";
 import {NavController, PopoverController,AlertController,ModalController} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
@@ -7,17 +7,40 @@ import {SettingsPage} from "../settings/settings";
 // import {TripsPage} from "../trips/trips";
 //import {SearchLocationPage} from "../search-location/search-location";
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
+import { DatabaseProvider } from '../../providers/database/database';
 // import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
 import { Dsh1SecondNoreleasePage} from '../dsh1-second-norelease/dsh1-second-norelease';
 import { Dsh1SecondPrjonpipePage } from '../dsh1-second-prjonpipe/dsh1-second-prjonpipe';
 import { Dsh1SecondRfiPage} from '../dsh1-second-rfi/dsh1-second-rfi';
 import { Dsh1SecondAfterrfiPage} from '../dsh1-second-afterrfi/dsh1-second-afterrfi';
 import * as HighCharts from "highcharts";
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
+
 // import HighCharts from 'highcharts'
 // import addMore from "highcharts/highcharts-more";
 
 // addMore(Highcharts)
+var defaultUrlImg="assets/img/new/";
+var varSecond0=0;
+var varSecond1=0;
+var varSecond2=0;
+var varSecond3=0;
+var varPerubisCol_1=0;
+var varPerubisCol_2=0;
+var varPerubisCol_3=0;
+var varPerubisCol_4=0;
 
+var aryB2S_AREA_NOT_RELEASE=[];
+var aryB2S_AREA_PRJ_ON_PIPE=[];
+var aryRFI=[];
+var aryARFI=[];
+var valArrayCheck=false;
+
+//Google Variable
+declare var google;
+// var marker = [];
 
 @Component({
   selector: 'page-home',
@@ -27,13 +50,22 @@ import * as HighCharts from "highcharts";
 export class HomePage {
   // search condition
   // public search = {
-  //   name: "Rio de Janeiro, Brazil",
+  //   name: "Piter, Indonesia",
   //   date: new Date().toISOString()
   // }
   //today;
   // dataInicial: any;
   // maxDate: string;
   // @ViewChild(Content) content: Content
+  private subscription1;
+  private subscription2;
+  private cardValue_Header;
+  //MAP
+  @ViewChild('map1') mapElement2: ElementRef;
+  map1: any;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  mapOptions1:any;
 
   constructor(
       // private storage: Storage,
@@ -41,11 +73,19 @@ export class HomePage {
       public popoverCtrl: PopoverController,
       private dashboarAll: DashboardAllProvider,
       public alertCtrl: AlertController,
-      public modalCtrl: ModalController
+      public modalCtrl: ModalController,
+      private database: DatabaseProvider
       // private pageScrollService: PageScrollService
       // ,@Inject(DOCUMENT)
       // private document: any
-  ) {
+  ){
+    this.mapOptions1={
+      zoom: 4,
+      center: new google.maps.LatLng(-2.209764,117.114258),
+      styles: this.database._defaultNewStyle
+    };
+
+    // this.dashboarAll.getAllPrj();
     //this.today = new Date().toISOString();
     // this.getDataAll();
 
@@ -53,7 +93,263 @@ export class HomePage {
 
   }
 
-  public secondAlertInfo1(){
+  ngOnInit() {
+    // this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      // this.dashboarAll.getAllPrj();
+      // this.dashboarAll.getSetting();
+    // });
+  }
+   /**
+   * Event Back / close Page
+   */
+  ionViewWillUnload() {
+    console.log("Previus page")
+    // this.subscription1.unsubscribe();
+    // this.subscription2.unsubscribe();
+  }
+
+  ionViewDidLoad():void{
+    //== Mouse Over - Change Color ==
+    // this.dashboarAll.getAllPrj();
+    this.firstCardEventMouse();
+    this.secondEventMousehover();
+    this.trheeEventMousehover();
+    document.getElementById("divPerUbis").hidden = true;
+    this.fourthEventMousehover();
+    document.getElementById("divPerArea").hidden = true;
+    this.drilldown();
+    this.nilaiDispyValue1();
+    this.initMap();
+  }
+
+  ionViewDidEnter(){
+    // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+      //  this.nilaiDispyValue1();
+    // });
+  }
+
+  initMap(){
+    this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
+    this.directionsDisplay.setMap(this.map1);
+  }
+
+  nilaiDispyValue1(){
+    /**
+     * Load Sqlite data periodik.
+     */
+    console.log("valAry" +  valArrayCheck);
+      // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ"
+      //               +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      // let getDataQry=this.database.selectData(querySql);
+      // getDataQry.then(data=>{
+        var aryRslt=[];
+        var ary_Header=[];
+        var aryB2S_AREA=[];
+        // setTimeout(()=> {
+            aryRslt=[];
+            aryRslt.push(this.database.setAllProject_first);
+            // aryRslt.push(data);
+            if(aryRslt[0].length > 0) {
+              valArrayCheck=true;
+              // console.log(aryRslt);
+
+              //-Set ARRAY GROUP - HEADER
+              ary_Header=[];
+              ary_Header.push(aryRslt[0].filter(function(headerObj){
+                return headerObj.SEQ.indexOf("HEADER") > -1
+              })
+              );
+              // ary_Header[0].sort("URUTAN");
+              // - ORDER SORT
+              ary_Header.sort((a, b):number=>{
+                if (a.URUTAN < b.URUTAN) return -1;
+                if (a.URUTAN > b.URUTAN) return 1;
+                return 0;
+              });
+
+
+              //-Set ARRAY GROUP - B2S
+              aryB2S_AREA=[];
+              aryB2S_AREA.push(aryRslt[0].filter(function(b2cAreaObj){
+                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                })
+              );
+              // - NOT RELEASE
+              aryB2S_AREA_NOT_RELEASE=[];
+              aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                })
+              );
+              // - PROJECT ON PIPE
+              aryB2S_AREA_PRJ_ON_PIPE=[];
+              aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
+                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                })
+              );
+              // - RFI
+              aryRFI=[];
+              aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+                  return rfiObj.GRP.indexOf("RFI") > -1
+                })
+              );
+              // -AFTER RFI
+              aryARFI=[];
+              aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+                  return arfiObj.GRP.indexOf("ARFI") > -1
+                })
+              );
+              console.log(
+                  " varSecond0="+ varSecond0 +
+                  ",varSecond1="+ varSecond1 +
+                  ",varSecond2="+ varSecond2 +
+                  ",varSecond3="+ varSecond3
+              );
+
+              // First layer
+              document.getElementById("allPrjLabel").innerHTML=ary_Header[0][0].NILAI!=null?ary_Header[0][0].NILAI:0;
+
+              // - VIEWER
+              // console.log(aryB2S_AREA_NOT_RELEASE[1]);
+              // this.nilaiDispyValue1();
+              // console.log('Check='+ ary_Header[0][0].NILAI);
+              document.getElementById("secondValue[0]").innerHTML=ary_Header[0][1].NILAI!=null?ary_Header[0][1].NILAI + " %":"0%";
+              document.getElementById("secondValue[1]").innerHTML=ary_Header[0][2].NILAI!=null?ary_Header[0][2].NILAI + " %":"0%";
+              document.getElementById("secondValue[2]").innerHTML=ary_Header[0][3].NILAI!=null?ary_Header[0][3].NILAI + " %":"0%";
+              document.getElementById("secondValue[3]").innerHTML=ary_Header[0][4].NILAI!=null?ary_Header[0][4].NILAI + " %":"0%";
+              //NO-RELEASE
+              if (varSecond0==1){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
+                  if(varSecond0==1 && varPerubisCol_1==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                  }
+                  if(varSecond0==1 && varPerubisCol_4==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                  }
+              }
+              //PIPE
+              if (varSecond1==1){
+                document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
+                document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
+                document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
+                document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+                if(varSecond1==1 && varPerubisCol_1==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
+                }
+                if(varSecond1==1 && varPerubisCol_2==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
+                }
+                if(varSecond1==1 && varPerubisCol_3==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
+                }
+                if(varSecond1==1 && varPerubisCol_4==1){
+                  document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
+                  document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
+                  document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
+                  document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
+                }
+            }
+            //RFI
+            if (varSecond2==1){
+              document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
+              document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
+              document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
+              document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
+              if(varSecond2==1 && varPerubisCol_1==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
+              }
+              if(varSecond2==1 && varPerubisCol_2==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
+              }
+              if(varSecond2==1 && varPerubisCol_3==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
+              }
+              if(varSecond2==1 && varPerubisCol_4==1){
+                document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
+              }
+            }
+            //-ARFI
+            if (varSecond3==1){
+              document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
+              document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
+              document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
+              document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
+              if(varSecond3==1 && varPerubisCol_1==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_2==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_3==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+              }
+              if(varSecond3==1 && varPerubisCol_4==1){
+                document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
+                document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
+                document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
+                document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+              }
+            }
+          }else{
+            valArrayCheck=false;
+          }
+        // },500);
+      // });
+  }
+
+  private secondAlertInfo1(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -84,7 +380,7 @@ export class HomePage {
     alert1.present();
   }
 
-  public secondAlertInfo2(){
+  private secondAlertInfo2(){
       //var data = { message : 'hello world' };
       var ModalAdduser = this.modalCtrl.create(Dsh1SecondPrjonpipePage);
       ModalAdduser.onDidDismiss(() => {
@@ -119,7 +415,7 @@ export class HomePage {
     // alert1.present();
   }
 
-  public secondAlertInfo3(){
+  private secondAlertInfo3(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -147,7 +443,7 @@ export class HomePage {
     alert1.present();
   }
 
-  public secondAlertInfo4(){
+  private secondAlertInfo4(){
     let alert1= this.alertCtrl.create({
       title: '<p>Warning<p>',
       //subTitle:'subtitle',
@@ -202,64 +498,17 @@ export class HomePage {
 
   //    }
 
-  getDataAll(){
-    this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
-  }
+  // getDataAll(){
+  //   this.dashboarAll.getDataAll().subscribe(data=>console.log(data));
+  // }
 
-  getCobaData(){
-    this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
-  }
-
-  ionViewDidLoad() {
-    //== Mouse Over - Change Color ==
-    this.firstCardEventMouse();
-    this.secondEventMousehover();
-    this.trheeEventMousehover();
-    document.getElementById("divPerUbis").hidden = true;
-    this.fourthEventMousehover();
-    document.getElementById("divPerArea").hidden = true;
-    this.drilldown();
+  // getCobaData(){
+  //   // this.dashboarAll.getCobaData().subscribe(data=>console.log(data));
+  // }
 
 
-    // var objRelease=document.getElementById("card-footer-release");
-    // objRelease.addEventListener('click', function (){
-    //   alert("test");
-    // });
-  }
 
-  firstCardEventMouse(){
-    // SECOND TO THREE
-    // == Not Release
-    var defaultUrlImg="assets/img/new/";
-    var varSecond0=0;
-    var varSecond1=0;
-    var varSecond2=0;
-    var varSecond3=0;
-    var varPerubisCol_1=0;
-    var varPerubisCol_2=0;
-    var varPerubisCol_3=0;
-    var varPerubisCol_4=0;
-    // var ObjSecondNotRelease= <HTMLImageElement>document.getElementById("divId_header_notRelease");
-    //     ObjSecondNotRelease.addEventListener('click', function () {
-    //       switch(expression) {
-    //         case 0:
-    //             document.getElementById("divPerUbis").hidden = false;
-    //             // var objScoundImg1= <HTMLImageElement>document.getElementById("second-img-4");
-    //             // objScoundImg1.src = "assets/img/new/PoP_m.png";
-    //             expression = 1;
-    //             break;
-    //         case 1:
-    //              document.getElementById("divPerUbis").hidden = true;
-    //              document.getElementById("divPerArea").hidden = true;
-    //              expression = 0;
-    //              varPerubisCol_1=0;
-    //             break;
-    //         default:
-    //             document.getElementById("divPerUbis").hidden = true;
-    //     }
-
-    // });
-
+  private firstCardEventMouse(){
     //=>SeCOND DIFINITION
     var ObjSecond0= <HTMLImageElement>document.getElementById("divSecond[0]");
     var ObjSecond1= <HTMLImageElement>document.getElementById("divSecond[1]");
@@ -295,13 +544,21 @@ export class HomePage {
     var firstLabel1= <HTMLImageElement>document.getElementById("firstLabel[1]"); //image
     var firstLabel2= <HTMLImageElement>document.getElementById("firstLabel[2]"); //Value
     var firstLabel3= <HTMLImageElement>document.getElementById("firstLabel[3]"); //text footer
-
+    firstLabel0.innerText ="";
+    firstLabel1.src = "";// defaultUrlImg + "All_Project_m.png";
+    firstLabel2.innerText =""; //getfrom API
+    firstLabel3.innerText ="";
     // SECOND TO THREE
     // == PER-UBIS -> B2S
     //== divSecond[0]
     ObjSecond0.addEventListener('click', function () {
       switch(varSecond0) {
           case 0:
+                varSecond0 = 1;
+                varSecond1 = 0;
+                varSecond2 = 0;
+                varSecond3 = 0;
+
                 ObjSecond0.style.backgroundColor="#83D7F1";
                 ObjSecond1.style.backgroundColor="#FFFFFF";
                 ObjSecond2.style.backgroundColor="#FFFFFF";
@@ -312,10 +569,7 @@ export class HomePage {
                 ObjThree3.style.backgroundColor="#FFFFFF";
 
                 document.getElementById("divPerUbis").hidden = false;
-                varSecond0 = 1;
-                varSecond1 = 0;
-                varSecond2 = 0;
-                varSecond3 = 0;
+
 
                 var srcScoundImgName0=objScoundImg0.src;
                 var aryScoundImgName0 = srcScoundImgName0.split("/");
@@ -338,11 +592,22 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                  //aryB2S_AREA_NOT_RELEASE
+                  //aryB2S_AREA_PRJ_ON_PIPE
+                  //aryRFI
+                  //aryARFI
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].NILAI!=null?aryB2S_AREA_NOT_RELEASE[0][3].NILAI:0;
+                // console.log(aryB2S_AREA_NOT_RELEASE);
+                }
               break;
           case 1:
-                firstLabel0.innerText ="All Project";
-                firstLabel1.src =  defaultUrlImg + "All_Project_m.png";
-                firstLabel2.innerText ="1000"; //getfrom API
+                firstLabel0.innerText ="";
+                firstLabel1.src =  "";//defaultUrlImg + "All_Project_m.png";
+                firstLabel2.innerText =""; //getfrom API
                 firstLabel3.innerText ="";
                 ObjSecond0.style.backgroundColor="#FFFFFF";
                 ObjThree0.style.backgroundColor="#FFFFFF";
@@ -399,11 +664,19 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                //VALUE B2S - AREA_PRJ_ON_PIPE
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].NILAI:0;
+                }
+
               break;
           case 1:
-                firstLabel0.innerText ="All Project";
-                firstLabel1.src =  defaultUrlImg + "All_Project_m.png";
-                firstLabel2.innerText ="1000"; //getfrom API
+                firstLabel0.innerText ="";
+                firstLabel1.src = "";// defaultUrlImg + "All_Project_m.png";
+                firstLabel2.innerText =""; //getfrom API
                 firstLabel3.innerText ="";
                 ObjSecond1.style.backgroundColor="#FFFFFF";
                 ObjThree0.style.backgroundColor="#FFFFFF";
@@ -460,11 +733,18 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="Area2";
                 objFourthFooterLabelLeft2.innerText ="Area3";
                 objFourthFooterLabelLeft3.innerText ="Area4";
+                // VALUE RFI
+                if (valArrayCheck==true){
+                  document.getElementById("threeValue[0]").innerText=aryRFI[0][0].NILAI!=null?aryRFI[0][0].NILAI:0;
+                  document.getElementById("threeValue[1]").innerText=aryRFI[0][1].NILAI!=null?aryRFI[0][1].NILAI:0;
+                  document.getElementById("threeValue[2]").innerText=aryRFI[0][2].NILAI!=null?aryRFI[0][2].NILAI:0;
+                  document.getElementById("threeValue[3]").innerText=aryRFI[0][3].NILAI!=null?aryRFI[0][3].NILAI:0;
+                }
               break;
           case 1:
-                firstLabel0.innerText ="All Project";
-                firstLabel1.src =  defaultUrlImg + "All_Project_m.png";
-                firstLabel2.innerText ="1000"; //getfrom API
+                firstLabel0.innerText ="";
+                firstLabel1.src =  "";//defaultUrlImg + "All_Project_m.png";
+                firstLabel2.innerText =""; //getfrom API
                 firstLabel3.innerText ="";
                 ObjSecond2.style.backgroundColor="#FFFFFF";
                 ObjThree0.style.backgroundColor="#FFFFFF";
@@ -522,11 +802,17 @@ export class HomePage {
                 objFourthFooterLabelLeft1.innerText ="BAPS";
                 objFourthFooterLabelLeft2.innerText ="Invoice";
                 objFourthFooterLabelLeft3.innerText ="close";
-
+                 //VALUE - aryARFI
+                if (valArrayCheck==true){
+                 document.getElementById("threeValue[0]").innerText=aryARFI[0][0].NILAI!=null?aryARFI[0][0].NILAI:0;
+                 document.getElementById("threeValue[1]").innerText=aryARFI[0][1].NILAI!=null?aryARFI[0][1].NILAI:0;
+                 document.getElementById("threeValue[2]").innerText=aryARFI[0][2].NILAI!=null?aryARFI[0][2].NILAI:0;
+                 document.getElementById("threeValue[3]").innerText=aryARFI[0][3].NILAI!=null?aryARFI[0][3].NILAI:0;
+                }
               break;
           case 1:
-                firstLabel0.innerText ="All Project";
-                firstLabel1.src =  defaultUrlImg + "All_Project_m.png";
+                firstLabel0.innerText ="";
+                firstLabel1.src ="";//  defaultUrlImg + "All_Project_m.png";
                 firstLabel2.innerText =""; //getfrom API
                 firstLabel3.innerText ="";
                 ObjSecond3.style.backgroundColor="#FFFFFF";
@@ -576,6 +862,35 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName0;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
+                   //
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][0].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][0].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4:0;
+                    }
+
+                    if (varSecond2==1){
+                      document.getElementById("fourthValue[0]").innerText=aryRFI[0][0].AREA1!=null?aryRFI[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryRFI[0][0].AREA2!=null?aryRFI[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryRFI[0][0].AREA3!=null?aryRFI[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryRFI[0][0].AREA4!=null?aryRFI[0][0].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                      document.getElementById("fourthValue[0]").innerText=aryARFI[0][0].AREA1!=null?aryARFI[0][0].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryARFI[0][0].AREA2!=null?aryARFI[0][0].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryARFI[0][0].AREA3!=null?aryARFI[0][0].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryARFI[0][0].AREA4!=null?aryARFI[0][0].AREA4:0;
+                    }
+                  }
+
                   break;
             case 1:
                   ObjThree0.style.backgroundColor="#FFFFFF";
@@ -618,7 +933,35 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName1;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
-                  break;
+
+                  //VALUE
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][1].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][1].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                      document.getElementById("fourthValue[0]").innerText=aryRFI[0][1].AREA1!=null?aryRFI[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryRFI[0][1].AREA2!=null?aryRFI[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryRFI[0][1].AREA3!=null?aryRFI[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryRFI[0][1].AREA4!=null?aryRFI[0][1].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                      document.getElementById("fourthValue[0]").innerText=aryARFI[0][1].AREA1!=null?aryARFI[0][1].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryARFI[0][1].AREA2!=null?aryARFI[0][1].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryARFI[0][1].AREA3!=null?aryARFI[0][1].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryARFI[0][1].AREA4!=null?aryARFI[0][1].AREA4:0;
+                    }
+                  }
+              break;
             case 1:
                   ObjThree1.style.backgroundColor="#FFFFFF";
                   varPerubisCol_2= 0;
@@ -658,6 +1001,32 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName2;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][2].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][2].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][2].AREA1!=null?aryRFI[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][2].AREA2!=null?aryRFI[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][2].AREA3!=null?aryRFI[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][2].AREA4!=null?aryRFI[0][2].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][2].AREA1!=null?aryARFI[0][2].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][2].AREA2!=null?aryARFI[0][2].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][2].AREA3!=null?aryARFI[0][2].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][2].AREA4!=null?aryARFI[0][2].AREA4:0;
+                    }
+                  }
                   break;
             case 1:
                   ObjThree2.style.backgroundColor="#FFFFFF";
@@ -700,7 +1069,32 @@ export class HomePage {
                   firstLabel1.src =  defaultUrlImg + ThreeImgName3;
                   firstLabel2.innerText ="";
                   firstLabel3.innerText ="PER-AREA";
-
+                  if (valArrayCheck==true){
+                    if (varSecond0==1){
+                      document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA1!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA1:0;
+                      document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA2!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA2:0;
+                      document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA3!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA3:0;
+                      document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_NOT_RELEASE[0][3].AREA4!=null?aryB2S_AREA_NOT_RELEASE[0][3].AREA4:0;
+                    }
+                    if (varSecond1==1){
+                    document.getElementById("fourthValue[0]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4!=null?aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4:0;
+                    }
+                    if (varSecond2==1){
+                    document.getElementById("fourthValue[0]").innerText=aryRFI[0][3].AREA1!=null?aryRFI[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryRFI[0][3].AREA2!=null?aryRFI[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryRFI[0][3].AREA3!=null?aryRFI[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryRFI[0][3].AREA4!=null?aryRFI[0][3].AREA4:0;
+                    }
+                    if (varSecond3==1){
+                    document.getElementById("fourthValue[0]").innerText=aryARFI[0][3].AREA1!=null?aryARFI[0][3].AREA1:0;
+                    document.getElementById("fourthValue[1]").innerText=aryARFI[0][3].AREA2!=null?aryARFI[0][3].AREA2:0;
+                    document.getElementById("fourthValue[2]").innerText=aryARFI[0][3].AREA3!=null?aryARFI[0][3].AREA3:0;
+                    document.getElementById("fourthValue[3]").innerText=aryARFI[0][3].AREA4!=null?aryARFI[0][3].AREA4:0;
+                    }
+                  }
                   break;
             case 1:
                   ObjThree3.style.backgroundColor="#FFFFFF";
@@ -718,7 +1112,7 @@ export class HomePage {
     })
   }
 
-  secondEventMousehover(){
+  private secondEventMousehover(){
     // NOT-RELEASE
     var objRelease= <HTMLImageElement>document.getElementById("card-footer-release");
         objRelease.onmouseover = function () {
@@ -754,7 +1148,7 @@ export class HomePage {
   }
 
   //THREE - PerUbis
-  trheeEventMousehover(){
+  private trheeEventMousehover(){
     // BUILT TO SUIT
     var objB2c= <HTMLImageElement>document.getElementById("three-card-footer-b2c");
         objB2c.onmouseover = function () {
@@ -790,7 +1184,7 @@ export class HomePage {
   }
 
   //FOURTH - PerArea
-  fourthEventMousehover(){
+  private fourthEventMousehover(){
     // AREA 1
     var objArea1= <HTMLImageElement>document.getElementById("fourth-card-footer-area1");
         objArea1.onmouseover = function () {
@@ -825,9 +1219,8 @@ export class HomePage {
         }
   }
 
-  drilldown(){
-
-    var myChart = HighCharts.chart('testChart1', {
+  private drilldown(){
+    var myChart = HighCharts.chart('allPrjChart', {
       chart: {
         zoomType: 'x',
         panning: true,
@@ -901,6 +1294,8 @@ export class HomePage {
     });
 
 
+
+
   }
 
   // ionViewWillEnter() {
@@ -928,7 +1323,7 @@ export class HomePage {
   // }
 
   // to go account page
-  goToAccount() {
+  private goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
 

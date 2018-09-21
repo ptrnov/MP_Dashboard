@@ -23,6 +23,11 @@ ver 1.0.0
     # npm install --save @ionic-native/toast
 8. tslint
    #npm install -g tslint
-9. 
-
+9. SqiIte Sync Api
+   On Forlder Provider
+10. Screen Orantion
+    add in config.xml : <preference name="orientation" value="portrait" />
+11. Searcable
+    #npm install ionic-select-searchable --save 
+    reff: https://www.npmjs.com/package/ionic-select-searchable
 ````

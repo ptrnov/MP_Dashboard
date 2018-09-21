@@ -89,8 +89,29 @@ page-home {
     border : 1px solid #e2e2e2;
   }
 
+  .card-box-map-header{
+    background-color:rgba(255, 253, 253, 0.993);
+    height: 50px;
+    margin-top: -10px;
+    border-radius: 0px 0px 0px 0px;
+    border : 1px solid #e2e2e2;
+    margin-bottom:14px;
+    padding-right: -10px;
+    margin-left: 7px;
+  }
+
+  .card-box-map{
+    background-color:#FFFF;
+    margin-top: -10px;
+    border-radius: 0px 0px 5px 5px;
+    border : 1px solid #e2e2e2;
+    margin-bottom:50px;
+    // padding-right: -10px;
+    margin-left: 7px;
+  }
+
   // FIRST ROWS
-  .first-card{
+  .first-card1{
     background-color:#FFFF;
     border-radius: 7px 7px 7px 7px;
     border : 1px solid #e2e2e2;
@@ -120,7 +141,49 @@ page-home {
       margin-top: -20px;
     }
 
-    #first-card-footer-PrjAll{
+    #first-card1-footer-PrjAll{
+      background-color: #E9E9E9
+    }
+
+    .first-column-tanggal{
+      background-color: #FAFBFC;
+      padding-top: 20px;
+      margin-left: 5px;
+    }
+  }
+
+  // FIRST ROWS
+  .first-card2{
+    background-color:#FFFF;
+    border-radius: 7px 7px 7px 7px;
+    border : 1px solid #e2e2e2;
+    .header-title{
+      width : 80%;
+      font-size: 8px;
+      text-align: right;
+      font-weight: bold;
+      vertical-align: top;
+      //margin-left: 50px;
+      float: right;
+    }
+    .left-icon{
+      width : 20%;
+      height: 20%;
+      //margin-left: -10px;
+      //padding:5px 0px 5px 10px;
+    // vertical-align: center;
+      float: left;
+    }
+    .right-text{
+      font-size: 8px;
+      width : 100%;
+      height: -60px;
+      text-align: right;
+      font-weight: bold;
+      margin-top: -20px;
+    }
+
+    #first-card2-footer-PrjAll{
       background-color: #E9E9E9
     }
 
