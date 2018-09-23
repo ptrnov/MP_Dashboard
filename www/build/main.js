@@ -54,7 +54,7 @@ var TripService = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh1SecondAfterrfiPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -104,7 +104,7 @@ var Dsh1SecondAfterrfiPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh1SecondNoreleasePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_database_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__);
@@ -295,7 +295,7 @@ var Dsh1SecondPrjonpipePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh1SecondRfiPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -345,10 +345,9 @@ var Dsh1SecondRfiPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh2HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highcharts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_highcharts__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_database_database__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -362,9 +361,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 // import { DomCard } from "./card";
 var chkInit = false;
+var dsh2_0card_0content_click = 0;
+var dsh2_0card_1content_click = 0;
+var dsh2_0card_2content_click = 0;
+var dsh2_0card_3content_click = 0;
 var Dsh2HomePage = (function () {
     function Dsh2HomePage(navCtrl, navParams, database) {
         this.navCtrl = navCtrl;
@@ -379,27 +381,8 @@ var Dsh2HomePage = (function () {
         };
     }
     Dsh2HomePage.prototype.ionViewDidLoad = function () {
-        // /** ROW 1*/
-        // document.getElementById("dsh2[0]").hidden = false;
-        //   /** CARD */
-        //   document.getElementById("dsh2[0]card[0]").hidden = false;
-        //     /** CARD CONTENT */
-        //     document.getElementById("dsh2[0]card[0]content").hidden = false;
-        //         /** CONTENT HEADER */
-        //         document.getElementById("dsh2[0]card[0]content[0]").hidden = false;
-        //             /** CONTENT HEADER PROPERTIES */
-        //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").hidden = false;
-        //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").innerHTML = " All Project";
-        //         /** CONTENT CONTENT*/
-        //         document.getElementById("dsh2[0]card[0]content[1]").hidden = false;
-        //             /** CONTENT CONTENT PROPERTIES */
-        //             document.getElementById("dsh2[0]card[0]content[1]-properties-img").hidden = false;
-        //             document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").hidden = false;
-        //     /** CARD FOOTER */
-        //     document.getElementById("dsh2[0]-card[0]footer").hidden = false;
-        //       /** CARD FOOTER PROPERTIES */
-        //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[0]").hidden = false;
-        //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[1]").hidden = true;
+        this.initMouseOverOut();
+        this.initClickEvent();
         this.initMap();
         console.log('ionViewDidLoad Dsh2HomePage');
         // if (chkInit==true){
@@ -411,15 +394,15 @@ var Dsh2HomePage = (function () {
         this.map2 = new google.maps.Map(document.getElementById("map2"), this.mapOptions2);
         this.directionsDisplay.setMap(this.map2);
     };
-    Dsh2HomePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
-    };
+    // goToAccount() {
+    //   this.navCtrl.push(SettingsPage);
+    // }
     Dsh2HomePage.prototype.ionViewWillUnload = function () {
         // chkInit=false;
         // this.charting.distroy;
     };
     Dsh2HomePage.prototype.drilldown = function () {
-        this.charting = __WEBPACK_IMPORTED_MODULE_3_highcharts__["chart"]({
+        this.charting = __WEBPACK_IMPORTED_MODULE_2_highcharts__["chart"]({
             chart: {
                 renderTo: 'b2cChart',
                 zoomType: 'x',
@@ -491,40 +474,180 @@ var Dsh2HomePage = (function () {
             }
         });
     };
-    Dsh2HomePage.prototype.initDomManipulation = function () {
-        /** ROW 1*/
-        var dsh2_0 = document.getElementById("dsh2[0]");
-        /** CARD */
-        var dsh2_0card_0 = document.getElementById("dsh2[0]card[0]");
-        /** CARD CONTENT */
+    Dsh2HomePage.prototype.initClickEvent = function () {
         var dsh2_0card_0content = document.getElementById("dsh2[0]card[0]content");
-        /** CONTENT HEADER */
-        var dsh2_0card_0content_0 = document.getElementById("dsh2[0]card[0]content[0]");
-        /** CONTENT HEADER PROPERTIES */
-        var dsh2_0card_0content_0_properties_lbl = document.getElementById("dsh2[0]card[0]content[0]-properties-lbl");
-        /** CONTENT CONTENT*/
-        var dsh2_0card_0content_1 = document.getElementById("dsh2[0]card[0]content[1]");
-        /** CONTENT CONTENT PROPERTIES */
-        var dsh2_0card_0content_1_properties_img = document.getElementById("dsh2[0]card[0]content[1]-properties-img");
-        var dsh2_0card_0content_1_properties_lbl = document.getElementById("dsh2[0]card[0]content[1]-properties-lbl");
-        /** CARD FOOTER */
-        var dsh2_0card_0footer = document.getElementById("dsh2[0]-card[0]footer");
-        /** CARD FOOTER PROPERTIES */
-        var dsh2_0card_0footer_properties_lbl_0 = document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
-        var dsh2_0card_0footer_properties_lbl_1 = document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
+        dsh2_0card_0content.addEventListener('click', function () {
+            switch (dsh2_0card_0content_click) {
+                case 0:
+                    dsh2_0card_0content_click = 1;
+                    dsh2_0card_0content.style.backgroundColor = "#83D7F1";
+                    //yang tidak di click kembali default
+                    dsh2_0card_1content.style.backgroundColor = "#FFFF";
+                    dsh2_0card_2content.style.backgroundColor = "#FFFF";
+                    dsh2_0card_3content.style.backgroundColor = "#FFFF";
+                    dsh2_0card_1content_click = 0;
+                    dsh2_0card_2content_click = 0;
+                    dsh2_0card_3content_click = 0;
+                    break;
+                case 1:
+                    dsh2_0card_0content_click = 0;
+                    dsh2_0card_0content.style.backgroundColor = "#FFFF";
+                    break;
+                default:
+            }
+            ;
+        });
+        var dsh2_0card_1content = document.getElementById("dsh2[0]card[1]content");
+        dsh2_0card_1content.addEventListener('click', function () {
+            switch (dsh2_0card_1content_click) {
+                case 0:
+                    dsh2_0card_1content_click = 1;
+                    dsh2_0card_1content.style.backgroundColor = "#83D7F1";
+                    break;
+                case 1:
+                    dsh2_0card_1content_click = 0;
+                    dsh2_0card_1content.style.backgroundColor = "#FFFF";
+                    break;
+                default:
+            }
+            ;
+        });
+        var dsh2_0card_2content = document.getElementById("dsh2[0]card[2]content");
+        dsh2_0card_2content.addEventListener('click', function () {
+            switch (dsh2_0card_2content_click) {
+                case 0:
+                    dsh2_0card_2content_click = 1;
+                    dsh2_0card_2content.style.backgroundColor = "#83D7F1";
+                    break;
+                case 1:
+                    dsh2_0card_2content_click = 0;
+                    dsh2_0card_2content.style.backgroundColor = "#FFFF";
+                    break;
+                default:
+            }
+            ;
+        });
+        var dsh2_0card_3content = document.getElementById("dsh2[0]card[3]content");
+        dsh2_0card_3content.addEventListener('click', function () {
+            switch (dsh2_0card_3content_click) {
+                case 0:
+                    dsh2_0card_3content_click = 1;
+                    dsh2_0card_3content.style.backgroundColor = "#83D7F1";
+                    break;
+                case 1:
+                    dsh2_0card_3content_click = 0;
+                    dsh2_0card_3content.style.backgroundColor = "#FFFF";
+                    break;
+                default:
+            }
+            ;
+        });
+    };
+    Dsh2HomePage.prototype.initMouseOverOut = function () {
+        /* FOOTER */
+        var dsh2_0card_0footer = document.getElementById("dsh2[0]card[0]footer");
+        dsh2_0card_0footer.onmouseover = function () {
+            dsh2_0card_0footer.style.backgroundColor = "#FA8633";
+        };
+        dsh2_0card_0footer.onmouseout = function () {
+            dsh2_0card_0footer.style.backgroundColor = "#E9E9E9";
+        };
+        var dsh2_0card_1footer = document.getElementById("dsh2[0]card[1]footer");
+        dsh2_0card_1footer.onmouseover = function () {
+            dsh2_0card_1footer.style.backgroundColor = "#FA8633";
+        };
+        dsh2_0card_1footer.onmouseout = function () {
+            dsh2_0card_1footer.style.backgroundColor = "#E9E9E9";
+        };
+        var dsh2_0card_2footer = document.getElementById("dsh2[0]card[2]footer");
+        dsh2_0card_2footer.onmouseover = function () {
+            dsh2_0card_2footer.style.backgroundColor = "#FA8633";
+        };
+        dsh2_0card_2footer.onmouseout = function () {
+            dsh2_0card_2footer.style.backgroundColor = "#E9E9E9";
+        };
+        var dsh2_0card_3footer = document.getElementById("dsh2[0]card[3]footer");
+        dsh2_0card_3footer.onmouseover = function () {
+            dsh2_0card_3footer.style.backgroundColor = "#FA8633";
+        };
+        dsh2_0card_3footer.onmouseout = function () {
+            dsh2_0card_3footer.style.backgroundColor = "#E9E9E9";
+        };
+        /* Contain */
+        var dsh2_0card_0content = document.getElementById("dsh2[0]card[0]content");
+        dsh2_0card_0content.onmouseover = function () {
+            dsh2_0card_0content.style.backgroundColor = "#BBE5F2";
+        };
+        dsh2_0card_0content.onmouseout = function () {
+            if (dsh2_0card_0content_click != 1) {
+                dsh2_0card_0content.style.backgroundColor = "#FFFF";
+            }
+        };
+        var dsh2_0card_1content = document.getElementById("dsh2[0]card[1]content");
+        dsh2_0card_1content.onmouseover = function () {
+            dsh2_0card_1content.style.backgroundColor = "#BBE5F2";
+        };
+        dsh2_0card_1content.onmouseout = function () {
+            if (dsh2_0card_1content_click != 1) {
+                dsh2_0card_1content.style.backgroundColor = "#FFFF";
+            }
+        };
+        var dsh2_0card_2content = document.getElementById("dsh2[0]card[2]content");
+        dsh2_0card_2content.onmouseover = function () {
+            dsh2_0card_2content.style.backgroundColor = "#BBE5F2";
+        };
+        dsh2_0card_2content.onmouseout = function () {
+            if (dsh2_0card_2content_click != 1) {
+                dsh2_0card_2content.style.backgroundColor = "#FFFF";
+            }
+        };
+        var dsh2_0card_3content = document.getElementById("dsh2[0]card[3]content");
+        dsh2_0card_3content.onmouseover = function () {
+            dsh2_0card_3content.style.backgroundColor = "#BBE5F2";
+        };
+        dsh2_0card_3content.onmouseout = function () {
+            if (dsh2_0card_3content_click != 1) {
+                dsh2_0card_3content.style.backgroundColor = "#FFFF";
+            }
+        };
+        /** Guide ROW */
+        // var dsh2_0=document.getElementById("dsh2[0]");
+        // /** CARD */
+        // var dsh2_0card_0=document.getElementById("dsh2[0]card[0]");
+        // /** CARD CONTENT */
+        // var dsh2_0card_content_bolean:boolean=true;
+        // var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
+        // var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
+        // var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
+        // var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
+        // /** CONTENT HEADER */
+        // var dsh2_0card_0content_0=document.getElementById("dsh2[0]card[0]content[0]");
+        // /** CONTENT HEADER PROPERTIES */
+        // var dsh2_0card_0content_0_properties_lbl=document.getElementById("dsh2[0]card[0]content[0]-properties-lbl");
+        // /** CONTENT CONTENT*/
+        // var dsh2_0card_0content_1=document.getElementById("dsh2[0]card[0]content[1]");
+        // /** CONTENT CONTENT PROPERTIES */
+        // var dsh2_0card_0content_1_properties_img=document.getElementById("dsh2[0]card[0]content[1]-properties-img");
+        // var dsh2_0card_0content_1_properties_lbl=document.getElementById("dsh2[0]card[0]content[1]-properties-lbl");
+        // /** CARD FOOTER */
+        // var dsh2_0card_0footer=document.getElementById("dsh2[0]-card[0]footer");
+        // /** CARD FOOTER PROPERTIES */
+        // var dsh2_0card_0footer_properties_lbl_0=document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
+        // var dsh2_0card_0footer_properties_lbl_1=document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('map2'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
     ], Dsh2HomePage.prototype, "mapElement2", void 0);
     Dsh2HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh2-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Build to Suite Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <!-- <ion-scroll scrollY="true"> -->\n          <ion-row>\n    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n      <ion-row id="dsh2[0]" class="full-width" style="margin-top: -20px">\n        <!-- All Project -->\n        <ion-col col-3>\n            <ion-card id="dsh2[0]card[0]" class="card full-width">\n                <div  id="dsh2[0]card[0]content">\n                  <ion-card-header id="dsh2[0]card[0]content[0]">\n                      <ion-label class="header-title" id="dsh2[0]card[0]content[0]-properties-lbl">\n                        All Project\n                      </ion-label>\n                  </ion-card-header>\n                  <ion-card-content id="dsh2[0]card[0]content[1]">\n                    <div>\n                      <ion-row class="row">\n                            <img  class="content-icon1" id="dsh2[0]card[0]content[1]-properties-img" src="assets/img/new/All_Project_m.png">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            <ion-label class="content-lbl1" id="dsh2[0]card[0]content[1]-properties-lbl">99 </ion-label>\n                      </ion-row>\n                    </div>\n                  </ion-card-content>\n                </div>\n                <div id="dsh2[0]card[0]footer">\n                  <ion-row class="footer-color-block full-width">\n                      <ion-label class="footer-font-lbl0" id="dsh2[0]card[0]footer-properties-lbl[0]">\n                        Total\n                      </ion-label>\n                      <ion-label class="footer-font-lbl1" id="dsh2[0]card[0]footer-properties-lbl[1]">\n                        129222\n                      </ion-label>\n                  </ion-row>\n              </div>\n            </ion-card>\n          </ion-col>\n           <!-- NOT RELEASE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[1]card[0]" class="card full-width">\n                  <div  id="dsh2[1]card[0]content">\n                    <ion-card-header id="dsh2[1]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[1]card[0]content[0]-properties-lbl">\n                            Not Release\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[1]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[1]card[0]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[1]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[1]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[1]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[1]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n          <!-- PROJECT ON PIPE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[2]card[0]" class="card full-width">\n                  <div  id="dsh2[2]card[0]content">\n                    <ion-card-header id="dsh2[2]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[2]card[0]content[0]-properties-lbl">\n                            Prj on Pipe\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[2]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[2]card[0]content[1]-properties-img" src="assets/img/new/PoP_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[2]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[2]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[2]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[2]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n          <!-- RFI -->\n          <ion-col col-3>\n              <ion-card id="dsh2[3]card[0]" class="card full-width">\n                  <div  id="dsh2[3]card[0]content">\n                    <ion-card-header id="dsh2[3]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[3]card[0]content[0]-properties-lbl">\n                            RFI\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[3]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[3]card[0]content[1]-properties-img" src="assets/img/new/Rfi_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[3]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[3]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[3]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[3]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col style="margin-left:2%">\n            <div id="b2cChart" style = " display : block ; " > </div>\n          </ion-col>\n\n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-card class="card-box-map full-width">\n                  <div id="map2" style="height: 350px"></div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      </ion-row>\n    <!-- </ion-scroll> -->\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/,
+            selector: 'page-dsh2-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Build to Suite Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <!-- <ion-scroll scrollY="true"> -->\n          <ion-row>\n    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n      <ion-row id="dsh2[0]" class="full-width" style="margin-top: -20px">\n        <!-- All Project -->\n        <ion-col col-3>\n            <ion-card id="dsh2[0]card[0]" class="card full-width">\n                <ion-row  id="dsh2[0]card[0]content">\n                  <ion-card-header id="dsh2[0]card[0]content[0]">\n                      <ion-label class="header-title" id="dsh2[0]card[0]content[0]-properties-lbl">\n                        All Project\n                      </ion-label>\n                  </ion-card-header>\n                  <ion-card-content id="dsh2[0]card[0]content[1]">\n                        <ion-row class="row">\n                            <img  class="content-icon1" id="dsh2[0]card[0]content[1]-properties-img" src="assets/img/new/All_Project_m.png">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            <ion-label class="content-lbl1" id="dsh2[0]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                  </ion-card-content>\n                </ion-row>\n                <ion-row id="dsh2[0]card[0]footer" class="footer-color-block full-width">\n                    <ion-label class="footer-font-lbl0" id="dsh2[0]card[0]footer-properties-lbl[0]">\n                      Total\n                    </ion-label>\n                    <ion-label class="footer-font-lbl1" id="dsh2[0]card[0]footer-properties-lbl[1]">\n                      129222\n                    </ion-label>\n                </ion-row>\n            </ion-card>\n          </ion-col>\n           <!-- NOT RELEASE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[0]card[1]" class="card full-width">\n                  <ion-row  id="dsh2[0]card[1]content">\n                    <ion-card-header id="dsh2[0]card[1]content[0]">\n                        <ion-label class="header-title" id="dsh2[0]card[1]content[0]-properties-lbl">\n                            Not Release\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[0]card[1]content[1]">\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[0]card[1]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[0]card[1]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                    </ion-card-content>\n                  </ion-row>\n                  <ion-row id="dsh2[0]card[1]footer" class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[0]card[1]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[0]card[1]footer-properties-lbl[1]">\n                          129555\n                        </ion-label>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n          <!-- PROJECT ON PIPE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[0]card[2]" class="card full-width">\n                  <ion-row  id="dsh2[0]card[2]content">\n                    <ion-card-header id="dsh2[2]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[0]card[2]content[0]-properties-lbl">\n                            Prj on Pipe\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[0]card[2]content[1]">\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[0]card[2]content[1]-properties-img" src="assets/img/new/PoP_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[0]card[2]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                     </ion-card-content>\n                  </ion-row>\n                  <ion-row id="dsh2[0]card[2]footer" class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[0]card[2]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[0]card[2]footer-properties-lbl[1]">\n                          129444\n                        </ion-label>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n          <!-- RFI -->\n          <ion-col col-3>\n              <ion-card id="dsh2[0]card[3]" class="card full-width">\n                  <ion-row  id="dsh2[0]card[3]content">\n                    <ion-card-header id="dsh2[3]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[0]card[3]content[0]-properties-lbl">\n                            RFI\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[0]card[3]content[]">\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[0]card[3]content[1]-properties-img" src="assets/img/new/Rfi_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[0]card[3]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                    </ion-card-content>\n                  </ion-row>\n                  <ion-row id="dsh2[0]card[3]footer" class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[0]card[3]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[0]card[3]footer-properties-lbl[1]">\n                          129111\n                        </ion-label>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col style="margin-left:2%">\n            <div id="b2cChart" style = " display : block ; " > </div>\n          </ion-col>\n\n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-card class="card-box-map full-width">\n                  <div id="map2" style="height: 350px"></div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      </ion-row>\n    <!-- </ion-scroll> -->\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+            __WEBPACK_IMPORTED_MODULE_3__providers_database_database__["a" /* DatabaseProvider */]])
     ], Dsh2HomePage);
     return Dsh2HomePage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=dsh2-home.js.map
@@ -538,7 +661,7 @@ var Dsh2HomePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh3HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highcharts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
@@ -685,10 +808,216 @@ var Dsh3HomePage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh5HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highcharts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var Dsh5HomePage = (function () {
+    function Dsh5HomePage(navCtrl, navParams, database) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.database = database;
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.mapOptions1 = {
+            zoom: 5,
+            center: new google.maps.LatLng(-2.209764, 117.114258),
+            styles: this.database._defaultNewStyle
+        };
+    }
+    Dsh5HomePage.prototype.ionViewDidLoad = function () {
+        this.initMap();
+        console.log('ionViewDidLoad Dsh2HomePage');
+        // if (chkInit==true){
+        this.drilldown();
+        //chkInit=false;
+        // }
+    };
+    Dsh5HomePage.prototype.initMap = function () {
+        this.map5 = new google.maps.Map(document.getElementById("map5"), this.mapOptions1);
+        this.directionsDisplay.setMap(this.map5);
+    };
+    Dsh5HomePage.prototype.goToAccount = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
+    };
+    Dsh5HomePage.prototype.ionViewWillUnload = function () {
+        // chkInit=false;
+        this.charting.distroy;
+    };
+    Dsh5HomePage.prototype.drilldown = function () {
+        this.charting = __WEBPACK_IMPORTED_MODULE_3_highcharts__["chart"]({
+            chart: {
+                renderTo: 'specialPrjChart',
+                zoomType: 'x',
+                panning: true,
+                panKey: 'shift',
+                type: 'areaspline'
+            },
+            title: {
+                text: "Project Summary of 10 September 2018",
+                style: {
+                    fontSize: '15px'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: ["W1-Jan-2018", "W2-Jan-2018", "W3-Jan-2018", "W4-Jan-2018", "W5-Jan-2018", "W1-Feb-2018", "W2-Feb-2018", "W3-Feb-2018", "W4-Feb-2018", "W5-Feb-2018", "W1-Mar-2018", "W2-Mar-2018", "W3-Mar-2018", "W4-Mar-2018", "W5-Mar-2018", "W1-Apr-2018", "W2-Apr-2018", "W3-Apr-2018", "W4-Apr-2018", "W5-Apr-2018", "W6-Apr-2018", "W1-May-2018", "W2-May-2018", "W3-May-2018", "W4-May-2018", "W5-May-2018", "W1-Jun-2018", "W2-Jun-2018", "W3-Jun-2018", "W4-Jun-2018", "W5-Jun-2018", "W1-Jul-2018", "W2-Jul-2018", "W3-Jul-2018", "W4-Jul-2018", "W5-Jul-2018", "W6-Jul-2018", "W1-Aug-2018", "W2-Aug-2018", "W3-Aug-2018", "W4-Aug-2018", "W5-Aug-2018", "W1-Sep-2018", "W2-Sep-2018", "W3-Sep-2018", "W4-Sep-2018", "W5-Sep-2018", "W1-Oct-2018", "W2-Oct-2018", "W3-Oct-2018", "W4-Oct-2018", "W5-Oct-2018", "W1-Nov-2018", "W2-Nov-2018", "W3-Nov-2018"],
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Project'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' '
+            },
+            plotOptions: {
+                spline: {
+                    lineWidth: 3,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                    // type: 'spline',
+                    name: 'Target RFI',
+                    data: [null, null, null, null, null, null, null, null, null, null, null, 16, 61, 302, 382, 394, 411, 421, 873, 885, 886, 900, 1195, 1233, 1251, 1401, 1422, 1447, 1449, 1459, 1461, 1461, 1487, 1487, 1489, 1530, 1560, 1564, 1577, 1586, 1606, 1610, 1610, 1613, 1613, 1613, 1615, 1650, 1650, 1654, 1712, 1716, 1716, 1721],
+                    color: '#2c303e',
+                }, {
+                    // type: 'spline',
+                    name: 'Actual RFI',
+                    data: [null, null, null, null, null, null, null, null, null, null, null, 22, 56, 123, 206, 209, 259, 303, 331, 339, 343, 343, 350, 353, 354, 356, 357, 359, 362, 362, 362, 363, 367, 372, 399, 403, 408, 456],
+                    color: '#a50500',
+                }, {
+                    type: 'column',
+                    name: 'Target',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 45, 241, 80, 12, 17, 10, 452, 12, 1, 14, 295, 38, 18, 150, 21, 25, 2, 10, 2, 0, 26, 0, 2, 41, 30, 4, 13, 9, 20, 4, 0, 3, 0, 0, 2, 35, 0, 4, 58, 4, 0, 5, 0],
+                    color: '#2F69C5'
+                }, {
+                    type: 'column',
+                    name: 'Actual',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 34, 67, 83, 3, 50, 44, 28, 8, 4, 0, 7, 3, 1, 2, 1, 2, 3, 0, 0, 1, 4, 5, 27, 4, 5, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    color: '#FF9735'
+                }],
+            navigation: {
+                menuItemStyle: {
+                    fontSize: '10px'
+                }
+            }
+        });
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('map5'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], Dsh5HomePage.prototype, "mapElement5", void 0);
+    Dsh5HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-dsh5-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Special Project Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n    <!-- <ion-scroll scrollY="true"> -->\n        <ion-row>\n  <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n    <ion-row class="full-width" style="margin-top: -20px">\n      <!-- All Project -->\n      <ion-col col-3>\n          <ion-card class="card full-width">\n              <div id="divSecond[3]">\n                <ion-card-header class="header-title">\n                  All Project\n                </ion-card-header>\n                <ion-card-content>\n                    <div class="row">\n                          <div class="left-icon">\n                            <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>\n                          </div>\n                    </div>\n                </ion-card-content>\n              </div>\n              <ion-row class="footer-color-block">\n                  <div class="row">\n                    <ion-col class="footer-title">\n                          Total\n                    </ion-col>\n                  </div>\n              </ion-row>\n          </ion-card>\n        </ion-col>\n        <!-- NOT RELEASE -->\n        <ion-col col-3 id="divId_noRelease">\n            <ion-card class="card full-width">\n                <div id="divSecond[0]">\n                  <ion-card-header class="header-title">\n                    Not Release\n                  </ion-card-header>\n                  <ion-card-content>\n                    <div class="row">\n                      <div  class="left-icon">\n                          <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                          <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                          <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                      </div>\n                      <div class="right-text" >\n                          <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>\n                      </div>\n                      <!-- <ion-icon   name="lock" ></ion-icon> -->\n                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                    </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n              </ion-card>\n        </ion-col>\n        <!-- PROJECT ON PIPE -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[1]">\n                  <ion-card-header class="header-title">\n                  Prj on Pipe\n                  </ion-card-header>\n                  <ion-card-content>\n                    <div class="row">\n                      <div class="left-icon">\n                          <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                          <!-- <ion-icon class="fa-home"></ion-icon> -->\n                          <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                      </div>\n                      <div class="right-text">\n                          <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>\n                      </div>\n                      <!-- <ion-icon   name="lock" ></ion-icon> -->\n                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                    </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n        </ion-col>\n        <!-- RFI -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[2]">\n                  <ion-card-header class="header-title">\n                    After Rfi\n                  </ion-card-header>\n                  <ion-card-content>\n                      <div class="row">\n                            <div class="left-icon">\n                              <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>\n                            </div>\n                      </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col style="margin-left:2%">\n          <div id="specialPrjChart" style = " display : block ; " > </div>\n        </ion-col>\n\n      </ion-row>\n      <ion-row>\n        <ion-col>\n            <ion-card class="card-box-map full-width">\n                <div id="map5" style="height: 350px"></div>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    </ion-row>\n  <!-- </ion-scroll> -->\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]])
+    ], Dsh5HomePage);
+    return Dsh5HomePage;
+}());
+
+//# sourceMappingURL=dsh5-home.js.map
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh6HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var Port = (function () {
+    function Port() {
+    }
+    return Port;
+}());
+var Dsh6HomePage = (function () {
+    function Dsh6HomePage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.ports = [
+            { id: 1, name: 'Tokai' },
+            { id: 2, name: 'Vladivostok' },
+            { id: 3, name: 'Navlakhi' }
+        ];
+    }
+    Dsh6HomePage.prototype.portChange = function (event) {
+        console.log('port:', event.value);
+    };
+    Dsh6HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad Dsh6HomePage');
+    };
+    Dsh6HomePage.prototype.goToAccount = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
+    };
+    Dsh6HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-dsh6-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Mitra Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n            <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n                <ion-row>\n                    <ion-col col-12>\n                        <ion-card class="box1 full-width">\n                          <ion-row>\n                            <ion-item style="margin-left:10px;background-color:white">\n                            <ion-label>Data Filter</ion-label>\n                            <select-searchable\n                              item-content\n                              headerColor="primary"\n                              groupColor="white"\n                              [(ngModel)]="port"\n                              [items]="ports"\n                              itemValueField="id"\n                              itemTextField="name"\n                              [canSearch]="true"\n                              [hasVirtualScroll]="true"\n                              (onChange)="portChange($event)">\n                            </select-searchable>\n                          </ion-item>\n                        </ion-row>\n                        </ion-card>\n                      </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col col-12 style="margin-top: -10px">\n                    <ion-card class="box1 full-width">\n                      asd\n                    </ion-card>\n                  </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
+    ], Dsh6HomePage);
+    return Dsh6HomePage;
+}());
+
+//# sourceMappingURL=dsh6-home.js.map
+
+/***/ }),
+
+/***/ 172:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh4HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highcharts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
@@ -833,212 +1162,6 @@ var Dsh4HomePage = (function () {
 
 /***/ }),
 
-/***/ 171:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh5HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highcharts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var Dsh5HomePage = (function () {
-    function Dsh5HomePage(navCtrl, navParams, database) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.database = database;
-        this.directionsService = new google.maps.DirectionsService;
-        this.directionsDisplay = new google.maps.DirectionsRenderer;
-        this.mapOptions1 = {
-            zoom: 5,
-            center: new google.maps.LatLng(-2.209764, 117.114258),
-            styles: this.database._defaultNewStyle
-        };
-    }
-    Dsh5HomePage.prototype.ionViewDidLoad = function () {
-        this.initMap();
-        console.log('ionViewDidLoad Dsh2HomePage');
-        // if (chkInit==true){
-        this.drilldown();
-        //chkInit=false;
-        // }
-    };
-    Dsh5HomePage.prototype.initMap = function () {
-        this.map5 = new google.maps.Map(document.getElementById("map5"), this.mapOptions1);
-        this.directionsDisplay.setMap(this.map5);
-    };
-    Dsh5HomePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
-    };
-    Dsh5HomePage.prototype.ionViewWillUnload = function () {
-        // chkInit=false;
-        this.charting.distroy;
-    };
-    Dsh5HomePage.prototype.drilldown = function () {
-        this.charting = __WEBPACK_IMPORTED_MODULE_3_highcharts__["chart"]({
-            chart: {
-                renderTo: 'specialPrjChart',
-                zoomType: 'x',
-                panning: true,
-                panKey: 'shift',
-                type: 'areaspline'
-            },
-            title: {
-                text: "Project Summary of 10 September 2018",
-                style: {
-                    fontSize: '15px'
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                categories: ["W1-Jan-2018", "W2-Jan-2018", "W3-Jan-2018", "W4-Jan-2018", "W5-Jan-2018", "W1-Feb-2018", "W2-Feb-2018", "W3-Feb-2018", "W4-Feb-2018", "W5-Feb-2018", "W1-Mar-2018", "W2-Mar-2018", "W3-Mar-2018", "W4-Mar-2018", "W5-Mar-2018", "W1-Apr-2018", "W2-Apr-2018", "W3-Apr-2018", "W4-Apr-2018", "W5-Apr-2018", "W6-Apr-2018", "W1-May-2018", "W2-May-2018", "W3-May-2018", "W4-May-2018", "W5-May-2018", "W1-Jun-2018", "W2-Jun-2018", "W3-Jun-2018", "W4-Jun-2018", "W5-Jun-2018", "W1-Jul-2018", "W2-Jul-2018", "W3-Jul-2018", "W4-Jul-2018", "W5-Jul-2018", "W6-Jul-2018", "W1-Aug-2018", "W2-Aug-2018", "W3-Aug-2018", "W4-Aug-2018", "W5-Aug-2018", "W1-Sep-2018", "W2-Sep-2018", "W3-Sep-2018", "W4-Sep-2018", "W5-Sep-2018", "W1-Oct-2018", "W2-Oct-2018", "W3-Oct-2018", "W4-Oct-2018", "W5-Oct-2018", "W1-Nov-2018", "W2-Nov-2018", "W3-Nov-2018"],
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Total Project'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' '
-            },
-            plotOptions: {
-                spline: {
-                    lineWidth: 3,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false
-                    }
-                }
-            },
-            series: [{
-                    // type: 'spline',
-                    name: 'Target RFI',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, 16, 61, 302, 382, 394, 411, 421, 873, 885, 886, 900, 1195, 1233, 1251, 1401, 1422, 1447, 1449, 1459, 1461, 1461, 1487, 1487, 1489, 1530, 1560, 1564, 1577, 1586, 1606, 1610, 1610, 1613, 1613, 1613, 1615, 1650, 1650, 1654, 1712, 1716, 1716, 1721],
-                    color: '#2c303e',
-                }, {
-                    // type: 'spline',
-                    name: 'Actual RFI',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, 22, 56, 123, 206, 209, 259, 303, 331, 339, 343, 343, 350, 353, 354, 356, 357, 359, 362, 362, 362, 363, 367, 372, 399, 403, 408, 456],
-                    color: '#a50500',
-                }, {
-                    type: 'column',
-                    name: 'Target',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 45, 241, 80, 12, 17, 10, 452, 12, 1, 14, 295, 38, 18, 150, 21, 25, 2, 10, 2, 0, 26, 0, 2, 41, 30, 4, 13, 9, 20, 4, 0, 3, 0, 0, 2, 35, 0, 4, 58, 4, 0, 5, 0],
-                    color: '#2F69C5'
-                }, {
-                    type: 'column',
-                    name: 'Actual',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 34, 67, 83, 3, 50, 44, 28, 8, 4, 0, 7, 3, 1, 2, 1, 2, 3, 0, 0, 1, 4, 5, 27, 4, 5, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    color: '#FF9735'
-                }],
-            navigation: {
-                menuItemStyle: {
-                    fontSize: '10px'
-                }
-            }
-        });
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('map5'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
-    ], Dsh5HomePage.prototype, "mapElement5", void 0);
-    Dsh5HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh5-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Special Project Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n    <!-- <ion-scroll scrollY="true"> -->\n        <ion-row>\n  <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n    <ion-row class="full-width" style="margin-top: -20px">\n      <!-- All Project -->\n      <ion-col col-3>\n          <ion-card class="card full-width">\n              <div id="divSecond[3]">\n                <ion-card-header class="header-title">\n                  All Project\n                </ion-card-header>\n                <ion-card-content>\n                    <div class="row">\n                          <div class="left-icon">\n                            <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                          </div>\n                          <div class="right-text">\n                              <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>\n                          </div>\n                    </div>\n                </ion-card-content>\n              </div>\n              <ion-row class="footer-color-block">\n                  <div class="row">\n                    <ion-col class="footer-title">\n                          Total\n                    </ion-col>\n                  </div>\n              </ion-row>\n          </ion-card>\n        </ion-col>\n        <!-- NOT RELEASE -->\n        <ion-col col-3 id="divId_noRelease">\n            <ion-card class="card full-width">\n                <div id="divSecond[0]">\n                  <ion-card-header class="header-title">\n                    Not Release\n                  </ion-card-header>\n                  <ion-card-content>\n                    <div class="row">\n                      <div  class="left-icon">\n                          <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                          <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                          <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                      </div>\n                      <div class="right-text" >\n                          <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>\n                      </div>\n                      <!-- <ion-icon   name="lock" ></ion-icon> -->\n                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                    </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n              </ion-card>\n        </ion-col>\n        <!-- PROJECT ON PIPE -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[1]">\n                  <ion-card-header class="header-title">\n                  Prj on Pipe\n                  </ion-card-header>\n                  <ion-card-content>\n                    <div class="row">\n                      <div class="left-icon">\n                          <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                          <!-- <ion-icon class="fa-home"></ion-icon> -->\n                          <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                      </div>\n                      <div class="right-text">\n                          <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>\n                      </div>\n                      <!-- <ion-icon   name="lock" ></ion-icon> -->\n                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                    </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n        </ion-col>\n        <!-- RFI -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[2]">\n                  <ion-card-header class="header-title">\n                    After Rfi\n                  </ion-card-header>\n                  <ion-card-content>\n                      <div class="row">\n                            <div class="left-icon">\n                              <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>\n                            </div>\n                      </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col style="margin-left:2%">\n          <div id="specialPrjChart" style = " display : block ; " > </div>\n        </ion-col>\n\n      </ion-row>\n      <ion-row>\n        <ion-col>\n            <ion-card class="card-box-map full-width">\n                <div id="map5" style="height: 350px"></div>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    </ion-row>\n  <!-- </ion-scroll> -->\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh5-home\dsh5-home.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]])
-    ], Dsh5HomePage);
-    return Dsh5HomePage;
-}());
-
-//# sourceMappingURL=dsh5-home.js.map
-
-/***/ }),
-
-/***/ 172:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh6HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var Port = (function () {
-    function Port() {
-    }
-    return Port;
-}());
-var Dsh6HomePage = (function () {
-    function Dsh6HomePage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.ports = [
-            { id: 1, name: 'Tokai' },
-            { id: 2, name: 'Vladivostok' },
-            { id: 3, name: 'Navlakhi' }
-        ];
-    }
-    Dsh6HomePage.prototype.portChange = function (event) {
-        console.log('port:', event.value);
-    };
-    Dsh6HomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad Dsh6HomePage');
-    };
-    Dsh6HomePage.prototype.goToAccount = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
-    };
-    Dsh6HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh6-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Mitra Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n            <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n                <ion-row>\n                    <ion-col col-12>\n                        <ion-card class="box1 full-width">\n                          <ion-row>\n                            <ion-item style="margin-left:10px;background-color:white">\n                            <ion-label>Data Filter</ion-label>\n                            <select-searchable\n                              item-content\n                              headerColor="primary"\n                              groupColor="white"\n                              [(ngModel)]="port"\n                              [items]="ports"\n                              itemValueField="id"\n                              itemTextField="name"\n                              [canSearch]="true"\n                              [hasVirtualScroll]="true"\n                              (onChange)="portChange($event)">\n                            </select-searchable>\n                          </ion-item>\n                        </ion-row>\n                        </ion-card>\n                      </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col col-12 style="margin-top: -10px">\n                    <ion-card class="box1 full-width">\n                      asd\n                    </ion-card>\n                  </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
-    ], Dsh6HomePage);
-    return Dsh6HomePage;
-}());
-
-//# sourceMappingURL=dsh6-home.js.map
-
-/***/ }),
-
 /***/ 185:
 /***/ (function(module, exports) {
 
@@ -1065,27 +1188,27 @@ var map = {
 		11
 	],
 	"../pages/dsh1-second-norelease/dsh1-second-norelease.module": [
-		720,
+		714,
 		10
 	],
 	"../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module": [
-		714,
+		715,
 		9
 	],
 	"../pages/dsh1-second-rfi/dsh1-second-rfi.module": [
-		715,
+		716,
 		8
 	],
 	"../pages/dsh2-home/dsh2-home.module": [
-		716,
+		717,
 		7
 	],
 	"../pages/dsh3-home/dsh3-home.module": [
-		717,
+		718,
 		6
 	],
 	"../pages/dsh4-home/dsh4-home.module": [
-		718,
+		723,
 		5
 	],
 	"../pages/dsh5-home/dsh5-home.module": [
@@ -1093,7 +1216,7 @@ var map = {
 		4
 	],
 	"../pages/dsh6-home/dsh6-home.module": [
-		723,
+		720,
 		3
 	],
 	"../pages/dsh7-home/dsh7-home.module": [
@@ -1169,116 +1292,6 @@ var RegisterPage = (function () {
 }());
 
 //# sourceMappingURL=register.js.map
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-// export interface aryFilterYearMonth {
-//   SORT:string,
-//   GRP:string,
-//   NAME:string,
-//   NILAI:string,
-//   STT_ACTIVE:string
-// }
-// var valAryFilterYearMonth=[];
-var Port = (function () {
-    function Port() {
-    }
-    return Port;
-}());
-var SettingsPage = (function () {
-    function SettingsPage(platform, nav, dashboarAll, database, alertCtrl) {
-        this.platform = platform;
-        this.nav = nav;
-        this.dashboarAll = dashboarAll;
-        this.database = database;
-        this.alertCtrl = alertCtrl;
-        this.valAryFilterYearMonth = this.database.getPageSetting_FilterManthYear;
-        this.ports = [
-            { id: 1, name: 'Tokai' },
-            { id: 2, name: 'Vladivostok' },
-            { id: 3, name: 'Navlakhi' }
-        ];
-        // platform.ready().then(() => {
-        // var querySql ="SELECT SORT,GRP,NAME,NILAI,STT_ACTIVE FROM APPSETTING"
-        // +" ORDER BY GRP,SORT ASC";
-        // this.database.selectData(querySql).then(data=>{
-        //   setTimeout(()=>{
-        //     console.log(data);
-        //     this.valAryFilterYearMonth=data;
-        //   },500);
-        // });
-        // console.log(getDataQry);
-        // var getDataQry=this.database.selectData1(querySql);
-        // getDataQry.then(data=>{
-        //   setTimeout(()=>{
-        //     var aryRslt=[];
-        //     aryRslt.push(data);
-        //     this.valAryFilterYearMonth=data;
-        //     console.log(this.valAryFilterYearMonth);
-        //   },500);
-        // });
-        // });
-    }
-    SettingsPage.prototype.portChange = function (event) {
-        console.log('port:', event.value);
-    };
-    SettingsPage.prototype.alertInfo = function () {
-        var alert1 = this.alertCtrl.create({
-            title: '<p><i class="fa fa-info-circle fa-1x"> Warning</i><p>',
-            //subTitle:'subtitle',
-            message: "<p>Automatic update every 1 minute</p>",
-            cssClass: 'alertModal',
-        });
-        alert1.present();
-    };
-    // ionViewLoaded() {
-    // }
-    // ionViewDidLoad(){
-    //   //     console.log("Adsadas");
-    //   // console.log(valAryFilterYearMonth);
-    // }
-    // logout
-    SettingsPage.prototype.logout = function () {
-        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */]);
-    };
-    SettingsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-settings',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\settings\settings.html"*/'<!-- -->\n<ion-header class="no-shadow">\n\n  <ion-navbar class="no-border">\n    <ion-title>\n      <ion-icon name="cog" class="text-primary"></ion-icon>\n      <span class="text-primary">Settings</span>\n    </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="common-bg">\n  <!-- User settings-->\n  <ion-item-group >\n    <ion-item-divider color="primary" class="bold" style="width:100%">\n      App Settings\n      <button ion-button  style="height:25px;float:right;" (click)="alertInfo()">\n          <i class="fa fa-info-circle fa-1x"></i>\n      </button>\n    </ion-item-divider>\n    <ion-item style="background-color:white" >\n        <span>Automatic update every 1 minute</span>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Data Filter</ion-label>\n      <!-- <ion-select [(ngModel)]="valAryFilterYearMonthObject" cancelText="Cancel" okText="OK"> -->\n      <ion-select [(ngModel)]="valAryFilterYearMonthObject" cancelText="Cancel" okText="OK">\n      <ion-option *ngFor="let yearMonth of valAryFilterYearMonth" value="{{yearMonth.NILAI}}" selected="{{yearMonth.STT_ACTIVE}}">{{yearMonth.NAME}}</ion-option>\n        <!-- <ion-option value="1" selected="true">Syaka</ion-option>\n        <ion-option value="2">piter</ion-option> -->\n      </ion-select>\n    </ion-item>\n    <ion-item style="background-color:white">\n        <ion-label>Data Filter</ion-label>\n        <select-searchable\n            item-content\n            headerColor="primary"\n            groupColor="white"\n            [(ngModel)]="port"\n            [items]="ports"\n            itemValueField="id"\n            itemTextField="name"\n            [canSearch]="true"\n            [hasVirtualScroll]="true"\n            (onChange)="portChange($event)">\n        </select-searchable>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Notifications?</ion-label>\n      <ion-toggle checked="true"></ion-toggle>\n    </ion-item>\n  </ion-item-group>\n  <!-- App settings-->\n  <ion-item-group>\n    <ion-item-divider color="primary" class="bold">User Settings</ion-item-divider>\n    <ion-item style="background-color:white">\n      <ion-label>Clear Cache</ion-label>\n      <ion-toggle checked="false"></ion-toggle>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Push Notifications?</ion-label>\n      <ion-toggle checked="false"></ion-toggle>\n    </ion-item>\n  </ion-item-group>\n\n  <!--sign out button-->\n  <button ion-button color="primary" full tappable (click)="logout()">LOG OUT</button>\n\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\settings\settings.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
-            __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
-    ], SettingsPage);
-    return SettingsPage;
-}());
-
-//# sourceMappingURL=settings.js.map
 
 /***/ }),
 
@@ -1417,6 +1430,116 @@ var TripDetailPage = (function () {
 }());
 
 //# sourceMappingURL=trip-detail.js.map
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+// export interface aryFilterYearMonth {
+//   SORT:string,
+//   GRP:string,
+//   NAME:string,
+//   NILAI:string,
+//   STT_ACTIVE:string
+// }
+// var valAryFilterYearMonth=[];
+var Port = (function () {
+    function Port() {
+    }
+    return Port;
+}());
+var SettingsPage = (function () {
+    function SettingsPage(platform, nav, dashboarAll, database, alertCtrl) {
+        this.platform = platform;
+        this.nav = nav;
+        this.dashboarAll = dashboarAll;
+        this.database = database;
+        this.alertCtrl = alertCtrl;
+        this.valAryFilterYearMonth = this.database.getPageSetting_FilterManthYear;
+        this.ports = [
+            { id: 1, name: 'Tokai' },
+            { id: 2, name: 'Vladivostok' },
+            { id: 3, name: 'Navlakhi' }
+        ];
+        // platform.ready().then(() => {
+        // var querySql ="SELECT SORT,GRP,NAME,NILAI,STT_ACTIVE FROM APPSETTING"
+        // +" ORDER BY GRP,SORT ASC";
+        // this.database.selectData(querySql).then(data=>{
+        //   setTimeout(()=>{
+        //     console.log(data);
+        //     this.valAryFilterYearMonth=data;
+        //   },500);
+        // });
+        // console.log(getDataQry);
+        // var getDataQry=this.database.selectData1(querySql);
+        // getDataQry.then(data=>{
+        //   setTimeout(()=>{
+        //     var aryRslt=[];
+        //     aryRslt.push(data);
+        //     this.valAryFilterYearMonth=data;
+        //     console.log(this.valAryFilterYearMonth);
+        //   },500);
+        // });
+        // });
+    }
+    SettingsPage.prototype.portChange = function (event) {
+        console.log('port:', event.value);
+    };
+    SettingsPage.prototype.alertInfo = function () {
+        var alert1 = this.alertCtrl.create({
+            title: '<p><i class="fa fa-info-circle fa-1x"> Warning</i><p>',
+            //subTitle:'subtitle',
+            message: "<p>Automatic update every 1 minute</p>",
+            cssClass: 'alertModal',
+        });
+        alert1.present();
+    };
+    // ionViewLoaded() {
+    // }
+    // ionViewDidLoad(){
+    //   //     console.log("Adsadas");
+    //   // console.log(valAryFilterYearMonth);
+    // }
+    // logout
+    SettingsPage.prototype.logout = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */]);
+    };
+    SettingsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-settings',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\settings\settings.html"*/'<!-- -->\n<ion-header class="no-shadow">\n\n  <ion-navbar class="no-border">\n    <ion-title>\n      <ion-icon name="cog" class="text-primary"></ion-icon>\n      <span class="text-primary">Settings</span>\n    </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="common-bg">\n  <!-- User settings-->\n  <ion-item-group >\n    <ion-item-divider color="primary" class="bold" style="width:100%">\n      App Settings\n      <button ion-button  style="height:25px;float:right;" (click)="alertInfo()">\n          <i class="fa fa-info-circle fa-1x"></i>\n      </button>\n    </ion-item-divider>\n    <ion-item style="background-color:white" >\n        <span>Automatic update every 1 minute</span>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Data Filter</ion-label>\n      <!-- <ion-select [(ngModel)]="valAryFilterYearMonthObject" cancelText="Cancel" okText="OK"> -->\n      <ion-select [(ngModel)]="valAryFilterYearMonthObject" cancelText="Cancel" okText="OK">\n      <ion-option *ngFor="let yearMonth of valAryFilterYearMonth" value="{{yearMonth.NILAI}}" selected="{{yearMonth.STT_ACTIVE}}">{{yearMonth.NAME}}</ion-option>\n        <!-- <ion-option value="1" selected="true">Syaka</ion-option>\n        <ion-option value="2">piter</ion-option> -->\n      </ion-select>\n    </ion-item>\n    <ion-item style="background-color:white">\n        <ion-label>Data Filter</ion-label>\n        <select-searchable\n            item-content\n            headerColor="primary"\n            groupColor="white"\n            [(ngModel)]="port"\n            [items]="ports"\n            itemValueField="id"\n            itemTextField="name"\n            [canSearch]="true"\n            [hasVirtualScroll]="true"\n            (onChange)="portChange($event)">\n        </select-searchable>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Notifications?</ion-label>\n      <ion-toggle checked="true"></ion-toggle>\n    </ion-item>\n  </ion-item-group>\n  <!-- App settings-->\n  <ion-item-group>\n    <ion-item-divider color="primary" class="bold">User Settings</ion-item-divider>\n    <ion-item style="background-color:white">\n      <ion-label>Clear Cache</ion-label>\n      <ion-toggle checked="false"></ion-toggle>\n    </ion-item>\n    <ion-item style="background-color:white">\n      <ion-label>Push Notifications?</ion-label>\n      <ion-toggle checked="false"></ion-toggle>\n    </ion-item>\n  </ion-item-group>\n\n  <!--sign out button-->\n  <button ion-button color="primary" full tappable (click)="logout()">LOG OUT</button>\n\n</ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\settings\settings.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
+            __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
+    ], SettingsPage);
+    return SettingsPage;
+}());
+
+//# sourceMappingURL=settings.js.map
 
 /***/ }),
 
@@ -1880,7 +2003,7 @@ var DatabaseProvider = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dsh7HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1959,7 +2082,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_select_searchable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ionic_select_searchable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_activity_service__ = __webpack_require__(430);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(432);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_settings_settings__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_checkout_trip_checkout_trip__ = __webpack_require__(281);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_home__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_login_login__ = __webpack_require__(78);
@@ -1976,9 +2099,9 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_dsh1_second_afterrfi_dsh1_second_afterrfi__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_dsh2_home_dsh2_home__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_dsh3_home_dsh3_home__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_dsh6_home_dsh6_home__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_dsh4_home_dsh4_home__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dsh5_home_dsh5_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_dsh6_home_dsh6_home__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_dsh7_home_dsh7_home__ = __webpack_require__(371);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable__ = __webpack_require__(452);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33__swimlane_ngx_datatable__);
@@ -2075,16 +2198,16 @@ var AppModule = (function () {
                 }, {
                     links: [
                         { loadChildren: '../pages/dsh1-second-afterrfi/dsh1-second-afterrfi.module#Dsh1SecondAfterrfiPageModule', name: 'Dsh1SecondAfterrfiPage', segment: 'dsh1-second-afterrfi', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh3-home/dsh3-home.module#Dsh3HomePageModule', name: 'Dsh3HomePage', segment: 'dsh3-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh7-home/dsh7-home.module#Dsh7HomePageModule', name: 'Dsh7HomePage', segment: 'dsh7-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/peta/peta.module#PetaPageModule', name: 'PetaPage', segment: 'peta', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -2740,9 +2863,9 @@ var ACTIVITIES = [];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dsh2_home_dsh2_home__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_dsh3_home_dsh3_home__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_dsh4_home_dsh4_home__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh5_home_dsh5_home__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh6_home_dsh6_home__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_dsh4_home_dsh4_home__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dsh5_home_dsh5_home__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dsh6_home_dsh6_home__ = __webpack_require__(171);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3311,7 +3434,7 @@ var RestProvider = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dsh1_second_norelease_dsh1_second_norelease__ = __webpack_require__(165);

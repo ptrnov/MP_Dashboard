@@ -7,6 +7,10 @@ import { DatabaseProvider} from "../../providers/database/database";
 
 var chkInit:boolean=false;
 declare var google;
+var dsh2_0card_0content_click=0;
+var dsh2_0card_1content_click=0;
+var dsh2_0card_2content_click=0;
+var dsh2_0card_3content_click=0;
 @IonicPage()
 @Component({
   selector: 'page-dsh2-home',
@@ -35,31 +39,8 @@ export class Dsh2HomePage {
 
 
   ionViewDidLoad() {
-    // /** ROW 1*/
-    // document.getElementById("dsh2[0]").hidden = false;
-    //   /** CARD */
-    //   document.getElementById("dsh2[0]card[0]").hidden = false;
-    //     /** CARD CONTENT */
-    //     document.getElementById("dsh2[0]card[0]content").hidden = false;
-    //         /** CONTENT HEADER */
-    //         document.getElementById("dsh2[0]card[0]content[0]").hidden = false;
-    //             /** CONTENT HEADER PROPERTIES */
-    //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").hidden = false;
-    //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").innerHTML = " All Project";
-    //         /** CONTENT CONTENT*/
-    //         document.getElementById("dsh2[0]card[0]content[1]").hidden = false;
-    //             /** CONTENT CONTENT PROPERTIES */
-    //             document.getElementById("dsh2[0]card[0]content[1]-properties-img").hidden = false;
-    //             document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").hidden = false;
-    //     /** CARD FOOTER */
-    //     document.getElementById("dsh2[0]-card[0]footer").hidden = false;
-    //       /** CARD FOOTER PROPERTIES */
-    //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[0]").hidden = false;
-    //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[1]").hidden = true;
-
-
-
-
+    this.initMouseOverOut();
+    this.initClickEvent();
     this.initMap();
     console.log('ionViewDidLoad Dsh2HomePage');
     // if (chkInit==true){
@@ -74,9 +55,10 @@ export class Dsh2HomePage {
     this.directionsDisplay.setMap(this.map2);
   }
 
-  goToAccount() {
-    this.navCtrl.push(SettingsPage);
-  }
+  // goToAccount() {
+  //   this.navCtrl.push(SettingsPage);
+  // }
+
   ionViewWillUnload() {
     // chkInit=false;
     // this.charting.distroy;
@@ -160,26 +142,168 @@ export class Dsh2HomePage {
 
   }
 
-  initDomManipulation(){
-    /** ROW 1*/
-      var dsh2_0=document.getElementById("dsh2[0]");
-      /** CARD */
-      var dsh2_0card_0=document.getElementById("dsh2[0]card[0]");
-      /** CARD CONTENT */
+
+  initClickEvent(){
+    var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
+        dsh2_0card_0content.addEventListener('click', function () {
+        switch(dsh2_0card_0content_click) {
+            case 0:
+                  dsh2_0card_0content_click=1;
+                  dsh2_0card_0content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                    dsh2_0card_1content.style.backgroundColor="#FFFF";
+                    dsh2_0card_2content.style.backgroundColor="#FFFF";
+                    dsh2_0card_3content.style.backgroundColor="#FFFF";
+                    dsh2_0card_1content_click=0;
+                    dsh2_0card_2content_click=0;
+                    dsh2_0card_3content_click=0;
+              break;
+            case 1:
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_0content.style.backgroundColor="#FFFF";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
+        dsh2_0card_1content.addEventListener('click', function () {
+        switch(dsh2_0card_1content_click) {
+            case 0:
+                  dsh2_0card_1content_click=1;
+                  dsh2_0card_1content.style.backgroundColor="#83D7F1";
+              break;
+            case 1:
+                  dsh2_0card_1content_click=0;
+                  dsh2_0card_1content.style.backgroundColor="#FFFF";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
+        dsh2_0card_2content.addEventListener('click', function () {
+        switch(dsh2_0card_2content_click) {
+            case 0:
+                  dsh2_0card_2content_click=1;
+                  dsh2_0card_2content.style.backgroundColor="#83D7F1";
+              break;
+            case 1:
+                  dsh2_0card_2content_click=0;
+                  dsh2_0card_2content.style.backgroundColor="#FFFF";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
+        dsh2_0card_3content.addEventListener('click', function () {
+        switch(dsh2_0card_3content_click) {
+            case 0:
+                  dsh2_0card_3content_click=1;
+                  dsh2_0card_3content.style.backgroundColor="#83D7F1";
+              break;
+            case 1:
+                  dsh2_0card_3content_click=0;
+                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+              break;
+            default:
+        };
+    });
+  }
+
+  initMouseOverOut(){
+      /* FOOTER */
+      var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
+            dsh2_0card_0footer.onmouseover= function () {
+            dsh2_0card_0footer.style.backgroundColor="#FA8633";
+          }
+            dsh2_0card_0footer.onmouseout = function () {
+            dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+          }
+
+      var dsh2_0card_1footer=document.getElementById("dsh2[0]card[1]footer");
+            dsh2_0card_1footer.onmouseover= function () {
+            dsh2_0card_1footer.style.backgroundColor="#FA8633";
+          }
+            dsh2_0card_1footer.onmouseout = function () {
+            dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+          }
+
+      var dsh2_0card_2footer=document.getElementById("dsh2[0]card[2]footer");
+            dsh2_0card_2footer.onmouseover= function () {
+            dsh2_0card_2footer.style.backgroundColor="#FA8633";
+          }
+            dsh2_0card_2footer.onmouseout = function () {
+            dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+          }
+      var dsh2_0card_3footer=document.getElementById("dsh2[0]card[3]footer");
+            dsh2_0card_3footer.onmouseover= function () {
+            dsh2_0card_3footer.style.backgroundColor="#FA8633";
+          }
+            dsh2_0card_3footer.onmouseout = function () {
+            dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+          }
+
+       /* Contain */
       var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
-      /** CONTENT HEADER */
-      var dsh2_0card_0content_0=document.getElementById("dsh2[0]card[0]content[0]");
-      /** CONTENT HEADER PROPERTIES */
-      var dsh2_0card_0content_0_properties_lbl=document.getElementById("dsh2[0]card[0]content[0]-properties-lbl");
-      /** CONTENT CONTENT*/
-      var dsh2_0card_0content_1=document.getElementById("dsh2[0]card[0]content[1]");
-      /** CONTENT CONTENT PROPERTIES */
-      var dsh2_0card_0content_1_properties_img=document.getElementById("dsh2[0]card[0]content[1]-properties-img");
-      var dsh2_0card_0content_1_properties_lbl=document.getElementById("dsh2[0]card[0]content[1]-properties-lbl");
-      /** CARD FOOTER */
-      var dsh2_0card_0footer=document.getElementById("dsh2[0]-card[0]footer");
-      /** CARD FOOTER PROPERTIES */
-      var dsh2_0card_0footer_properties_lbl_0=document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
-      var dsh2_0card_0footer_properties_lbl_1=document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
+          dsh2_0card_0content.onmouseover= function () {
+            dsh2_0card_0content.style.backgroundColor="#BBE5F2";
+          }
+          dsh2_0card_0content.onmouseout = function () {
+            if (dsh2_0card_0content_click!=1){
+              dsh2_0card_0content.style.backgroundColor="#FFFF";
+            }
+          }
+      var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
+          dsh2_0card_1content.onmouseover= function () {
+            dsh2_0card_1content.style.backgroundColor="#BBE5F2";
+          }
+          dsh2_0card_1content.onmouseout = function () {
+            if (dsh2_0card_1content_click!=1){
+              dsh2_0card_1content.style.backgroundColor="#FFFF";
+            }
+          }
+      var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
+          dsh2_0card_2content.onmouseover= function () {
+            dsh2_0card_2content.style.backgroundColor="#BBE5F2";
+          }
+          dsh2_0card_2content.onmouseout = function () {
+            if (dsh2_0card_2content_click!=1){
+              dsh2_0card_2content.style.backgroundColor="#FFFF";
+            }
+          }
+      var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
+          dsh2_0card_3content.onmouseover= function () {
+            dsh2_0card_3content.style.backgroundColor="#BBE5F2";
+          }
+          dsh2_0card_3content.onmouseout = function () {
+            if (dsh2_0card_3content_click!=1){
+              dsh2_0card_3content.style.backgroundColor="#FFFF";
+            }
+          }
+
+    /** Guide ROW */
+      // var dsh2_0=document.getElementById("dsh2[0]");
+      // /** CARD */
+      // var dsh2_0card_0=document.getElementById("dsh2[0]card[0]");
+      // /** CARD CONTENT */
+      // var dsh2_0card_content_bolean:boolean=true;
+      // var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
+      // var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
+      // var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
+      // var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
+      // /** CONTENT HEADER */
+      // var dsh2_0card_0content_0=document.getElementById("dsh2[0]card[0]content[0]");
+      // /** CONTENT HEADER PROPERTIES */
+      // var dsh2_0card_0content_0_properties_lbl=document.getElementById("dsh2[0]card[0]content[0]-properties-lbl");
+      // /** CONTENT CONTENT*/
+      // var dsh2_0card_0content_1=document.getElementById("dsh2[0]card[0]content[1]");
+      // /** CONTENT CONTENT PROPERTIES */
+      // var dsh2_0card_0content_1_properties_img=document.getElementById("dsh2[0]card[0]content[1]-properties-img");
+      // var dsh2_0card_0content_1_properties_lbl=document.getElementById("dsh2[0]card[0]content[1]-properties-lbl");
+      // /** CARD FOOTER */
+      // var dsh2_0card_0footer=document.getElementById("dsh2[0]-card[0]footer");
+      // /** CARD FOOTER PROPERTIES */
+      // var dsh2_0card_0footer_properties_lbl_0=document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
+      // var dsh2_0card_0footer_properties_lbl_1=document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
+
   }
 }
