@@ -7,10 +7,16 @@ import { DatabaseProvider} from "../../providers/database/database";
 
 var chkInit:boolean=false;
 declare var google;
+/** VAR CLICK & MOUSEOVER STATUS */
 var dsh2_0card_0content_click=0;
 var dsh2_0card_1content_click=0;
 var dsh2_0card_2content_click=0;
 var dsh2_0card_3content_click=0;
+var dsh2_0card_0footer_click=0;
+var dsh2_0card_1footer_click=0;
+var dsh2_0card_2footer_click=0;
+var dsh2_0card_3footer_click=0;
+
 @IonicPage()
 @Component({
   selector: 'page-dsh2-home',
@@ -55,9 +61,9 @@ export class Dsh2HomePage {
     this.directionsDisplay.setMap(this.map2);
   }
 
-  // goToAccount() {
-  //   this.navCtrl.push(SettingsPage);
-  // }
+  goToAccount() {
+    this.navCtrl.push(SettingsPage);
+  }
 
   ionViewWillUnload() {
     // chkInit=false;
@@ -143,7 +149,8 @@ export class Dsh2HomePage {
   }
 
 
-  initClickEvent(){
+  private initClickEvent(){
+    /** dsh2_0 CONTAIN */
     var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
         dsh2_0card_0content.addEventListener('click', function () {
         switch(dsh2_0card_0content_click) {
@@ -171,6 +178,13 @@ export class Dsh2HomePage {
             case 0:
                   dsh2_0card_1content_click=1;
                   dsh2_0card_1content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0content.style.backgroundColor="#FFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_2content_click=0;
+                  dsh2_0card_3content_click=0;
               break;
             case 1:
                   dsh2_0card_1content_click=0;
@@ -185,6 +199,13 @@ export class Dsh2HomePage {
             case 0:
                   dsh2_0card_2content_click=1;
                   dsh2_0card_2content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0content.style.backgroundColor="#FFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_1content_click=0;
+                  dsh2_0card_3content_click=0;
               break;
             case 1:
                   dsh2_0card_2content_click=0;
@@ -199,6 +220,13 @@ export class Dsh2HomePage {
             case 0:
                   dsh2_0card_3content_click=1;
                   dsh2_0card_3content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0content.style.backgroundColor="#FFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_1content_click=0;
+                  dsh2_0card_2content_click=0;
               break;
             case 1:
                   dsh2_0card_3content_click=0;
@@ -207,42 +235,96 @@ export class Dsh2HomePage {
             default:
         };
     });
+    /** dsh2_0 FOOTER */
+    var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
+        dsh2_0card_0footer.addEventListener('click', function () {
+        switch(dsh2_0card_0footer_click) {
+            case 0:
+                  dsh2_0card_0footer_click=1;
+                  dsh2_0card_0footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_2footer_click=0;
+                  dsh2_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_1footer=document.getElementById("dsh2[0]card[1]footer");
+        dsh2_0card_1footer.addEventListener('click', function () {
+        switch(dsh2_0card_1footer_click) {
+            case 0:
+                  dsh2_0card_1footer_click=1;
+                  dsh2_0card_1footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_2footer_click=0;
+                  dsh2_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_2footer=document.getElementById("dsh2[0]card[2]footer");
+        dsh2_0card_2footer.addEventListener('click', function () {
+        switch(dsh2_0card_2footer_click) {
+            case 0:
+                  dsh2_0card_2footer_click=1;
+                  dsh2_0card_2footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh2_0card_2footer_click=0;
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+        };
+    });
+    var dsh2_0card_3footer=document.getElementById("dsh2[0]card[3]footer");
+        dsh2_0card_3footer.addEventListener('click', function () {
+        switch(dsh2_0card_3footer_click) {
+            case 0:
+                  dsh2_0card_3footer_click=1;
+                  dsh2_0card_3footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_2footer_click=0;
+              break;
+            case 1:
+                  dsh2_0card_3footer_click=0;
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+        };
+    });
+
   }
 
-  initMouseOverOut(){
-      /* FOOTER */
-      var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
-            dsh2_0card_0footer.onmouseover= function () {
-            dsh2_0card_0footer.style.backgroundColor="#FA8633";
-          }
-            dsh2_0card_0footer.onmouseout = function () {
-            dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
-          }
-
-      var dsh2_0card_1footer=document.getElementById("dsh2[0]card[1]footer");
-            dsh2_0card_1footer.onmouseover= function () {
-            dsh2_0card_1footer.style.backgroundColor="#FA8633";
-          }
-            dsh2_0card_1footer.onmouseout = function () {
-            dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
-          }
-
-      var dsh2_0card_2footer=document.getElementById("dsh2[0]card[2]footer");
-            dsh2_0card_2footer.onmouseover= function () {
-            dsh2_0card_2footer.style.backgroundColor="#FA8633";
-          }
-            dsh2_0card_2footer.onmouseout = function () {
-            dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
-          }
-      var dsh2_0card_3footer=document.getElementById("dsh2[0]card[3]footer");
-            dsh2_0card_3footer.onmouseover= function () {
-            dsh2_0card_3footer.style.backgroundColor="#FA8633";
-          }
-            dsh2_0card_3footer.onmouseout = function () {
-            dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
-          }
-
-       /* Contain */
+ private initMouseOverOut(){
+       /* dsh2_0 CONTAIN */
       var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
           dsh2_0card_0content.onmouseover= function () {
             dsh2_0card_0content.style.backgroundColor="#BBE5F2";
@@ -277,6 +359,46 @@ export class Dsh2HomePage {
           dsh2_0card_3content.onmouseout = function () {
             if (dsh2_0card_3content_click!=1){
               dsh2_0card_3content.style.backgroundColor="#FFFF";
+            }
+          }
+      /* dsh2_0 FOOTER */
+      var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
+          dsh2_0card_0footer.onmouseover= function () {
+            dsh2_0card_0footer.style.backgroundColor="#FA8633";
+          }
+          dsh2_0card_0footer.onmouseout = function () {
+            if (dsh2_0card_0footer_click!=1){
+              dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+            }
+
+          }
+
+      var dsh2_0card_1footer=document.getElementById("dsh2[0]card[1]footer");
+          dsh2_0card_1footer.onmouseover= function () {
+            dsh2_0card_1footer.style.backgroundColor="#FA8633";
+          }
+          dsh2_0card_1footer.onmouseout = function () {
+            if (dsh2_0card_1footer_click!=1){
+              dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+
+      var dsh2_0card_2footer=document.getElementById("dsh2[0]card[2]footer");
+          dsh2_0card_2footer.onmouseover= function () {
+            dsh2_0card_2footer.style.backgroundColor="#FA8633";
+          }
+          dsh2_0card_2footer.onmouseout = function () {
+            if (dsh2_0card_2footer_click!=1){
+              dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+      var dsh2_0card_3footer=document.getElementById("dsh2[0]card[3]footer");
+          dsh2_0card_3footer.onmouseover= function () {
+            dsh2_0card_3footer.style.backgroundColor="#FA8633";
+          }
+          dsh2_0card_3footer.onmouseout = function () {
+            if (dsh2_0card_3footer_click!=1){
+              dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
             }
           }
 
