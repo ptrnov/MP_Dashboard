@@ -29821,35 +29821,56 @@ page-dsh2-home .card {
 }
 
 page-dsh2-home .card .header-title {
-  font-size: 8px;
+  font-size: 10px;
   text-align: right;
   font-weight: bold;
+  width: 120%;
+  padding-left: -15px;
+  padding-right: -15px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
 }
 
-page-dsh2-home .card .left-icon {
-  width: 50%;
+page-dsh2-home .card .content-icon1 {
+  margin-top: -10px;
+  width: 40%;
+  height: 40%;
   margin-left: -10px;
-  float: left;
 }
 
-page-dsh2-home .card .right-text {
+page-dsh2-home .card .content-lbl1 {
   width: 50%;
-  font-size: 50%;
+  font-size: 12px;
   font-weight: bold;
   width: 60%;
-  margin-left: 20px;
+  margin-right: -10px;
+  margin-top: 0px;
+  margin-bottom: -5px;
+  margin-bottom: -5px;
   text-align: right;
-  vertical-align: center;
 }
 
 page-dsh2-home .card .footer-color-block {
   background-color: #E9E9E9;
+  height: 20px;
 }
 
-page-dsh2-home .card .footer-title {
-  font-size: 8px;
-  text-align: right;
+page-dsh2-home .card .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: 2px;
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+
+page-dsh2-home .card .footer-font-lbl1 {
+  font-size: 10px;
   font-weight: bold;
+  text-align: left;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: -10px;
+  margin-left: -15px;
 }
 
 page-dsh2-home .datatable-header {

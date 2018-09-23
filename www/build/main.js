@@ -363,6 +363,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { DomCard } from "./card";
 var chkInit = false;
 var Dsh2HomePage = (function () {
     function Dsh2HomePage(navCtrl, navParams, database) {
@@ -378,6 +379,27 @@ var Dsh2HomePage = (function () {
         };
     }
     Dsh2HomePage.prototype.ionViewDidLoad = function () {
+        // /** ROW 1*/
+        // document.getElementById("dsh2[0]").hidden = false;
+        //   /** CARD */
+        //   document.getElementById("dsh2[0]card[0]").hidden = false;
+        //     /** CARD CONTENT */
+        //     document.getElementById("dsh2[0]card[0]content").hidden = false;
+        //         /** CONTENT HEADER */
+        //         document.getElementById("dsh2[0]card[0]content[0]").hidden = false;
+        //             /** CONTENT HEADER PROPERTIES */
+        //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").hidden = false;
+        //             document.getElementById("dsh2[0]card[0]content[0]-properties-lbl").innerHTML = " All Project";
+        //         /** CONTENT CONTENT*/
+        //         document.getElementById("dsh2[0]card[0]content[1]").hidden = false;
+        //             /** CONTENT CONTENT PROPERTIES */
+        //             document.getElementById("dsh2[0]card[0]content[1]-properties-img").hidden = false;
+        //             document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").hidden = false;
+        //     /** CARD FOOTER */
+        //     document.getElementById("dsh2[0]-card[0]footer").hidden = false;
+        //       /** CARD FOOTER PROPERTIES */
+        //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[0]").hidden = false;
+        //       document.getElementById("dsh2[0]-card[0]footer-properties-lbl[1]").hidden = true;
         this.initMap();
         console.log('ionViewDidLoad Dsh2HomePage');
         // if (chkInit==true){
@@ -469,19 +491,40 @@ var Dsh2HomePage = (function () {
             }
         });
     };
+    Dsh2HomePage.prototype.initDomManipulation = function () {
+        /** ROW 1*/
+        var dsh2_0 = document.getElementById("dsh2[0]");
+        /** CARD */
+        var dsh2_0card_0 = document.getElementById("dsh2[0]card[0]");
+        /** CARD CONTENT */
+        var dsh2_0card_0content = document.getElementById("dsh2[0]card[0]content");
+        /** CONTENT HEADER */
+        var dsh2_0card_0content_0 = document.getElementById("dsh2[0]card[0]content[0]");
+        /** CONTENT HEADER PROPERTIES */
+        var dsh2_0card_0content_0_properties_lbl = document.getElementById("dsh2[0]card[0]content[0]-properties-lbl");
+        /** CONTENT CONTENT*/
+        var dsh2_0card_0content_1 = document.getElementById("dsh2[0]card[0]content[1]");
+        /** CONTENT CONTENT PROPERTIES */
+        var dsh2_0card_0content_1_properties_img = document.getElementById("dsh2[0]card[0]content[1]-properties-img");
+        var dsh2_0card_0content_1_properties_lbl = document.getElementById("dsh2[0]card[0]content[1]-properties-lbl");
+        /** CARD FOOTER */
+        var dsh2_0card_0footer = document.getElementById("dsh2[0]-card[0]footer");
+        /** CARD FOOTER PROPERTIES */
+        var dsh2_0card_0footer_properties_lbl_0 = document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
+        var dsh2_0card_0footer_properties_lbl_1 = document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('map2'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _a || Object)
     ], Dsh2HomePage.prototype, "mapElement2", void 0);
     Dsh2HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh2-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Build to Suite Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <!-- <ion-scroll scrollY="true"> -->\n          <ion-row>\n    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n      <ion-row class="full-width" style="margin-top: -20px">\n        <!-- All Project -->\n        <ion-col col-3>\n            <ion-card class="card full-width">\n                <div id="divSecond[3]">\n                  <ion-card-header class="header-title">\n                    All Project\n                  </ion-card-header>\n                  <ion-card-content>\n                      <div class="row">\n                            <div class="left-icon">\n                              <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            </div>\n                            <div class="right-text">\n                                <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>\n                            </div>\n                      </div>\n                  </ion-card-content>\n                </div>\n                <ion-row class="footer-color-block">\n                    <div class="row">\n                      <ion-col class="footer-title">\n                            Total\n                      </ion-col>\n                    </div>\n                </ion-row>\n            </ion-card>\n          </ion-col>\n          <!-- NOT RELEASE -->\n          <ion-col col-3 id="divId_noRelease">\n              <ion-card class="card full-width">\n                  <div id="divSecond[0]">\n                    <ion-card-header class="header-title">\n                      Not Release\n                    </ion-card-header>\n                    <ion-card-content>\n                      <div class="row">\n                        <div  class="left-icon">\n                            <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                        </div>\n                        <div class="right-text" >\n                            <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>\n                        </div>\n                        <!-- <ion-icon   name="lock" ></ion-icon> -->\n                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n                </ion-card>\n          </ion-col>\n          <!-- PROJECT ON PIPE -->\n          <ion-col col-3>\n              <ion-card class="card full-width">\n                  <div id="divSecond[1]">\n                    <ion-card-header class="header-title">\n                    Prj on Pipe\n                    </ion-card-header>\n                    <ion-card-content>\n                      <div class="row">\n                        <div class="left-icon">\n                            <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">\n                            <!-- <ion-icon class="fa-home"></ion-icon> -->\n                            <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                        </div>\n                        <div class="right-text">\n                            <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>\n                        </div>\n                        <!-- <ion-icon   name="lock" ></ion-icon> -->\n                        <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n          <!-- RFI -->\n          <ion-col col-3>\n              <ion-card class="card full-width">\n                  <div id="divSecond[2]">\n                    <ion-card-header class="header-title">\n                      After Rfi\n                    </ion-card-header>\n                    <ion-card-content>\n                        <div class="row">\n                              <div class="left-icon">\n                                <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              </div>\n                              <div class="right-text">\n                                  <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>\n                              </div>\n                        </div>\n                    </ion-card-content>\n                  </div>\n                  <ion-row class="footer-color-block">\n                      <div class="row">\n                        <ion-col class="footer-title">\n                              Total\n                        </ion-col>\n                      </div>\n                  </ion-row>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col style="margin-left:2%">\n            <div id="b2cChart" style = " display : block ; " > </div>\n          </ion-col>\n\n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-card class="card-box-map full-width">\n                  <div id="map2" style="height: 350px"></div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      </ion-row>\n    <!-- </ion-scroll> -->\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/,
+            selector: 'page-dsh2-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Build to Suite Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <!-- <ion-scroll scrollY="true"> -->\n          <ion-row>\n    <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">\n      <ion-row id="dsh2[0]" class="full-width" style="margin-top: -20px">\n        <!-- All Project -->\n        <ion-col col-3>\n            <ion-card id="dsh2[0]card[0]" class="card full-width">\n                <div  id="dsh2[0]card[0]content">\n                  <ion-card-header id="dsh2[0]card[0]content[0]">\n                      <ion-label class="header-title" id="dsh2[0]card[0]content[0]-properties-lbl">\n                        All Project\n                      </ion-label>\n                  </ion-card-header>\n                  <ion-card-content id="dsh2[0]card[0]content[1]">\n                    <div>\n                      <ion-row class="row">\n                            <img  class="content-icon1" id="dsh2[0]card[0]content[1]-properties-img" src="assets/img/new/All_Project_m.png">\n                              <!-- <ion-icon class="fa-home"></ion-icon> -->\n                              <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                            <ion-label class="content-lbl1" id="dsh2[0]card[0]content[1]-properties-lbl">99 </ion-label>\n                      </ion-row>\n                    </div>\n                  </ion-card-content>\n                </div>\n                <div id="dsh2[0]card[0]footer">\n                  <ion-row class="footer-color-block full-width">\n                      <ion-label class="footer-font-lbl0" id="dsh2[0]card[0]footer-properties-lbl[0]">\n                        Total\n                      </ion-label>\n                      <ion-label class="footer-font-lbl1" id="dsh2[0]card[0]footer-properties-lbl[1]">\n                        129222\n                      </ion-label>\n                  </ion-row>\n              </div>\n            </ion-card>\n          </ion-col>\n           <!-- NOT RELEASE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[1]card[0]" class="card full-width">\n                  <div  id="dsh2[1]card[0]content">\n                    <ion-card-header id="dsh2[1]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[1]card[0]content[0]-properties-lbl">\n                            Not Release\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[1]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[1]card[0]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[1]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[1]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[1]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[1]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n          <!-- PROJECT ON PIPE -->\n          <ion-col col-3>\n              <ion-card id="dsh2[2]card[0]" class="card full-width">\n                  <div  id="dsh2[2]card[0]content">\n                    <ion-card-header id="dsh2[2]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[2]card[0]content[0]-properties-lbl">\n                            Prj on Pipe\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[2]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[2]card[0]content[1]-properties-img" src="assets/img/new/PoP_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[2]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[2]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[2]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[2]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n          <!-- RFI -->\n          <ion-col col-3>\n              <ion-card id="dsh2[3]card[0]" class="card full-width">\n                  <div  id="dsh2[3]card[0]content">\n                    <ion-card-header id="dsh2[3]card[0]content[0]">\n                        <ion-label class="header-title" id="dsh2[3]card[0]content[0]-properties-lbl">\n                            RFI\n                        </ion-label>\n                    </ion-card-header>\n                    <ion-card-content id="dsh2[3]card[0]content[1]">\n                      <div>\n                        <ion-row class="row">\n                              <img  class="content-icon1" id="dsh2[3]card[0]content[1]-properties-img" src="assets/img/new/Rfi_m.png">\n                                <!-- <ion-icon class="fa-home"></ion-icon> -->\n                                <!-- <i class="fa fa-user-md fa-2x"></i> -->\n                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->\n                              <ion-label class="content-lbl1" id="dsh2[3]card[0]content[1]-properties-lbl">99 </ion-label>\n                        </ion-row>\n                      </div>\n                    </ion-card-content>\n                  </div>\n                  <div id="dsh2[3]-card[0]footer">\n                    <ion-row class="footer-color-block full-width">\n                        <ion-label class="footer-font-lbl0" id="dsh2[3]-card[0]footer-properties-lbl[0]">\n                          Total\n                        </ion-label>\n                        <ion-label class="footer-font-lbl1" id="dsh2[3]-card[0]footer-properties-lbl[1]">\n                          129222\n                        </ion-label>\n                    </ion-row>\n                </div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col style="margin-left:2%">\n            <div id="b2cChart" style = " display : block ; " > </div>\n          </ion-col>\n\n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-card class="card-box-map full-width">\n                  <div id="map2" style="height: 350px"></div>\n              </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      </ion-row>\n    <!-- </ion-scroll> -->\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh2-home\dsh2-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-            __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]) === "function" && _d || Object])
     ], Dsh2HomePage);
     return Dsh2HomePage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=dsh2-home.js.map
@@ -1022,43 +1065,43 @@ var map = {
 		11
 	],
 	"../pages/dsh1-second-norelease/dsh1-second-norelease.module": [
-		714,
+		720,
 		10
 	],
 	"../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module": [
-		715,
+		714,
 		9
 	],
 	"../pages/dsh1-second-rfi/dsh1-second-rfi.module": [
-		716,
+		715,
 		8
 	],
 	"../pages/dsh2-home/dsh2-home.module": [
-		717,
+		716,
 		7
 	],
 	"../pages/dsh3-home/dsh3-home.module": [
-		718,
+		717,
 		6
 	],
 	"../pages/dsh4-home/dsh4-home.module": [
-		719,
+		718,
 		5
 	],
 	"../pages/dsh5-home/dsh5-home.module": [
-		720,
+		719,
 		4
 	],
 	"../pages/dsh6-home/dsh6-home.module": [
-		721,
+		723,
 		3
 	],
 	"../pages/dsh7-home/dsh7-home.module": [
-		722,
+		721,
 		2
 	],
 	"../pages/peta/peta.module": [
-		723,
+		722,
 		1
 	],
 	"../pages/welcome/welcome.module": [
@@ -2032,16 +2075,16 @@ var AppModule = (function () {
                 }, {
                     links: [
                         { loadChildren: '../pages/dsh1-second-afterrfi/dsh1-second-afterrfi.module#Dsh1SecondAfterrfiPageModule', name: 'Dsh1SecondAfterrfiPage', segment: 'dsh1-second-afterrfi', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh3-home/dsh3-home.module#Dsh3HomePageModule', name: 'Dsh3HomePage', segment: 'dsh3-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh7-home/dsh7-home.module#Dsh7HomePageModule', name: 'Dsh7HomePage', segment: 'dsh7-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/peta/peta.module#PetaPageModule', name: 'PetaPage', segment: 'peta', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                     ]
                 }),
