@@ -10,6 +10,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import { SelectSearchableModule  } from 'ionic-select-searchable';
 import {ActivityService} from "../services/activity-service";
+// import { CacheModule } from 'ionic-cache';
 // import {TripService} from "../services/trip-service";
 // import {WeatherProvider} from "../services/weather";
 

@@ -1,11 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
 // import { DomCard } from "./card";
 
-var chkInit:boolean=false;
 declare var google;
 /** VAR CLICK & MOUSEOVER STATUS */
 var dsh2_0card_0content_click=0;
@@ -16,6 +15,8 @@ var dsh2_0card_0footer_click=0;
 var dsh2_0card_1footer_click=0;
 var dsh2_0card_2footer_click=0;
 var dsh2_0card_3footer_click=0;
+/** INIT ONE OPEN NEW STATUS */
+var chkInit=0;
 
 @IonicPage()
 @Component({
@@ -33,7 +34,8 @@ export class Dsh2HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private database: DatabaseProvider
+    private database: DatabaseProvider,
+    private menu: MenuController
   ) {
 
     this.mapOptions2={
@@ -43,17 +45,31 @@ export class Dsh2HomePage {
     };
   }
 
-
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    this.menu.swipeEnable(true);
+    console.log('ionViewDidLoad Dsh2HomePage');
     this.initMouseOverOut();
     this.initClickEvent();
+    this.drilldown();
     this.initMap();
-    console.log('ionViewDidLoad Dsh2HomePage');
-    // if (chkInit==true){
-      this.drilldown();
-      //chkInit=false;
+    chkInit=1;
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(false, 'menu1');
+  }
+  onPageWillEnter () {
+    // if (chkInit==0){
+      // console.log('ionViewDidLoad Dsh2HomePage');
+      // this.initMouseOverOut();
+      // this.initClickEvent();
+      // this.drilldown();
+      // this.initMap();
+      // chkInit=1;
     // }
+  }
 
+  ionViewWillUnload() {
+    console.log("Previus page")
+    chkInit=0;
   }
 
   initMap() {
@@ -65,16 +81,10 @@ export class Dsh2HomePage {
     this.navCtrl.push(SettingsPage);
   }
 
-  ionViewWillUnload() {
-    // chkInit=false;
-    // this.charting.distroy;
-
-  }
-
   private drilldown(){
    this.charting=HighCharts.chart({
       chart: {
-        renderTo:'b2cChart',
+        renderTo:'dsh2-b2cChart',
         zoomType: 'x',
         panning: true,
         panKey: 'shift',
@@ -151,86 +161,111 @@ export class Dsh2HomePage {
 
   private initClickEvent(){
     /** dsh2_0 CONTAIN */
-    var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
-        dsh2_0card_0content.addEventListener('click', function () {
-        switch(dsh2_0card_0content_click) {
-            case 0:
-                  dsh2_0card_0content_click=1;
-                  dsh2_0card_0content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
-                    dsh2_0card_1content.style.backgroundColor="#FFFF";
-                    dsh2_0card_2content.style.backgroundColor="#FFFF";
-                    dsh2_0card_3content.style.backgroundColor="#FFFF";
-                    dsh2_0card_1content_click=0;
-                    dsh2_0card_2content_click=0;
-                    dsh2_0card_3content_click=0;
-              break;
-            case 1:
-                  dsh2_0card_0content_click=0;
-                  dsh2_0card_0content.style.backgroundColor="#FFFF";
-              break;
-            default:
-        };
+    var dsh2_0card_0content=<HTMLImageElement>document.getElementById("dsh2[0]card[0]content");
+    var dsh2_0card_1content=<HTMLImageElement>document.getElementById("dsh2[0]card[1]content");
+    var dsh2_0card_2content=<HTMLImageElement>document.getElementById("dsh2[0]card[2]content");
+    var dsh2_0card_3content=<HTMLImageElement>document.getElementById("dsh2[0]card[3]content");
+
+    dsh2_0card_0content.addEventListener('click', function () {
+    switch(dsh2_0card_0content_click) {
+        case 0:
+              dsh2_0card_0content_click=1;
+              dsh2_0card_0content.style.backgroundColor="#83D7F1";
+              //yang tidak di click kembali default
+                dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                dsh2_0card_1content_click=0;
+                dsh2_0card_2content_click=0;
+                dsh2_0card_3content_click=0;
+          break;
+        case 1:
+              dsh2_0card_0content_click=0;
+              dsh2_0card_1content_click=0;
+              dsh2_0card_2content_click=0;
+              dsh2_0card_3content_click=0;
+              dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+              dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+              dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+              dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+          break;
+        default:
+      };
     });
-    var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
-        dsh2_0card_1content.addEventListener('click', function () {
+       dsh2_0card_1content.addEventListener('click', function () {
         switch(dsh2_0card_1content_click) {
             case 0:
                   dsh2_0card_1content_click=1;
                   dsh2_0card_1content.style.backgroundColor="#83D7F1";
                   //yang tidak di click kembali default
-                  dsh2_0card_0content.style.backgroundColor="#FFFF";
-                  dsh2_0card_2content.style.backgroundColor="#FFFF";
-                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_0content_click=0;
                   dsh2_0card_2content_click=0;
                   dsh2_0card_3content_click=0;
               break;
             case 1:
+                  dsh2_0card_0content_click=0;
                   dsh2_0card_1content_click=0;
-                  dsh2_0card_1content.style.backgroundColor="#FFFF";
+                  dsh2_0card_2content_click=0;
+                  dsh2_0card_3content_click=0;
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
         };
     });
-    var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
         dsh2_0card_2content.addEventListener('click', function () {
         switch(dsh2_0card_2content_click) {
             case 0:
                   dsh2_0card_2content_click=1;
                   dsh2_0card_2content.style.backgroundColor="#83D7F1";
                   //yang tidak di click kembali default
-                  dsh2_0card_0content.style.backgroundColor="#FFFF";
-                  dsh2_0card_1content.style.backgroundColor="#FFFF";
-                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_0content_click=0;
                   dsh2_0card_1content_click=0;
                   dsh2_0card_3content_click=0;
               break;
             case 1:
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_1content_click=0;
                   dsh2_0card_2content_click=0;
-                  dsh2_0card_2content.style.backgroundColor="#FFFF";
+                  dsh2_0card_3content_click=0;
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
         };
     });
-    var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
         dsh2_0card_3content.addEventListener('click', function () {
         switch(dsh2_0card_3content_click) {
             case 0:
                   dsh2_0card_3content_click=1;
                   dsh2_0card_3content.style.backgroundColor="#83D7F1";
                   //yang tidak di click kembali default
-                  dsh2_0card_0content.style.backgroundColor="#FFFF";
-                  dsh2_0card_1content.style.backgroundColor="#FFFF";
-                  dsh2_0card_2content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_0content_click=0;
                   dsh2_0card_1content_click=0;
                   dsh2_0card_2content_click=0;
               break;
             case 1:
+                  dsh2_0card_0content_click=0;
+                  dsh2_0card_1content_click=0;
+                  dsh2_0card_2content_click=0;
                   dsh2_0card_3content_click=0;
-                  dsh2_0card_3content.style.backgroundColor="#FFFF";
+                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
         };
@@ -252,7 +287,13 @@ export class Dsh2HomePage {
               break;
             case 1:
                   dsh2_0card_0footer_click=0;
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_2footer_click=0;
+                  dsh2_0card_3footer_click=0;
                   dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
         };
@@ -272,8 +313,14 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer_click=0;
               break;
             case 1:
+                  dsh2_0card_0footer_click=0;
                   dsh2_0card_1footer_click=0;
+                  dsh2_0card_2footer_click=0;
+                  dsh2_0card_3footer_click=0;
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
                   dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
         };
@@ -293,8 +340,14 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer_click=0;
               break;
             case 1:
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_1footer_click=0;
                   dsh2_0card_2footer_click=0;
+                  dsh2_0card_3footer_click=0;
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
                   dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
         };
@@ -314,7 +367,13 @@ export class Dsh2HomePage {
                   dsh2_0card_2footer_click=0;
               break;
             case 1:
+                  dsh2_0card_0footer_click=0;
+                  dsh2_0card_1footer_click=0;
+                  dsh2_0card_2footer_click=0;
                   dsh2_0card_3footer_click=0;
+                  dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
@@ -330,8 +389,8 @@ export class Dsh2HomePage {
             dsh2_0card_0content.style.backgroundColor="#BBE5F2";
           }
           dsh2_0card_0content.onmouseout = function () {
-            if (dsh2_0card_0content_click!=1){
-              dsh2_0card_0content.style.backgroundColor="#FFFF";
+            if (dsh2_0card_0content_click!==1){
+              dsh2_0card_0content.style.backgroundColor="#FFFFFF";
             }
           }
       var dsh2_0card_1content=document.getElementById("dsh2[0]card[1]content");
@@ -339,8 +398,8 @@ export class Dsh2HomePage {
             dsh2_0card_1content.style.backgroundColor="#BBE5F2";
           }
           dsh2_0card_1content.onmouseout = function () {
-            if (dsh2_0card_1content_click!=1){
-              dsh2_0card_1content.style.backgroundColor="#FFFF";
+            if (dsh2_0card_1content_click!==1){
+              dsh2_0card_1content.style.backgroundColor="#FFFFFF";
             }
           }
       var dsh2_0card_2content=document.getElementById("dsh2[0]card[2]content");
@@ -348,8 +407,8 @@ export class Dsh2HomePage {
             dsh2_0card_2content.style.backgroundColor="#BBE5F2";
           }
           dsh2_0card_2content.onmouseout = function () {
-            if (dsh2_0card_2content_click!=1){
-              dsh2_0card_2content.style.backgroundColor="#FFFF";
+            if (dsh2_0card_2content_click!==1){
+              dsh2_0card_2content.style.backgroundColor="#FFFFFF";
             }
           }
       var dsh2_0card_3content=document.getElementById("dsh2[0]card[3]content");
@@ -357,8 +416,8 @@ export class Dsh2HomePage {
             dsh2_0card_3content.style.backgroundColor="#BBE5F2";
           }
           dsh2_0card_3content.onmouseout = function () {
-            if (dsh2_0card_3content_click!=1){
-              dsh2_0card_3content.style.backgroundColor="#FFFF";
+            if (dsh2_0card_3content_click!==1){
+              dsh2_0card_3content.style.backgroundColor="#FFFFFF";
             }
           }
       /* dsh2_0 FOOTER */
@@ -367,7 +426,7 @@ export class Dsh2HomePage {
             dsh2_0card_0footer.style.backgroundColor="#FA8633";
           }
           dsh2_0card_0footer.onmouseout = function () {
-            if (dsh2_0card_0footer_click!=1){
+            if (dsh2_0card_0footer_click!==1){
               dsh2_0card_0footer.style.backgroundColor="#E9E9E9";
             }
 
@@ -378,7 +437,7 @@ export class Dsh2HomePage {
             dsh2_0card_1footer.style.backgroundColor="#FA8633";
           }
           dsh2_0card_1footer.onmouseout = function () {
-            if (dsh2_0card_1footer_click!=1){
+            if (dsh2_0card_1footer_click!==1){
               dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
             }
           }
@@ -388,7 +447,7 @@ export class Dsh2HomePage {
             dsh2_0card_2footer.style.backgroundColor="#FA8633";
           }
           dsh2_0card_2footer.onmouseout = function () {
-            if (dsh2_0card_2footer_click!=1){
+            if (dsh2_0card_2footer_click!==1){
               dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
             }
           }
@@ -397,7 +456,7 @@ export class Dsh2HomePage {
             dsh2_0card_3footer.style.backgroundColor="#FA8633";
           }
           dsh2_0card_3footer.onmouseout = function () {
-            if (dsh2_0card_3footer_click!=1){
+            if (dsh2_0card_3footer_click!==1){
               dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
             }
           }

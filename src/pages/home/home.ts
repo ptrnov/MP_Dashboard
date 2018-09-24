@@ -1,5 +1,5 @@
 import {Component,ViewChild, ElementRef  } from "@angular/core";
-import {NavController, PopoverController,AlertController,ModalController} from "ionic-angular";
+import {NavController, PopoverController,AlertController,ModalController,MenuController} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
 // import {NotificationsPage} from "../notifications/notifications";
@@ -74,7 +74,8 @@ export class HomePage {
       private dashboarAll: DashboardAllProvider,
       public alertCtrl: AlertController,
       public modalCtrl: ModalController,
-      private database: DatabaseProvider
+      private database: DatabaseProvider,
+      private menu: MenuController
       // private pageScrollService: PageScrollService
       // ,@Inject(DOCUMENT)
       // private document: any
@@ -91,6 +92,14 @@ export class HomePage {
 
     // this.getCobaData();
 
+  }
+
+  ionViewDidEnter(){
+    this.menu.swipeEnable(false);
+    // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+      //  this.nilaiDispyValue1();
+    // });
   }
 
   ngOnInit() {
@@ -123,12 +132,7 @@ export class HomePage {
     this.initMap();
   }
 
-  ionViewDidEnter(){
-    // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
-      //  this.nilaiDispyValue1();
-    // });
-  }
+
 
   initMap(){
     this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);

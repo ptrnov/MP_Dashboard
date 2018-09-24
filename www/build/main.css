@@ -29814,51 +29814,60 @@ page-dsh2-home .circle {
   height: 14px;
 }
 
-page-dsh2-home .card {
+page-dsh2-home .grid-ukuran {
+  width: 100%;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+page-dsh2-home .cardHead {
   background-color: #FFFF;
   border-radius: 7px 7px 7px 7px;
   border: 1px solid #e2e2e2;
-  width: 105%;
+  width: 100%;
 }
 
-page-dsh2-home .card .header-title {
+page-dsh2-home .cardHead .cardcontent {
+  background-color: #FFFF;
+  height: 70px;
+  width: 100%;
+}
+
+page-dsh2-home .cardHead .cardcontent .header-title {
   font-size: 10px;
   text-align: right;
   font-weight: bold;
-  width: 120%;
-  padding-left: -15px;
-  padding-right: -15px;
+  margin-left: -20px;
+  margin-right: -20px;
   margin-top: -10px;
   margin-bottom: -5px;
   text-align: center;
 }
 
-page-dsh2-home .card .content-icon1 {
+page-dsh2-home .cardHead .cardcontent .icon1 {
   margin-top: -10px;
-  width: 50%;
-  height: 50%;
-  margin-left: -10px;
-  text-align: left;
-}
-
-page-dsh2-home .card .content-lbl1 {
-  width: 120%;
-  height: 50%;
-  font-size: 12px;
-  font-weight: bold;
-  margin-right: -10px;
-  margin-left: 0%;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  width: 35px;
+  height: 35px;
+  margin-left: -15px;
   text-align: right;
 }
 
-page-dsh2-home .card .footer-color-block {
+page-dsh2-home .cardHead .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-dsh2-home .cardHead .footer-color-block {
   background-color: #E9E9E9;
   height: 20px;
 }
 
-page-dsh2-home .card .footer-font-lbl0 {
+page-dsh2-home .cardHead .footer-font-lbl0 {
   font-size: 10px;
   margin-left: -40%;
   margin-top: 4px;
@@ -29866,7 +29875,7 @@ page-dsh2-home .card .footer-font-lbl0 {
   text-align: right;
 }
 
-page-dsh2-home .card .footer-font-lbl1 {
+page-dsh2-home .cardHead .footer-font-lbl1 {
   font-size: 10px;
   font-weight: bold;
   text-align: right;
@@ -29874,6 +29883,197 @@ page-dsh2-home .card .footer-font-lbl1 {
   margin-bottom: 0px;
   margin-right: 5%;
   margin-left: -15px;
+}
+
+page-dsh2-home .cardSecond {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+page-dsh2-home .cardSecond .cardcontent {
+  background-color: #FFFF;
+  height: 70px;
+  width: 100%;
+  padding-right: 10px;
+}
+
+page-dsh2-home .cardSecond .cardcontent .header-title {
+  font-size: 10px;
+  text-align: right;
+  font-weight: bold;
+  margin-left: -23px;
+  margin-right: -25px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+page-dsh2-home .cardSecond .cardcontent .icon1 {
+  margin-top: -10px;
+  width: 35px;
+  height: 35px;
+  margin-left: -15px;
+  text-align: right;
+}
+
+page-dsh2-home .cardSecond .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-dsh2-home .cardSecond .footer-color-block {
+  background-color: #E9E9E9;
+  height: 20px;
+}
+
+page-dsh2-home .cardSecond .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: -40%;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+page-dsh2-home .cardSecond .footer-font-lbl1 {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: -15px;
+}
+
+page-dsh2-home .cardThree {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+page-dsh2-home .cardThree .cardcontent {
+  background-color: #FFFF;
+  height: 70px;
+  width: 100%;
+  padding-right: 10px;
+}
+
+page-dsh2-home .cardThree .cardcontent .header-title {
+  font-size: 10px;
+  text-align: right;
+  font-weight: bold;
+  margin-left: -23px;
+  margin-right: -25px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+page-dsh2-home .cardThree .cardcontent .icon1 {
+  margin-top: -10px;
+  width: 35px;
+  height: 35px;
+  margin-left: -15px;
+  text-align: right;
+}
+
+page-dsh2-home .cardThree .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-dsh2-home .cardThree .footer-color-block {
+  background-color: #E9E9E9;
+  height: 20px;
+}
+
+page-dsh2-home .cardThree .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: -40%;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+page-dsh2-home .cardThree .footer-font-lbl1 {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: -15px;
+}
+
+page-dsh2-home .cardPop {
+  margin-top: 0px;
+  font-size: 10px;
+}
+
+page-dsh2-home .cardPop .sub1 {
+  width: 100%;
+  height: 30px;
+  font-size: 9px;
+  border-radius: 1px 1px 1px 1px;
+}
+
+page-dsh2-home .cardPop .sub1 .alg-kiri {
+  text-align: left;
+  margin-left: -2px;
+  margin-right: -43px;
+  font-weight: bold;
+}
+
+page-dsh2-home .cardPop .sub1 .alg-kanan {
+  text-align: right;
+  padding-left: 5px;
+  margin-right: 0px;
+}
+
+page-dsh2-home .cardPop .sub1 .bridge {
+  font-size: 12px;
+  background-color: #00AADD;
+}
+
+page-dsh2-home .cardPop .sub2 {
+  margin-top: -9px;
+  width: 100%;
+  height: 30px;
+  font-size: 9px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+page-dsh2-home .cardPop .sub2 .alg-kiri {
+  text-align: left;
+  margin-left: -2px;
+  margin-right: -43px;
+  font-weight: bold;
+}
+
+page-dsh2-home .cardPop .sub2 .alg-kanan {
+  text-align: right;
+  padding-left: 5px;
+  margin-right: 0px;
+}
+
+page-dsh2-home .cardPop .sub2 .bridge {
+  background-color: #00AADD;
+}
+
+page-dsh2-home .cardPop .font {
+  font-size: 9px;
 }
 
 page-dsh2-home .datatable-header {
