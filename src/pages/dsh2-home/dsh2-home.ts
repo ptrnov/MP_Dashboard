@@ -1,10 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
 // import { DomCard } from "./card";
-
 declare var google;
 /** VAR CLICK & MOUSEOVER STATUS */
 var dsh2_0card_0content_click=0;
@@ -34,10 +33,8 @@ export class Dsh2HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private database: DatabaseProvider,
-    private menu: MenuController
-  ) {
-
+    private database: DatabaseProvider
+  ){
     this.mapOptions2={
       zoom: 4,
       center:  new google.maps.LatLng(-2.209764,117.114258),
@@ -46,16 +43,23 @@ export class Dsh2HomePage {
   }
 
   ionViewDidEnter() {
-    this.menu.swipeEnable(true);
+    // this.menu.swipeEnable(true);
     console.log('ionViewDidLoad Dsh2HomePage');
     this.initMouseOverOut();
     this.initClickEvent();
+    document.getElementById("dsh2[1]").hidden=true;
+    document.getElementById("dsh2[2]").hidden=true;
+    document.getElementById("dsh2[3]").hidden=true;
+    document.getElementById("dsh2[4]").hidden=true;
+    document.getElementById("dsh2[5]").hidden=true;
+    document.getElementById("dsh2[6]").hidden=true;
     this.drilldown();
     this.initMap();
     chkInit=1;
     // If you have more than one side menu, use the id like below
     // this.menu.swipeEnable(false, 'menu1');
   }
+
   onPageWillEnter () {
     // if (chkInit==0){
       // console.log('ionViewDidLoad Dsh2HomePage');
@@ -68,7 +72,7 @@ export class Dsh2HomePage {
   }
 
   ionViewWillUnload() {
-    console.log("Previus page")
+    console.log("Previus page");
     chkInit=0;
   }
 
@@ -155,55 +159,24 @@ export class Dsh2HomePage {
               }
           }
     });
-
   }
 
 
   private initClickEvent(){
     /** dsh2_0 CONTAIN */
     var dsh2_0card_0content=<HTMLImageElement>document.getElementById("dsh2[0]card[0]content");
-    var dsh2_0card_1content=<HTMLImageElement>document.getElementById("dsh2[0]card[1]content");
-    var dsh2_0card_2content=<HTMLImageElement>document.getElementById("dsh2[0]card[2]content");
-    var dsh2_0card_3content=<HTMLImageElement>document.getElementById("dsh2[0]card[3]content");
-
-    dsh2_0card_0content.addEventListener('click', function () {
-    switch(dsh2_0card_0content_click) {
-        case 0:
-              dsh2_0card_0content_click=1;
-              dsh2_0card_0content.style.backgroundColor="#83D7F1";
-              //yang tidak di click kembali default
-                dsh2_0card_1content.style.backgroundColor="#FFFFFF";
-                dsh2_0card_2content.style.backgroundColor="#FFFFFF";
-                dsh2_0card_3content.style.backgroundColor="#FFFFFF";
-                dsh2_0card_1content_click=0;
-                dsh2_0card_2content_click=0;
-                dsh2_0card_3content_click=0;
-          break;
-        case 1:
-              dsh2_0card_0content_click=0;
-              dsh2_0card_1content_click=0;
-              dsh2_0card_2content_click=0;
-              dsh2_0card_3content_click=0;
-              dsh2_0card_0content.style.backgroundColor="#FFFFFF";
-              dsh2_0card_1content.style.backgroundColor="#FFFFFF";
-              dsh2_0card_2content.style.backgroundColor="#FFFFFF";
-              dsh2_0card_3content.style.backgroundColor="#FFFFFF";
-          break;
-        default:
-      };
-    });
-       dsh2_0card_1content.addEventListener('click', function () {
-        switch(dsh2_0card_1content_click) {
+        dsh2_0card_0content.addEventListener('click', function () {
+          switch(dsh2_0card_0content_click) {
             case 0:
-                  dsh2_0card_1content_click=1;
-                  dsh2_0card_1content.style.backgroundColor="#83D7F1";
+                  dsh2_0card_0content_click=1;
+                  dsh2_0card_0content.style.backgroundColor="#83D7F1";
                   //yang tidak di click kembali default
-                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
-                  dsh2_0card_2content.style.backgroundColor="#FFFFFF";
-                  dsh2_0card_3content.style.backgroundColor="#FFFFFF";
-                  dsh2_0card_0content_click=0;
-                  dsh2_0card_2content_click=0;
-                  dsh2_0card_3content_click=0;
+                    dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_1content_click=0;
+                    dsh2_0card_2content_click=0;
+                    dsh2_0card_3content_click=0;
               break;
             case 1:
                   dsh2_0card_0content_click=0;
@@ -216,10 +189,40 @@ export class Dsh2HomePage {
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
-        };
-    });
+          };
+        });
+
+    var dsh2_0card_1content=<HTMLImageElement>document.getElementById("dsh2[0]card[1]content");
+        dsh2_0card_1content.addEventListener('click', function () {
+          switch(dsh2_0card_1content_click) {
+              case 0:
+                    dsh2_0card_1content_click=1;
+                    dsh2_0card_1content.style.backgroundColor="#83D7F1";
+                    //yang tidak di click kembali default
+                    dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_0content_click=0;
+                    dsh2_0card_2content_click=0;
+                    dsh2_0card_3content_click=0;
+                break;
+              case 1:
+                    dsh2_0card_0content_click=0;
+                    dsh2_0card_1content_click=0;
+                    dsh2_0card_2content_click=0;
+                    dsh2_0card_3content_click=0;
+                    dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                break;
+              default:
+          };
+        });
+
+    var dsh2_0card_2content=<HTMLImageElement>document.getElementById("dsh2[0]card[2]content");
         dsh2_0card_2content.addEventListener('click', function () {
-        switch(dsh2_0card_2content_click) {
+          switch(dsh2_0card_2content_click) {
             case 0:
                   dsh2_0card_2content_click=1;
                   dsh2_0card_2content.style.backgroundColor="#83D7F1";
@@ -242,10 +245,12 @@ export class Dsh2HomePage {
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
-        };
-    });
+          };
+        });
+
+    var dsh2_0card_3content=<HTMLImageElement>document.getElementById("dsh2[0]card[3]content");
         dsh2_0card_3content.addEventListener('click', function () {
-        switch(dsh2_0card_3content_click) {
+          switch(dsh2_0card_3content_click) {
             case 0:
                   dsh2_0card_3content_click=1;
                   dsh2_0card_3content.style.backgroundColor="#83D7F1";
@@ -268,12 +273,13 @@ export class Dsh2HomePage {
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
               break;
             default:
-        };
-    });
+          };
+        });
+
     /** dsh2_0 FOOTER */
     var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
         dsh2_0card_0footer.addEventListener('click', function () {
-        switch(dsh2_0card_0footer_click) {
+          switch(dsh2_0card_0footer_click) {
             case 0:
                   dsh2_0card_0footer_click=1;
                   dsh2_0card_0footer.style.backgroundColor="#FA8633";
@@ -296,11 +302,12 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
-        };
-    });
+          };
+        });
+
     var dsh2_0card_1footer=document.getElementById("dsh2[0]card[1]footer");
         dsh2_0card_1footer.addEventListener('click', function () {
-        switch(dsh2_0card_1footer_click) {
+          switch(dsh2_0card_1footer_click) {
             case 0:
                   dsh2_0card_1footer_click=1;
                   dsh2_0card_1footer.style.backgroundColor="#FA8633";
@@ -323,11 +330,12 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
-        };
-    });
+          };
+        });
+
     var dsh2_0card_2footer=document.getElementById("dsh2[0]card[2]footer");
         dsh2_0card_2footer.addEventListener('click', function () {
-        switch(dsh2_0card_2footer_click) {
+          switch(dsh2_0card_2footer_click) {
             case 0:
                   dsh2_0card_2footer_click=1;
                   dsh2_0card_2footer.style.backgroundColor="#FA8633";
@@ -350,11 +358,12 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
-        };
-    });
+          };
+        });
+
     var dsh2_0card_3footer=document.getElementById("dsh2[0]card[3]footer");
         dsh2_0card_3footer.addEventListener('click', function () {
-        switch(dsh2_0card_3footer_click) {
+          switch(dsh2_0card_3footer_click) {
             case 0:
                   dsh2_0card_3footer_click=1;
                   dsh2_0card_3footer.style.backgroundColor="#FA8633";
@@ -377,12 +386,11 @@ export class Dsh2HomePage {
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
               break;
             default:
-        };
-    });
-
+          };
+        });
   }
 
- private initMouseOverOut(){
+  private initMouseOverOut(){
        /* dsh2_0 CONTAIN */
       var dsh2_0card_0content=document.getElementById("dsh2[0]card[0]content");
           dsh2_0card_0content.onmouseover= function () {
@@ -420,6 +428,7 @@ export class Dsh2HomePage {
               dsh2_0card_3content.style.backgroundColor="#FFFFFF";
             }
           }
+
       /* dsh2_0 FOOTER */
       var dsh2_0card_0footer=document.getElementById("dsh2[0]card[0]footer");
           dsh2_0card_0footer.onmouseover= function () {
@@ -485,6 +494,5 @@ export class Dsh2HomePage {
       // /** CARD FOOTER PROPERTIES */
       // var dsh2_0card_0footer_properties_lbl_0=document.getElementById("dsh2[0]card[0]footer-properties-lbl[0]");
       // var dsh2_0card_0footer_properties_lbl_1=document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]");
-
   }
 }

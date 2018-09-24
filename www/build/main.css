@@ -29833,6 +29833,10 @@ page-dsh2-home .cardHead .cardcontent {
   width: 100%;
 }
 
+page-dsh2-home .cardHead .cardcontent .head-ukuran {
+  height: 20px;
+}
+
 page-dsh2-home .cardHead .cardcontent .header-title {
   font-size: 10px;
   text-align: right;
@@ -29899,6 +29903,10 @@ page-dsh2-home .cardSecond .cardcontent {
   padding-right: 10px;
 }
 
+page-dsh2-home .cardSecond .cardcontent .head-ukuran {
+  height: 20px;
+}
+
 page-dsh2-home .cardSecond .cardcontent .header-title {
   font-size: 10px;
   text-align: right;
@@ -29912,8 +29920,8 @@ page-dsh2-home .cardSecond .cardcontent .header-title {
 
 page-dsh2-home .cardSecond .cardcontent .icon1 {
   margin-top: -10px;
-  width: 35px;
-  height: 35px;
+  width: 55px;
+  height: 25px;
   margin-left: -15px;
   text-align: right;
 }
@@ -29960,9 +29968,13 @@ page-dsh2-home .cardThree {
 
 page-dsh2-home .cardThree .cardcontent {
   background-color: #FFFF;
-  height: 70px;
+  height: 50px;
   width: 100%;
   padding-right: 10px;
+}
+
+page-dsh2-home .cardThree .cardcontent .head-ukuran {
+  height: 0px;
 }
 
 page-dsh2-home .cardThree .cardcontent .header-title {
@@ -29977,11 +29989,10 @@ page-dsh2-home .cardThree .cardcontent .header-title {
 }
 
 page-dsh2-home .cardThree .cardcontent .icon1 {
-  margin-top: -10px;
-  width: 35px;
-  height: 35px;
-  margin-left: -15px;
-  text-align: right;
+  width: 55px;
+  height: 25px;
+  margin-left: -17px;
+  margin-top: -15px;
 }
 
 page-dsh2-home .cardThree .cardcontent .lbl1 {

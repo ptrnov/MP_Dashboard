@@ -85,6 +85,9 @@ page-dsh2-home {
       background-color:#FFFF;
       height: 70px;
       width: 100%;
+      .head-ukuran{
+        height: 20px;
+      }
       .header-title{
         font-size: 10px;
         text-align: right;
@@ -147,6 +150,9 @@ page-dsh2-home {
       height: 70px;
       width: 100%;
       padding-right: 10px;
+      .head-ukuran{
+        height: 20px;
+      }
       .header-title{
         font-size: 10px;
         text-align: right;
@@ -160,8 +166,8 @@ page-dsh2-home {
       }
       .icon1{
         margin-top:-10px;
-        width : 35px;
-        height: 35px;
+        width : 55px;
+        height: 25px;
         margin-left:-15px;
         text-align:right;
       }
@@ -206,14 +212,17 @@ page-dsh2-home {
     width: 100%;
     .cardcontent{
       background-color:#FFFF;
-      height: 70px;
+      height: 50px;
       width: 100%;
       padding-right: 10px;
+      .head-ukuran{
+        height: 0px;
+      }
       .header-title{
         font-size: 10px;
         text-align: right;
         font-weight: bold;
-        //width:100%;
+        // width:0%;
         margin-left:-23px;
         margin-right:-25px;
         margin-top: -10px;
@@ -221,11 +230,10 @@ page-dsh2-home {
         text-align:center;
       }
       .icon1{
-        margin-top:-10px;
-        width : 35px;
-        height: 35px;
-        margin-left:-15px;
-        text-align:right;
+        width : 55px;
+        height: 25px;
+        margin-left:-17px;
+        margin-top:-15px;
       }
       .lbl1{
         font-size:12px;
@@ -262,7 +270,6 @@ page-dsh2-home {
 
   //CARD POP
   .cardPop{
-
     margin-top: 0px;
     font-size: 10px;
     .sub1{
