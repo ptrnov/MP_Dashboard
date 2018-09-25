@@ -30514,6 +30514,12 @@ page-dsh4-home .circle {
   height: 14px;
 }
 
+page-dsh4-home .grid-ukuran {
+  width: 100%;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
 page-dsh4-home .cardHead {
   background-color: #FFFF;
   border-radius: 7px 7px 7px 7px;
@@ -30831,6 +30837,12 @@ page-dsh5-home .circle {
   background-color: lightgreen;
   width: 14px;
   height: 14px;
+}
+
+page-dsh5-home .grid-ukuran {
+  width: 100%;
+  margin-top: -10px;
+  margin-left: -10px;
 }
 
 page-dsh5-home .cardHead {
@@ -31528,7 +31540,7 @@ page-home .fourth-card #fourth-card-footer-area4 {
   background-color: #E9E9E9;
 }
 
-.alertModal .alert-head {
+page-home .alertModal .alert-head {
   background-color: #B1232D;
   color: white;
   vertical-align: center;
@@ -31536,13 +31548,13 @@ page-home .fourth-card #fourth-card-footer-area4 {
   margin-bottom: -30px;
 }
 
-.alertModal .alert-message {
+page-home .alertModal .alert-message {
   height: 120px;
   font-size: 20px;
   background-color: #e2e2e2;
 }
 
-.alertModal .alertModal {
+page-home .alertModal .alertModal {
   border-radius: 50ps;
   background-color: transparent;
   -webkit-box-shadow: #ff0000;
@@ -31550,7 +31562,7 @@ page-home .fourth-card #fourth-card-footer-area4 {
   color: red;
 }
 
-.alertDanger {
+page-home .alertDanger {
   border-radius: 30px !important;
   padding-left: 30px !important;
   font-size: 0.9em;
@@ -31562,9 +31574,282 @@ page-home .fourth-card #fourth-card-footer-area4 {
   color: white;
 }
 
-.alertDanger button {
+page-home .alertDanger button {
   color: white !important;
   background-color: #5b5ef4 !important;
+}
+
+page-home .grid-ukuran {
+  width: 100%;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+page-home .cardHead {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+page-home .cardHead .cardcontent {
+  background-color: #FFFF;
+  height: 70px;
+  width: 100%;
+}
+
+page-home .cardHead .cardcontent .head-ukuran {
+  height: 20px;
+}
+
+page-home .cardHead .cardcontent .header-title {
+  font-size: 10px;
+  text-align: right;
+  font-weight: bold;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+page-home .cardHead .cardcontent .icon1 {
+  margin-top: -10px;
+  width: 35px;
+  height: 35px;
+  margin-left: -15px;
+  text-align: right;
+}
+
+page-home .cardHead .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-home .cardHead .footer-color-block {
+  background-color: #E9E9E9;
+  height: 20px;
+}
+
+page-home .cardHead .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: 0%;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+page-home .cardHead .footer-font-lbl1 {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: 0px;
+}
+
+page-home .cardSecond {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+page-home .cardSecond .cardcontent {
+  background-color: #FFFF;
+  height: 70px;
+  width: 100%;
+  padding-right: 10px;
+}
+
+page-home .cardSecond .cardcontent .head-ukuran {
+  height: 20px;
+}
+
+page-home .cardSecond .cardcontent .header-title {
+  font-size: 10px;
+  text-align: right;
+  font-weight: bold;
+  margin-left: -23px;
+  margin-right: -25px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+page-home .cardSecond .cardcontent .icon1 {
+  margin-top: -10px;
+  width: 55px;
+  height: 25px;
+  margin-left: -15px;
+  text-align: right;
+}
+
+page-home .cardSecond .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-home .cardSecond .footer-color-block {
+  background-color: #E9E9E9;
+  height: 20px;
+}
+
+page-home .cardSecond .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: -40%;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+page-home .cardSecond .footer-font-lbl1 {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: -15px;
+}
+
+page-home .cardThree {
+  background-color: #FFFF;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+page-home .cardThree .cardcontent {
+  background-color: #FFFF;
+  height: 50px;
+  width: 100%;
+  padding-right: 10px;
+}
+
+page-home .cardThree .cardcontent .head-ukuran {
+  height: 0px;
+}
+
+page-home .cardThree .cardcontent .header-title {
+  font-size: 10px;
+  text-align: right;
+  font-weight: bold;
+  margin-left: -23px;
+  margin-right: -25px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+page-home .cardThree .cardcontent .icon1 {
+  width: 55px;
+  height: 25px;
+  margin-left: -17px;
+  margin-top: -15px;
+}
+
+page-home .cardThree .cardcontent .lbl1 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: -20px;
+  margin-left: -20%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+page-home .cardThree .footer-color-block {
+  background-color: #E9E9E9;
+  height: 20px;
+}
+
+page-home .cardThree .footer-font-lbl0 {
+  font-size: 10px;
+  margin-left: -40%;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+page-home .cardThree .footer-font-lbl1 {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: -25px;
+}
+
+page-home .cardPop {
+  margin-top: 0px;
+  font-size: 10px;
+}
+
+page-home .cardPop .sub1 {
+  width: 100%;
+  height: 30px;
+  font-size: 9px;
+  border-radius: 1px 1px 1px 1px;
+}
+
+page-home .cardPop .sub1 .alg-kiri {
+  text-align: left;
+  margin-left: -2px;
+  margin-right: -43px;
+  font-weight: bold;
+}
+
+page-home .cardPop .sub1 .alg-kanan {
+  text-align: right;
+  padding-left: 5px;
+  margin-right: 0px;
+}
+
+page-home .cardPop .sub1 .bridge {
+  font-size: 12px;
+  background-color: #00AADD;
+}
+
+page-home .cardPop .sub2 {
+  margin-top: -9px;
+  width: 100%;
+  height: 30px;
+  font-size: 9px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+page-home .cardPop .sub2 .alg-kiri {
+  text-align: left;
+  margin-left: -2px;
+  margin-right: -43px;
+  font-weight: bold;
+}
+
+page-home .cardPop .sub2 .alg-kanan {
+  text-align: right;
+  padding-left: 5px;
+  margin-right: 0px;
+}
+
+page-home .cardPop .sub2 .bridge {
+  background-color: #00AADD;
+}
+
+page-home .cardPop .font {
+  font-size: 9px;
 }
 
 page-login .content {

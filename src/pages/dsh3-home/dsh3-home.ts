@@ -5,6 +5,7 @@ import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
 
 declare var google;
+
 /** VAR CLICK & MOUSEOVER STATUS */
 var dsh3_0card_0content_click=0;
 var dsh3_0card_1content_click=0;
