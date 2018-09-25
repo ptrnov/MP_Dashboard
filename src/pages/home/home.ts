@@ -129,11 +129,18 @@ export class HomePage {
       this.drilldown();
       //chkInit=false;
     // }
+    this.tampilkanNilai();
+  }
 
+  tampilkanNilai(){
     //--HIDE CARD
     for (var x1=1; x1<=20; x1++){
       document.getElementById("dsh1["+x1+"]").hidden=true;
     }
+
+    /** All Project */
+    document.getElementById("dsh1_headcard[0]content[1]-properties-lbl").innerHTML=(99+13).toString();
+
     /** HEAD VALUE */
     for (var j=0; j<=3; j++){
       document.getElementById("dsh1[0]card["+j+"]footer-properties-lbl[1]").innerHTML='212';
@@ -180,11 +187,105 @@ export class HomePage {
     }
   }
 
-
-
   initMap(){
     this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
     this.directionsDisplay.setMap(this.map1);
+  }
+
+  public alertModalNoRelease(){
+    let alert1= this.alertCtrl.create({
+      title: '<p>Warning<p>',
+      //subTitle:'subtitle',
+      message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+      cssClass:'alertModal',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass:'alertSucess',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Continue',
+          cssClass:'alertDangger',
+          handler: data => {
+            // console.log('Items Removed!');
+            //  alert("suksess");
+            //Call you API to remove Items here.
+            this.navCtrl.push(Dsh1SecondNoreleasePage);
+          }
+        }
+      ]
+    });
+
+    alert1.present();
+  }
+
+  public alertModalPop(){
+      //var data = { message : 'hello world' };
+      var ModalAdduser = this.modalCtrl.create(Dsh1SecondPrjonpipePage);
+      ModalAdduser.onDidDismiss(() => {
+        this.ionViewDidLoad();
+      });
+      ModalAdduser.present();
+  }
+
+  public alertModalRfi(){
+    let alert1= this.alertCtrl.create({
+      title: '<p>Warning<p>',
+      //subTitle:'subtitle',
+      message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+      cssClass:'alertModal',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass:'alertSucess',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Continue',
+          cssClass:'alertDangger',
+          handler: data => {
+            this.navCtrl.push(Dsh1SecondRfiPage);
+          }
+        }
+      ]
+    });
+
+    alert1.present();
+  }
+
+  public secondAlertInfo4(){
+    let alert1= this.alertCtrl.create({
+      title: '<p>Warning<p>',
+      //subTitle:'subtitle',
+      message: "<p>It might take time to load this Site's table. Do you still want to proceed?</p>",
+      cssClass:'alertModal',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          // cssClass:'alertSucess',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Continue',
+          // cssClass:'alertDangger',
+          handler: data => {
+            this.navCtrl.push( Dsh1SecondAfterrfiPage);
+          }
+        }
+      ]
+    });
+
+    alert1.present();
   }
 
   private drilldown(){
@@ -263,13 +364,14 @@ export class HomePage {
     });
   }
 
+
   private initClickEvent(){
     /** dsh1_0 CONTAIN */
     //-HEADER - IMAGE CONTENT
     var hdrImgDes1=<HTMLImageElement>document.getElementById("dsh1_headcard[1]content[1]-properties-img");
     //-HEADER - LABEL CONTENT
     var hdrImgDes2=<HTMLImageElement>document.getElementById("dsh1_headcard[1]content[1]-properties-lbl");
-    //-HEADER - LABEL LEFT CONTENT
+    //-FOOTER - LABEL LEFT
     var hdrImgDes3=<HTMLImageElement>document.getElementById("dsh1_headcard[1]footer-properties-lbl[0]");
 
     /** PER-UBIS - NO RELEASE */
@@ -294,6 +396,13 @@ export class HomePage {
                     for (var q0=5; q0<=20; q0++){
                       document.getElementById("dsh1["+q0+"]").hidden=true;
                     }
+                    /** HEADER */
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[0]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
                   break;
                 case 1:
                       dsh1_0card_0content_click=0;
@@ -335,6 +444,13 @@ export class HomePage {
                     for (var q1=5; q1<=20; q1++){
                       document.getElementById("dsh1["+q1+"]").hidden=true;
                     }
+                    /** HEADER */
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[1]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
                 break;
               case 1:
                     dsh1_0card_0content_click=0;
@@ -376,6 +492,13 @@ export class HomePage {
                   for (var q2=5; q2<=20; q2++){
                     document.getElementById("dsh1["+q2+"]").hidden=true;
                   }
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[2]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
               break;
             case 1:
                   dsh1_0card_0content_click=0;
@@ -417,6 +540,13 @@ export class HomePage {
                   for (var q3=5; q3<=20; q3++){
                     document.getElementById("dsh1["+q3+"]").hidden=true;
                   }
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[3]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
               break;
             case 1:
                   dsh1_0card_0content_click=0;

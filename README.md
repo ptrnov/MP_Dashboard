@@ -33,4 +33,7 @@ ver 1.0.0
 12. add install 
     #npm install ngx-toastr --save
     #issue : __WEBPACK_IMPORTED_MODULE_0__angular_core__.OpaqueToken is not a constructor 
+13. issue: application error the connection to the server was unsuccessful file:///android_asset/www/index.html)
+    soluation add in config.eml
+    <preference name="loadUrlTimeoutValue" value="700000" />
 ````

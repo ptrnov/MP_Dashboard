@@ -62,7 +62,39 @@ export class Dsh4HomePage {
       this.drilldown();
       //chkInit=false;
     // }
+    this.tampilkanNilai();
+  }
 
+  tampilkanNilai(){
+    /** All Project */
+    document.getElementById("dsh4_headcard[0]content[1]-properties-lbl").innerHTML=(99+17).toString();
+
+      /** PER-AREA*/
+    for (var i=0; i<=3; i++){
+      //second=NoRelease|Pop|RFI|AfterRFI| Value %
+      document.getElementById("dsh4[0]card["+i+"]content[1]-properties-lbl").innerHTML=(i+100).toString() + "%";
+      //NoRelease AREA[1,2,3,4]
+      document.getElementById("dsh4[1]card["+i+"]content[1]-properties-lbl").innerHTML=(i+10).toString();
+      //RFI AREA[1,2,3,4]
+      document.getElementById("dsh4[2]card["+i+"]content[1]-properties-lbl").innerHTML=(i+5).toString();
+      //AfterRFI AREA[1,2,3,4]
+      document.getElementById("dsh4[3]card["+i+"]content[1]-properties-lbl").innerHTML=(i+12).toString();
+      document.getElementById("dsh4[4]card["+i+"]content[1]-properties-lbl").innerHTML=(i+13).toString();
+      //PoP AREA[1,2,3,4]
+      document.getElementById("dsh4[5]card["+i+"]content[1]-properties-lbl").innerHTML=(i+20).toString();
+    }
+
+    /** Total */
+    for(var x=0; x<=3; x ++){
+      document.getElementById("dsh4[0]card["+x+"]footer-properties-lbl[1]").innerHTML=(x+293).toString();
+    }
+    /** POP VALUE DETAIL */
+    for (var i1=0; i1<=6; i1++){
+      document.getElementById("dsh4[6]card[0]properties-lbl["+i1+"]").innerHTML=(i1+1).toString();
+      document.getElementById("dsh4[6]card[1]properties-lbl["+i1+"]").innerHTML=(i1+2).toString();
+      document.getElementById("dsh4[6]card[2]properties-lbl["+i1+"]").innerHTML=(i1+3).toString();
+      document.getElementById("dsh4[6]card[3]properties-lbl["+i1+"]").innerHTML=(i1+4).toString();
+    }
   }
 
   initMap() {
@@ -163,43 +195,43 @@ export class Dsh4HomePage {
     /** dsh4_0 CONTAIN */
     var hdrImgDes1=<HTMLImageElement>document.getElementById("dsh4_headcard[1]content[1]-properties-img");
     var hdrImgDes2=<HTMLImageElement>document.getElementById("dsh4_headcard[1]content[1]-properties-lbl");
+    //-FOOTER - LABEL LEFT
+    var hdrImgDes3=<HTMLImageElement>document.getElementById("dsh4_headcard[1]footer-properties-lbl[0]");
     /** NO RELEASE */
     var dsh4_0card_0content=<HTMLImageElement>document.getElementById("dsh4[0]card[0]content");
         dsh4_0card_0content.addEventListener('click', function () {
           switch(dsh4_0card_0content_click) {
             case 0:
-                  dsh4_0card_0content_click=1;
+                  hdrImgDes2.innerHTML="No Release";
+                  hdrImgDes3.innerHTML="Microcell-PerArea";
                   dsh4_0card_0content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
-                    dsh4_0card_1content.style.backgroundColor="#FFFFFF";
-                    dsh4_0card_2content.style.backgroundColor="#FFFFFF";
-                    dsh4_0card_3content.style.backgroundColor="#FFFFFF";
-                    dsh4_0card_1content_click=0;
-                    dsh4_0card_2content_click=0;
-                    dsh4_0card_3content_click=0;
-                  //show card - Not release - Per-Aria
+                  dsh4_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh4_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh4_0card_3content.style.backgroundColor="#FFFFFF";
+                  dsh4_0card_0content_click=1;
+                  dsh4_0card_1content_click=0;
+                  dsh4_0card_2content_click=0;
+                  dsh4_0card_3content_click=0;
                   document.getElementById("dsh4[1]").hidden=false;
-                  //====>CLOSE
                   document.getElementById("dsh4[2]").hidden=true;
                   document.getElementById("dsh4[3]").hidden=true;
                   document.getElementById("dsh4[4]").hidden=true;
                   document.getElementById("dsh4[5]").hidden=true;
                   document.getElementById("dsh4[6]").hidden=true;
                   /** HEADER */
-                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[0]content[1]-properties-img");
-                  //     var srcScoundImgName0=hdrImgSrc.src;
-                  //     var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  //     hdrImgDes1.hidden=false;
-                      hdrImgDes2.innerHTML="No Release";
-                  break;
-                case 1:
-                      dsh4_0card_0content_click=0;
-                      dsh4_0card_1content_click=0;
-                      dsh4_0card_2content_click=0;
-                      dsh4_0card_3content_click=0;
-                      dsh4_0card_0content.style.backgroundColor="#FFFFFF";
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[0]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
+              break;
+            case 1:
+                  dsh4_0card_0content_click=0;
+                  dsh4_0card_1content_click=0;
+                  dsh4_0card_2content_click=0;
+                  dsh4_0card_3content_click=0;
+                  dsh4_0card_0content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_3content.style.backgroundColor="#FFFFFF";
@@ -212,37 +244,36 @@ export class Dsh4HomePage {
               break;
             default:
           };
-        });
+      });
     /** POP */
     var dsh4_0card_1content=<HTMLImageElement>document.getElementById("dsh4[0]card[1]content");
         dsh4_0card_1content.addEventListener('click', function () {
           switch(dsh4_0card_1content_click) {
               case 0:
-                    dsh4_0card_1content_click=1;
-                    dsh4_0card_1content.style.backgroundColor="#83D7F1";
-                    //yang tidak di click kembali default
+                    hdrImgDes2.innerHTML="Project On Pipe";
+                    hdrImgDes3.innerHTML="Microcell-PerArea";
                     dsh4_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh4_0card_1content.style.backgroundColor="#83D7F1";
                     dsh4_0card_2content.style.backgroundColor="#FFFFFF";
                     dsh4_0card_3content.style.backgroundColor="#FFFFFF";
                     dsh4_0card_0content_click=0;
+                    dsh4_0card_1content_click=1;
                     dsh4_0card_2content_click=0;
                     dsh4_0card_3content_click=0;
-                    //show card - POP - Per-Aria
-                    document.getElementById("dsh4[5]").hidden=false;
-                    document.getElementById("dsh4[6]").hidden=false;
-                    //====>CLOSE
                     document.getElementById("dsh4[1]").hidden=true;
                     document.getElementById("dsh4[2]").hidden=true;
                     document.getElementById("dsh4[3]").hidden=true;
                     document.getElementById("dsh4[4]").hidden=true;
+                    document.getElementById("dsh4[5]").hidden=false;
+                    document.getElementById("dsh4[6]").hidden=false;
                     /** HEADER */
-                    // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[1]content[1]-properties-img");
-                    //     var srcScoundImgName0=hdrImgSrc.src;
-                    //     var aryScoundImgName0 = srcScoundImgName0.split("/");
-                    //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                    //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                    //     hdrImgDes1.hidden=false;
-                        hdrImgDes2.innerHTML="Project On Pipe";
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[1]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
+
                 break;
               case 1:
                     dsh4_0card_0content_click=0;
@@ -268,31 +299,30 @@ export class Dsh4HomePage {
         dsh4_0card_2content.addEventListener('click', function () {
           switch(dsh4_0card_2content_click) {
             case 0:
-                  dsh4_0card_2content_click=1;
-                  dsh4_0card_2content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
+                  hdrImgDes2.innerHTML="RFI";
+                  hdrImgDes3.innerHTML="Microcell-PerArea";
                   dsh4_0card_0content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh4_0card_2content.style.backgroundColor="#83D7F1";
                   dsh4_0card_3content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_0content_click=0;
                   dsh4_0card_1content_click=0;
+                  dsh4_0card_2content_click=1;
                   dsh4_0card_3content_click=0;
-                  //--- RFI
-                  document.getElementById("dsh4[2]").hidden=false;
-                  //====>CLOSE
                   document.getElementById("dsh4[1]").hidden=true;
+                  document.getElementById("dsh4[2]").hidden=false;
                   document.getElementById("dsh4[3]").hidden=true;
                   document.getElementById("dsh4[4]").hidden=true;
                   document.getElementById("dsh4[5]").hidden=true;
                   document.getElementById("dsh4[6]").hidden=true;
                   /** HEADER */
-                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[2]content[1]-properties-img");
-                  // var srcScoundImgName0=hdrImgSrc.src;
-                  // var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  // var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  // hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  // hdrImgDes1.hidden=false;
-                  hdrImgDes2.innerHTML="RFI";
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[2]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+
               break;
             case 1:
                   dsh4_0card_0content_click=0;
@@ -318,31 +348,29 @@ export class Dsh4HomePage {
         dsh4_0card_3content.addEventListener('click', function () {
           switch(dsh4_0card_3content_click) {
             case 0:
-                  dsh4_0card_3content_click=1;
-                  dsh4_0card_3content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
+                  hdrImgDes2.innerHTML="After RFI";
+                  hdrImgDes3.innerHTML="Microcell-PerArea";
                   dsh4_0card_0content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh4_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh4_0card_3content.style.backgroundColor="#83D7F1";
                   dsh4_0card_0content_click=0;
                   dsh4_0card_1content_click=0;
                   dsh4_0card_2content_click=0;
-                  //--- AFTER RFI
-                  document.getElementById("dsh4[3]").hidden=false;
-                  document.getElementById("dsh4[4]").hidden=false;
-                  //====>CLOSE
+                  dsh4_0card_3content_click=1;
                   document.getElementById("dsh4[1]").hidden=true;
                   document.getElementById("dsh4[2]").hidden=true;
+                  document.getElementById("dsh4[3]").hidden=false;
+                  document.getElementById("dsh4[4]").hidden=false;
                   document.getElementById("dsh4[5]").hidden=true;
                   document.getElementById("dsh4[6]").hidden=true;
                   /** HEADER */
                   var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh4[0]card[3]content[1]-properties-img");
-                  var srcScoundImgName0=hdrImgSrc.src;
-                  var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  hdrImgDes1.hidden=false;
-                  hdrImgDes2.innerHTML="After RFI";
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
               break;
             case 1:
                   dsh4_0card_0content_click=0;
