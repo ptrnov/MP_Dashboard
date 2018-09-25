@@ -14,6 +14,8 @@ var dsh2_0card_0footer_click=0;
 var dsh2_0card_1footer_click=0;
 var dsh2_0card_2footer_click=0;
 var dsh2_0card_3footer_click=0;
+/** IMG SOURCE */
+var defaultUrlImg="assets/img/new/";
 /** INIT ONE OPEN NEW STATUS */
 var chkInit=0;
 
@@ -53,6 +55,8 @@ export class Dsh2HomePage {
     document.getElementById("dsh2[4]").hidden=true;
     document.getElementById("dsh2[5]").hidden=true;
     document.getElementById("dsh2[6]").hidden=true;
+    document.getElementById("dsh2_headcard[1]content[1]-properties-img").hidden=true;;
+    document.getElementById("dsh2_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
     this.drilldown();
     this.initMap();
     chkInit=1;
@@ -161,9 +165,42 @@ export class Dsh2HomePage {
     });
   }
 
+  // private initClickEventSecond(){
+  //   /** dsh2_0 CONTAIN */
+  //   var dsh2_1card_0content=<HTMLImageElement>document.getElementById("dsh2[1]card[0]content");
+  //       dsh2_1card_0content.addEventListener('click', function () {
+  //         switch(dsh2_0card_0content_click) {
+  //           case 0:
+  //                 dsh2_0card_0content_click=1;
+  //                 dsh2_0card_0content.style.backgroundColor="#83D7F1";
+  //                 //yang tidak di click kembali default
+  //                   dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+  //                   dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+  //                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+  //                   dsh2_0card_1content_click=0;
+  //                   dsh2_0card_2content_click=0;
+  //                   dsh2_0card_3content_click=0;
+  //             break;
+  //           case 1:
+  //                 dsh2_0card_0content_click=0;
+  //                 dsh2_0card_1content_click=0;
+  //                 dsh2_0card_2content_click=0;
+  //                 dsh2_0card_3content_click=0;
+  //                 dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+  //                 dsh2_0card_1content.style.backgroundColor="#FFFFFF";
+  //                 dsh2_0card_2content.style.backgroundColor="#FFFFFF";
+  //                 dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+  //             break;
+  //           default:
+  //         };
+  //       });
+  // }
 
   private initClickEvent(){
     /** dsh2_0 CONTAIN */
+    var hdrImgDes1=<HTMLImageElement>document.getElementById("dsh2_headcard[1]content[1]-properties-img");
+    var hdrImgDes2=<HTMLImageElement>document.getElementById("dsh2_headcard[1]content[1]-properties-lbl");
+    /** NO RELEASE */
     var dsh2_0card_0content=<HTMLImageElement>document.getElementById("dsh2[0]card[0]content");
         dsh2_0card_0content.addEventListener('click', function () {
           switch(dsh2_0card_0content_click) {
@@ -177,21 +214,43 @@ export class Dsh2HomePage {
                     dsh2_0card_1content_click=0;
                     dsh2_0card_2content_click=0;
                     dsh2_0card_3content_click=0;
-              break;
-            case 1:
-                  dsh2_0card_0content_click=0;
-                  dsh2_0card_1content_click=0;
-                  dsh2_0card_2content_click=0;
-                  dsh2_0card_3content_click=0;
-                  dsh2_0card_0content.style.backgroundColor="#FFFFFF";
+                  //show card - Not release - Per-Aria
+                  document.getElementById("dsh2[1]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh2[0]card[0]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
+                      hdrImgDes2.innerHTML="No Release";
+                  break;
+                case 1:
+                      dsh2_0card_0content_click=0;
+                      dsh2_0card_1content_click=0;
+                      dsh2_0card_2content_click=0;
+                      dsh2_0card_3content_click=0;
+                      dsh2_0card_0content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
               break;
             default:
           };
         });
-
+    /** POP */
     var dsh2_0card_1content=<HTMLImageElement>document.getElementById("dsh2[0]card[1]content");
         dsh2_0card_1content.addEventListener('click', function () {
           switch(dsh2_0card_1content_click) {
@@ -205,6 +264,22 @@ export class Dsh2HomePage {
                     dsh2_0card_0content_click=0;
                     dsh2_0card_2content_click=0;
                     dsh2_0card_3content_click=0;
+                    //show card - POP - Per-Aria
+                    document.getElementById("dsh2[5]").hidden=false;
+                    document.getElementById("dsh2[6]").hidden=false;
+                    //====>CLOSE
+                    document.getElementById("dsh2[1]").hidden=true;
+                    document.getElementById("dsh2[2]").hidden=true;
+                    document.getElementById("dsh2[3]").hidden=true;
+                    document.getElementById("dsh2[4]").hidden=true;
+                    /** HEADER */
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh2[0]card[1]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
+                        hdrImgDes2.innerHTML="Project On Pipe";
                 break;
               case 1:
                     dsh2_0card_0content_click=0;
@@ -215,11 +290,17 @@ export class Dsh2HomePage {
                     dsh2_0card_1content.style.backgroundColor="#FFFFFF";
                     dsh2_0card_2content.style.backgroundColor="#FFFFFF";
                     dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                    document.getElementById("dsh2[1]").hidden=true;
+                    document.getElementById("dsh2[2]").hidden=true;
+                    document.getElementById("dsh2[3]").hidden=true;
+                    document.getElementById("dsh2[4]").hidden=true;
+                    document.getElementById("dsh2[5]").hidden=true;
+                    document.getElementById("dsh2[6]").hidden=true;
                 break;
               default:
           };
         });
-
+    /** RFI */
     var dsh2_0card_2content=<HTMLImageElement>document.getElementById("dsh2[0]card[2]content");
         dsh2_0card_2content.addEventListener('click', function () {
           switch(dsh2_0card_2content_click) {
@@ -233,6 +314,22 @@ export class Dsh2HomePage {
                   dsh2_0card_0content_click=0;
                   dsh2_0card_1content_click=0;
                   dsh2_0card_3content_click=0;
+                  //--- RFI
+                  document.getElementById("dsh2[2]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh2[0]card[2]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="RFI";
               break;
             case 1:
                   dsh2_0card_0content_click=0;
@@ -243,11 +340,17 @@ export class Dsh2HomePage {
                   dsh2_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
               break;
             default:
           };
         });
-
+    /** AFTER RFI */
     var dsh2_0card_3content=<HTMLImageElement>document.getElementById("dsh2[0]card[3]content");
         dsh2_0card_3content.addEventListener('click', function () {
           switch(dsh2_0card_3content_click) {
@@ -261,6 +364,22 @@ export class Dsh2HomePage {
                   dsh2_0card_0content_click=0;
                   dsh2_0card_1content_click=0;
                   dsh2_0card_2content_click=0;
+                  //--- AFTER RFI
+                  document.getElementById("dsh2[3]").hidden=false;
+                  document.getElementById("dsh2[4]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh2[0]card[3]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="After RFI";
               break;
             case 1:
                   dsh2_0card_0content_click=0;
@@ -271,6 +390,12 @@ export class Dsh2HomePage {
                   dsh2_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh2_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
               break;
             default:
           };
@@ -300,6 +425,12 @@ export class Dsh2HomePage {
                   dsh2_0card_1footer.style.backgroundColor="#E9E9E9";
                   dsh2_0card_2footer.style.backgroundColor="#E9E9E9";
                   dsh2_0card_3footer.style.backgroundColor="#E9E9E9";
+                  document.getElementById("dsh2[1]").hidden=true;
+                  document.getElementById("dsh2[2]").hidden=true;
+                  document.getElementById("dsh2[3]").hidden=true;
+                  document.getElementById("dsh2[4]").hidden=true;
+                  document.getElementById("dsh2[5]").hidden=true;
+                  document.getElementById("dsh2[6]").hidden=true;
               break;
             default:
           };

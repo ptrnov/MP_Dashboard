@@ -5,6 +5,17 @@ import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
 
 declare var google;
+var dsh5_0card_0content_click=0;
+var dsh5_0card_1content_click=0;
+var dsh5_0card_2content_click=0;
+var dsh5_0card_3content_click=0;
+var dsh5_0card_0footer_click=0;
+var dsh5_0card_1footer_click=0;
+var dsh5_0card_2footer_click=0;
+var dsh5_0card_3footer_click=0;
+/** IMG SOURCE */
+var defaultUrlImg="assets/img/new/";
+
 @IonicPage()
 @Component({
   selector: 'page-dsh5-home',
@@ -32,6 +43,16 @@ export class Dsh5HomePage {
 
 
   ionViewDidLoad() {
+    this.initMouseOverOut();
+    this.initClickEvent();
+    document.getElementById("dsh5[1]").hidden=true;
+    document.getElementById("dsh5[2]").hidden=true;
+    document.getElementById("dsh5[3]").hidden=true;
+    document.getElementById("dsh5[4]").hidden=true;
+    document.getElementById("dsh5[5]").hidden=true;
+    document.getElementById("dsh5[6]").hidden=true;
+    document.getElementById("dsh5_headcard[1]content[1]-properties-img").hidden=true;;
+    document.getElementById("dsh5_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
     this.initMap();
     console.log('ionViewDidLoad Dsh2HomePage');
     // if (chkInit==true){
@@ -51,14 +72,14 @@ export class Dsh5HomePage {
   }
   ionViewWillUnload() {
     // chkInit=false;
-    this.charting.distroy;
+    // this.charting.distroy;
 
   }
 
   private drilldown(){
    this.charting=HighCharts.chart({
       chart: {
-        renderTo:'specialPrjChart',
+        renderTo:'dsh5-b2cChart',
         zoomType: 'x',
         panning: true,
         panKey: 'shift',
@@ -129,5 +150,411 @@ export class Dsh5HomePage {
               }
           }
     });
+  }
+
+  private initClickEvent(){
+    /** dsh5_0 CONTAIN */
+    var hdrImgDes1=<HTMLImageElement>document.getElementById("dsh5_headcard[1]content[1]-properties-img");
+    var hdrImgDes2=<HTMLImageElement>document.getElementById("dsh5_headcard[1]content[1]-properties-lbl");
+    /** NO RELEASE */
+    var dsh5_0card_0content=<HTMLImageElement>document.getElementById("dsh5[0]card[0]content");
+        dsh5_0card_0content.addEventListener('click', function () {
+          switch(dsh5_0card_0content_click) {
+            case 0:
+                  dsh5_0card_0content_click=1;
+                  dsh5_0card_0content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                    dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_1content_click=0;
+                    dsh5_0card_2content_click=0;
+                    dsh5_0card_3content_click=0;
+                  //show card - Not release - Per-Aria
+                  document.getElementById("dsh5[1]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[0]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
+                      hdrImgDes2.innerHTML="No Release";
+                  break;
+                case 1:
+                      dsh5_0card_0content_click=0;
+                      dsh5_0card_1content_click=0;
+                      dsh5_0card_2content_click=0;
+                      dsh5_0card_3content_click=0;
+                      dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+    /** POP */
+    var dsh5_0card_1content=<HTMLImageElement>document.getElementById("dsh5[0]card[1]content");
+        dsh5_0card_1content.addEventListener('click', function () {
+          switch(dsh5_0card_1content_click) {
+              case 0:
+                    dsh5_0card_1content_click=1;
+                    dsh5_0card_1content.style.backgroundColor="#83D7F1";
+                    //yang tidak di click kembali default
+                    dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_0content_click=0;
+                    dsh5_0card_2content_click=0;
+                    dsh5_0card_3content_click=0;
+                    //show card - POP - Per-Aria
+                    document.getElementById("dsh5[5]").hidden=false;
+                    document.getElementById("dsh5[6]").hidden=false;
+                    //====>CLOSE
+                    document.getElementById("dsh5[1]").hidden=true;
+                    document.getElementById("dsh5[2]").hidden=true;
+                    document.getElementById("dsh5[3]").hidden=true;
+                    document.getElementById("dsh5[4]").hidden=true;
+                    /** HEADER */
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[1]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
+                        hdrImgDes2.innerHTML="Project On Pipe";
+                break;
+              case 1:
+                    dsh5_0card_0content_click=0;
+                    dsh5_0card_1content_click=0;
+                    dsh5_0card_2content_click=0;
+                    dsh5_0card_3content_click=0;
+                    dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                    document.getElementById("dsh5[1]").hidden=true;
+                    document.getElementById("dsh5[2]").hidden=true;
+                    document.getElementById("dsh5[3]").hidden=true;
+                    document.getElementById("dsh5[4]").hidden=true;
+                    document.getElementById("dsh5[5]").hidden=true;
+                    document.getElementById("dsh5[6]").hidden=true;
+                break;
+              default:
+          };
+        });
+    /** RFI */
+    var dsh5_0card_2content=<HTMLImageElement>document.getElementById("dsh5[0]card[2]content");
+        dsh5_0card_2content.addEventListener('click', function () {
+          switch(dsh5_0card_2content_click) {
+            case 0:
+                  dsh5_0card_2content_click=1;
+                  dsh5_0card_2content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_0content_click=0;
+                  dsh5_0card_1content_click=0;
+                  dsh5_0card_3content_click=0;
+                  //--- RFI
+                  document.getElementById("dsh5[2]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[2]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="RFI";
+              break;
+            case 1:
+                  dsh5_0card_0content_click=0;
+                  dsh5_0card_1content_click=0;
+                  dsh5_0card_2content_click=0;
+                  dsh5_0card_3content_click=0;
+                  dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+    /** AFTER RFI */
+    var dsh5_0card_3content=<HTMLImageElement>document.getElementById("dsh5[0]card[3]content");
+        dsh5_0card_3content.addEventListener('click', function () {
+          switch(dsh5_0card_3content_click) {
+            case 0:
+                  dsh5_0card_3content_click=1;
+                  dsh5_0card_3content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_0content_click=0;
+                  dsh5_0card_1content_click=0;
+                  dsh5_0card_2content_click=0;
+                  //--- AFTER RFI
+                  document.getElementById("dsh5[3]").hidden=false;
+                  document.getElementById("dsh5[4]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[3]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="After RFI";
+              break;
+            case 1:
+                  dsh5_0card_0content_click=0;
+                  dsh5_0card_1content_click=0;
+                  dsh5_0card_2content_click=0;
+                  dsh5_0card_3content_click=0;
+                  dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+
+    /** dsh5_0 FOOTER */
+    var dsh5_0card_0footer=document.getElementById("dsh5[0]card[0]footer");
+        dsh5_0card_0footer.addEventListener('click', function () {
+          switch(dsh5_0card_0footer_click) {
+            case 0:
+                  dsh5_0card_0footer_click=1;
+                  dsh5_0card_0footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+                  document.getElementById("dsh5[1]").hidden=true;
+                  document.getElementById("dsh5[2]").hidden=true;
+                  document.getElementById("dsh5[3]").hidden=true;
+                  document.getElementById("dsh5[4]").hidden=true;
+                  document.getElementById("dsh5[5]").hidden=true;
+                  document.getElementById("dsh5[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+
+    var dsh5_0card_1footer=document.getElementById("dsh5[0]card[1]footer");
+        dsh5_0card_1footer.addEventListener('click', function () {
+          switch(dsh5_0card_1footer_click) {
+            case 0:
+                  dsh5_0card_1footer_click=1;
+                  dsh5_0card_1footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+
+    var dsh5_0card_2footer=document.getElementById("dsh5[0]card[2]footer");
+        dsh5_0card_2footer.addEventListener('click', function () {
+          switch(dsh5_0card_2footer_click) {
+            case 0:
+                  dsh5_0card_2footer_click=1;
+                  dsh5_0card_2footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+
+    var dsh5_0card_3footer=document.getElementById("dsh5[0]card[3]footer");
+        dsh5_0card_3footer.addEventListener('click', function () {
+          switch(dsh5_0card_3footer_click) {
+            case 0:
+                  dsh5_0card_3footer_click=1;
+                  dsh5_0card_3footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+              break;
+            case 1:
+                  dsh5_0card_0footer_click=0;
+                  dsh5_0card_1footer_click=0;
+                  dsh5_0card_2footer_click=0;
+                  dsh5_0card_3footer_click=0;
+                  dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+  }
+
+  private initMouseOverOut(){
+       /* dsh5_0 CONTAIN */
+      var dsh5_0card_0content=document.getElementById("dsh5[0]card[0]content");
+          dsh5_0card_0content.onmouseover= function () {
+            dsh5_0card_0content.style.backgroundColor="#BBE5F2";
+          }
+          dsh5_0card_0content.onmouseout = function () {
+            if (dsh5_0card_0content_click!==1){
+              dsh5_0card_0content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh5_0card_1content=document.getElementById("dsh5[0]card[1]content");
+          dsh5_0card_1content.onmouseover= function () {
+            dsh5_0card_1content.style.backgroundColor="#BBE5F2";
+          }
+          dsh5_0card_1content.onmouseout = function () {
+            if (dsh5_0card_1content_click!==1){
+              dsh5_0card_1content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh5_0card_2content=document.getElementById("dsh5[0]card[2]content");
+          dsh5_0card_2content.onmouseover= function () {
+            dsh5_0card_2content.style.backgroundColor="#BBE5F2";
+          }
+          dsh5_0card_2content.onmouseout = function () {
+            if (dsh5_0card_2content_click!==1){
+              dsh5_0card_2content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh5_0card_3content=document.getElementById("dsh5[0]card[3]content");
+          dsh5_0card_3content.onmouseover= function () {
+            dsh5_0card_3content.style.backgroundColor="#BBE5F2";
+          }
+          dsh5_0card_3content.onmouseout = function () {
+            if (dsh5_0card_3content_click!==1){
+              dsh5_0card_3content.style.backgroundColor="#FFFFFF";
+            }
+          }
+
+      /* dsh5_0 FOOTER */
+      var dsh5_0card_0footer=document.getElementById("dsh5[0]card[0]footer");
+          dsh5_0card_0footer.onmouseover= function () {
+            dsh5_0card_0footer.style.backgroundColor="#FA8633";
+          }
+          dsh5_0card_0footer.onmouseout = function () {
+            if (dsh5_0card_0footer_click!==1){
+              dsh5_0card_0footer.style.backgroundColor="#E9E9E9";
+            }
+
+          }
+
+      var dsh5_0card_1footer=document.getElementById("dsh5[0]card[1]footer");
+          dsh5_0card_1footer.onmouseover= function () {
+            dsh5_0card_1footer.style.backgroundColor="#FA8633";
+          }
+          dsh5_0card_1footer.onmouseout = function () {
+            if (dsh5_0card_1footer_click!==1){
+              dsh5_0card_1footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+
+      var dsh5_0card_2footer=document.getElementById("dsh5[0]card[2]footer");
+          dsh5_0card_2footer.onmouseover= function () {
+            dsh5_0card_2footer.style.backgroundColor="#FA8633";
+          }
+          dsh5_0card_2footer.onmouseout = function () {
+            if (dsh5_0card_2footer_click!==1){
+              dsh5_0card_2footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+      var dsh5_0card_3footer=document.getElementById("dsh5[0]card[3]footer");
+          dsh5_0card_3footer.onmouseover= function () {
+            dsh5_0card_3footer.style.backgroundColor="#FA8633";
+          }
+          dsh5_0card_3footer.onmouseout = function () {
+            if (dsh5_0card_3footer_click!==1){
+              dsh5_0card_3footer.style.backgroundColor="#E9E9E9";
+            }
+          }
   }
 }

@@ -3,14 +3,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
-/**
- * Generated class for the Dsh3HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 declare var google;
+/** VAR CLICK & MOUSEOVER STATUS */
+var dsh3_0card_0content_click=0;
+var dsh3_0card_1content_click=0;
+var dsh3_0card_2content_click=0;
+var dsh3_0card_3content_click=0;
+var dsh3_0card_0footer_click=0;
+var dsh3_0card_1footer_click=0;
+var dsh3_0card_2footer_click=0;
+var dsh3_0card_3footer_click=0;
+/** IMG SOURCE */
+var defaultUrlImg="assets/img/new/";
 @IonicPage()
 @Component({
   selector: 'page-dsh3-home',
@@ -39,8 +44,18 @@ export class Dsh3HomePage {
 
 
   ionViewDidLoad() {
+    this.initMouseOverOut();
+    this.initClickEvent();
+    document.getElementById("dsh3[1]").hidden=true;
+    document.getElementById("dsh3[2]").hidden=true;
+    document.getElementById("dsh3[3]").hidden=true;
+    document.getElementById("dsh3[4]").hidden=true;
+    document.getElementById("dsh3[5]").hidden=true;
+    document.getElementById("dsh3[6]").hidden=true;
+    document.getElementById("dsh3_headcard[1]content[1]-properties-img").hidden=true;;
+    document.getElementById("dsh3_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
     this.initMap();
-    console.log('ionViewDidLoad Dsh2HomePage');
+    console.log('ionViewDidLoad dsh3HomePage');
     // if (chkInit==true){
       this.drilldown();
       //chkInit=false;
@@ -59,14 +74,14 @@ export class Dsh3HomePage {
   }
   ionViewWillUnload() {
     // chkInit=false;
-    this.charting.distroy;
+    // this.charting.distroy;
 
   }
 
   private drilldown(){
    this.charting=HighCharts.chart({
       chart: {
-        renderTo:'colotionResellerChart',
+        renderTo:'dsh3-b2cChart',
         zoomType: 'x',
         panning: true,
         panKey: 'shift',
@@ -137,5 +152,411 @@ export class Dsh3HomePage {
               }
           }
     });
+  }
+
+  private initClickEvent(){
+    /** dsh3_0 CONTAIN */
+    var hdrImgDes1=<HTMLImageElement>document.getElementById("dsh3_headcard[1]content[1]-properties-img");
+    var hdrImgDes2=<HTMLImageElement>document.getElementById("dsh3_headcard[1]content[1]-properties-lbl");
+    /** NO RELEASE */
+    var dsh3_0card_0content=<HTMLImageElement>document.getElementById("dsh3[0]card[0]content");
+        dsh3_0card_0content.addEventListener('click', function () {
+          switch(dsh3_0card_0content_click) {
+            case 0:
+                  dsh3_0card_0content_click=1;
+                  dsh3_0card_0content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                    dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_1content_click=0;
+                    dsh3_0card_2content_click=0;
+                    dsh3_0card_3content_click=0;
+                  //show card - Not release - Per-Aria
+                  document.getElementById("dsh3[1]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh3[0]card[0]content[1]-properties-img");
+                      var srcScoundImgName0=hdrImgSrc.src;
+                      var aryScoundImgName0 = srcScoundImgName0.split("/");
+                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                      hdrImgDes1.hidden=false;
+                      hdrImgDes2.innerHTML="No Release";
+                  break;
+                case 1:
+                      dsh3_0card_0content_click=0;
+                      dsh3_0card_1content_click=0;
+                      dsh3_0card_2content_click=0;
+                      dsh3_0card_3content_click=0;
+                      dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+    /** POP */
+    var dsh3_0card_1content=<HTMLImageElement>document.getElementById("dsh3[0]card[1]content");
+        dsh3_0card_1content.addEventListener('click', function () {
+          switch(dsh3_0card_1content_click) {
+              case 0:
+                    dsh3_0card_1content_click=1;
+                    dsh3_0card_1content.style.backgroundColor="#83D7F1";
+                    //yang tidak di click kembali default
+                    dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_0content_click=0;
+                    dsh3_0card_2content_click=0;
+                    dsh3_0card_3content_click=0;
+                    //show card - POP - Per-Aria
+                    document.getElementById("dsh3[5]").hidden=false;
+                    document.getElementById("dsh3[6]").hidden=false;
+                    //====>CLOSE
+                    document.getElementById("dsh3[1]").hidden=true;
+                    document.getElementById("dsh3[2]").hidden=true;
+                    document.getElementById("dsh3[3]").hidden=true;
+                    document.getElementById("dsh3[4]").hidden=true;
+                    /** HEADER */
+                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh3[0]card[1]content[1]-properties-img");
+                        var srcScoundImgName0=hdrImgSrc.src;
+                        var aryScoundImgName0 = srcScoundImgName0.split("/");
+                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                        hdrImgDes1.hidden=false;
+                        hdrImgDes2.innerHTML="Project On Pipe";
+                break;
+              case 1:
+                    dsh3_0card_0content_click=0;
+                    dsh3_0card_1content_click=0;
+                    dsh3_0card_2content_click=0;
+                    dsh3_0card_3content_click=0;
+                    dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                    dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                    document.getElementById("dsh3[1]").hidden=true;
+                    document.getElementById("dsh3[2]").hidden=true;
+                    document.getElementById("dsh3[3]").hidden=true;
+                    document.getElementById("dsh3[4]").hidden=true;
+                    document.getElementById("dsh3[5]").hidden=true;
+                    document.getElementById("dsh3[6]").hidden=true;
+                break;
+              default:
+          };
+        });
+    /** RFI */
+    var dsh3_0card_2content=<HTMLImageElement>document.getElementById("dsh3[0]card[2]content");
+        dsh3_0card_2content.addEventListener('click', function () {
+          switch(dsh3_0card_2content_click) {
+            case 0:
+                  dsh3_0card_2content_click=1;
+                  dsh3_0card_2content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_0content_click=0;
+                  dsh3_0card_1content_click=0;
+                  dsh3_0card_3content_click=0;
+                  //--- RFI
+                  document.getElementById("dsh3[2]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh3[0]card[2]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="RFI";
+              break;
+            case 1:
+                  dsh3_0card_0content_click=0;
+                  dsh3_0card_1content_click=0;
+                  dsh3_0card_2content_click=0;
+                  dsh3_0card_3content_click=0;
+                  dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+    /** AFTER RFI */
+    var dsh3_0card_3content=<HTMLImageElement>document.getElementById("dsh3[0]card[3]content");
+        dsh3_0card_3content.addEventListener('click', function () {
+          switch(dsh3_0card_3content_click) {
+            case 0:
+                  dsh3_0card_3content_click=1;
+                  dsh3_0card_3content.style.backgroundColor="#83D7F1";
+                  //yang tidak di click kembali default
+                  dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_0content_click=0;
+                  dsh3_0card_1content_click=0;
+                  dsh3_0card_2content_click=0;
+                  //--- AFTER RFI
+                  document.getElementById("dsh3[3]").hidden=false;
+                  document.getElementById("dsh3[4]").hidden=false;
+                  //====>CLOSE
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+                  /** HEADER */
+                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh3[0]card[3]content[1]-properties-img");
+                  var srcScoundImgName0=hdrImgSrc.src;
+                  var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  hdrImgDes1.hidden=false;
+                  hdrImgDes2.innerHTML="After RFI";
+              break;
+            case 1:
+                  dsh3_0card_0content_click=0;
+                  dsh3_0card_1content_click=0;
+                  dsh3_0card_2content_click=0;
+                  dsh3_0card_3content_click=0;
+                  dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+
+    /** dsh3_0 FOOTER */
+    var dsh3_0card_0footer=document.getElementById("dsh3[0]card[0]footer");
+        dsh3_0card_0footer.addEventListener('click', function () {
+          switch(dsh3_0card_0footer_click) {
+            case 0:
+                  dsh3_0card_0footer_click=1;
+                  dsh3_0card_0footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+                  document.getElementById("dsh3[1]").hidden=true;
+                  document.getElementById("dsh3[2]").hidden=true;
+                  document.getElementById("dsh3[3]").hidden=true;
+                  document.getElementById("dsh3[4]").hidden=true;
+                  document.getElementById("dsh3[5]").hidden=true;
+                  document.getElementById("dsh3[6]").hidden=true;
+              break;
+            default:
+          };
+        });
+
+    var dsh3_0card_1footer=document.getElementById("dsh3[0]card[1]footer");
+        dsh3_0card_1footer.addEventListener('click', function () {
+          switch(dsh3_0card_1footer_click) {
+            case 0:
+                  dsh3_0card_1footer_click=1;
+                  dsh3_0card_1footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+
+    var dsh3_0card_2footer=document.getElementById("dsh3[0]card[2]footer");
+        dsh3_0card_2footer.addEventListener('click', function () {
+          switch(dsh3_0card_2footer_click) {
+            case 0:
+                  dsh3_0card_2footer_click=1;
+                  dsh3_0card_2footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_3footer_click=0;
+              break;
+            case 1:
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+
+    var dsh3_0card_3footer=document.getElementById("dsh3[0]card[3]footer");
+        dsh3_0card_3footer.addEventListener('click', function () {
+          switch(dsh3_0card_3footer_click) {
+            case 0:
+                  dsh3_0card_3footer_click=1;
+                  dsh3_0card_3footer.style.backgroundColor="#FA8633";
+                  //yang tidak di click kembali default
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+              break;
+            case 1:
+                  dsh3_0card_0footer_click=0;
+                  dsh3_0card_1footer_click=0;
+                  dsh3_0card_2footer_click=0;
+                  dsh3_0card_3footer_click=0;
+                  dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+                  dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+              break;
+            default:
+          };
+        });
+  }
+
+  private initMouseOverOut(){
+       /* dsh3_0 CONTAIN */
+      var dsh3_0card_0content=document.getElementById("dsh3[0]card[0]content");
+          dsh3_0card_0content.onmouseover= function () {
+            dsh3_0card_0content.style.backgroundColor="#BBE5F2";
+          }
+          dsh3_0card_0content.onmouseout = function () {
+            if (dsh3_0card_0content_click!==1){
+              dsh3_0card_0content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh3_0card_1content=document.getElementById("dsh3[0]card[1]content");
+          dsh3_0card_1content.onmouseover= function () {
+            dsh3_0card_1content.style.backgroundColor="#BBE5F2";
+          }
+          dsh3_0card_1content.onmouseout = function () {
+            if (dsh3_0card_1content_click!==1){
+              dsh3_0card_1content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh3_0card_2content=document.getElementById("dsh3[0]card[2]content");
+          dsh3_0card_2content.onmouseover= function () {
+            dsh3_0card_2content.style.backgroundColor="#BBE5F2";
+          }
+          dsh3_0card_2content.onmouseout = function () {
+            if (dsh3_0card_2content_click!==1){
+              dsh3_0card_2content.style.backgroundColor="#FFFFFF";
+            }
+          }
+      var dsh3_0card_3content=document.getElementById("dsh3[0]card[3]content");
+          dsh3_0card_3content.onmouseover= function () {
+            dsh3_0card_3content.style.backgroundColor="#BBE5F2";
+          }
+          dsh3_0card_3content.onmouseout = function () {
+            if (dsh3_0card_3content_click!==1){
+              dsh3_0card_3content.style.backgroundColor="#FFFFFF";
+            }
+          }
+
+      /* dsh3_0 FOOTER */
+      var dsh3_0card_0footer=document.getElementById("dsh3[0]card[0]footer");
+          dsh3_0card_0footer.onmouseover= function () {
+            dsh3_0card_0footer.style.backgroundColor="#FA8633";
+          }
+          dsh3_0card_0footer.onmouseout = function () {
+            if (dsh3_0card_0footer_click!==1){
+              dsh3_0card_0footer.style.backgroundColor="#E9E9E9";
+            }
+
+          }
+
+      var dsh3_0card_1footer=document.getElementById("dsh3[0]card[1]footer");
+          dsh3_0card_1footer.onmouseover= function () {
+            dsh3_0card_1footer.style.backgroundColor="#FA8633";
+          }
+          dsh3_0card_1footer.onmouseout = function () {
+            if (dsh3_0card_1footer_click!==1){
+              dsh3_0card_1footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+
+      var dsh3_0card_2footer=document.getElementById("dsh3[0]card[2]footer");
+          dsh3_0card_2footer.onmouseover= function () {
+            dsh3_0card_2footer.style.backgroundColor="#FA8633";
+          }
+          dsh3_0card_2footer.onmouseout = function () {
+            if (dsh3_0card_2footer_click!==1){
+              dsh3_0card_2footer.style.backgroundColor="#E9E9E9";
+            }
+          }
+      var dsh3_0card_3footer=document.getElementById("dsh3[0]card[3]footer");
+          dsh3_0card_3footer.onmouseover= function () {
+            dsh3_0card_3footer.style.backgroundColor="#FA8633";
+          }
+          dsh3_0card_3footer.onmouseout = function () {
+            if (dsh3_0card_3footer_click!==1){
+              dsh3_0card_3footer.style.backgroundColor="#E9E9E9";
+            }
+          }
   }
 }
