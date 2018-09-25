@@ -179,12 +179,12 @@ export class Dsh5HomePage {
                   document.getElementById("dsh5[5]").hidden=true;
                   document.getElementById("dsh5[6]").hidden=true;
                   /** HEADER */
-                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[0]content[1]-properties-img");
-                      var srcScoundImgName0=hdrImgSrc.src;
-                      var aryScoundImgName0 = srcScoundImgName0.split("/");
-                      var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                      hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                      hdrImgDes1.hidden=false;
+                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[0]content[1]-properties-img");
+                  //     var srcScoundImgName0=hdrImgSrc.src;
+                  //     var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  //     hdrImgDes1.hidden=false;
                       hdrImgDes2.innerHTML="No Release";
                   break;
                 case 1:
@@ -229,12 +229,12 @@ export class Dsh5HomePage {
                     document.getElementById("dsh5[3]").hidden=true;
                     document.getElementById("dsh5[4]").hidden=true;
                     /** HEADER */
-                    var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[1]content[1]-properties-img");
-                        var srcScoundImgName0=hdrImgSrc.src;
-                        var aryScoundImgName0 = srcScoundImgName0.split("/");
-                        var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                        hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                        hdrImgDes1.hidden=false;
+                    // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[1]content[1]-properties-img");
+                    //     var srcScoundImgName0=hdrImgSrc.src;
+                    //     var aryScoundImgName0 = srcScoundImgName0.split("/");
+                    //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                    //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                    //     hdrImgDes1.hidden=false;
                         hdrImgDes2.innerHTML="Project On Pipe";
                 break;
               case 1:
@@ -279,12 +279,12 @@ export class Dsh5HomePage {
                   document.getElementById("dsh5[5]").hidden=true;
                   document.getElementById("dsh5[6]").hidden=true;
                   /** HEADER */
-                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[2]content[1]-properties-img");
-                  var srcScoundImgName0=hdrImgSrc.src;
-                  var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  hdrImgDes1.hidden=false;
+                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[2]content[1]-properties-img");
+                  // var srcScoundImgName0=hdrImgSrc.src;
+                  // var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  // var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  // hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  // hdrImgDes1.hidden=false;
                   hdrImgDes2.innerHTML="RFI";
               break;
             case 1:
@@ -329,12 +329,12 @@ export class Dsh5HomePage {
                   document.getElementById("dsh5[5]").hidden=true;
                   document.getElementById("dsh5[6]").hidden=true;
                   /** HEADER */
-                  var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[3]content[1]-properties-img");
-                  var srcScoundImgName0=hdrImgSrc.src;
-                  var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  hdrImgDes1.hidden=false;
+                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh5[0]card[3]content[1]-properties-img");
+                  // var srcScoundImgName0=hdrImgSrc.src;
+                  // var aryScoundImgName0 = srcScoundImgName0.split("/");
+                  // var ScoundImgName0=aryScoundImgName0.reverse()[0];
+                  // hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
+                  // hdrImgDes1.hidden=false;
                   hdrImgDes2.innerHTML="After RFI";
               break;
             case 1:

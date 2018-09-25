@@ -30,4 +30,7 @@ ver 1.0.0
 11. Searcable
     #npm install ionic-select-searchable --save 
     reff: https://www.npmjs.com/package/ionic-select-searchable
+12. add install 
+    #npm install ngx-toastr --save
+    #issue : __WEBPACK_IMPORTED_MODULE_0__angular_core__.OpaqueToken is not a constructor 
 ````

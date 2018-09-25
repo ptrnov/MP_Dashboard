@@ -29,6 +29,23 @@ var dsh1_0card_0footer_click=0;
 var dsh1_0card_1footer_click=0;
 var dsh1_0card_2footer_click=0;
 var dsh1_0card_3footer_click=0;
+/** PER-AREA */
+var dsh1_1card_0content_click=0;
+var dsh1_1card_1content_click=0;
+var dsh1_1card_2content_click=0;
+var dsh1_1card_3content_click=0;
+var dsh1_2card_0content_click=0;
+var dsh1_2card_1content_click=0;
+var dsh1_2card_2content_click=0;
+var dsh1_2card_3content_click=0;
+var dsh1_3card_0content_click=0;
+var dsh1_3card_1content_click=0;
+var dsh1_3card_2content_click=0;
+var dsh1_3card_3content_click=0;
+var dsh1_4card_0content_click=0;
+var dsh1_4card_1content_click=0;
+var dsh1_4card_2content_click=0;
+var dsh1_4card_3content_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
 
@@ -70,16 +87,16 @@ export class HomePage {
   }
 
   ionViewDidEnter(){
-    this.menu.swipeEnable(false);
+    // this.menu.swipeEnable(false);
     // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
+      // console.log('run-Disply');
       //  this.nilaiDispyValue1();
     // });
   }
 
   ngOnInit() {
     // this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
+      // console.log('run-Disply');
       // this.dashboarAll.getAllPrj();
       // this.dashboarAll.getSetting();
     // });
@@ -88,7 +105,7 @@ export class HomePage {
    * Event Back / close Page
    */
   ionViewWillUnload() {
-    console.log("Previus page")
+    // console.log("Previus page")
     // this.subscription1.unsubscribe();
     // this.subscription2.unsubscribe();
   }
@@ -112,16 +129,55 @@ export class HomePage {
       this.drilldown();
       //chkInit=false;
     // }
-    for (var i=0; i<=8; i++){
-      document.getElementById("dsh1["+i+"]card[0]content[1]-properties-lbl").innerHTML='1';
-      document.getElementById("dsh1["+i+"]card[1]content[1]-properties-lbl").innerHTML='1';
-      document.getElementById("dsh1["+i+"]card[2]content[1]-properties-lbl").innerHTML='1';
-      document.getElementById("dsh1["+i+"]card[3]content[1]-properties-lbl").innerHTML='1';
+
+    //--HIDE CARD
+    for (var x1=1; x1<=20; x1++){
+      document.getElementById("dsh1["+x1+"]").hidden=true;
     }
+    /** HEAD VALUE */
     for (var j=0; j<=3; j++){
       document.getElementById("dsh1[0]card["+j+"]footer-properties-lbl[1]").innerHTML='212';
     }
 
+    /** PER-UBIS*/
+    for (var i=0; i<=4; i++){
+      document.getElementById("dsh1["+i+"]card[0]content[1]-properties-lbl").innerHTML='1';
+      document.getElementById("dsh1["+i+"]card[1]content[1]-properties-lbl").innerHTML='2';
+      document.getElementById("dsh1["+i+"]card[2]content[1]-properties-lbl").innerHTML='3';
+      document.getElementById("dsh1["+i+"]card[3]content[1]-properties-lbl").innerHTML='4';
+    }
+
+    /** NOT RELEASE: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
+    for (var k1=5; k1<=8; k1++){
+      document.getElementById("dsh1["+k1+"]card[0]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+      document.getElementById("dsh1["+k1+"]card[1]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+      document.getElementById("dsh1["+k1+"]card[2]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+      document.getElementById("dsh1["+k1+"]card[3]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+    }
+
+    /** POP: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
+    for (var k2=9; k2<=12; k2++){
+      document.getElementById("dsh1["+k2+"]card[0]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+      document.getElementById("dsh1["+k2+"]card[1]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+      document.getElementById("dsh1["+k2+"]card[2]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+      document.getElementById("dsh1["+k2+"]card[3]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+    }
+
+    /** RFI: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
+    for (var k3=13; k3<=16; k3++){
+      document.getElementById("dsh1["+k3+"]card[0]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+      document.getElementById("dsh1["+k3+"]card[1]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+      document.getElementById("dsh1["+k3+"]card[2]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+      document.getElementById("dsh1["+k3+"]card[3]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+    }
+
+    /** ARFI: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
+    for (var k4=17; k4<=20; k4++){
+      document.getElementById("dsh1["+k4+"]card[0]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+      document.getElementById("dsh1["+k4+"]card[1]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+      document.getElementById("dsh1["+k4+"]card[2]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+      document.getElementById("dsh1["+k4+"]card[3]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+    }
   }
 
 
@@ -216,37 +272,28 @@ export class HomePage {
     //-HEADER - LABEL LEFT CONTENT
     var hdrImgDes3=<HTMLImageElement>document.getElementById("dsh1_headcard[1]footer-properties-lbl[0]");
 
-    /** NO RELEASE */
+    /** PER-UBIS - NO RELEASE */
     var dsh1_0card_0content=<HTMLImageElement>document.getElementById("dsh1[0]card[0]content");
         dsh1_0card_0content.addEventListener('click', function () {
           switch(dsh1_0card_0content_click) {
             case 0:
-                  dsh1_0card_0content_click=1;
-                  dsh1_0card_0content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
+                    hdrImgDes2.innerHTML="No Release";
+                    hdrImgDes3.innerHTML="Per Ubis";
+                    dsh1_0card_0content.style.backgroundColor="#83D7F1";
                     dsh1_0card_1content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_2content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_0card_0content_click=1;
                     dsh1_0card_1content_click=0;
                     dsh1_0card_2content_click=0;
                     dsh1_0card_3content_click=0;
-                  //show card - Not release - Per-Aria
-                  document.getElementById("dsh1[1]").hidden=false;
-                  //====>CLOSE
-                  document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
-                  /** HEADER */
-                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[0]content[1]-properties-img");
-                  //     var srcScoundImgName0=hdrImgSrc.src;
-                  //     var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  //     hdrImgDes1.hidden=false;
-                      hdrImgDes2.innerHTML="No Release";
-                      hdrImgDes3.innerHTML="Per Ubis";
+                    document.getElementById("dsh1[1]").hidden=false;
+                    document.getElementById("dsh1[2]").hidden=true;
+                    document.getElementById("dsh1[3]").hidden=true;
+                    document.getElementById("dsh1[4]").hidden=true;
+                    for (var q0=5; q0<=20; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
                   break;
                 case 1:
                       dsh1_0card_0content_click=0;
@@ -254,51 +301,40 @@ export class HomePage {
                       dsh1_0card_2content_click=0;
                       dsh1_0card_3content_click=0;
                       dsh1_0card_0content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_1content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_2content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_3content.style.backgroundColor="#FFFFFF";
-                  document.getElementById("dsh1[1]").hidden=true;
-                  document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
-                  hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      dsh1_0card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_0card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_0card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var b0=1; b0<=20; b0++){
+                        document.getElementById("dsh1["+b0+"]").hidden=true;
+                      }
               break;
             default:
           };
         });
-    /** POP */
+
+    /** PER-UBIS - POP */
     var dsh1_0card_1content=<HTMLImageElement>document.getElementById("dsh1[0]card[1]content");
         dsh1_0card_1content.addEventListener('click', function () {
           switch(dsh1_0card_1content_click) {
               case 0:
-                    dsh1_0card_1content_click=1;
-                    dsh1_0card_1content.style.backgroundColor="#83D7F1";
-                    //yang tidak di click kembali default
+                    hdrImgDes2.innerHTML="Project On Pipe";
+                    hdrImgDes3.innerHTML="Per Ubis";
                     dsh1_0card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_0card_1content.style.backgroundColor="#83D7F1";
                     dsh1_0card_2content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_3content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_0content_click=0;
+                    dsh1_0card_1content_click=1;
                     dsh1_0card_2content_click=0;
                     dsh1_0card_3content_click=0;
-                    //show card - POP - Per-Aria
-                    document.getElementById("dsh1[5]").hidden=false;
-                    document.getElementById("dsh1[6]").hidden=false;
-                    //====>CLOSE
                     document.getElementById("dsh1[1]").hidden=true;
-                    document.getElementById("dsh1[2]").hidden=true;
+                    document.getElementById("dsh1[2]").hidden=false;
                     document.getElementById("dsh1[3]").hidden=true;
                     document.getElementById("dsh1[4]").hidden=true;
-                    /** HEADER */
-                    // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[1]content[1]-properties-img");
-                    //     var srcScoundImgName0=hdrImgSrc.src;
-                    //     var aryScoundImgName0 = srcScoundImgName0.split("/");
-                    //     var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                    //     hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                    //     hdrImgDes1.hidden=false;
-                        hdrImgDes2.innerHTML="Project On Pipe";
-                        hdrImgDes3.innerHTML="Per Ubis";
+                    for (var q1=5; q1<=20; q1++){
+                      document.getElementById("dsh1["+q1+"]").hidden=true;
+                    }
                 break;
               case 1:
                     dsh1_0card_0content_click=0;
@@ -309,48 +345,37 @@ export class HomePage {
                     dsh1_0card_1content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_2content.style.backgroundColor="#FFFFFF";
                     dsh1_0card_3content.style.backgroundColor="#FFFFFF";
-                    document.getElementById("dsh1[1]").hidden=true;
-                    document.getElementById("dsh1[2]").hidden=true;
-                    document.getElementById("dsh1[3]").hidden=true;
-                    document.getElementById("dsh1[4]").hidden=true;
-                    document.getElementById("dsh1[5]").hidden=true;
-                    document.getElementById("dsh1[6]").hidden=true;
                     hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                    for (var b1=1; b1<=20; b1++){
+                      document.getElementById("dsh1["+b1+"]").hidden=true;
+                    }
                 break;
               default:
           };
         });
-    /** RFI */
+
+    /** PER-UBIS - RFI */
     var dsh1_0card_2content=<HTMLImageElement>document.getElementById("dsh1[0]card[2]content");
         dsh1_0card_2content.addEventListener('click', function () {
           switch(dsh1_0card_2content_click) {
             case 0:
-                  dsh1_0card_2content_click=1;
-                  dsh1_0card_2content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
-                  dsh1_0card_0content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_1content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_3content.style.backgroundColor="#FFFFFF";
-                  dsh1_0card_0content_click=0;
-                  dsh1_0card_1content_click=0;
-                  dsh1_0card_3content_click=0;
-                  //--- RFI
-                  document.getElementById("dsh1[2]").hidden=false;
-                  //====>CLOSE
-                  document.getElementById("dsh1[1]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
-                  /** HEADER */
-                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[2]content[1]-properties-img");
-                  // var srcScoundImgName0=hdrImgSrc.src;
-                  // var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  // var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  // hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  // hdrImgDes1.hidden=false;
                   hdrImgDes2.innerHTML="RFI";
                   hdrImgDes3.innerHTML="Per Ubis";
+                  dsh1_0card_0content.style.backgroundColor="#FFFFFF";
+                  dsh1_0card_1content.style.backgroundColor="#FFFFFF";
+                  dsh1_0card_2content.style.backgroundColor="#83D7F1";
+                  dsh1_0card_3content.style.backgroundColor="#FFFFFF";
+                  dsh1_0card_0content_click=0;
+                  dsh1_0card_2content_click=1;
+                  dsh1_0card_1content_click=0;
+                  dsh1_0card_3content_click=0;
+                  document.getElementById("dsh1[1]").hidden=true;
+                  document.getElementById("dsh1[2]").hidden=true;
+                  document.getElementById("dsh1[3]").hidden=false;
+                  document.getElementById("dsh1[4]").hidden=true;
+                  for (var q2=5; q2<=20; q2++){
+                    document.getElementById("dsh1["+q2+"]").hidden=true;
+                  }
               break;
             case 1:
                   dsh1_0card_0content_click=0;
@@ -361,48 +386,37 @@ export class HomePage {
                   dsh1_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_3content.style.backgroundColor="#FFFFFF";
-                  document.getElementById("dsh1[1]").hidden=true;
-                  document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
                   hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                  for (var b2=1; b2<=20; b2++){
+                    document.getElementById("dsh1["+b2+"]").hidden=true;
+                  }
               break;
             default:
           };
         });
-    /** AFTER RFI */
+
+    /** PER-UBIS - A-RFI */
     var dsh1_0card_3content=<HTMLImageElement>document.getElementById("dsh1[0]card[3]content");
         dsh1_0card_3content.addEventListener('click', function () {
           switch(dsh1_0card_3content_click) {
             case 0:
-                  dsh1_0card_3content_click=1;
-                  dsh1_0card_3content.style.backgroundColor="#83D7F1";
-                  //yang tidak di click kembali default
+                  hdrImgDes2.innerHTML="After RFI";
+                  hdrImgDes3.innerHTML="Per Ubis";
                   dsh1_0card_0content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_2content.style.backgroundColor="#FFFFFF";
+                  dsh1_0card_3content.style.backgroundColor="#83D7F1";
                   dsh1_0card_0content_click=0;
                   dsh1_0card_1content_click=0;
                   dsh1_0card_2content_click=0;
-                  //--- AFTER RFI
-                  document.getElementById("dsh1[3]").hidden=false;
-                  document.getElementById("dsh1[4]").hidden=false;
-                  //====>CLOSE
+                  dsh1_0card_3content_click=1;
                   document.getElementById("dsh1[1]").hidden=true;
                   document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
-                  /** HEADER */
-                  // var hdrImgSrc=<HTMLImageElement>document.getElementById("dsh1[0]card[3]content[1]-properties-img");
-                  // var srcScoundImgName0=hdrImgSrc.src;
-                  // var aryScoundImgName0 = srcScoundImgName0.split("/");
-                  // var ScoundImgName0=aryScoundImgName0.reverse()[0];
-                  // hdrImgDes1.src =  defaultUrlImg + ScoundImgName0;
-                  // hdrImgDes1.hidden=false;
-                  hdrImgDes2.innerHTML="After RFI";
-                  hdrImgDes3.innerHTML="Per Ubis";
+                  document.getElementById("dsh1[3]").hidden=true;
+                  document.getElementById("dsh1[4]").hidden=false;
+                  for (var q3=5; q3<=20; q3++){
+                    document.getElementById("dsh1["+q3+"]").hidden=true;
+                  }
               break;
             case 1:
                   dsh1_0card_0content_click=0;
@@ -413,17 +427,687 @@ export class HomePage {
                   dsh1_0card_1content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_2content.style.backgroundColor="#FFFFFF";
                   dsh1_0card_3content.style.backgroundColor="#FFFFFF";
-                  document.getElementById("dsh1[1]").hidden=true;
-                  document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
-                  hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                  for (var b3=1; b3<=20; b3++){
+                    document.getElementById("dsh1["+b3+"]").hidden=true;
+                  }
               break;
             default:
           };
         });
+
+    /** PER_AREA_UNRELEASE - B2S*/
+    var dsh1_1card_0content=<HTMLImageElement>document.getElementById("dsh1[1]card[0]content");
+        dsh1_1card_0content.addEventListener('click', function () {
+          switch(dsh1_1card_0content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="No Release";
+                    hdrImgDes3.innerHTML="B2s-PerArea";
+                    dsh1_1card_0content.style.backgroundColor="#83D7F1";
+                    dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_0content_click=1;
+                    dsh1_1card_1content_click=0;
+                    dsh1_1card_2content_click=0;
+                    dsh1_1card_3content_click=0;
+                    document.getElementById("dsh1[5]").hidden=false;
+                    document.getElementById("dsh1[6]").hidden=true;
+                    document.getElementById("dsh1[7]").hidden=true;
+                    document.getElementById("dsh1[8]").hidden=true;
+                    for (var q1=9; q1<=20; q1++){
+                      document.getElementById("dsh1["+q1+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_1card_0content_click=0;
+                      dsh1_1card_1content_click=0;
+                      dsh1_1card_2content_click=0;
+                      dsh1_1card_3content_click=0;
+                      dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c0=5; c0<=20; c0++){
+                        document.getElementById("dsh1["+c0+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+
+    /** PER_AREA_UNRELEASE - CORE*/
+    var dsh1_1card_1content=<HTMLImageElement>document.getElementById("dsh1[1]card[1]content");
+        dsh1_1card_1content.addEventListener('click', function () {
+          switch(dsh1_1card_1content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="No Release";
+                    hdrImgDes3.innerHTML="Core-PerArea";
+                    dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_1content.style.backgroundColor="#83D7F1";
+                    dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_0content_click=0;
+                    dsh1_1card_1content_click=1;
+                    dsh1_1card_2content_click=0;
+                    dsh1_1card_3content_click=0;
+                    document.getElementById("dsh1[5]").hidden=true;
+                    document.getElementById("dsh1[6]").hidden=false;
+                    document.getElementById("dsh1[7]").hidden=true;
+                    document.getElementById("dsh1[8]").hidden=true;
+                    for (var q1=9; q1<=20; q1++){
+                      document.getElementById("dsh1["+q1+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_1card_0content_click=0;
+                      dsh1_1card_1content_click=0;
+                      dsh1_1card_2content_click=0;
+                      dsh1_1card_3content_click=0;
+                      dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c1=5; c1<=20; c1++){
+                        document.getElementById("dsh1["+c1+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+
+    /** PER_AREA_UNRELEASE - MICROCELL */
+    var dsh1_1card_2content=<HTMLImageElement>document.getElementById("dsh1[1]card[2]content");
+        dsh1_1card_2content.addEventListener('click', function () {
+          switch(dsh1_1card_2content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="No Release";
+                    hdrImgDes3.innerHTML="Microcell-PerArea";
+                    dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_2content.style.backgroundColor="#83D7F1";
+                    dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_0content_click=0;
+                    dsh1_1card_1content_click=0;
+                    dsh1_1card_2content_click=1;
+                    dsh1_1card_3content_click=0;
+                    document.getElementById("dsh1[5]").hidden=true;
+                    document.getElementById("dsh1[6]").hidden=true;
+                    document.getElementById("dsh1[7]").hidden=false;
+                    document.getElementById("dsh1[8]").hidden=true;
+                    for (var q2=9; q2<=20; q2++){
+                      document.getElementById("dsh1["+q2+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_1card_0content_click=0;
+                      dsh1_1card_1content_click=0;
+                      dsh1_1card_2content_click=0;
+                      dsh1_1card_3content_click=0;
+                      dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c2=5; c2<=20; c2++){
+                        document.getElementById("dsh1["+c2+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+
+    /** PER_AREA_UNRELEASE - SPECIAL PROJECT */
+    var dsh1_1card_3content=<HTMLImageElement>document.getElementById("dsh1[1]card[3]content");
+        dsh1_1card_3content.addEventListener('click', function () {
+          switch(dsh1_1card_3content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="No Release";
+                    hdrImgDes3.innerHTML="SP-PerArea";
+                    dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_1card_3content.style.backgroundColor="#83D7F1";
+                    dsh1_1card_0content_click=0;
+                    dsh1_1card_1content_click=0;
+                    dsh1_1card_2content_click=0;
+                    dsh1_1card_3content_click=1;
+                    document.getElementById("dsh1[5]").hidden=true;
+                    document.getElementById("dsh1[6]").hidden=true;
+                    document.getElementById("dsh1[7]").hidden=true;
+                    document.getElementById("dsh1[8]").hidden=false;
+                    for (var q3=9; q3<=20; q3++){
+                      document.getElementById("dsh1["+q3+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_1card_0content_click=0;
+                      dsh1_1card_1content_click=0;
+                      dsh1_1card_2content_click=0;
+                      dsh1_1card_3content_click=0;
+                      dsh1_1card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_1card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c3=5; c3<=20; c3++){
+                        document.getElementById("dsh1["+c3+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+
+    /** PER_AREA_POP - B2S */
+    var dsh1_2card_0content=<HTMLImageElement>document.getElementById("dsh1[2]card[0]content");
+        dsh1_2card_0content.addEventListener('click', function () {
+          switch(dsh1_2card_0content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="Project on Pipe";
+                    hdrImgDes3.innerHTML="B2s-PerArea";
+                    dsh1_2card_0content.style.backgroundColor="#83D7F1";
+                    dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_0content_click=1;
+                    dsh1_2card_1content_click=0;
+                    dsh1_2card_2content_click=0;
+                    dsh1_2card_3content_click=0;
+                    document.getElementById("dsh1[9]").hidden=false;
+                    document.getElementById("dsh1[10]").hidden=true;
+                    document.getElementById("dsh1[11]").hidden=true;
+                    document.getElementById("dsh1[12]").hidden=true;
+                    for (var q0=5; q0<=8; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
+                    for (var q01=13; q01<=20; q01++){
+                      document.getElementById("dsh1["+q01+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_2card_0content_click=0;
+                      dsh1_2card_1content_click=0;
+                      dsh1_2card_2content_click=0;
+                      dsh1_2card_3content_click=0;
+                      dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c3=5; c3<=20; c3++){
+                        document.getElementById("dsh1["+c3+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+
+    /** PER_AREA_POP - CORE */
+    var dsh1_2card_1content=<HTMLImageElement>document.getElementById("dsh1[2]card[1]content");
+        dsh1_2card_1content.addEventListener('click', function () {
+          switch(dsh1_2card_1content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="Project on Pipe";
+                    hdrImgDes3.innerHTML="Core-PerArea";
+                    dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_1content.style.backgroundColor="#83D7F1";
+                    dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_0content_click=0;
+                    dsh1_2card_1content_click=1;
+                    dsh1_2card_2content_click=0;
+                    dsh1_2card_3content_click=0;
+                    document.getElementById("dsh1[9]").hidden=true;
+                    document.getElementById("dsh1[10]").hidden=false;
+                    document.getElementById("dsh1[11]").hidden=true;
+                    document.getElementById("dsh1[12]").hidden=true;
+                    for (var q0=5; q0<=8; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
+                    for (var q01=13; q01<=20; q01++){
+                      document.getElementById("dsh1["+q01+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_2card_0content_click=0;
+                      dsh1_2card_1content_click=0;
+                      dsh1_2card_2content_click=0;
+                      dsh1_2card_3content_click=0;
+                      dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c3=5; c3<=20; c3++){
+                        document.getElementById("dsh1["+c3+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+    /** PER_AREA_POP - MICROCELL */
+    var dsh1_2card_2content=<HTMLImageElement>document.getElementById("dsh1[2]card[2]content");
+        dsh1_2card_2content.addEventListener('click', function () {
+          switch(dsh1_2card_2content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="Project on Pipe";
+                    hdrImgDes3.innerHTML="Microcell-PerArea";
+                    dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_2content.style.backgroundColor="#83D7F1";
+                    dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_0content_click=0;
+                    dsh1_2card_1content_click=0;
+                    dsh1_2card_2content_click=1;
+                    dsh1_2card_3content_click=0;
+                    document.getElementById("dsh1[9]").hidden=true;
+                    document.getElementById("dsh1[10]").hidden=true;
+                    document.getElementById("dsh1[11]").hidden=false;
+                    document.getElementById("dsh1[12]").hidden=true;
+                    for (var q0=5; q0<=8; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
+                    for (var q01=13; q01<=20; q01++){
+                      document.getElementById("dsh1["+q01+"]").hidden=true;
+                    }
+                  break;
+                case 1:
+                      dsh1_2card_0content_click=0;
+                      dsh1_2card_1content_click=0;
+                      dsh1_2card_2content_click=0;
+                      dsh1_2card_3content_click=0;
+                      dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                      dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                      hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                      for (var c3=5; c3<=20; c3++){
+                        document.getElementById("dsh1["+c3+"]").hidden=true;
+                      }
+              break;
+            default:
+          };
+        });
+    /** PER_AREA_POP - SPECIAL PROJECT */
+    var dsh1_2card_3content=<HTMLImageElement>document.getElementById("dsh1[2]card[3]content");
+        dsh1_2card_3content.addEventListener('click', function () {
+          switch(dsh1_2card_3content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="Project on Pipe";
+                    hdrImgDes3.innerHTML="SP-PerArea";
+                    dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_3content.style.backgroundColor="#83D7F1";
+                    dsh1_2card_0content_click=0;
+                    dsh1_2card_1content_click=0;
+                    dsh1_2card_2content_click=0;
+                    dsh1_2card_3content_click=1;
+                    document.getElementById("dsh1[9]").hidden=true;
+                    document.getElementById("dsh1[10]").hidden=true;
+                    document.getElementById("dsh1[11]").hidden=true;
+                    document.getElementById("dsh1[12]").hidden=false;
+                    for (var q0=5; q0<=8; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
+                    for (var q01=13; q01<=20; q01++){
+                      document.getElementById("dsh1["+q01+"]").hidden=true;
+                    }
+                  break;
+              case 1:
+                    dsh1_2card_0content_click=0;
+                    dsh1_2card_1content_click=0;
+                    dsh1_2card_2content_click=0;
+                    dsh1_2card_3content_click=0;
+                    dsh1_2card_0content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_2card_3content.style.backgroundColor="#FFFFFF";
+                    hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                    for (var c3=5; c3<=20; c3++){
+                      document.getElementById("dsh1["+c3+"]").hidden=true;
+                    }
+            break;
+          default:
+        };
+      });
+
+    /** PER_AREA_RFI - B2S */
+    var dsh1_3card_0content=<HTMLImageElement>document.getElementById("dsh1[3]card[0]content");
+        dsh1_3card_0content.addEventListener('click', function () {
+          switch(dsh1_3card_0content_click) {
+            case 0:
+                    hdrImgDes2.innerHTML="RFI";
+                    hdrImgDes3.innerHTML="B2S-PerArea";
+                    dsh1_3card_0content.style.backgroundColor="#83D7F1";
+                    dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                    dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                    dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                    dsh1_3card_0content_click=1;
+                    dsh1_3card_1content_click=0;
+                    dsh1_3card_2content_click=0;
+                    dsh1_3card_3content_click=0;
+                    document.getElementById("dsh1[13]").hidden=false;
+                    document.getElementById("dsh1[14]").hidden=true;
+                    document.getElementById("dsh1[15]").hidden=true;
+                    document.getElementById("dsh1[16]").hidden=true;
+                    for (var q0=5; q0<=12; q0++){
+                      document.getElementById("dsh1["+q0+"]").hidden=true;
+                    }
+                    for (var q01=17; q01<=20; q01++){
+                      document.getElementById("dsh1["+q01+"]").hidden=true;
+                    }
+              break;
+            case 1:
+                  dsh1_3card_0content_click=0;
+                  dsh1_3card_1content_click=0;
+                  dsh1_3card_2content_click=0;
+                  dsh1_3card_3content_click=0;
+                  dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                  hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                  for (var c3=5; c3<=20; c3++){
+                    document.getElementById("dsh1["+c3+"]").hidden=true;
+                  }
+            break;
+          default:
+      };
+    });
+   /** PER_AREA_RFI - CORE */
+    var dsh1_3card_1content=<HTMLImageElement>document.getElementById("dsh1[3]card[1]content");
+        dsh1_3card_1content.addEventListener('click', function () {
+          switch(dsh1_3card_1content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="RFI";
+                hdrImgDes3.innerHTML="Core-PerArea";
+                dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_1content.style.backgroundColor="#83D7F1";
+                dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_0content_click=0;
+                dsh1_3card_1content_click=1;
+                dsh1_3card_2content_click=0;
+                dsh1_3card_3content_click=0;
+                document.getElementById("dsh1[13]").hidden=true;
+                document.getElementById("dsh1[14]").hidden=false;
+                document.getElementById("dsh1[15]").hidden=true;
+                document.getElementById("dsh1[16]").hidden=true;
+                for (var q0=5; q0<=12; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+                for (var q01=17; q01<=20; q01++){
+                  document.getElementById("dsh1["+q01+"]").hidden=true;
+                }
+              break;
+            case 1:
+                  dsh1_3card_0content_click=0;
+                  dsh1_3card_1content_click=0;
+                  dsh1_3card_2content_click=0;
+                  dsh1_3card_3content_click=0;
+                  dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                  dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                  hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                  for (var c3=5; c3<=20; c3++){
+                    document.getElementById("dsh1["+c3+"]").hidden=true;
+                  }
+          break;
+        default:
+      };
+    });
+
+    /** PER_AREA_RFI - MICROCELL */
+    var dsh1_3card_2content=<HTMLImageElement>document.getElementById("dsh1[3]card[2]content");
+        dsh1_3card_2content.addEventListener('click', function () {
+          switch(dsh1_3card_2content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="RFI";
+                hdrImgDes3.innerHTML="Microcell-PerArea";
+                dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_2content.style.backgroundColor="#83D7F1";
+                dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_0content_click=0;
+                dsh1_3card_1content_click=0;
+                dsh1_3card_2content_click=1;
+                dsh1_3card_3content_click=0;
+                document.getElementById("dsh1[13]").hidden=true;
+                document.getElementById("dsh1[14]").hidden=true;
+                document.getElementById("dsh1[15]").hidden=false;
+                document.getElementById("dsh1[16]").hidden=true;
+                for (var q0=5; q0<=12; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+                for (var q01=17; q01<=20; q01++){
+                  document.getElementById("dsh1["+q01+"]").hidden=true;
+                }
+              break;
+            case 1:
+                dsh1_3card_0content_click=0;
+                dsh1_3card_1content_click=0;
+                dsh1_3card_2content_click=0;
+                dsh1_3card_3content_click=0;
+                dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                for (var c3=5; c3<=20; c3++){
+                  document.getElementById("dsh1["+c3+"]").hidden=true;
+                }
+          break;
+        default:
+      };
+    });
+
+     /** PER_AREA_RFI - SPECIAL PROJECT */
+    var dsh1_3card_3content=<HTMLImageElement>document.getElementById("dsh1[3]card[3]content");
+        dsh1_3card_3content.addEventListener('click', function () {
+          switch(dsh1_3card_3content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="RFI";
+                hdrImgDes3.innerHTML="SP-PerArea";
+                dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_3content.style.backgroundColor="#83D7F1";
+                dsh1_3card_0content_click=0;
+                dsh1_3card_1content_click=0;
+                dsh1_3card_2content_click=0;
+                dsh1_3card_3content_click=1;
+                document.getElementById("dsh1[13]").hidden=true;
+                document.getElementById("dsh1[14]").hidden=true;
+                document.getElementById("dsh1[15]").hidden=true;
+                document.getElementById("dsh1[16]").hidden=false;
+                for (var q0=5; q0<=12; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+                for (var q01=17; q01<=20; q01++){
+                  document.getElementById("dsh1["+q01+"]").hidden=true;
+                }
+              break;
+            case 1:
+                dsh1_3card_0content_click=0;
+                dsh1_3card_1content_click=0;
+                dsh1_3card_2content_click=0;
+                dsh1_3card_3content_click=0;
+                dsh1_3card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_3card_3content.style.backgroundColor="#FFFFFF";
+                hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                for (var c3=5; c3<=20; c3++){
+                  document.getElementById("dsh1["+c3+"]").hidden=true;
+                }
+          break;
+        default:
+      };
+    });
+
+    /** PER_AREA_ARFI - B2S */
+    var dsh1_4card_0content=<HTMLImageElement>document.getElementById("dsh1[4]card[0]content");
+        dsh1_4card_0content.addEventListener('click', function () {
+          switch(dsh1_4card_0content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="After RFI";
+                hdrImgDes3.innerHTML="B2C-PerArea";
+                dsh1_4card_0content.style.backgroundColor="#83D7F1";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_0content_click=1;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=0;
+                document.getElementById("dsh1[17]").hidden=false;
+                document.getElementById("dsh1[18]").hidden=true;
+                document.getElementById("dsh1[19]").hidden=true;
+                document.getElementById("dsh1[20]").hidden=true;
+                for (var q0=5; q0<=16; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+              break;
+            case 1:
+                  dsh1_4card_0content_click=0;
+                  dsh1_4card_1content_click=0;
+                  dsh1_4card_2content_click=0;
+                  dsh1_4card_3content_click=0;
+                  dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                  dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                  dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                  dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                  hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                  for (var c3=5; c3<=20; c3++){
+                    document.getElementById("dsh1["+c3+"]").hidden=true;
+                  }
+          break;
+        default:
+      };
+    });
+    /** PER_AREA_ARFI - CORE */
+    var dsh1_4card_1content=<HTMLImageElement>document.getElementById("dsh1[4]card[1]content");
+        dsh1_4card_1content.addEventListener('click', function () {
+          switch(dsh1_4card_1content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="After RFI";
+                hdrImgDes3.innerHTML="Core-PerArea";
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#83D7F1";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=1;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=0;
+                document.getElementById("dsh1[17]").hidden=true;
+                document.getElementById("dsh1[18]").hidden=false;
+                document.getElementById("dsh1[19]").hidden=true;
+                document.getElementById("dsh1[20]").hidden=true;
+                for (var q0=5; q0<=16; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+              break;
+            case 1:
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=0;
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                for (var c3=5; c3<=20; c3++){
+                  document.getElementById("dsh1["+c3+"]").hidden=true;
+                }
+          break;
+        default:
+      };
+    });
+    /** PER_AREA_ARFI - MICROCELL */
+    var dsh1_4card_2content=<HTMLImageElement>document.getElementById("dsh1[4]card[2]content");
+        dsh1_4card_2content.addEventListener('click', function () {
+          switch(dsh1_4card_2content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="After RFI";
+                hdrImgDes3.innerHTML="Microcell-PerArea";
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#83D7F1";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=1;
+                dsh1_4card_3content_click=0;
+                document.getElementById("dsh1[17]").hidden=true;
+                document.getElementById("dsh1[18]").hidden=true;
+                document.getElementById("dsh1[19]").hidden=false;
+                document.getElementById("dsh1[20]").hidden=true;
+                for (var q0=5; q0<=16; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+              break;
+            case 1:
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=0;
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                for (var c3=5; c3<=20; c3++){
+                  document.getElementById("dsh1["+c3+"]").hidden=true;
+                }
+          break;
+        default:
+      };
+    });
+    /** PER_AREA_ARFI - SPECIAL PROJECT */
+    var dsh1_4card_3content=<HTMLImageElement>document.getElementById("dsh1[4]card[3]content");
+        dsh1_4card_3content.addEventListener('click', function () {
+          switch(dsh1_4card_3content_click) {
+            case 0:
+                hdrImgDes2.innerHTML="After RFI";
+                hdrImgDes3.innerHTML="SP-PerArea";
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#83D7F1";
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=1;
+                document.getElementById("dsh1[17]").hidden=true;
+                document.getElementById("dsh1[18]").hidden=true;
+                document.getElementById("dsh1[19]").hidden=true;
+                document.getElementById("dsh1[20]").hidden=false;
+                for (var q0=5; q0<=16; q0++){
+                  document.getElementById("dsh1["+q0+"]").hidden=true;
+                }
+              break;
+            case 1:
+                dsh1_4card_0content_click=0;
+                dsh1_4card_1content_click=0;
+                dsh1_4card_2content_click=0;
+                dsh1_4card_3content_click=0;
+                dsh1_4card_0content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_1content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_2content.style.backgroundColor="#FFFFFF";
+                dsh1_4card_3content.style.backgroundColor="#FFFFFF";
+                hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
+                for (var c3=5; c3<=20; c3++){
+                  document.getElementById("dsh1["+c3+"]").hidden=true;
+                }
+          break;
+        default:
+      };
+    });
 
     /** dsh1_0 FOOTER */
     var dsh1_0card_0footer=document.getElementById("dsh1[0]card[0]footer");
@@ -449,12 +1133,12 @@ export class HomePage {
                   dsh1_0card_1footer.style.backgroundColor="#E9E9E9";
                   dsh1_0card_2footer.style.backgroundColor="#E9E9E9";
                   dsh1_0card_3footer.style.backgroundColor="#E9E9E9";
-                  document.getElementById("dsh1[1]").hidden=true;
-                  document.getElementById("dsh1[2]").hidden=true;
-                  document.getElementById("dsh1[3]").hidden=true;
-                  document.getElementById("dsh1[4]").hidden=true;
-                  document.getElementById("dsh1[5]").hidden=true;
-                  document.getElementById("dsh1[6]").hidden=true;
+                  // document.getElementById("dsh1[1]").hidden=true;
+                  // document.getElementById("dsh1[2]").hidden=true;
+                  // document.getElementById("dsh1[3]").hidden=true;
+                  // document.getElementById("dsh1[4]").hidden=true;
+                  // document.getElementById("dsh1[5]").hidden=true;
+                  // document.getElementById("dsh1[6]").hidden=true;
                   hdrImgDes3.innerHTML="Per-Ubis/Per-Area";
               break;
             default:
