@@ -159,7 +159,8 @@ export class HomePage {
               aryARFI=[];
 
               ary_Header.push(rsltAry[0].filter(function(headerObj){
-                return headerObj.SEQ.indexOf("HEADER") > -1
+                return headerObj.SEQ=="HEADER";
+                // return headerObj.SEQ.indexOf("HEADER") > -1
               }));
               // - ORDER SORT
               ary_Header[0].sort((a, b):number=>{
@@ -169,17 +170,19 @@ export class HomePage {
               });
               //-Set ARRAY GROUP - B2S
               aryB2S_AREA.push(rsltAry[0].filter(function(b2cAreaObj){
-                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                  return b2cAreaObj.SEQ=="B2S";
+                  // return b2cAreaObj.SEQ.indexOf("B2S") > -1
                 })
               );
               /** NOT RELEASE - UBIS -> PER AREA */
               aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
-                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                  return notReleaseObj.GRP=="NOT_RELEASE";
+                  // return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
                 })
               );
               /** PROJECT ON PIPE - UBIS -> PER AREA */
               aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
-                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                  return pipeObj.GRP=="PRJ_ON_PIPE";
                 })
               );
                /** RFI - UBIS -> PER AREA */

@@ -3,6 +3,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
+
 // import { DomCard } from "./card";
 declare var google;
 /** VAR CLICK & MOUSEOVER STATUS */
@@ -30,7 +34,8 @@ export class Dsh2HomePage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   mapOptions2:any;
-
+  private dsh2_subscription1;
+  private dsh2_subscription2;
   charting;
   constructor(
     public navCtrl: NavController,
@@ -44,7 +49,7 @@ export class Dsh2HomePage {
     };
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     // this.menu.swipeEnable(true);
     console.log('ionViewDidLoad Dsh2HomePage');
     this.initMouseOverOut();
@@ -55,6 +60,8 @@ export class Dsh2HomePage {
     document.getElementById("dsh2[4]").hidden=true;
     document.getElementById("dsh2[5]").hidden=true;
     document.getElementById("dsh2[6]").hidden=true;
+    document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").hidden=true;
+    document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh2_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh2_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
     this.drilldown();
@@ -64,9 +71,22 @@ export class Dsh2HomePage {
     // this.menu.swipeEnable(false, 'menu1');
     //this.tampilkanNilai();
     this.getData();
-
   }
 
+  ionViewDidEnter(){
+    // this.menu.swipeEnable(false);
+    this.dsh2_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+       this.getData();
+    });
+  }
+
+  ionViewWillUnload() {
+    console.log("Previus page");
+    chkInit=0;
+    // this.dsh2_subscription1.unsubscribe();
+    this.dsh2_subscription2.unsubscribe();
+  }
   private getData(){
     var ary_Header=[];
     var rsltAry=[];
@@ -84,7 +104,7 @@ export class Dsh2HomePage {
               // console.log(rsltAry);
               ary_Header=[];
               ary_Header.push(rsltAry[0].filter(function(headerObj){
-                return headerObj.SEQ.indexOf("HEADER") > -1
+                return headerObj.SEQ=="HEADER";
               }));
               // - ORDER SORT
               ary_Header[0].sort((a, b):number=>{
@@ -96,31 +116,31 @@ export class Dsh2HomePage {
               //-Set ARRAY GROUP - B2S
               aryB2S_AREA=[];
               aryB2S_AREA.push(rsltAry[0].filter(function(b2cAreaObj){
-                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                  return b2cAreaObj.SEQ=="B2S";
                 })
               );
               /** NOT RELEASE - UBIS -> PER AREA */
               aryB2S_AREA_NOT_RELEASE=[];
               aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
-                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                  return notReleaseObj.GRP=="NOT_RELEASE";
                 })
               );
               /** PROJECT ON PIPE - UBIS -> PER AREA */
               aryB2S_AREA_PRJ_ON_PIPE=[];
               aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
-                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                  return pipeObj.GRP=="PRJ_ON_PIPE";
                 })
               );
                /** RFI - UBIS -> PER AREA */
               aryRFI=[];
               aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
-                  return rfiObj.GRP.indexOf("RFI") > -1
+                  return rfiObj.GRP=="RFI";
                 })
               );
                /** AFTER RFI - UBIS -> PER AREA */
               aryARFI=[];
               aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
-                  return arfiObj.GRP.indexOf("ARFI") > -1
+                  return arfiObj.GRP=="ARFI";
                 })
               );
 
@@ -149,59 +169,22 @@ export class Dsh2HomePage {
                     document.getElementById("dsh2[0]card[3]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
               });
-
               aryB2S_AREA_NOT_RELEASE[0].forEach(el1=>{
                   console.log(el1);
                   document.getElementById("dsh2[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
               });
-              // document.getElementById("dsh2[5]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA1).toString();
-              // document.getElementById("dsh2[5]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA2).toString();
-              // document.getElementById("dsh2[5]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA3).toString();
-              // document.getElementById("dsh2[5]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA4).toString();
-              // document.getElementById("dsh2[6]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA1).toString();
-              // document.getElementById("dsh2[6]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA2).toString();
-              // document.getElementById("dsh2[6]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA3).toString();
-              // document.getElementById("dsh2[6]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA4).toString();
-              // document.getElementById("dsh2[7]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA1).toString();
-              // document.getElementById("dsh2[7]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA2).toString();
-              // document.getElementById("dsh2[7]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA3).toString();
-              // document.getElementById("dsh2[7]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA4).toString();
-              // document.getElementById("dsh2[8]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA1).toString();
-              // document.getElementById("dsh2[8]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA2).toString();
-              // document.getElementById("dsh2[8]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA3).toString();
-              // document.getElementById("dsh2[8]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA4).toString();
-
-              aryB2S_AREA_PRJ_ON_PIPE[0].forEach(el=>{
-                console.log(el);
-                document.getElementById("dsh2[2]card["+el.URUTAN +"]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+              aryB2S_AREA_PRJ_ON_PIPE[0].forEach(el2=>{
+                console.log(el2);
+                document.getElementById("dsh2[5]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
               });
-              // document.getElementById("dsh2[9]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1).toString();
-              // document.getElementById("dsh2[9]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2).toString();
-              // document.getElementById("dsh2[9]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3).toString();
-              // document.getElementById("dsh2[9]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4).toString();
-              // document.getElementById("dsh2[10]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1).toString();
-              // document.getElementById("dsh2[10]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2).toString();
-              // document.getElementById("dsh2[10]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3).toString();
-              // document.getElementById("dsh2[10]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4).toString();
-              // document.getElementById("dsh2[11]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1).toString();
-              // document.getElementById("dsh2[11]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2).toString();
-              // document.getElementById("dsh2[11]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3).toString();
-              // document.getElementById("dsh2[11]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4).toString();
-              // document.getElementById("dsh2[12]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1).toString();
-              // document.getElementById("dsh2[12]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2).toString();
-              // document.getElementById("dsh2[12]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3).toString();
-              // document.getElementById("dsh2[12]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4).toString();
-
-                // document.getElementById("dsh2[1]card[1]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
-                // document.getElementById("dsh2[1]card[2]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
-                // document.getElementById("dsh2[1]card[3]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
-                // PER-AREA
-
-              // });
-              // aryB2S_AREA_PRJ_ON_PIPE
-
-
-
+              aryRFI[0].forEach(el3=>{
+                console.log(el3);
+                document.getElementById("dsh2[2]card["+el3.URUTAN +"]content[1]-properties-lbl").innerHTML=(el3.NILAI).toString();
+              });
+              aryARFI[0].forEach(el4=>{
+                console.log(el4);
+                document.getElementById("dsh2[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+              });
               console.log(ary_Header);
           }else{
               // console.log("data kosong");
@@ -254,10 +237,7 @@ export class Dsh2HomePage {
     // }
   }
 
-  ionViewWillUnload() {
-    console.log("Previus page");
-    chkInit=0;
-  }
+
 
   initMap() {
     this.map2 = new google.maps.Map(document.getElementById("map2"),this.mapOptions2);
