@@ -62,40 +62,185 @@ export class Dsh2HomePage {
     chkInit=1;
     // If you have more than one side menu, use the id like below
     // this.menu.swipeEnable(false, 'menu1');
-    this.tampilkanNilai();
+    //this.tampilkanNilai();
+    this.getData();
 
+  }
+
+  private getData(){
+    var ary_Header=[];
+    var rsltAry=[];
+    var aryB2S_AREA=[];
+    var aryB2S_AREA_NOT_RELEASE=[];
+    var aryB2S_AREA_PRJ_ON_PIPE=[];
+    var aryRFI=[];
+    var  aryARFI=[];
+    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
+                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      this.database.selectData(querySql).then(data=>{
+         rsltAry.push(data);
+         if (rsltAry[0].length!==0){
+              // console.log("data ada");
+              // console.log(rsltAry);
+              ary_Header=[];
+              ary_Header.push(rsltAry[0].filter(function(headerObj){
+                return headerObj.SEQ.indexOf("HEADER") > -1
+              }));
+              // - ORDER SORT
+              ary_Header[0].sort((a, b):number=>{
+                if (a.URUTAN < b.URUTAN) return -1;
+                if (a.URUTAN > b.URUTAN) return 1;
+                return 0;
+              });
+
+              //-Set ARRAY GROUP - B2S
+              aryB2S_AREA=[];
+              aryB2S_AREA.push(rsltAry[0].filter(function(b2cAreaObj){
+                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                })
+              );
+              /** NOT RELEASE - UBIS -> PER AREA */
+              aryB2S_AREA_NOT_RELEASE=[];
+              aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                })
+              );
+              /** PROJECT ON PIPE - UBIS -> PER AREA */
+              aryB2S_AREA_PRJ_ON_PIPE=[];
+              aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
+                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                })
+              );
+               /** RFI - UBIS -> PER AREA */
+              aryRFI=[];
+              aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+                  return rfiObj.GRP.indexOf("RFI") > -1
+                })
+              );
+               /** AFTER RFI - UBIS -> PER AREA */
+              aryARFI=[];
+              aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+                  return arfiObj.GRP.indexOf("ARFI") > -1
+                })
+              );
+
+              //-> toDisply
+              ary_Header[0].forEach(el=>{
+                  console.log(el.GRP);
+                  // console.log(el);
+                  if (el.GRP=='ALL_PRJ') {
+                    document.getElementById("dsh2_headcard[0]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                    // document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='NOT_RELEASE') {
+                    document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='PRJ_ON_PIPE'){
+                    document.getElementById("dsh2[0]card[1]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[1]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='RFI') {
+                    document.getElementById("dsh2[0]card[2]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[2]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='ARFI') {
+                    document.getElementById("dsh2[0]card[3]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[3]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+              });
+
+              aryB2S_AREA_NOT_RELEASE[0].forEach(el1=>{
+                  console.log(el1);
+                  document.getElementById("dsh2[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
+              });
+              // document.getElementById("dsh2[5]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA1).toString();
+              // document.getElementById("dsh2[5]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA2).toString();
+              // document.getElementById("dsh2[5]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA3).toString();
+              // document.getElementById("dsh2[5]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA4).toString();
+              // document.getElementById("dsh2[6]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA1).toString();
+              // document.getElementById("dsh2[6]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA2).toString();
+              // document.getElementById("dsh2[6]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA3).toString();
+              // document.getElementById("dsh2[6]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA4).toString();
+              // document.getElementById("dsh2[7]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA1).toString();
+              // document.getElementById("dsh2[7]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA2).toString();
+              // document.getElementById("dsh2[7]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA3).toString();
+              // document.getElementById("dsh2[7]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA4).toString();
+              // document.getElementById("dsh2[8]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA1).toString();
+              // document.getElementById("dsh2[8]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA2).toString();
+              // document.getElementById("dsh2[8]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA3).toString();
+              // document.getElementById("dsh2[8]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA4).toString();
+
+              aryB2S_AREA_PRJ_ON_PIPE[0].forEach(el=>{
+                console.log(el);
+                document.getElementById("dsh2[2]card["+el.URUTAN +"]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+              });
+              // document.getElementById("dsh2[9]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1).toString();
+              // document.getElementById("dsh2[9]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2).toString();
+              // document.getElementById("dsh2[9]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3).toString();
+              // document.getElementById("dsh2[9]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4).toString();
+              // document.getElementById("dsh2[10]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1).toString();
+              // document.getElementById("dsh2[10]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2).toString();
+              // document.getElementById("dsh2[10]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3).toString();
+              // document.getElementById("dsh2[10]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4).toString();
+              // document.getElementById("dsh2[11]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1).toString();
+              // document.getElementById("dsh2[11]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2).toString();
+              // document.getElementById("dsh2[11]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3).toString();
+              // document.getElementById("dsh2[11]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4).toString();
+              // document.getElementById("dsh2[12]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1).toString();
+              // document.getElementById("dsh2[12]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2).toString();
+              // document.getElementById("dsh2[12]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3).toString();
+              // document.getElementById("dsh2[12]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4).toString();
+
+                // document.getElementById("dsh2[1]card[1]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                // document.getElementById("dsh2[1]card[2]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                // document.getElementById("dsh2[1]card[3]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                // PER-AREA
+
+              // });
+              // aryB2S_AREA_PRJ_ON_PIPE
+
+
+
+              console.log(ary_Header);
+          }else{
+              // console.log("data kosong");
+
+          };
+      });
+      return rsltAry;
   }
 
   tampilkanNilai(){
     /** All Project */
-    document.getElementById("dsh2_headcard[0]content[1]-properties-lbl").innerHTML=(88+10).toString();
+    // document.getElementById("dsh2_headcard[0]content[1]-properties-lbl").innerHTML=(88+10).toString();
 
-      /** PER-AREA*/
-    for (var i=0; i<=3; i++){
-      //second=NoRelease|Pop|RFI|AfterRFI| Value %
-      document.getElementById("dsh2[0]card["+i+"]content[1]-properties-lbl").innerHTML=(i+100).toString() + "%";
-      //NoRelease AREA[1,2,3,4]
-      document.getElementById("dsh2[1]card["+i+"]content[1]-properties-lbl").innerHTML=(i+10).toString();
-      //RFI AREA[1,2,3,4]
-      document.getElementById("dsh2[2]card["+i+"]content[1]-properties-lbl").innerHTML=(i+5).toString();
-      //AfterRFI AREA[1,2,3,4]
-      document.getElementById("dsh2[3]card["+i+"]content[1]-properties-lbl").innerHTML=(i+12).toString();
-      document.getElementById("dsh2[4]card["+i+"]content[1]-properties-lbl").innerHTML=(i+13).toString();
-      //PoP AREA[1,2,3,4]
-      document.getElementById("dsh2[5]card["+i+"]content[1]-properties-lbl").innerHTML=(i+20).toString();
-    }
+    //   /** PER-AREA*/
+    // for (var i=0; i<=3; i++){
+    //   //second=NoRelease|Pop|RFI|AfterRFI| Value %
+    //   document.getElementById("dsh2[0]card["+i+"]content[1]-properties-lbl").innerHTML=(i+100).toString() + "%";
+    //   //NoRelease AREA[1,2,3,4]
+    //   document.getElementById("dsh2[1]card["+i+"]content[1]-properties-lbl").innerHTML=(i+10).toString();
+    //   //RFI AREA[1,2,3,4]
+    //   document.getElementById("dsh2[2]card["+i+"]content[1]-properties-lbl").innerHTML=(i+5).toString();
+    //   //AfterRFI AREA[1,2,3,4]
+    //   document.getElementById("dsh2[3]card["+i+"]content[1]-properties-lbl").innerHTML=(i+12).toString();
+    //   document.getElementById("dsh2[4]card["+i+"]content[1]-properties-lbl").innerHTML=(i+13).toString();
+    //   //PoP AREA[1,2,3,4]
+    //   document.getElementById("dsh2[5]card["+i+"]content[1]-properties-lbl").innerHTML=(i+20).toString();
+    // }
 
-    /** Total */
-    for(var x=0; x<=3; x ++){
-      document.getElementById("dsh2[0]card["+x+"]footer-properties-lbl[1]").innerHTML=(x+293).toString();
-    }
-    /** POP VALUE DETAIL */
-    for (var i1=0; i1<=5; i1++){
-      document.getElementById("dsh2[6]card[0]properties-lbl["+i1+"]").innerHTML=(i1+1).toString();
-      document.getElementById("dsh2[6]card[1]properties-lbl["+i1+"]").innerHTML=(i1+2).toString();
-      document.getElementById("dsh2[6]card[2]properties-lbl["+i1+"]").innerHTML=(i1+3).toString();
-      document.getElementById("dsh2[6]card[3]properties-lbl["+i1+"]").innerHTML=(i1+4).toString();
-    }
+    // /** Total */
+    // for(var x=0; x<=3; x ++){
+    //   document.getElementById("dsh2[0]card["+x+"]footer-properties-lbl[1]").innerHTML=(x+293).toString();
+    // }
+    // /** POP VALUE DETAIL */
+    // for (var i1=0; i1<=5; i1++){
+    //   document.getElementById("dsh2[6]card[0]properties-lbl["+i1+"]").innerHTML=(i1+1).toString();
+    //   document.getElementById("dsh2[6]card[1]properties-lbl["+i1+"]").innerHTML=(i1+2).toString();
+    //   document.getElementById("dsh2[6]card[2]properties-lbl["+i1+"]").innerHTML=(i1+3).toString();
+    //   document.getElementById("dsh2[6]card[3]properties-lbl["+i1+"]").innerHTML=(i1+4).toString();
+    // }
   }
 
   onPageWillEnter () {

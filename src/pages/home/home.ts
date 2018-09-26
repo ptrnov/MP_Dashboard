@@ -65,8 +65,8 @@ export class HomePage {
   //MAP
   @ViewChild('map1') mapElement2: ElementRef;
   map1: any;
-  directionsService = new google.maps.DirectionsService;
-  directionsDisplay = new google.maps.DirectionsRenderer;
+  // directionsService = new google.maps.DirectionsService;
+  // directionsDisplay = new google.maps.DirectionsRenderer;
   mapOptions1:any;
   charting;
   constructor(
@@ -81,33 +81,33 @@ export class HomePage {
   ){
     this.mapOptions1={
       zoom: 4,
-      center: new google.maps.LatLng(-2.209764,117.114258),
+      // center: new google.maps.LatLng(-2.209764,117.114258),
       styles: this.database._defaultNewStyle
     };
   }
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    // this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      // console.log('run-Disply');
-      //  this.nilaiDispyValue1();
-    // });
+    this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+       this.getData();
+    });
   }
 
   ngOnInit() {
-    // this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      // console.log('run-Disply');
-      // this.dashboarAll.getAllPrj();
+    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      this.dashboarAll.getAllPrj();
       // this.dashboarAll.getSetting();
-    // });
+    });
   }
    /**
    * Event Back / close Page
    */
   ionViewWillUnload() {
-    // console.log("Previus page")
-    // this.subscription1.unsubscribe();
-    // this.subscription2.unsubscribe();
+    console.log("Previus page")
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   private goToAccount() {
@@ -119,6 +119,9 @@ export class HomePage {
     this.initClickEvent();
     document.getElementById("dsh1[1]").hidden=false;
     document.getElementById("dsh1[2]").hidden=false;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+
     // document.getElementById("dsh1[3]").hidden=true;
     // document.getElementById("dsh1[4]").hidden=true;
     // document.getElementById("dsh1[5]").hidden=true;
@@ -132,64 +135,251 @@ export class HomePage {
     this.tampilkanNilai();
   }
 
+  private getData(){
+    var ary_Header=[];
+    var rsltAry=[];
+    var aryB2S_AREA=[];
+    var aryB2S_AREA_NOT_RELEASE=[];
+    var aryB2S_AREA_PRJ_ON_PIPE=[];
+    var aryRFI=[];
+    var aryARFI=[];
+    var querySql ="SELECT DISTINCT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
+                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      this.database.selectData(querySql).then(data=>{
+         rsltAry=[];
+         rsltAry.push(data);
+         if (rsltAry[0].length!==0){
+              // console.log("data ada");
+              // console.log(rsltAry);
+              ary_Header=[];
+              aryB2S_AREA=[];
+              aryB2S_AREA_NOT_RELEASE=[];
+              aryB2S_AREA_PRJ_ON_PIPE=[];
+              aryRFI=[];
+              aryARFI=[];
+
+              ary_Header.push(rsltAry[0].filter(function(headerObj){
+                return headerObj.SEQ.indexOf("HEADER") > -1
+              }));
+              // - ORDER SORT
+              ary_Header[0].sort((a, b):number=>{
+                if (a.URUTAN < b.URUTAN) return -1;
+                if (a.URUTAN > b.URUTAN) return 1;
+                return 0;
+              });
+              //-Set ARRAY GROUP - B2S
+              aryB2S_AREA.push(rsltAry[0].filter(function(b2cAreaObj){
+                  return b2cAreaObj.SEQ.indexOf("B2S") > -1
+                })
+              );
+              /** NOT RELEASE - UBIS -> PER AREA */
+              aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+                  return notReleaseObj.GRP.indexOf("NOT_RELEASE") > -1
+                })
+              );
+              /** PROJECT ON PIPE - UBIS -> PER AREA */
+              aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
+                  return pipeObj.GRP.indexOf("PRJ_ON_PIPE") > -1
+                })
+              );
+               /** RFI - UBIS -> PER AREA */
+              aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+                  return rfiObj.GRP=="RFI";
+                  //  return rfiObj.GRP.indexOf("RFI")  > -3
+                })
+              );
+              /** AFTER RFI - UBIS -> PER AREA */
+              aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+                  return arfiObj.GRP=="ARFI";
+                  // return arfiObj.GRP.indexOf("ARFI") > -1
+                })
+              );
+              //-> toDisply
+              ary_Header[0].forEach(el=>{
+                  //console.log(el.GRP);
+                  // console.log(el);
+                  if (el.GRP=='ALL_PRJ') {
+                    document.getElementById("dsh1_headcard[0]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                    // document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='NOT_RELEASE') {
+                    document.getElementById("dsh1[0]card[0]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh1[0]card[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='PRJ_ON_PIPE'){
+                    document.getElementById("dsh1[0]card[1]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh1[0]card[1]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='RFI') {
+                    document.getElementById("dsh1[0]card[2]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh1[0]card[2]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='ARFI') {
+                    document.getElementById("dsh1[0]card[3]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh1[0]card[3]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+              });
+
+              aryB2S_AREA_NOT_RELEASE[0].forEach(el1=>{
+                  console.log(el1);
+                  document.getElementById("dsh1[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
+              });
+              document.getElementById("dsh1[5]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA1).toString();
+              document.getElementById("dsh1[5]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA2).toString();
+              document.getElementById("dsh1[5]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA3).toString();
+              document.getElementById("dsh1[5]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][0].AREA4).toString();
+              document.getElementById("dsh1[6]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA1).toString();
+              document.getElementById("dsh1[6]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA2).toString();
+              document.getElementById("dsh1[6]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA3).toString();
+              document.getElementById("dsh1[6]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][1].AREA4).toString();
+              document.getElementById("dsh1[7]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA1).toString();
+              document.getElementById("dsh1[7]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA2).toString();
+              document.getElementById("dsh1[7]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA3).toString();
+              document.getElementById("dsh1[7]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][2].AREA4).toString();
+              document.getElementById("dsh1[8]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA1).toString();
+              document.getElementById("dsh1[8]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA2).toString();
+              document.getElementById("dsh1[8]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA3).toString();
+              document.getElementById("dsh1[8]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_NOT_RELEASE[0][3].AREA4).toString();
+
+              aryB2S_AREA_PRJ_ON_PIPE[0].forEach(el2=>{
+                console.log(el2);
+                document.getElementById("dsh1[2]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
+              });
+              document.getElementById("dsh1[9]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA1).toString();
+              document.getElementById("dsh1[9]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA2).toString();
+              document.getElementById("dsh1[9]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA3).toString();
+              document.getElementById("dsh1[9]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][0].AREA4).toString();
+              document.getElementById("dsh1[10]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA1).toString();
+              document.getElementById("dsh1[10]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA2).toString();
+              document.getElementById("dsh1[10]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA3).toString();
+              document.getElementById("dsh1[10]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][1].AREA4).toString();
+              document.getElementById("dsh1[11]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA1).toString();
+              document.getElementById("dsh1[11]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA2).toString();
+              document.getElementById("dsh1[11]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA3).toString();
+              document.getElementById("dsh1[11]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][2].AREA4).toString();
+              document.getElementById("dsh1[12]card[0]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA1).toString();
+              document.getElementById("dsh1[12]card[1]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA2).toString();
+              document.getElementById("dsh1[12]card[2]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA3).toString();
+              document.getElementById("dsh1[12]card[3]content[1]-properties-lbl").innerHTML=(aryB2S_AREA_PRJ_ON_PIPE[0][3].AREA4).toString();
+
+              aryRFI[0].forEach(el3=>{
+                console.log(el3);
+                document.getElementById("dsh1[3]card["+el3.URUTAN +"]content[1]-properties-lbl").innerHTML=(el3.NILAI).toString();
+              });
+              document.getElementById("dsh1[13]card[0]content[1]-properties-lbl").innerHTML=(aryRFI[0][0].AREA1).toString();
+              document.getElementById("dsh1[13]card[1]content[1]-properties-lbl").innerHTML=(aryRFI[0][0].AREA2).toString();
+              document.getElementById("dsh1[13]card[2]content[1]-properties-lbl").innerHTML=(aryRFI[0][0].AREA3).toString();
+              document.getElementById("dsh1[13]card[3]content[1]-properties-lbl").innerHTML=(aryRFI[0][0].AREA4).toString();
+              document.getElementById("dsh1[14]card[0]content[1]-properties-lbl").innerHTML=(aryRFI[0][1].AREA1).toString();
+              document.getElementById("dsh1[14]card[1]content[1]-properties-lbl").innerHTML=(aryRFI[0][1].AREA2).toString();
+              document.getElementById("dsh1[14]card[2]content[1]-properties-lbl").innerHTML=(aryRFI[0][1].AREA3).toString();
+              document.getElementById("dsh1[14]card[3]content[1]-properties-lbl").innerHTML=(aryRFI[0][1].AREA4).toString();
+              document.getElementById("dsh1[15]card[0]content[1]-properties-lbl").innerHTML=(aryRFI[0][2].AREA1).toString();
+              document.getElementById("dsh1[15]card[1]content[1]-properties-lbl").innerHTML=(aryRFI[0][2].AREA2).toString();
+              document.getElementById("dsh1[15]card[2]content[1]-properties-lbl").innerHTML=(aryRFI[0][2].AREA3).toString();
+              document.getElementById("dsh1[15]card[3]content[1]-properties-lbl").innerHTML=(aryRFI[0][2].AREA4).toString();
+              document.getElementById("dsh1[16]card[0]content[1]-properties-lbl").innerHTML=(aryRFI[0][3].AREA1).toString();
+              document.getElementById("dsh1[16]card[1]content[1]-properties-lbl").innerHTML=(aryRFI[0][3].AREA2).toString();
+              document.getElementById("dsh1[16]card[2]content[1]-properties-lbl").innerHTML=(aryRFI[0][3].AREA3).toString();
+              document.getElementById("dsh1[16]card[3]content[1]-properties-lbl").innerHTML=(aryRFI[0][3].AREA4).toString();
+
+              aryARFI[0].forEach(el4=>{
+                console.log(el4);
+                document.getElementById("dsh1[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+              });
+              document.getElementById("dsh1[17]card[0]content[1]-properties-lbl").innerHTML=(aryARFI[0][0].AREA1).toString();
+              document.getElementById("dsh1[17]card[1]content[1]-properties-lbl").innerHTML=(aryARFI[0][0].AREA2).toString();
+              document.getElementById("dsh1[17]card[2]content[1]-properties-lbl").innerHTML=(aryARFI[0][0].AREA3).toString();
+              document.getElementById("dsh1[17]card[3]content[1]-properties-lbl").innerHTML=(aryARFI[0][0].AREA4).toString();
+              document.getElementById("dsh1[18]card[0]content[1]-properties-lbl").innerHTML=(aryARFI[0][1].AREA1).toString();
+              document.getElementById("dsh1[18]card[1]content[1]-properties-lbl").innerHTML=(aryARFI[0][1].AREA2).toString();
+              document.getElementById("dsh1[18]card[2]content[1]-properties-lbl").innerHTML=(aryARFI[0][1].AREA3).toString();
+              document.getElementById("dsh1[18]card[3]content[1]-properties-lbl").innerHTML=(aryARFI[0][1].AREA4).toString();
+              document.getElementById("dsh1[19]card[0]content[1]-properties-lbl").innerHTML=(aryARFI[0][2].AREA1).toString();
+              document.getElementById("dsh1[19]card[1]content[1]-properties-lbl").innerHTML=(aryARFI[0][2].AREA2).toString();
+              document.getElementById("dsh1[19]card[2]content[1]-properties-lbl").innerHTML=(aryARFI[0][2].AREA3).toString();
+              document.getElementById("dsh1[19]card[3]content[1]-properties-lbl").innerHTML=(aryARFI[0][2].AREA4).toString();
+              document.getElementById("dsh1[20]card[0]content[1]-properties-lbl").innerHTML=(aryARFI[0][3].AREA1).toString();
+              document.getElementById("dsh1[20]card[1]content[1]-properties-lbl").innerHTML=(aryARFI[0][3].AREA2).toString();
+              document.getElementById("dsh1[20]card[2]content[1]-properties-lbl").innerHTML=(aryARFI[0][3].AREA3).toString();
+              document.getElementById("dsh1[20]card[3]content[1]-properties-lbl").innerHTML=(aryARFI[0][3].AREA4).toString();
+              //console.log(ary_Header);
+          }else{
+              // console.log("data kosong");
+
+          };
+      });
+      return aryB2S_AREA;
+  }
+
+
   tampilkanNilai(){
+  //  var a:[];
+  //setTimeout(()=>{
+    console.log(this.getData());
+  //},1000);
+  //  a.push(a.filter(function(headerObj){
+  //           return headerObj.SEQ.indexOf("HEADER") > -1
+  //         }));
+  //   console.log(a);
+
     //--HIDE CARD
     for (var x1=1; x1<=20; x1++){
       document.getElementById("dsh1["+x1+"]").hidden=true;
     }
 
     /** All Project */
-    document.getElementById("dsh1_headcard[0]content[1]-properties-lbl").innerHTML=(99+13).toString();
+    // document.getElementById("dsh1_headcard[0]content[1]-properties-lbl").innerHTML=(99+13).toString();
 
-    /** HEAD VALUE */
-    for (var j=0; j<=3; j++){
-      document.getElementById("dsh1[0]card["+j+"]footer-properties-lbl[1]").innerHTML='212';
-    }
+    /** FOOTER VALUE */
+    // for (var j=0; j<=3; j++){
+    //   document.getElementById("dsh1[0]card["+j+"]footer-properties-lbl[1]").innerHTML='212';
+    // }
 
     /** PER-UBIS*/
-    for (var i=0; i<=4; i++){
-      document.getElementById("dsh1["+i+"]card[0]content[1]-properties-lbl").innerHTML='1';
-      document.getElementById("dsh1["+i+"]card[1]content[1]-properties-lbl").innerHTML='2';
-      document.getElementById("dsh1["+i+"]card[2]content[1]-properties-lbl").innerHTML='3';
-      document.getElementById("dsh1["+i+"]card[3]content[1]-properties-lbl").innerHTML='4';
-    }
+    // for (var i=0; i<=4; i++){
+    //   document.getElementById("dsh1["+i+"]card[0]content[1]-properties-lbl").innerHTML='1';
+    //   document.getElementById("dsh1["+i+"]card[1]content[1]-properties-lbl").innerHTML='2';
+    //   document.getElementById("dsh1["+i+"]card[2]content[1]-properties-lbl").innerHTML='3';
+    //   document.getElementById("dsh1["+i+"]card[3]content[1]-properties-lbl").innerHTML='4';
+    // }
 
     /** NOT RELEASE: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
-    for (var k1=5; k1<=8; k1++){
-      document.getElementById("dsh1["+k1+"]card[0]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
-      document.getElementById("dsh1["+k1+"]card[1]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
-      document.getElementById("dsh1["+k1+"]card[2]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
-      document.getElementById("dsh1["+k1+"]card[3]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
-    }
+    // for (var k1=5; k1<=8; k1++){
+    //   document.getElementById("dsh1["+k1+"]card[0]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+    //   document.getElementById("dsh1["+k1+"]card[1]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+    //   document.getElementById("dsh1["+k1+"]card[2]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+    //   document.getElementById("dsh1["+k1+"]card[3]content[1]-properties-lbl").innerHTML="'" + 2+k1 + "'";
+    // }
 
     /** POP: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
-    for (var k2=9; k2<=12; k2++){
-      document.getElementById("dsh1["+k2+"]card[0]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
-      document.getElementById("dsh1["+k2+"]card[1]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
-      document.getElementById("dsh1["+k2+"]card[2]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
-      document.getElementById("dsh1["+k2+"]card[3]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
-    }
+    // for (var k2=9; k2<=12; k2++){
+    //   document.getElementById("dsh1["+k2+"]card[0]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+    //   document.getElementById("dsh1["+k2+"]card[1]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+    //   document.getElementById("dsh1["+k2+"]card[2]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+    //   document.getElementById("dsh1["+k2+"]card[3]content[1]-properties-lbl").innerHTML="'" + 3+k2 + "'";
+    // }
 
     /** RFI: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
-    for (var k3=13; k3<=16; k3++){
-      document.getElementById("dsh1["+k3+"]card[0]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
-      document.getElementById("dsh1["+k3+"]card[1]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
-      document.getElementById("dsh1["+k3+"]card[2]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
-      document.getElementById("dsh1["+k3+"]card[3]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
-    }
+    // for (var k3=13; k3<=16; k3++){
+    //   document.getElementById("dsh1["+k3+"]card[0]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+    //   document.getElementById("dsh1["+k3+"]card[1]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+    //   document.getElementById("dsh1["+k3+"]card[2]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+    //   document.getElementById("dsh1["+k3+"]card[3]content[1]-properties-lbl").innerHTML="'" + 4+k3 + "'";
+    // }
 
     /** ARFI: PER AREA[1,2,3,4] - |NOT RELEASE|POP|RFI|ARFI| -  */
-    for (var k4=17; k4<=20; k4++){
-      document.getElementById("dsh1["+k4+"]card[0]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
-      document.getElementById("dsh1["+k4+"]card[1]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
-      document.getElementById("dsh1["+k4+"]card[2]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
-      document.getElementById("dsh1["+k4+"]card[3]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
-    }
+    // for (var k4=17; k4<=20; k4++){
+    //   document.getElementById("dsh1["+k4+"]card[0]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+    //   document.getElementById("dsh1["+k4+"]card[1]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+    //   document.getElementById("dsh1["+k4+"]card[2]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+    //   document.getElementById("dsh1["+k4+"]card[3]content[1]-properties-lbl").innerHTML="'" + 5+k4 + "'";
+    // }
   }
 
   initMap(){
-    this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
-    this.directionsDisplay.setMap(this.map1);
+    // this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
+    // this.directionsDisplay.setMap(this.map1);
   }
 
   public alertModalNoRelease(){

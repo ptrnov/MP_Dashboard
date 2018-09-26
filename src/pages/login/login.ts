@@ -23,8 +23,8 @@ export class LoginPage {
     // .getAllPrj();
   }
   ngOnInit() {
-    // this.dashboarAll.getAllPrj();
-    // this.dashboarAll.getSetting();
+    this.dashboarAll.getAllPrj();
+    this.dashboarAll.getSetting();
   }
   // go to register page
   register() {
