@@ -4,7 +4,8 @@ import { Dsh2HomePage } from './dsh2-home';
 
 @NgModule({
   declarations: [
-    Dsh2HomePage,
+    Dsh2HomePage
+    // Dsh2Card
   ],
   imports: [
     IonicPageModule.forChild(Dsh2HomePage),

@@ -6,7 +6,7 @@
       <ion-title>
           <div style="width:100%; text-align: center">
               <div class="norepease-logo"></div>
-              <ion-label>Colaction & Reseller Dashboard</ion-label>
+              <ion-label>Coloction & Reseller Dashboard</ion-label>
           </div>
       </ion-title>
       <ion-buttons end>
@@ -26,149 +26,1046 @@
   </ion-header>
 
   <ion-content class="common-bg">
-    <!-- <ion-scroll scrollY="true"> -->
-        <ion-row>
-  <ion-grid class="common-bg" style="margin-left: -10px; margin-top: 10px">
-    <ion-row class="full-width" style="margin-top: -20px">
-      <!-- All Project -->
-      <ion-col col-3>
-          <ion-card class="card full-width">
-              <div id="divSecond[3]">
-                <ion-card-header class="header-title">
-                  All Project
-                </ion-card-header>
-                <ion-card-content>
-                    <div class="row">
-                          <div class="left-icon">
-                            <img  id="second-img-3" src="assets/img/new/All_Project_m.png" style="margin-top:-10px;">
-                            <!-- <ion-icon class="fa-home"></ion-icon> -->
-                            <!-- <i class="fa fa-user-md fa-2x"></i> -->
-                            <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
-                          </div>
-                          <div class="right-text">
-                              <ion-label id="secondValue[3]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px;margin-bottom:-5px">99 </ion-label>
-                          </div>
-                    </div>
-                </ion-card-content>
-              </div>
-              <ion-row class="footer-color-block">
-                  <div class="row">
-                    <ion-col class="footer-title">
-                          Total
-                    </ion-col>
-                  </div>
-              </ion-row>
-          </ion-card>
-        </ion-col>
-        <!-- NOT RELEASE -->
-        <ion-col col-3 id="divId_noRelease">
-            <ion-card class="card full-width">
-                <div id="divSecond[0]">
-                  <ion-card-header class="header-title">
-                    Not Release
+      <!-- <ion-scroll scrollY="true"> -->
+    <ion-row>
+      <ion-grid class="common-bg grid-ukuran">
+        <ion-row id="dsh3_head" class="full-width">
+          <!-- DASH HEAD -->
+          <ion-col col-6 >
+            <ion-card id="dsh3_headcard[0]" class="cardHead">
+              <ion-row id="dsh3_headcard[0]content" class="cardcontent">
+                <ion-col col-12 class="head-ukuran">
+                  <ion-card-header class="full-width" id="dsh3_headcard[0]content[0]">
+                      <ion-label class="header-title" id="dsh3_headcard[0]content[0]-properties-lbl">
+                        All Project
+                      </ion-label>
                   </ion-card-header>
-                  <ion-card-content>
-                    <div class="row">
-                      <div  class="left-icon">
-                          <img  id="second-img-0" src="assets/img/new/Not_Release_m.png" style="margin-top:-10px;">
-                          <!-- <ion-icon class="fa fa-home"></ion-icon> -->
-                          <!-- <i class="fa fa-user-md fa-2x"></i> -->
-                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
-                      </div>
-                      <div class="right-text" >
-                          <ion-label id="secondValue[0]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">10.000.000</ion-label>
-                      </div>
-                      <!-- <ion-icon   name="lock" ></ion-icon> -->
-                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/Not_Release_m.png"> -->
-                    </div>
-                  </ion-card-content>
-                </div>
-                <ion-row class="footer-color-block">
-                    <div class="row">
-                      <ion-col class="footer-title">
-                            Total
-                      </ion-col>
-                    </div>
-                </ion-row>
-              </ion-card>
-        </ion-col>
-        <!-- PROJECT ON PIPE -->
-        <ion-col col-3>
-            <ion-card class="card full-width">
-                <div id="divSecond[1]">
-                  <ion-card-header class="header-title">
-                  Prj on Pipe
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div class="row">
-                      <div class="left-icon">
-                          <img  id="second-img-1" src="assets/img/new/PoP_m.png" style="margin-top:-10px;">
-                          <!-- <ion-icon class="fa-home"></ion-icon> -->
-                          <!-- <i class="fa fa-user-md fa-2x"></i> -->
-                          <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
-                      </div>
-                      <div class="right-text">
-                          <ion-label id="secondValue[1]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">100 %</ion-label>
-                      </div>
-                      <!-- <ion-icon   name="lock" ></ion-icon> -->
-                      <!-- <img class="second-card-content-left-icon" src="../assets/img/new/PoP_m.png"> -->
-                    </div>
-                  </ion-card-content>
-                </div>
-                <ion-row class="footer-color-block">
-                    <div class="row">
-                      <ion-col class="footer-title">
-                            Total
-                      </ion-col>
-                    </div>
-                </ion-row>
-            </ion-card>
-        </ion-col>
-        <!-- RFI -->
-        <ion-col col-3>
-            <ion-card class="card full-width">
-                <div id="divSecond[2]">
-                  <ion-card-header class="header-title">
-                    After Rfi
-                  </ion-card-header>
-                  <ion-card-content>
-                      <div class="row">
-                            <div class="left-icon">
-                              <img  id="second-img-2" src="assets/img/new/Rfi_m.png" style="margin-top:-10px;">
+                </ion-col>
+                <ion-col col-12>
+                  <ion-card-content id="dsh3_headcard[0]content[1]">
+                        <ion-row>
+                            <img  class="icon1" id="dsh3_headcard[0]content[1]-properties-img" src="assets/img/new/All_Project_m.png">
                               <!-- <ion-icon class="fa-home"></ion-icon> -->
                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
-                            </div>
-                            <div class="right-text">
-                                <ion-label id="secondValue[2]" style="margin-right:-10px;margin-top: -20px;margin-bottom: -5px">88 %</ion-label>
-                            </div>
-                      </div>
+                            <ion-label class="lbl1" id="dsh3_headcard[0]content[1]-properties-lbl">99 </ion-label>
+                        </ion-row>
                   </ion-card-content>
-                </div>
-                <ion-row class="footer-color-block">
-                    <div class="row">
-                      <ion-col class="footer-title">
-                            Total
-                      </ion-col>
-                    </div>
+                </ion-col>
+              </ion-row>
+                <ion-row id="dsh3_headcard[0]footer" class="footer-color-block full-width">
+                    <ion-label class="footer-font-lbl0" id="dsh3_headcard[0]footer-properties-lbl[0]">
+                      Total
+                    </ion-label>
+                    <ion-label class="footer-font-lbl1" id="dsh3_headcard[0]footer-properties-lbl[1]">
+                      129222
+                    </ion-label>
                 </ion-row>
             </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col style="margin-left:2%">
-          <div id="colotionResellerChart" style = " display : block ; " > </div>
-        </ion-col>
+          </ion-col>
+            <!-- HEAD NAME CLICK-->
+          <ion-col col-6>
+              <ion-card id="dsh3_headcard[1]" class="cardHead">
+                <ion-row  id="dsh3_headcard[1]content" class="cardcontent">
+                  <ion-col col-12 class="head-ukuran">
+                    <ion-card-header class="full-width" id="dsh3_headcard[1]content[0]">
+                        <ion-label class="header-title" id="dsh3_headcard[1]content[0]-properties-lbl">
 
-      </ion-row>
-      <ion-row>
-        <ion-col>
-            <ion-card class="card-box-map full-width">
-                <div id="map3" style="height: 350px"></div>
+                        </ion-label>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col col-12>
+                    <ion-card-content id="dsh3_headcard[1]content[1]">
+                        <ion-row >
+                              <img  class="icon1" id="dsh3_headcard[1]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                                <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                              <ion-label class="lbl1" id="dsh3_headcard[1]content[1]-properties-lbl">
+                                  HEAD NAME CLICK
+                              </ion-label>
+                        </ion-row>
+                    </ion-card-content>
+                  </ion-col>
+                </ion-row>
+                  <ion-row id="dsh3_headcard[1]footer" class="footer-color-block full-width">
+                        <ion-label class="footer-font-lbl0" id="dsh3_headcard[1]footer-properties-lbl[0]">
+
+                        </ion-label>
+                        <ion-label class="footer-font-lbl1" id="dsh3_headcard[1]footer-properties-lbl[1]">
+
+                        </ion-label>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+        <!-- DASH SECOND -->
+        <ion-row id="dsh3[0]" class="full-width" style="margin-top:-20px">
+           <!-- NOT RELEASE -->
+          <ion-col col-3 >
+            <ion-card id="dsh3[0]card[0]" class="cardSecond">
+              <ion-row id="dsh3[0]card[0]content" class="cardcontent">
+                <ion-col col-12 class="head-ukuran">
+                  <ion-card-header class="full-width" id="dsh3[0]card[0]content[0]">
+                      <ion-label class="header-title" id="dsh3[0]card[0]content[0]-properties-lbl">
+                          Not Release
+                      </ion-label>
+                  </ion-card-header>
+                </ion-col>
+                <ion-col col-12>
+                  <ion-card-content id="dsh3[0]card[0]content[1]">
+                        <ion-row>
+                            <img  class="icon1" id="dsh3[0]card[0]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                              <!-- <ion-icon class="fa-home"></ion-icon> -->
+                              <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                              <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                            <ion-label class="lbl1" id="dsh3[0]card[0]content[1]-properties-lbl">99 </ion-label>
+                        </ion-row>
+                  </ion-card-content>
+                </ion-col>
+              </ion-row>
+                <ion-row id="dsh3[0]card[0]footer" class="footer-color-block full-width">
+                    <ion-label class="footer-font-lbl0" id="dsh3[0]card[0]footer-properties-lbl[0]">
+                      Total
+                    </ion-label>
+                    <ion-label class="footer-font-lbl1" id="dsh3[0]card[0]footer-properties-lbl[1]">
+                      129222
+                    </ion-label>
+                </ion-row>
             </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          </ion-col>
+          <!--POP -->
+          <ion-col col-3>
+              <ion-card id="dsh3[0]card[1]" class="cardSecond">
+                <ion-row  id="dsh3[0]card[1]content" class="cardcontent">
+                  <ion-col col-12 class="head-ukuran">
+                    <ion-card-header class="full-width" id="dsh3[0]card[1]content[0]">
+                        <ion-label class="header-title" id="dsh3[0]card[1]content[0]-properties-lbl">
+                           POP
+                        </ion-label>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col col-12>
+                    <ion-card-content id="dsh3[0]card[1]content[1]">
+                        <ion-row >
+                              <img  class="icon1" id="dsh3[0]card[1]content[1]-properties-img" src="assets/img/new/PoP_m.png">
+                                <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                              <ion-label class="lbl1" id="dsh3[0]card[1]content[1]-properties-lbl">99 </ion-label>
+                        </ion-row>
+                    </ion-card-content>
+                  </ion-col>
+                </ion-row>
+                  <ion-row id="dsh3[0]card[1]footer" class="footer-color-block full-width">
+                        <ion-label class="footer-font-lbl0" id="dsh3[0]card[1]footer-properties-lbl[0]">
+                          Total
+                        </ion-label>
+                        <ion-label class="footer-font-lbl1" id="dsh3[0]card[1]footer-properties-lbl[1]">
+                          129555
+                        </ion-label>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+          <!-- RFI -->
+          <ion-col col-3>
+              <ion-card id="dsh3[0]card[2]" class="cardSecond">
+                <ion-row  id="dsh3[0]card[2]content" class="cardcontent">
+                  <ion-col col-12 class="head-ukuran">
+                    <ion-card-header class="full-width" id="dsh3[2]card[0]content[0]">
+                        <ion-label class="header-title" id="dsh3[0]card[2]content[0]-properties-lbl">
+                            RFI
+                        </ion-label>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col col-12>
+                    <ion-card-content id="dsh3[0]card[2]content[1]">
+                        <ion-row>
+                              <img  class="icon1" id="dsh3[0]card[2]content[1]-properties-img" src="assets/img/new/Rfi_m.png">
+                                <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                              <ion-label class="lbl1" id="dsh3[0]card[2]content[1]-properties-lbl">99 </ion-label>
+                        </ion-row>
+                     </ion-card-content>
+                  </ion-col>
+                </ion-row>
+                  <ion-row id="dsh3[0]card[2]footer" class="footer-color-block full-width">
+                        <ion-label class="footer-font-lbl0" id="dsh3[0]card[2]footer-properties-lbl[0]">
+                          Total
+                        </ion-label>
+                        <ion-label class="footer-font-lbl1" id="dsh3[0]card[2]footer-properties-lbl[1]">
+                          129444
+                        </ion-label>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+          <!-- AFTER RFI -->
+          <ion-col col-3>
+              <ion-card id="dsh3[0]card[3]" class="cardSecond">
+                <ion-row  id="dsh3[0]card[3]content" class="cardcontent">
+                  <ion-col col-12 class="head-ukuran">
+                    <ion-card-header id="dsh3[3]card[0]content[0]">
+                        <ion-label class="header-title  " id="dsh3[0]card[3]content[0]-properties-lbl">
+                            After RFI
+                        </ion-label>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col col-12>
+                    <ion-card-content id="dsh3[0]card[3]content[]">
+                        <ion-row class="row">
+                              <img  class="icon1" id="dsh3[0]card[3]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                              <ion-label class="lbl1" id="dsh3[0]card[3]content[1]-properties-lbl">129111 </ion-label>
+                        </ion-row>
+                    </ion-card-content>
+                  </ion-col>
+                </ion-row>
+                  <ion-row id="dsh3[0]card[3]footer" class="footer-color-block full-width">
+                        <ion-label class="footer-font-lbl0" id="dsh3[0]card[3]footer-properties-lbl[0]">
+                          Total
+                        </ion-label>
+                        <ion-label class="footer-font-lbl1" id="dsh3[0]card[3]footer-properties-lbl[1]">
+                          129111
+                        </ion-label>
+                  </ion-row>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+        <!-- DASH THREE - NOT RELEASE PER AREA-->
+        <ion-row id="dsh3[1]" class="full-width" style="margin-top:-20px">
+            <!-- NOT RELEASE -  Area 1-->
+           <ion-col col-3 >
+             <ion-card id="dsh3[1]card[0]" class="cardThree">
+               <ion-row id="dsh3[1]card[0]content" class="cardcontent">
+                 <ion-col col-12 class="head-ukuran">
+                   <ion-card-header class="full-width" id="dsh3[1]card[0]content[0]">
+                       <ion-label class="header-title" id="dsh3[1]card[0]content[0]-properties-lbl">
+
+                       </ion-label>
+                   </ion-card-header>
+                 </ion-col>
+                 <ion-col col-12>
+                   <ion-card-content id="dsh3[1]card[0]content[1]">
+                         <ion-row>
+                             <img  class="icon1" id="dsh3[1]card[0]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                               <!-- <ion-icon class="fa-home"></ion-icon> -->
+                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                             <ion-label class="lbl1" id="dsh3[1]card[0]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                   </ion-card-content>
+                 </ion-col>
+               </ion-row>
+                 <ion-row id="dsh3[1]card[0]footer" class="footer-color-block full-width">
+                     <ion-label class="footer-font-lbl0" id="dsh3[1]card[0]footer-properties-lbl[0]">
+
+                     </ion-label>
+                     <ion-label class="footer-font-lbl1" id="dsh3[1]card[0]footer-properties-lbl[1]">
+                        Area 1
+                     </ion-label>
+                 </ion-row>
+             </ion-card>
+           </ion-col>
+           <!-- NOT RELEASE - Area 2 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[1]card[1]" class="cardThree">
+                 <ion-row  id="dsh3[1]card[1]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[1]card[1]content[0]">
+                         <ion-label class="header-title" id="dsh3[1]card[1]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[1]card[1]content[1]">
+                         <ion-row >
+                               <img  class="icon1" id="dsh3[1]card[1]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[1]card[1]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[1]card[1]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[1]card[1]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[1]card[1]footer-properties-lbl[1]">
+                            Area 2
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- NOT RELEASE - Area 3 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[1]card[2]" class="cardThree">
+                 <ion-row  id="dsh3[1]card[2]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[2]card[0]content[0]">
+                         <ion-label class="header-title" id="dsh3[1]card[2]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[1]card[2]content[1]">
+                         <ion-row>
+                               <img  class="icon1" id="dsh3[1]card[2]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[1]card[2]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                      </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[1]card[2]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[1]card[2]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[1]card[2]footer-properties-lbl[1]">
+                            Area 3
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- NOT RELEASE - Area 4 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[1]card[3]" class="cardThree">
+                 <ion-row  id="dsh3[1]card[3]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header id="dsh3[3]card[0]content[0]">
+                         <ion-label class="header-title  " id="dsh3[1]card[3]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[1]card[3]content[]">
+                         <ion-row class="row">
+                               <img  class="icon1" id="dsh3[1]card[3]content[1]-properties-img" src="assets/img/new/Not_Release_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[1]card[3]content[1]-properties-lbl">129111 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[1]card[3]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[1]card[3]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[1]card[3]footer-properties-lbl[1]">
+                            Area 4
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+         </ion-row>
+         <!-- DASH THREE - RFI PER AREA-->
+        <ion-row id="dsh3[2]" class="full-width" style="margin-top:-20px">
+            <!-- RFI -  Area 1-->
+           <ion-col col-3 >
+             <ion-card id="dsh3[2]card[0]" class="cardThree">
+               <ion-row id="dsh3[2]card[0]content" class="cardcontent">
+                 <ion-col col-12 class="head-ukuran">
+                   <ion-card-header class="full-width" id="dsh3[2]card[0]content[0]">
+                       <ion-label class="header-title" id="dsh3[2]card[0]content[0]-properties-lbl">
+
+                       </ion-label>
+                   </ion-card-header>
+                 </ion-col>
+                 <ion-col col-12>
+                   <ion-card-content id="dsh3[2]card[0]content[1]">
+                         <ion-row>
+                             <img  class="icon1" id="dsh3[2]card[0]content[1]-properties-img" src="assets/img/new/Rfi_m.png">
+                               <!-- <ion-icon class="fa-home"></ion-icon> -->
+                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                             <ion-label class="lbl1" id="dsh3[2]card[0]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                   </ion-card-content>
+                 </ion-col>
+               </ion-row>
+                 <ion-row id="dsh3[2]card[0]footer" class="footer-color-block full-width">
+                     <ion-label class="footer-font-lbl0" id="dsh3[2]card[0]footer-properties-lbl[0]">
+
+                     </ion-label>
+                     <ion-label class="footer-font-lbl1" id="dsh3[2]card[0]footer-properties-lbl[1]">
+                       Area 1
+                     </ion-label>
+                 </ion-row>
+             </ion-card>
+           </ion-col>
+           <!-- RFI - Area 2 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[2]card[1]" class="cardThree">
+                 <ion-row  id="dsh3[2]card[1]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[2]card[1]content[0]">
+                         <ion-label class="header-title" id="dsh3[2]card[1]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[2]card[1]content[1]">
+                         <ion-row >
+                               <img  class="icon1" id="dsh3[2]card[1]content[1]-properties-img" src="assets/img/new/Rfi_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[2]card[1]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[2]card[1]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[2]card[1]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[2]card[1]footer-properties-lbl[1]">
+                           Area 2
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- RFI - Area 3 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[2]card[2]" class="cardThree">
+                 <ion-row  id="dsh3[2]card[2]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[2]card[0]content[0]">
+                         <ion-label class="header-title" id="dsh3[2]card[2]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[2]card[2]content[1]">
+                         <ion-row>
+                               <img  class="icon1" id="dsh3[2]card[2]content[1]-properties-img" src="assets/img/new/Rfi_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[2]card[2]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                      </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[2]card[2]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[2]card[2]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[2]card[2]footer-properties-lbl[1]">
+                           Area 3
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- RFI - Area 4 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[2]card[3]" class="cardThree">
+                 <ion-row  id="dsh3[2]card[3]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header id="dsh3[3]card[0]content[0]">
+                         <ion-label class="header-title  " id="dsh3[2]card[3]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[2]card[3]content[]">
+                         <ion-row class="row">
+                               <img  class="icon1" id="dsh3[2]card[3]content[1]-properties-img" src="assets/img/new/Rfi_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[2]card[3]content[1]-properties-lbl">129111 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[2]card[3]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[2]card[3]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[2]card[3]footer-properties-lbl[1]">
+                           Area 4
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+        </ion-row>
+        <!-- DASH THREE - AFTER RFI 3 & 4-->
+        <ion-row id="dsh3[3]" class="full-width" style="margin-top:-20px">
+            <!-- ARFI -  BAUT-->
+           <ion-col col-3 >
+             <ion-card id="dsh3[3]card[0]" class="cardThree">
+               <ion-row id="dsh3[3]card[0]content" class="cardcontent">
+                 <ion-col col-12 class="head-ukuran">
+                   <ion-card-header class="full-width" id="dsh3[3]card[0]content[0]">
+                       <ion-label class="header-title" id="dsh3[3]card[0]content[0]-properties-lbl">
+
+                       </ion-label>
+                   </ion-card-header>
+                 </ion-col>
+                 <ion-col col-12>
+                   <ion-card-content id="dsh3[3]card[0]content[1]">
+                         <ion-row>
+                             <img  class="icon1" id="dsh3[3]card[0]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                               <!-- <ion-icon class="fa-home"></ion-icon> -->
+                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                             <ion-label class="lbl1" id="dsh3[3]card[0]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                   </ion-card-content>
+                 </ion-col>
+               </ion-row>
+                 <ion-row id="dsh3[3]card[0]footer" class="footer-color-block full-width">
+                     <ion-label class="footer-font-lbl0" id="dsh3[3]card[0]footer-properties-lbl[0]">
+
+                     </ion-label>
+                     <ion-label class="footer-font-lbl1" id="dsh3[3]card[0]footer-properties-lbl[1]">
+                      BAUT
+                     </ion-label>
+                 </ion-row>
+             </ion-card>
+           </ion-col>
+           <!-- ARFI - BAST 1 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[3]card[1]" class="cardThree">
+                 <ion-row  id="dsh3[3]card[1]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[3]card[1]content[0]">
+                         <ion-label class="header-title" id="dsh3[3]card[1]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[3]card[1]content[1]">
+                         <ion-row >
+                               <img  class="icon1" id="dsh3[3]card[1]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[3]card[1]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[3]card[1]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[3]card[1]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[3]card[1]footer-properties-lbl[1]">
+                           BAST 1
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- ARFI - BAST 2 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[3]card[2]" class="cardThree">
+                 <ion-row  id="dsh3[3]card[2]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[3]card[0]content[0]">
+                         <ion-label class="header-title" id="dsh3[3]card[2]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[3]card[2]content[1]">
+                         <ion-row>
+                               <img  class="icon1" id="dsh3[3]card[2]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[3]card[2]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                      </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[3]card[2]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[3]card[2]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[3]card[2]footer-properties-lbl[1]">
+                           BAST 2
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- ARFI - Close -->
+           <ion-col col-3>
+               <ion-card id="dsh3[3]card[3]" class="cardThree">
+                 <ion-row  id="dsh3[3]card[3]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header id="dsh3[3]card[0]content[0]">
+                         <ion-label class="header-title  " id="dsh3[3]card[3]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[3]card[3]content[]">
+                         <ion-row class="row">
+                               <img  class="icon1" id="dsh3[3]card[3]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[3]card[3]content[1]-properties-lbl">129111 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[3]card[3]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[3]card[3]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[3]card[3]footer-properties-lbl[1]">
+                           Close
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+         </ion-row>
+         <!-- DASH THREE - AFTER RFI 3&4-->
+        <ion-row id="dsh3[4]" class="full-width" style="margin-top:-20px">
+            <!-- ARFI -  BAUK-->
+           <ion-col col-3 >
+             <ion-card id="dsh3[4]card[0]" class="cardThree">
+               <ion-row id="dsh3[4]card[0]content" class="cardcontent">
+                 <ion-col col-12 class="head-ukuran">
+                   <ion-card-header class="full-width" id="dsh3[4]card[0]content[0]">
+                       <ion-label class="header-title" id="dsh3[4]card[0]content[0]-properties-lbl">
+
+                       </ion-label>
+                   </ion-card-header>
+                 </ion-col>
+                 <ion-col col-12>
+                   <ion-card-content id="dsh3[4]card[0]content[1]">
+                         <ion-row>
+                             <img  class="icon1" id="dsh3[4]card[0]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                               <!-- <ion-icon class="fa-home"></ion-icon> -->
+                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                             <ion-label class="lbl1" id="dsh3[4]card[0]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                   </ion-card-content>
+                 </ion-col>
+               </ion-row>
+                 <ion-row id="dsh3[4]card[0]footer" class="footer-color-block full-width">
+                     <ion-label class="footer-font-lbl0" id="dsh3[4]card[0]footer-properties-lbl[0]">
+
+                     </ion-label>
+                     <ion-label class="footer-font-lbl1" id="dsh3[4]card[0]footer-properties-lbl[1]">
+                       BAUK
+                     </ion-label>
+                 </ion-row>
+             </ion-card>
+           </ion-col>
+           <!-- ARFI - BAPS -->
+           <ion-col col-3>
+               <ion-card id="dsh3[4]card[1]" class="cardThree">
+                 <ion-row  id="dsh3[4]card[1]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[4]card[1]content[0]">
+                         <ion-label class="header-title" id="dsh3[4]card[1]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[4]card[1]content[1]">
+                         <ion-row >
+                               <img  class="icon1" id="dsh3[4]card[1]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[4]card[1]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[4]card[1]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[4]card[1]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[4]card[1]footer-properties-lbl[1]">
+                           BAPS
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- ARFI - Invoice -->
+           <ion-col col-3>
+               <ion-card id="dsh3[4]card[2]" class="cardThree">
+                 <ion-row  id="dsh3[4]card[2]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[4]card[0]content[0]">
+                         <ion-label class="header-title" id="dsh3[4]card[2]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[4]card[2]content[1]">
+                         <ion-row>
+                               <img  class="icon1" id="dsh3[4]card[2]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[4]card[2]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                      </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[4]card[2]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[4]card[2]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[4]card[2]footer-properties-lbl[1]">
+                           Invoice
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- ARFI - Close -->
+           <ion-col col-3>
+               <ion-card id="dsh3[4]card[3]" class="cardThree">
+                 <ion-row  id="dsh3[4]card[3]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header id="dsh3[4]card[0]content[0]">
+                         <ion-label class="header-title  " id="dsh3[4]card[3]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[4]card[3]content[]">
+                         <ion-row class="row">
+                               <img  class="icon1" id="dsh3[4]card[3]content[1]-properties-img" src="assets/img/new/BAPS_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[4]card[3]content[1]-properties-lbl">129111 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[4]card[3]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[4]card[3]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[4]card[3]footer-properties-lbl[1]">
+                           Close
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+         </ion-row>
+         <!-- DASH THREE - POP AREA 5 & 6-->
+        <ion-row id="dsh3[5]" class="full-width" style="margin-top:-20px">
+            <!-- POP -  AREA 1-->
+           <ion-col col-3 >
+             <ion-card id="dsh3[5]card[0]" class="cardThree">
+               <ion-row id="dsh3[5]card[0]content" class="cardcontent">
+                 <ion-col col-12 class="head-ukuran">
+                   <ion-card-header class="full-width" id="dsh3[5]card[0]content[0]">
+                       <ion-label class="header-title" id="dsh3[5]card[0]content[0]-properties-lbl">
+
+                       </ion-label>
+                   </ion-card-header>
+                 </ion-col>
+                 <ion-col col-12>
+                   <ion-card-content id="dsh3[5]card[0]content[1]">
+                         <ion-row>
+                             <img  class="icon1" id="dsh3[5]card[0]content[1]-properties-img" src="assets/img/new/PoP_m.png">
+                               <!-- <ion-icon class="fa-home"></ion-icon> -->
+                               <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                               <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                             <ion-label class="lbl1" id="dsh3[5]card[0]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                   </ion-card-content>
+                 </ion-col>
+               </ion-row>
+                 <ion-row id="dsh3[5]card[0]footer" class="footer-color-block full-width">
+                     <ion-label class="footer-font-lbl0" id="dsh3[5]card[0]footer-properties-lbl[0]">
+
+                     </ion-label>
+                     <ion-label class="footer-font-lbl1" id="dsh3[5]card[0]footer-properties-lbl[1]">
+                       Area 1
+                     </ion-label>
+                 </ion-row>
+             </ion-card>
+           </ion-col>
+           <!-- POP - AREA 2 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[5]card[1]" class="cardThree">
+                 <ion-row  id="dsh3[5]card[1]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[5]card[1]content[0]">
+                         <ion-label class="header-title" id="dsh3[5]card[1]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[5]card[1]content[1]">
+                         <ion-row >
+                               <img  class="icon1" id="dsh3[5]card[1]content[1]-properties-img" src="assets/img/new/PoP_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[5]card[1]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[5]card[1]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[5]card[1]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[5]card[1]footer-properties-lbl[1]">
+                           Area 2
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- POP - AREA 3 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[5]card[2]" class="cardThree">
+                 <ion-row  id="dsh3[5]card[2]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header class="full-width" id="dsh3[5]card[0]content[0]">
+                         <ion-label class="header-title" id="dsh3[5]card[2]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[5]card[2]content[1]">
+                         <ion-row>
+                               <img  class="icon1" id="dsh3[5]card[2]content[1]-properties-img" src="assets/img/new/PoP_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[5]card[2]content[1]-properties-lbl">99 </ion-label>
+                         </ion-row>
+                      </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[5]card[2]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[5]card[2]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[5]card[2]footer-properties-lbl[1]">
+                           Area 3
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+           <!-- POP - AREA 4 -->
+           <ion-col col-3>
+               <ion-card id="dsh3[5]card[3]" class="cardThree">
+                 <ion-row  id="dsh3[5]card[3]content" class="cardcontent">
+                   <ion-col col-12 class="head-ukuran">
+                     <ion-card-header id="dsh3[5]card[0]content[0]">
+                         <ion-label class="header-title  " id="dsh3[5]card[3]content[0]-properties-lbl">
+
+                         </ion-label>
+                     </ion-card-header>
+                   </ion-col>
+                   <ion-col col-12>
+                     <ion-card-content id="dsh3[5]card[3]content[]">
+                         <ion-row class="row">
+                               <img  class="icon1" id="dsh3[5]card[3]content[1]-properties-img" src="assets/img/new/PoP_m.png">
+                                 <!-- <ion-icon class="fa-home"></ion-icon> -->
+                                 <!-- <i class="fa fa-user-md fa-2x"></i> -->
+                                 <!-- <i class=“fas fa-prescription-bottle-alt”></i> -->
+                               <ion-label class="lbl1" id="dsh3[5]card[3]content[1]-properties-lbl">129111 </ion-label>
+                         </ion-row>
+                     </ion-card-content>
+                   </ion-col>
+                 </ion-row>
+                   <ion-row id="dsh3[5]card[3]footer" class="footer-color-block full-width">
+                         <ion-label class="footer-font-lbl0" id="dsh3[5]card[3]footer-properties-lbl[0]">
+
+                         </ion-label>
+                         <ion-label class="footer-font-lbl1" id="dsh3[5]card[3]footer-properties-lbl[1]">
+                           Area 3
+                         </ion-label>
+                   </ion-row>
+               </ion-card>
+           </ion-col>
+        </ion-row>
+        <!-- DASH THREE - POP AREA 5 & 6-->
+        <ion-row id="dsh3[6]" class="full-width" style="margin-top:-20px">
+            <!-- POP -  AREA 1 DETAIL-->
+            <ion-col col-3 class="cardPop">
+                  <ion-card class="sub1 full-width">
+                      <ion-row>
+                        <ion-col class="alg-kiri">Survey&SITAC</ion-col>
+                        <ion-col class="alg-kanan">
+                            <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[0]properties-lbl[0]" item-end>19</ion-badge>
+                        </ion-col>
+                      </ion-row>
+                  </ion-card>
+                  <ion-card class="sub2 full-width">
+                    <ion-row>
+                        <ion-col class="alg-kiri">CME</ion-col>
+                        <ion-col class="alg-kanan">
+                            <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[0]properties-lbl[1]" item-end>9</ion-badge>
+                        </ion-col>
+                    </ion-row>
+                  </ion-card>
+                  <ion-card class="sub2 full-width">
+                    <ion-row>
+                        <ion-col class="alg-kiri">RFI</ion-col>
+                        <ion-col class="alg-kanan">
+                            <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[0]properties-lbl[2]" item-end>9</ion-badge>
+                        </ion-col>
+                    </ion-row>
+                  </ion-card>
+                  <ion-card class="sub2 full-width">
+                    <ion-row>
+                        <ion-col class="alg-kiri">BAUT</ion-col>
+                        <ion-col class="alg-kanan">
+                            <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[0]properties-lbl[3]" item-end>9</ion-badge>
+                        </ion-col>
+                    </ion-row>
+                  </ion-card>
+            </ion-col>
+            <!-- POP - AREA 2 DETAIL-->
+            <ion-col col-3 class="cardPop">
+                <ion-card class="sub1 full-width">
+                    <ion-row>
+                      <ion-col class="alg-kiri">Survey&SITAC</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[1]properties-lbl[0]" item-end>19</ion-badge>
+                      </ion-col>
+                    </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">CME</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[1]properties-lbl[1]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">RFI</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[1]properties-lbl[2]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">BAUT</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[1]properties-lbl[3]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+            </ion-col>
+            <!-- POP - AREA 3 DETAIL-->
+            <ion-col col-3 class="cardPop">
+                <ion-card class="sub1 full-width">
+                    <ion-row>
+                      <ion-col class="alg-kiri">Survey&SITAC</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[2]properties-lbl[0]" item-end>19</ion-badge>
+                      </ion-col>
+                    </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">CME</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[2]properties-lbl[1]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">RFI</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[2]properties-lbl[2]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">BAUT</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[2]properties-lbl[3]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+            </ion-col>
+            <!-- POP - AREA 4 DETAIL-->
+            <ion-col col-3 class="cardPop">
+                <ion-card class="sub1 full-width">
+                    <ion-row>
+                      <ion-col class="alg-kiri">Survey&SITAC</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[3]properties-lbl[0]" item-end>19</ion-badge>
+                      </ion-col>
+                    </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">CME</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[3]properties-lbl[1]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">RFI</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[3]properties-lbl[2]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+                <ion-card class="sub2 full-width">
+                  <ion-row>
+                      <ion-col class="alg-kiri">BAUT</ion-col>
+                      <ion-col class="alg-kanan">
+                          <ion-badge class="bridge badge badge-xe" id="dsh3[6]card[3]properties-lbl[3]" item-end>9</ion-badge>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin-left:2%">
+            <div id="dsh3-b2cChart" style = " display : block ; " > </div>
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <ion-card class="card-box-map full-width">
+                  <div id="map3" style="height: 350px"></div>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-row>
-  <!-- </ion-scroll> -->
-</ion-content>
+    <!-- </ion-scroll> -->
+  </ion-content>
