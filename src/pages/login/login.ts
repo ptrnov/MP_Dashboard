@@ -28,6 +28,7 @@ export class LoginPage {
     this.dashboarAll.getCorePrj();
     this.dashboarAll.getMcpPrj()
     this.dashboarAll.getSpPrj();
+    this.dashboarAll.getChartData();
     this.dashboarAll.getSetting();
   }
   // go to register page

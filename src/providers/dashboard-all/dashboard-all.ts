@@ -249,7 +249,7 @@ export class DashboardAllProvider {
         });
     }
 
-    /* MICROCELL Project
+    /* SPECIAL Project
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
     * SQLite    : Live Mobile Storage.
@@ -280,6 +280,38 @@ export class DashboardAllProvider {
             ]);
           });
           console.log("success load Api - SPECIAL Project");
+        });
+    }
+
+    /* CHART DATA PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getChartData():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/chartdata").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_CHART (ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+          data.chart.forEach(element => {
+            this.database.insertData(qry,[
+              element.ID_CHART,
+              element.BULAN,
+              element.TAHUN,
+              element.NM_CHART,
+              element.TITLE,
+              element.CATEGORIES,
+              element.TARGET_RFI,
+              element.ACTUAL_RFI,
+              element.TARGET,
+              element.ACTUAL
+            ]);
+          });
+          console.log("success load Api - Chart Data Project");
         });
     }
 
