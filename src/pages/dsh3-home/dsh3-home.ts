@@ -74,7 +74,7 @@ export class Dsh3HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.dsh3_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+    this.dsh3_subscription2 = Observable.timer(6000, 6000).subscribe(x => {
       console.log('run-Disply');
        this.getData();
     });

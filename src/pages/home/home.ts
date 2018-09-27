@@ -95,7 +95,7 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.subscription1 = Observable.timer(30000,30000).subscribe(x => {
+    this.subscription1 = Observable.timer(90000,90000).subscribe(x => {
       console.log('run-Disply');
       this.dashboarAll.getAllPrj();
       // this.dashboarAll.getSetting();
@@ -227,85 +227,85 @@ export class HomePage {
                   console.log(el1);
                   document.getElementById("dsh1[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
               });
-              document.getElementById("dsh1[5]card[0]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][0].AREA1).toString();
-              document.getElementById("dsh1[5]card[1]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][0].AREA2).toString();
-              document.getElementById("dsh1[5]card[2]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][0].AREA3).toString();
-              document.getElementById("dsh1[5]card[3]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][0].AREA4).toString();
-              document.getElementById("dsh1[6]card[0]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][1].AREA1).toString();
-              document.getElementById("dsh1[6]card[1]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][1].AREA2).toString();
-              document.getElementById("dsh1[6]card[2]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][1].AREA3).toString();
-              document.getElementById("dsh1[6]card[3]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][1].AREA4).toString();
-              document.getElementById("dsh1[7]card[0]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][2].AREA1).toString();
-              document.getElementById("dsh1[7]card[1]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][2].AREA2).toString();
-              document.getElementById("dsh1[7]card[2]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][2].AREA3).toString();
-              document.getElementById("dsh1[7]card[3]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][2].AREA4).toString();
-              document.getElementById("dsh1[8]card[0]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][3].AREA1).toString();
-              document.getElementById("dsh1[8]card[1]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][3].AREA2).toString();
-              document.getElementById("dsh1[8]card[2]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][3].AREA3).toString();
-              document.getElementById("dsh1[8]card[3]content[1]-properties-lbl").innerHTML=(area_NOT_RELEASE[0][3].AREA4).toString();
+              document.getElementById("dsh1[5]card[0]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][0]['AREA1'];
+              document.getElementById("dsh1[5]card[1]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][0]['AREA2'];
+              document.getElementById("dsh1[5]card[2]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][0]['AREA3'];
+              document.getElementById("dsh1[5]card[3]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][0]['AREA4'];
+              document.getElementById("dsh1[6]card[0]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][1]['AREA1'];
+              document.getElementById("dsh1[6]card[1]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][1]['AREA2'];
+              document.getElementById("dsh1[6]card[2]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][1]['AREA3'];
+              document.getElementById("dsh1[6]card[3]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][1]['AREA4'];
+              document.getElementById("dsh1[7]card[0]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][2]['AREA1'];
+              document.getElementById("dsh1[7]card[1]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][2]['AREA2'];
+              document.getElementById("dsh1[7]card[2]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][2]['AREA3'];
+              document.getElementById("dsh1[7]card[3]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][2]['AREA4'];
+              document.getElementById("dsh1[8]card[0]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][3]['AREA1'];
+              document.getElementById("dsh1[8]card[1]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][3]['AREA2'];
+              document.getElementById("dsh1[8]card[2]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][3]['AREA3'];
+              document.getElementById("dsh1[8]card[3]content[1]-properties-lbl").innerHTML=area_NOT_RELEASE[0][3]['AREA4'];
 
               area_POP[0].forEach(el2=>{
                 console.log(el2);
                 document.getElementById("dsh1[2]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
               });
-              document.getElementById("dsh1[9]card[0]content[1]-properties-lbl").innerHTML=(area_POP[0][0].AREA1).toString();
-              document.getElementById("dsh1[9]card[1]content[1]-properties-lbl").innerHTML=(area_POP[0][0].AREA2).toString();
-              document.getElementById("dsh1[9]card[2]content[1]-properties-lbl").innerHTML=(area_POP[0][0].AREA3).toString();
-              document.getElementById("dsh1[9]card[3]content[1]-properties-lbl").innerHTML=(area_POP[0][0].AREA4).toString();
-              document.getElementById("dsh1[10]card[0]content[1]-properties-lbl").innerHTML=(area_POP[0][1].AREA1).toString();
-              document.getElementById("dsh1[10]card[1]content[1]-properties-lbl").innerHTML=(area_POP[0][1].AREA2).toString();
-              document.getElementById("dsh1[10]card[2]content[1]-properties-lbl").innerHTML=(area_POP[0][1].AREA3).toString();
-              document.getElementById("dsh1[10]card[3]content[1]-properties-lbl").innerHTML=(area_POP[0][1].AREA4).toString();
-              document.getElementById("dsh1[11]card[0]content[1]-properties-lbl").innerHTML=(area_POP[0][2].AREA1).toString();
-              document.getElementById("dsh1[11]card[1]content[1]-properties-lbl").innerHTML=(area_POP[0][2].AREA2).toString();
-              document.getElementById("dsh1[11]card[2]content[1]-properties-lbl").innerHTML=(area_POP[0][2].AREA3).toString();
-              document.getElementById("dsh1[11]card[3]content[1]-properties-lbl").innerHTML=(area_POP[0][2].AREA4).toString();
-              document.getElementById("dsh1[12]card[0]content[1]-properties-lbl").innerHTML=(area_POP[0][3].AREA1).toString();
-              document.getElementById("dsh1[12]card[1]content[1]-properties-lbl").innerHTML=(area_POP[0][3].AREA2).toString();
-              document.getElementById("dsh1[12]card[2]content[1]-properties-lbl").innerHTML=(area_POP[0][3].AREA3).toString();
-              document.getElementById("dsh1[12]card[3]content[1]-properties-lbl").innerHTML=(area_POP[0][3].AREA4).toString();
+              document.getElementById("dsh1[9]card[0]content[1]-properties-lbl").innerHTML=area_POP[0][0]['AREA1'];
+              document.getElementById("dsh1[9]card[1]content[1]-properties-lbl").innerHTML=area_POP[0][0]['AREA2'];
+              document.getElementById("dsh1[9]card[2]content[1]-properties-lbl").innerHTML=area_POP[0][0]['AREA3'];
+              document.getElementById("dsh1[9]card[3]content[1]-properties-lbl").innerHTML=area_POP[0][0]['AREA4'];
+              document.getElementById("dsh1[10]card[0]content[1]-properties-lbl").innerHTML=area_POP[0][1]['AREA1'];
+              document.getElementById("dsh1[10]card[1]content[1]-properties-lbl").innerHTML=area_POP[0][1]['AREA2'];
+              document.getElementById("dsh1[10]card[2]content[1]-properties-lbl").innerHTML=area_POP[0][1]['AREA3'];
+              document.getElementById("dsh1[10]card[3]content[1]-properties-lbl").innerHTML=area_POP[0][1]['AREA4'];
+              document.getElementById("dsh1[11]card[0]content[1]-properties-lbl").innerHTML=area_POP[0][2]['AREA1'];
+              document.getElementById("dsh1[11]card[1]content[1]-properties-lbl").innerHTML=area_POP[0][2]['AREA2'];
+              document.getElementById("dsh1[11]card[2]content[1]-properties-lbl").innerHTML=area_POP[0][2]['AREA3'];
+              document.getElementById("dsh1[11]card[3]content[1]-properties-lbl").innerHTML=area_POP[0][2]['AREA4'];
+              document.getElementById("dsh1[12]card[0]content[1]-properties-lbl").innerHTML=area_POP[0][3]['AREA1'];
+              document.getElementById("dsh1[12]card[1]content[1]-properties-lbl").innerHTML=area_POP[0][3]['AREA2'];
+              document.getElementById("dsh1[12]card[2]content[1]-properties-lbl").innerHTML=area_POP[0][3]['AREA3'];
+              document.getElementById("dsh1[12]card[3]content[1]-properties-lbl").innerHTML=area_POP[0][3]['AREA4'];
 
               area_RFI[0].forEach(el3=>{
                 console.log(el3);
                 document.getElementById("dsh1[3]card["+el3.URUTAN +"]content[1]-properties-lbl").innerHTML=(el3.NILAI).toString();
               });
-              document.getElementById("dsh1[13]card[0]content[1]-properties-lbl").innerHTML=(area_RFI[0][0].AREA1).toString();
-              document.getElementById("dsh1[13]card[1]content[1]-properties-lbl").innerHTML=(area_RFI[0][0].AREA2).toString();
-              document.getElementById("dsh1[13]card[2]content[1]-properties-lbl").innerHTML=(area_RFI[0][0].AREA3).toString();
-              document.getElementById("dsh1[13]card[3]content[1]-properties-lbl").innerHTML=(area_RFI[0][0].AREA4).toString();
-              document.getElementById("dsh1[14]card[0]content[1]-properties-lbl").innerHTML=(area_RFI[0][1].AREA1).toString();
-              document.getElementById("dsh1[14]card[1]content[1]-properties-lbl").innerHTML=(area_RFI[0][1].AREA2).toString();
-              document.getElementById("dsh1[14]card[2]content[1]-properties-lbl").innerHTML=(area_RFI[0][1].AREA3).toString();
-              document.getElementById("dsh1[14]card[3]content[1]-properties-lbl").innerHTML=(area_RFI[0][1].AREA4).toString();
-              document.getElementById("dsh1[15]card[0]content[1]-properties-lbl").innerHTML=(area_RFI[0][2].AREA1).toString();
-              document.getElementById("dsh1[15]card[1]content[1]-properties-lbl").innerHTML=(area_RFI[0][2].AREA2).toString();
-              document.getElementById("dsh1[15]card[2]content[1]-properties-lbl").innerHTML=(area_RFI[0][2].AREA3).toString();
-              document.getElementById("dsh1[15]card[3]content[1]-properties-lbl").innerHTML=(area_RFI[0][2].AREA4).toString();
-              document.getElementById("dsh1[16]card[0]content[1]-properties-lbl").innerHTML=(area_RFI[0][3].AREA1).toString();
-              document.getElementById("dsh1[16]card[1]content[1]-properties-lbl").innerHTML=(area_RFI[0][3].AREA2).toString();
-              document.getElementById("dsh1[16]card[2]content[1]-properties-lbl").innerHTML=(area_RFI[0][3].AREA3).toString();
-              document.getElementById("dsh1[16]card[3]content[1]-properties-lbl").innerHTML=(area_RFI[0][3].AREA4).toString();
+              document.getElementById("dsh1[13]card[0]content[1]-properties-lbl").innerHTML=area_RFI[0][0]['AREA1']
+              document.getElementById("dsh1[13]card[1]content[1]-properties-lbl").innerHTML=area_RFI[0][0]['AREA2']
+              document.getElementById("dsh1[13]card[2]content[1]-properties-lbl").innerHTML=area_RFI[0][0]['AREA3']
+              document.getElementById("dsh1[13]card[3]content[1]-properties-lbl").innerHTML=area_RFI[0][0]['AREA4']
+              document.getElementById("dsh1[14]card[0]content[1]-properties-lbl").innerHTML=area_RFI[0][1]['AREA1']
+              document.getElementById("dsh1[14]card[1]content[1]-properties-lbl").innerHTML=area_RFI[0][1]['AREA2']
+              document.getElementById("dsh1[14]card[2]content[1]-properties-lbl").innerHTML=area_RFI[0][1]['AREA3']
+              document.getElementById("dsh1[14]card[3]content[1]-properties-lbl").innerHTML=area_RFI[0][1]['AREA4']
+              document.getElementById("dsh1[15]card[0]content[1]-properties-lbl").innerHTML=area_RFI[0][2]['AREA1']
+              document.getElementById("dsh1[15]card[1]content[1]-properties-lbl").innerHTML=area_RFI[0][2]['AREA2']
+              document.getElementById("dsh1[15]card[2]content[1]-properties-lbl").innerHTML=area_RFI[0][2]['AREA3']
+              document.getElementById("dsh1[15]card[3]content[1]-properties-lbl").innerHTML=area_RFI[0][2]['AREA4']
+              document.getElementById("dsh1[16]card[0]content[1]-properties-lbl").innerHTML=area_RFI[0][3]['AREA1']
+              document.getElementById("dsh1[16]card[1]content[1]-properties-lbl").innerHTML=area_RFI[0][3]['AREA2']
+              document.getElementById("dsh1[16]card[2]content[1]-properties-lbl").innerHTML=area_RFI[0][3]['AREA3']
+              document.getElementById("dsh1[16]card[3]content[1]-properties-lbl").innerHTML=area_RFI[0][3]['AREA4']
 
               area_ARFI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh1[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
               });
-              document.getElementById("dsh1[17]card[0]content[1]-properties-lbl").innerHTML=(area_ARFI[0][0].AREA1).toString();
-              document.getElementById("dsh1[17]card[1]content[1]-properties-lbl").innerHTML=(area_ARFI[0][0].AREA2).toString();
-              document.getElementById("dsh1[17]card[2]content[1]-properties-lbl").innerHTML=(area_ARFI[0][0].AREA3).toString();
-              document.getElementById("dsh1[17]card[3]content[1]-properties-lbl").innerHTML=(area_ARFI[0][0].AREA4).toString();
-              document.getElementById("dsh1[18]card[0]content[1]-properties-lbl").innerHTML=(area_ARFI[0][1].AREA1).toString();
-              document.getElementById("dsh1[18]card[1]content[1]-properties-lbl").innerHTML=(area_ARFI[0][1].AREA2).toString();
-              document.getElementById("dsh1[18]card[2]content[1]-properties-lbl").innerHTML=(area_ARFI[0][1].AREA3).toString();
-              document.getElementById("dsh1[18]card[3]content[1]-properties-lbl").innerHTML=(area_ARFI[0][1].AREA4).toString();
-              document.getElementById("dsh1[19]card[0]content[1]-properties-lbl").innerHTML=(area_ARFI[0][2].AREA1).toString();
-              document.getElementById("dsh1[19]card[1]content[1]-properties-lbl").innerHTML=(area_ARFI[0][2].AREA2).toString();
-              document.getElementById("dsh1[19]card[2]content[1]-properties-lbl").innerHTML=(area_ARFI[0][2].AREA3).toString();
-              document.getElementById("dsh1[19]card[3]content[1]-properties-lbl").innerHTML=(area_ARFI[0][2].AREA4).toString();
-              document.getElementById("dsh1[20]card[0]content[1]-properties-lbl").innerHTML=(area_ARFI[0][3].AREA1).toString();
-              document.getElementById("dsh1[20]card[1]content[1]-properties-lbl").innerHTML=(area_ARFI[0][3].AREA2).toString();
-              document.getElementById("dsh1[20]card[2]content[1]-properties-lbl").innerHTML=(area_ARFI[0][3].AREA3).toString();
-              document.getElementById("dsh1[20]card[3]content[1]-properties-lbl").innerHTML=(area_ARFI[0][3].AREA4).toString();
+              document.getElementById("dsh1[17]card[0]content[1]-properties-lbl").innerHTML=area_ARFI[0][0]['AREA1']
+              document.getElementById("dsh1[17]card[1]content[1]-properties-lbl").innerHTML=area_ARFI[0][0]['AREA2']
+              document.getElementById("dsh1[17]card[2]content[1]-properties-lbl").innerHTML=area_ARFI[0][0]['AREA3']
+              document.getElementById("dsh1[17]card[3]content[1]-properties-lbl").innerHTML=area_ARFI[0][0]['AREA4']
+              document.getElementById("dsh1[18]card[0]content[1]-properties-lbl").innerHTML=area_ARFI[0][1]['AREA1']
+              document.getElementById("dsh1[18]card[1]content[1]-properties-lbl").innerHTML=area_ARFI[0][1]['AREA2']
+              document.getElementById("dsh1[18]card[2]content[1]-properties-lbl").innerHTML=area_ARFI[0][1]['AREA3']
+              document.getElementById("dsh1[18]card[3]content[1]-properties-lbl").innerHTML=area_ARFI[0][1]['AREA4']
+              document.getElementById("dsh1[19]card[0]content[1]-properties-lbl").innerHTML=area_ARFI[0][2]['AREA1']
+              document.getElementById("dsh1[19]card[1]content[1]-properties-lbl").innerHTML=area_ARFI[0][2]['AREA2']
+              document.getElementById("dsh1[19]card[2]content[1]-properties-lbl").innerHTML=area_ARFI[0][2]['AREA3']
+              document.getElementById("dsh1[19]card[3]content[1]-properties-lbl").innerHTML=area_ARFI[0][2]['AREA4']
+              document.getElementById("dsh1[20]card[0]content[1]-properties-lbl").innerHTML=area_ARFI[0][3]['AREA1']
+              document.getElementById("dsh1[20]card[1]content[1]-properties-lbl").innerHTML=area_ARFI[0][3]['AREA2']
+              document.getElementById("dsh1[20]card[2]content[1]-properties-lbl").innerHTML=area_ARFI[0][3]['AREA3']
+              document.getElementById("dsh1[20]card[3]content[1]-properties-lbl").innerHTML=area_ARFI[0][3]['AREA4']
               //console.log(ary_Header);
           }else{
               // console.log("data kosong");

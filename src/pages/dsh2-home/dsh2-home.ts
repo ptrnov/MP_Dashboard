@@ -190,6 +190,7 @@ export class Dsh2HomePage {
               area_ARFI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh2[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+                document.getElementById("dsh2[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
               });
               console.log(ary_Header);
           }else{
