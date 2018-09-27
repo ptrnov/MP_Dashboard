@@ -95,7 +95,7 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.subscription1 = Observable.timer(90000,90000).subscribe(x => {
+    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
       this.dashboarAll.getAllPrj();
       // this.dashboarAll.getSetting();
@@ -144,7 +144,8 @@ export class HomePage {
     var area_RFI=[];
     var area_ARFI=[];
     var querySql ="SELECT DISTINCT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
-                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+                  +" WHERE BULAN='08' AND TAHUN='2018'";
+                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
          rsltAry=[];
          rsltAry.push(data);

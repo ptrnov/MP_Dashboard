@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
+import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
@@ -38,7 +39,8 @@ export class Dsh4HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private database: DatabaseProvider
+    private database: DatabaseProvider,
+    private dashboarAll: DashboardAllProvider,
   ) {
     this.mapOptions4={
       zoom: 5,
@@ -84,6 +86,14 @@ export class Dsh4HomePage {
     this.dsh4_subscription2.unsubscribe();
   }
 
+  ngOnInit() {
+    this.dsh4_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      this.dashboarAll.getMcpPrj();
+      // this.dashboarAll.getSetting();
+    });
+  }
+
   private getData(){
     var ary_Header=[];
     var rsltAry=[];
@@ -92,7 +102,7 @@ export class Dsh4HomePage {
     var area_POP=[];
     var area_FRI=[];
     var  area_AFRI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI FROM MCP_PRJ "// WHERE GRP='test' "
+    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI,ARFI_NILAI2 FROM MCP_PRJ "// WHERE GRP='test' "
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
          rsltAry.push(data);
@@ -181,6 +191,7 @@ export class Dsh4HomePage {
               area_AFRI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh4[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+                document.getElementById("dsh4[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.ARFI_NILAI2).toString();
               });
               console.log(ary_Header);
           }else{

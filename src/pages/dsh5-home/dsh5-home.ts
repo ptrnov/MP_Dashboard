@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
+import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
@@ -36,7 +37,8 @@ export class Dsh5HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private database: DatabaseProvider
+    private database: DatabaseProvider,
+    private dashboarAll: DashboardAllProvider,
   ) {
     this.mapOptions1={
       zoom: 5,
@@ -82,6 +84,13 @@ export class Dsh5HomePage {
     this.dsh5_subscription2.unsubscribe();
   }
 
+  ngOnInit() {
+    this.dsh5_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      this.dashboarAll.getSpPrj();
+      // this.dashboarAll.getSetting();
+    });
+  }
   private getData(){
     var ary_Header=[];
     var rsltAry=[];
@@ -90,7 +99,7 @@ export class Dsh5HomePage {
     var area_POP=[];
     var area_RFI=[];
     var area_ARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST FROM SP_PRJ "// WHERE GRP='test' "
+    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2 FROM SP_PRJ "// WHERE GRP='test' "
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
          rsltAry.push(data);
@@ -179,6 +188,7 @@ export class Dsh5HomePage {
              area_ARFI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh5[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+                document.getElementById("dsh5[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.ARFI_NILAI2).toString();
               });
               console.log(ary_Header);
           }else{

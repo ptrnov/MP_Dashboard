@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
+import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
@@ -40,7 +41,8 @@ export class Dsh2HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private database: DatabaseProvider
+    private database: DatabaseProvider,
+    private dashboarAll: DashboardAllProvider,
   ){
     this.mapOptions2={
       zoom: 4,
@@ -81,6 +83,14 @@ export class Dsh2HomePage {
     });
   }
 
+  ngOnInit() {
+    this.dsh2_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+      console.log('run-Disply');
+      this.dashboarAll.getB2SPrj();
+      // this.dashboarAll.getSetting();
+    });
+  }
+
   ionViewWillUnload() {
     console.log("Previus page");
     chkInit=0;
@@ -95,7 +105,8 @@ export class Dsh2HomePage {
     var area_POP=[];
     var area_RFI=[];
     var  area_ARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI FROM B2S_PRJ "// WHERE GRP='test' "
+    var querySql ="SELECT URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI,ARFI_NILAI2 FROM B2S_PRJ "// WHERE GRP='test' "
+                //  +" WHERE BULAN='09' AND TAHUN='2018'"
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
          rsltAry.push(data);
@@ -190,7 +201,7 @@ export class Dsh2HomePage {
               area_ARFI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh2[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
-                document.getElementById("dsh2[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+                document.getElementById("dsh2[4]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.ARFI_NILAI2).toString();
               });
               console.log(ary_Header);
           }else{

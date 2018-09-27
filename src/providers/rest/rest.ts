@@ -33,11 +33,11 @@ export class RestProvider {
     console.log(res);
   }
 
-  public apiAllPrj_first(){
-    return this.http.get(this.url + "Mobile_Dashboard/coba")
-        .map(res => res.json())
-        .do(this.logResponse)
-        .catch(this.catchError);
-  }
+  // public apiAllPrj_first(){
+  //   return this.http.get(this.url + "Mobile_Dashboard/coba")
+  //       .map(res => res.json())
+  //       .do(this.logResponse)
+  //       .catch(this.catchError);
+  // }
 
 }

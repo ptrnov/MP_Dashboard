@@ -111,19 +111,21 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
               element.URUTAN,
               element.SEQ,
               element.GRP,
+              element.BULAN,
+              element.TAHUN,
               element.NILAI,
               element.PERSEN,
               element.AREA1,
               element.AREA2,
               element.AREA3,
-              element.AREA4,
+              element.AREA4
             ]);
           });
           console.log("success load Api - All Project");
@@ -142,13 +144,15 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/b2sproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO B2S_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO B2S_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI,ARFI_NILAI2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
               element.URUTAN,
               element.SEQ,
               element.GRP,
+              element.BULAN,
+              element.TAHUN,
               element.NILAI,
               element.PERSEN,
               element.AREA1,
@@ -160,7 +164,8 @@ export class DashboardAllProvider {
               element.SITAC2,
               element.CME,
               element.RFC,
-              element.RFI
+              element.RFI,
+              element.ARFI_NILAI2
             ]);
           });
           console.log("success load Api - B2S Project");
@@ -178,13 +183,15 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/coreproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO CORE_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO CORE_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT,ARFI_NILAI2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
               element.URUTAN,
               element.SEQ,
               element.GRP,
+              element.BULAN,
+              element.TAHUN,
               element.NILAI,
               element.PERSEN,
               element.AREA1,
@@ -194,7 +201,8 @@ export class DashboardAllProvider {
               element.SurveySITAC,
               element.CME,
               element.RFI,
-              element.BAUT
+              element.BAUT,
+              element.ARFI_NILAI2
             ]);
           });
           console.log("success load Api - CORE Project");
@@ -212,13 +220,15 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/microcellproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO MCP_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO MCP_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI,ARFI_NILAI2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
               element.URUTAN,
               element.SEQ,
               element.GRP,
+              element.BULAN,
+              element.TAHUN,
               element.NILAI,
               element.PERSEN,
               element.AREA1,
@@ -231,7 +241,8 @@ export class DashboardAllProvider {
               element.CME,
               element.RFC,
               element.FO,
-              element.RFI
+              element.RFI,
+              element.ARFI_NILAI2
             ]);
           });
           console.log("success load Api - MICROCELL Project");
@@ -249,20 +260,23 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/specialproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO SP_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST) VALUES (?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO SP_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
           data.dsh1.forEach(element => {
             this.database.insertData(qry,[
               element.URUTAN,
               element.SEQ,
               element.GRP,
+              element.BULAN,
+              element.TAHUN,
               element.NILAI,
               element.PERSEN,
               element.AREA1,
               element.AREA2,
               element.AREA3,
               element.AREA4,
-              element.BAST
+              element.BAST,
+              element.ARFI_NILAI2
             ]);
           });
           console.log("success load Api - SPECIAL Project");
