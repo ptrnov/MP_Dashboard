@@ -108,7 +108,7 @@ export class DashboardAllProvider {
     * Author    : ptr.nov@gmail.com
     */
    getAllPrj():void {
-    var x1=this.http.get(this.url + "Mobile_Dashboard/coba2").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
           var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -129,8 +129,144 @@ export class DashboardAllProvider {
           console.log("success load Api - All Project");
 
         });
-        // this.setAllProject_first();
+    }
 
+    /* B2S Project
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getB2SPrj():void {
+    var x1=this.http.get(this.url + "Mobile_Dashboard/b2sproject").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO B2S_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+          data.dsh1.forEach(element => {
+            this.database.insertData(qry,[
+              element.URUTAN,
+              element.SEQ,
+              element.GRP,
+              element.NILAI,
+              element.PERSEN,
+              element.AREA1,
+              element.AREA2,
+              element.AREA3,
+              element.AREA4,
+              element.SIS,
+              element.SITAC1,
+              element.SITAC2,
+              element.CME,
+              element.RFC,
+              element.RFI
+            ]);
+          });
+          console.log("success load Api - B2S Project");
+        });
+    }
+
+    /* CORE Project
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getCorePrj():void {
+    var x1=this.http.get(this.url + "Mobile_Dashboard/coreproject").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO CORE_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+          data.dsh1.forEach(element => {
+            this.database.insertData(qry,[
+              element.URUTAN,
+              element.SEQ,
+              element.GRP,
+              element.NILAI,
+              element.PERSEN,
+              element.AREA1,
+              element.AREA2,
+              element.AREA3,
+              element.AREA4,
+              element.SurveySITAC,
+              element.CME,
+              element.RFI,
+              element.BAUT
+            ]);
+          });
+          console.log("success load Api - CORE Project");
+        });
+    }
+
+    /* MICROCELL Project
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMcpPrj():void {
+    var x1=this.http.get(this.url + "Mobile_Dashboard/microcellproject").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO MCP_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+          data.dsh1.forEach(element => {
+            this.database.insertData(qry,[
+              element.URUTAN,
+              element.SEQ,
+              element.GRP,
+              element.NILAI,
+              element.PERSEN,
+              element.AREA1,
+              element.AREA2,
+              element.AREA3,
+              element.AREA4,
+              element.SIS,
+              element.SITAC1,
+              element.SITAC2,
+              element.CME,
+              element.RFC,
+              element.FO,
+              element.RFI
+            ]);
+          });
+          console.log("success load Api - MICROCELL Project");
+        });
+    }
+
+    /* MICROCELL Project
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getSpPrj():void {
+    var x1=this.http.get(this.url + "Mobile_Dashboard/specialproject").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO SP_PRJ (URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+          data.dsh1.forEach(element => {
+            this.database.insertData(qry,[
+              element.URUTAN,
+              element.SEQ,
+              element.GRP,
+              element.NILAI,
+              element.PERSEN,
+              element.AREA1,
+              element.AREA2,
+              element.AREA3,
+              element.AREA4,
+              element.BAST
+            ]);
+          });
+          console.log("success load Api - SPECIAL Project");
+        });
     }
 
     /* All Project

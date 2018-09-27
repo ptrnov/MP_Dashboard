@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
 
 declare var google;
 
@@ -30,6 +33,8 @@ export class Dsh3HomePage {
   directionsDisplay = new google.maps.DirectionsRenderer;
   mapOptions3:any;
 
+  private dsh3_subscription1;
+  private dsh3_subscription2;
   charting;
   constructor(
     public navCtrl: NavController,
@@ -53,6 +58,8 @@ export class Dsh3HomePage {
     document.getElementById("dsh3[4]").hidden=true;
     document.getElementById("dsh3[5]").hidden=true;
     document.getElementById("dsh3[6]").hidden=true;
+    document.getElementById("dsh3_headcard[0]footer-properties-lbl[0]").hidden=true;
+    document.getElementById("dsh3_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh3_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh3_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
     this.initMap();
@@ -62,38 +69,164 @@ export class Dsh3HomePage {
       //chkInit=false;
     // }
     this.tampilkanNilai();
+    this.getData();
+  }
+
+  ionViewDidEnter(){
+    // this.menu.swipeEnable(false);
+    this.dsh3_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+      console.log('run-Disply');
+       this.getData();
+    });
+  }
+
+  ionViewWillUnload() {
+    console.log("Previus page");
+    // this.dsh2_subscription1.unsubscribe();
+    this.dsh3_subscription2.unsubscribe();
+  }
+
+  private getData(){
+    var ary_Header=[];
+    var rsltAry=[];
+    var grpCore=[];
+    var areaNOT_RELEASE=[];
+    var areaPOP=[];
+    var areaRFI=[];
+    var  areaARFI=[];
+    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT FROM CORE_PRJ "// WHERE GRP='test' "
+                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+      this.database.selectData(querySql).then(data=>{
+         rsltAry.push(data);
+         if (rsltAry[0].length!==0){
+              // console.log("data ada");
+              // console.log(rsltAry);
+              ary_Header=[];
+              ary_Header.push(rsltAry[0].filter(function(headerObj){
+                return headerObj.SEQ=="HEADER";
+              }));
+              // - ORDER SORT
+              ary_Header[0].sort((a, b):number=>{
+                if (a.URUTAN < b.URUTAN) return -1;
+                if (a.URUTAN > b.URUTAN) return 1;
+                return 0;
+              });
+
+              //-Set ARRAY GROUP - B2S
+              grpCore=[];
+              grpCore.push(rsltAry[0].filter(function(b2cAreaObj){
+                  return b2cAreaObj.SEQ=="CORE";
+                })
+              );
+              /** NOT RELEASE - UBIS -> PER AREA */
+              areaNOT_RELEASE=[];
+              areaNOT_RELEASE.push(grpCore[0].filter(function(notReleaseObj){
+                  return notReleaseObj.GRP=="NOT_RELEASE";
+                })
+              );
+              /** PROJECT ON PIPE - UBIS -> PER AREA */
+              areaPOP=[];
+              areaPOP.push(grpCore[0].filter(function(pipeObj){
+                  return pipeObj.GRP=="POP";
+                })
+              );
+               /** RFI - UBIS -> PER AREA */
+              areaRFI=[];
+              areaRFI.push(grpCore[0].filter(function(rfiObj){
+                  return rfiObj.GRP=="RFI";
+                })
+              );
+               /** AFTER RFI - UBIS -> PER AREA */
+              areaARFI=[];
+              areaARFI.push(grpCore[0].filter(function(arfiObj){
+                  return arfiObj.GRP=="ARFI";
+                })
+              );
+
+              //-> toDisply
+              ary_Header[0].forEach(el=>{
+                  console.log(el.GRP);
+                  // console.log(el);
+                  if (el.GRP=='ALL_PRJ') {
+                    document.getElementById("dsh3_headcard[0]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                    // document.getElementById("dsh3_headcard[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='NOT_RELEASE') {
+                    document.getElementById("dsh3[0]card[0]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
+                    document.getElementById("dsh3[0]card[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='PRJ_ON_PIPE'){
+                    document.getElementById("dsh3[0]card[1]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
+                    document.getElementById("dsh3[0]card[1]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='RFI') {
+                    document.getElementById("dsh3[0]card[2]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
+                    document.getElementById("dsh3[0]card[2]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+                  if (el.GRP=='ARFI') {
+                    document.getElementById("dsh3[0]card[3]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
+                    document.getElementById("dsh3[0]card[3]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
+                  }
+              });
+              areaNOT_RELEASE[0].forEach(el1=>{
+                  console.log(el1);
+                  document.getElementById("dsh3[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
+              });
+              areaPOP[0].forEach(el2=>{
+                console.log(el2);
+                document.getElementById("dsh3[5]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
+                document.getElementById("dsh3[6]card["+el2.URUTAN +"]properties-lbl[0]").innerHTML=(el2.SurveySITAC).toString();
+                document.getElementById("dsh3[6]card["+el2.URUTAN +"]properties-lbl[1]").innerHTML=(el2.CME).toString();
+                document.getElementById("dsh3[6]card["+el2.URUTAN +"]properties-lbl[2]").innerHTML=(el2.RFI).toString();
+                document.getElementById("dsh3[6]card["+el2.URUTAN +"]properties-lbl[3]").innerHTML=(el2.BAUT).toString();
+              });
+              areaRFI[0].forEach(el3=>{
+                console.log(el3);
+                document.getElementById("dsh3[2]card["+el3.URUTAN +"]content[1]-properties-lbl").innerHTML=(el3.NILAI).toString();
+              });
+              areaARFI[0].forEach(el4=>{
+                console.log(el4);
+                document.getElementById("dsh3[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
+              });
+              console.log(ary_Header);
+          }else{
+              // console.log("data kosong");
+
+          };
+      });
+      return rsltAry;
   }
 
   tampilkanNilai(){
     /** All Project */
-    document.getElementById("dsh3_headcard[0]content[1]-properties-lbl").innerHTML=(44+10).toString();
+    // document.getElementById("dsh3_headcard[0]content[1]-properties-lbl").innerHTML=(44+10).toString();
 
-      /** PER-AREA*/
-    for (var i=0; i<=3; i++){
-      //second=NoRelease|Pop|RFI|AfterRFI| Value %
-      document.getElementById("dsh3[0]card["+i+"]content[1]-properties-lbl").innerHTML=(i+100).toString() + "%";
-      //NoRelease AREA[1,2,3,4]
-      document.getElementById("dsh3[1]card["+i+"]content[1]-properties-lbl").innerHTML=(i+10).toString();
-      //RFI AREA[1,2,3,4]
-      document.getElementById("dsh3[2]card["+i+"]content[1]-properties-lbl").innerHTML=(i+5).toString();
-      //AfterRFI AREA[1,2,3,4]
-      document.getElementById("dsh3[3]card["+i+"]content[1]-properties-lbl").innerHTML=(i+12).toString();
-      document.getElementById("dsh3[4]card["+i+"]content[1]-properties-lbl").innerHTML=(i+13).toString();
-      //PoP AREA[1,2,3,4]
-      document.getElementById("dsh3[5]card["+i+"]content[1]-properties-lbl").innerHTML=(i+20).toString();
-    }
+    //   /** PER-AREA*/
+    // for (var i=0; i<=3; i++){
+    //   //second=NoRelease|Pop|RFI|AfterRFI| Value %
+    //   document.getElementById("dsh3[0]card["+i+"]content[1]-properties-lbl").innerHTML=(i+100).toString() + "%";
+    //   //NoRelease AREA[1,2,3,4]
+    //   document.getElementById("dsh3[1]card["+i+"]content[1]-properties-lbl").innerHTML=(i+10).toString();
+    //   //RFI AREA[1,2,3,4]
+    //   document.getElementById("dsh3[2]card["+i+"]content[1]-properties-lbl").innerHTML=(i+5).toString();
+    //   //AfterRFI AREA[1,2,3,4]
+    //   document.getElementById("dsh3[3]card["+i+"]content[1]-properties-lbl").innerHTML=(i+12).toString();
+    //   document.getElementById("dsh3[4]card["+i+"]content[1]-properties-lbl").innerHTML=(i+13).toString();
+    //   //PoP AREA[1,2,3,4]
+    //   document.getElementById("dsh3[5]card["+i+"]content[1]-properties-lbl").innerHTML=(i+20).toString();
+    // }
 
-    /** Total */
-    for(var x=0; x<=3; x ++){
-      document.getElementById("dsh3[0]card["+x+"]footer-properties-lbl[1]").innerHTML=(x+293).toString();
-    }
-    /** POP VALUE DETAIL */
-    for (var i1=0; i1<=3; i1++){
-      document.getElementById("dsh3[6]card[0]properties-lbl["+i1+"]").innerHTML=(i1+1).toString();
-      document.getElementById("dsh3[6]card[1]properties-lbl["+i1+"]").innerHTML=(i1+2).toString();
-      document.getElementById("dsh3[6]card[2]properties-lbl["+i1+"]").innerHTML=(i1+3).toString();
-      document.getElementById("dsh3[6]card[3]properties-lbl["+i1+"]").innerHTML=(i1+4).toString();
-    }
+    // /** Total */
+    // for(var x=0; x<=3; x ++){
+    //   document.getElementById("dsh3[0]card["+x+"]footer-properties-lbl[1]").innerHTML=(x+293).toString();
+    // }
+    // /** POP VALUE DETAIL */
+    // for (var i1=0; i1<=3; i1++){
+    //   document.getElementById("dsh3[6]card[0]properties-lbl["+i1+"]").innerHTML=(i1+1).toString();
+    //   document.getElementById("dsh3[6]card[1]properties-lbl["+i1+"]").innerHTML=(i1+2).toString();
+    //   document.getElementById("dsh3[6]card[2]properties-lbl["+i1+"]").innerHTML=(i1+3).toString();
+    //   document.getElementById("dsh3[6]card[3]properties-lbl["+i1+"]").innerHTML=(i1+4).toString();
+    // }
   }
 
   initMap() {
@@ -105,11 +238,7 @@ export class Dsh3HomePage {
   goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
-  ionViewWillUnload() {
-    // chkInit=false;
-    // this.charting.distroy;
 
-  }
 
   private drilldown(){
    this.charting=HighCharts.chart({

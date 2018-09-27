@@ -60,7 +60,7 @@ export class Dsh2HomePage {
     document.getElementById("dsh2[4]").hidden=true;
     document.getElementById("dsh2[5]").hidden=true;
     document.getElementById("dsh2[6]").hidden=true;
-    document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").hidden=true;
+    document.getElementById("dsh2_headcard[0]footer-properties-lbl[0]").hidden=true;
     document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh2_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh2_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
@@ -75,7 +75,7 @@ export class Dsh2HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.dsh2_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+    this.dsh2_subscription2 = Observable.timer(4000, 4000).subscribe(x => {
       console.log('run-Disply');
        this.getData();
     });
@@ -90,18 +90,18 @@ export class Dsh2HomePage {
   private getData(){
     var ary_Header=[];
     var rsltAry=[];
-    var aryB2S_AREA=[];
-    var aryB2S_AREA_NOT_RELEASE=[];
-    var aryB2S_AREA_PRJ_ON_PIPE=[];
-    var aryRFI=[];
-    var  aryARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
+    var grpB2S=[];
+    var area_NOT_RELEASE=[];
+    var area_POP=[];
+    var area_RFI=[];
+    var  area_ARFI=[];
+    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI FROM B2S_PRJ "// WHERE GRP='test' "
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
          rsltAry.push(data);
          if (rsltAry[0].length!==0){
               // console.log("data ada");
-              // console.log(rsltAry);
+              console.log(rsltAry);
               ary_Header=[];
               ary_Header.push(rsltAry[0].filter(function(headerObj){
                 return headerObj.SEQ=="HEADER";
@@ -114,32 +114,32 @@ export class Dsh2HomePage {
               });
 
               //-Set ARRAY GROUP - B2S
-              aryB2S_AREA=[];
-              aryB2S_AREA.push(rsltAry[0].filter(function(b2cAreaObj){
+              grpB2S=[];
+              grpB2S.push(rsltAry[0].filter(function(b2cAreaObj){
                   return b2cAreaObj.SEQ=="B2S";
                 })
               );
               /** NOT RELEASE - UBIS -> PER AREA */
-              aryB2S_AREA_NOT_RELEASE=[];
-              aryB2S_AREA_NOT_RELEASE.push(aryB2S_AREA[0].filter(function(notReleaseObj){
+              area_NOT_RELEASE=[];
+              area_NOT_RELEASE.push(grpB2S[0].filter(function(notReleaseObj){
                   return notReleaseObj.GRP=="NOT_RELEASE";
                 })
               );
               /** PROJECT ON PIPE - UBIS -> PER AREA */
-              aryB2S_AREA_PRJ_ON_PIPE=[];
-              aryB2S_AREA_PRJ_ON_PIPE.push(aryB2S_AREA[0].filter(function(pipeObj){
-                  return pipeObj.GRP=="PRJ_ON_PIPE";
+              area_POP=[];
+              area_POP.push(grpB2S[0].filter(function(pipeObj){
+                  return pipeObj.GRP=="POP";
                 })
               );
                /** RFI - UBIS -> PER AREA */
-              aryRFI=[];
-              aryRFI.push(aryB2S_AREA[0].filter(function(rfiObj){
+              area_RFI=[];
+              area_RFI.push(grpB2S[0].filter(function(rfiObj){
                   return rfiObj.GRP=="RFI";
                 })
               );
                /** AFTER RFI - UBIS -> PER AREA */
-              aryARFI=[];
-              aryARFI.push(aryB2S_AREA[0].filter(function(arfiObj){
+              area_ARFI=[];
+              area_ARFI.push(grpB2S[0].filter(function(arfiObj){
                   return arfiObj.GRP=="ARFI";
                 })
               );
@@ -149,39 +149,45 @@ export class Dsh2HomePage {
                   console.log(el.GRP);
                   // console.log(el);
                   if (el.GRP=='ALL_PRJ') {
-                    document.getElementById("dsh2_headcard[0]content[1]-properties-lbl").innerHTML=(el.NILAI).toString();
+                    document.getElementById("dsh2_headcard[0]content[1]-properties-lbl").innerHTML=(el.NILAI).toString()
                     // document.getElementById("dsh2_headcard[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
                   if (el.GRP=='NOT_RELEASE') {
-                    document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[0]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
                     document.getElementById("dsh2[0]card[0]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
                   if (el.GRP=='PRJ_ON_PIPE'){
-                    document.getElementById("dsh2[0]card[1]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[1]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
                     document.getElementById("dsh2[0]card[1]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
                   if (el.GRP=='RFI') {
-                    document.getElementById("dsh2[0]card[2]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[2]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
                     document.getElementById("dsh2[0]card[2]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
                   if (el.GRP=='ARFI') {
-                    document.getElementById("dsh2[0]card[3]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString();
+                    document.getElementById("dsh2[0]card[3]content[1]-properties-lbl").innerHTML=(el.PERSEN).toString()+ "%";
                     document.getElementById("dsh2[0]card[3]footer-properties-lbl[1]").innerHTML=(el.NILAI).toString();
                   }
               });
-              aryB2S_AREA_NOT_RELEASE[0].forEach(el1=>{
+              area_NOT_RELEASE[0].forEach(el1=>{
                   console.log(el1);
                   document.getElementById("dsh2[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
               });
-              aryB2S_AREA_PRJ_ON_PIPE[0].forEach(el2=>{
+              area_POP[0].forEach(el2=>{
                 console.log(el2);
-                document.getElementById("dsh2[5]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
+                document.getElementById("dsh2[5]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=el2.NILAI.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[0]").innerHTML=el2.SIS.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[1]").innerHTML=el2.SITAC1.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[2]").innerHTML=el2.SITAC2.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[3]").innerHTML=el2.CME.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[4]").innerHTML=el2.RFC.toString();
+                document.getElementById("dsh2[6]card["+el2.URUTAN +"]properties-lbl[5]").innerHTML=el2.RFI.toString();
               });
-              aryRFI[0].forEach(el3=>{
+              area_RFI[0].forEach(el3=>{
                 console.log(el3);
                 document.getElementById("dsh2[2]card["+el3.URUTAN +"]content[1]-properties-lbl").innerHTML=(el3.NILAI).toString();
               });
-              aryARFI[0].forEach(el4=>{
+              area_ARFI[0].forEach(el4=>{
                 console.log(el4);
                 document.getElementById("dsh2[3]card["+el4.URUTAN +"]content[1]-properties-lbl").innerHTML=(el4.NILAI).toString();
               });
