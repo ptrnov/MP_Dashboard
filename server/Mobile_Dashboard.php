@@ -2040,6 +2040,27 @@ class Mobile_Dashboard extends CI_Controller {
 		// return $data;
 	}
 	
+	public function chartdata(){
+		$data=[
+			'chart'=>[
+				[
+					'ID_CHART'=>'mp001,
+					'BULAN'=>'09',
+					'TAHUN'=>'2018',
+					'NM_CHART'=>'All Project', 
+					'TITLE'=>'Project Summary', 
+					'TARGET_RFI'=>[null,null,null,null,null,null,null,null,null,null,null,16,61,302,382,394,411,421,873,885,886,900,1195,1233,1251,1401,1422,1447,1449,1459,1461,1461,1487,1487,1489,1530,1560,1564,1577,1586,1606,1610,1610,1613,1613,1613,1615,1650,1650,1654,1712,1716,1716,1721], 
+					'ACTUAL_RFI'=>[null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
+					'TARGET'=>[0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
+					'ACTUAL'=>[0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				]		
+			]
+		];
+		echo json_encode($data, JSON_PRETTY_PRINT);
+		// return $data;
+	}
+	
+	
 	public function setting(){
 		$data=[
 			'filter'=>[

@@ -17,6 +17,7 @@ import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
+import { toArray } from "rxjs/operators";
 
 // import HighCharts from 'highcharts'
 // import addMore from "highcharts/highcharts-more";
@@ -53,15 +54,15 @@ var defaultUrlImg="assets/img/new/";
 //Google Variable
 declare var google;
 // var marker = [];
-
+var charting;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 
 export class HomePage {
-  private subscription1;
-  private subscription2;
+  private dsh1_subscription1;
+  private dsh1_subscription2;
   private cardValue_Header;
   //MAP
   @ViewChild('map1') mapElement2: ElementRef;
@@ -69,7 +70,7 @@ export class HomePage {
   // directionsService = new google.maps.DirectionsService;
   // directionsDisplay = new google.maps.DirectionsRenderer;
   mapOptions1:any;
-  charting;
+
   constructor(
       // private storage: Storage,
       public navCtrl: NavController,
@@ -90,17 +91,18 @@ export class HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
+    this.dsh1_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
       console.log('run-Disply');
-       this.getData();
+       this.dsh1_GetData();
+       this.dsh1_UpdateDataChart();
     });
   }
 
+  /** API */
   ngOnInit() {
-    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
       this.dashboarAll.getAllPrj();
-      // this.dashboarAll.getSetting();
     });
   }
    /**
@@ -108,8 +110,8 @@ export class HomePage {
    */
   ionViewWillUnload() {
     console.log("Previus page")
-    this.subscription1.unsubscribe();
-    this.subscription2.unsubscribe();
+    this.dsh1_subscription1.unsubscribe();
+    this.dsh1_subscription2.unsubscribe();
   }
 
   private goToAccount() {
@@ -127,22 +129,20 @@ export class HomePage {
     document.getElementById("dsh1[2]").hidden=false;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-
-    // document.getElementById("dsh1[3]").hidden=true;
-    // document.getElementById("dsh1[4]").hidden=true;
-    // document.getElementById("dsh1[5]").hidden=true;
-    // document.getElementById("dsh1[6]").hidden=true;
     this.initMap();
+    this.dsh1_InitChart();
+    this.dsh1_UpdateDataChart();
     console.log('ionViewDidLoad Dsh2HomePage');
     // if (chkInit==true){
-      this.drilldown();
+
       //chkInit=false;
     // }
     this.tampilkanNilai();
+
     loading.dismiss();
   }
 
-  private getData(){
+  private dsh1_GetData(){
     var ary_Header=[];
     var rsltAry=[];
     var grpNotRelease=[];
@@ -327,7 +327,7 @@ export class HomePage {
   tampilkanNilai(){
   //  var a:[];
   //setTimeout(()=>{
-    console.log(this.getData());
+    // console.log(this.dsh1_GetData());
   //},1000);
   //  a.push(a.filter(function(headerObj){
   //           return headerObj.SEQ.indexOf("HEADER") > -1
@@ -489,106 +489,193 @@ export class HomePage {
     alert1.present();
   }
 
-  private drilldown(){
-
-    const tgl = new Date();
+  private dsh1_UpdateDataChart(){
     var rsltAryChart=[];
     var querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
+        this.database.selectData(querySql).then(data=>{
 
         rsltAryChart=[];
         rsltAryChart.push(data);
-    //     console.log(rsltAryChart[0].CATEGORIES);
-    //   });
         // if (rsltAryChart.length!==0){
-
-
-            this.charting=HighCharts.chart({
-              chart: {
-                renderTo:'dsh1-b2cChart',
-                zoomType: 'x',
-                panning: true,
-                panKey: 'shift',
-                type:'areaspline'
-              },
-              title: {
-                  text: "Project Summary of " + tgl.getDay() +"-" + tgl.getMonth() + '-' + tgl.getFullYear(),
-                  style: {
-                    fontSize: '15px'
-                  }
-              },
-              credits: {
-                enabled: false
-              },
-              xAxis: {
-                 categories: ["W1-Jan-2018","W2-Jan-2018","W3-Jan-2018","W4-Jan-2018","W5-Jan-2018","W1-Feb-2018","W2-Feb-2018","W3-Feb-2018","W4-Feb-2018","W5-Feb-2018","W1-Mar-2018","W2-Mar-2018","W3-Mar-2018","W4-Mar-2018","W5-Mar-2018","W1-Apr-2018","W2-Apr-2018","W3-Apr-2018","W4-Apr-2018","W5-Apr-2018","W6-Apr-2018","W1-May-2018","W2-May-2018","W3-May-2018","W4-May-2018","W5-May-2018","W1-Jun-2018","W2-Jun-2018","W3-Jun-2018","W4-Jun-2018","W5-Jun-2018","W1-Jul-2018","W2-Jul-2018","W3-Jul-2018","W4-Jul-2018","W5-Jul-2018","W6-Jul-2018","W1-Aug-2018","W2-Aug-2018","W3-Aug-2018","W4-Aug-2018","W5-Aug-2018","W1-Sep-2018","W2-Sep-2018","W3-Sep-2018","W4-Sep-2018","W5-Sep-2018","W1-Oct-2018","W2-Oct-2018","W3-Oct-2018","W4-Oct-2018","W5-Oct-2018","W1-Nov-2018","W2-Nov-2018","W3-Nov-2018"],
-                // categories: [rsltAryChart[0]['CATEGORIES']],
-                  labels: {
-                      overflow: 'justify'
-                  }
-              },
-              yAxis: {
-                  title: {
-                    text: 'Total Project'
-                  }
-              },
-              tooltip: {
-                  valueSuffix: ' '
-              },
-              plotOptions: {
-                  spline: {
-                    lineWidth: 3,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false
-                    }
-                  }
-              },
+        var aryCtg:[] =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+        var aryTarget_RFI:[] =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+        var aryActual_RFI:[] =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+        var aryTarget:[] =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+        var aryActual:[] =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+        // console.log(aryTarget_RFI);
+          // setTimeout(() => {
+            charting.update({
               series: [{
-                    // type: 'spline',
-                    name: 'Target RFI',
-                    data: [null,null,null,null,null,null,null,null,null,null,null,16,61,302,382,394,411,421,873,885,886,900,1195,1233,1251,1401,1422,1447,1449,1459,1461,1461,1487,1487,1489,1530,1560,1564,1577,1586,1606,1610,1610,1613,1613,1613,1615,1650,1650,1654,1712,1716,1716,1721],
-                    color:'#2c303e',
-                    //fillOpacity: 0.5
-                }, {
-                    // type: 'spline',
-                    name: 'Actual RFI',
-                    data: [null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
-                    color:'#a50500',
-                    //fillOpacity: 0.5
-              }, {
-                    type: 'column',
-                    name: 'Target',
-                    data: [0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
-                    color:'#2F69C5'
-              }, {
-                    type: 'column',
-                    name: 'Actual',
-                    data: [0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                    color:'#FF9735'
-              }],
-              navigation: {
-                  menuItemStyle: {
-                      fontSize: '10px'
-                  }
-              }
-            })
-          // }
+                name: 'Target RFI',
+                data: aryTarget_RFI,
+                color:'#2c303e',
+              }]
+            });
+          // }, 200);
         });
-
-        // }
-
-
-
-
-
   }
+
+  private dsh1_InitChart(){
+      const tgl = new Date();
+      const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+      charting=HighCharts.chart({
+          chart: {
+            renderTo:'dsh1-b2cChart',
+            zoomType: 'x',
+            panning: true,
+            panKey: 'shift',
+            type:'areaspline',
+            // events:{
+            //   data: (function () {
+            // },
+            // events: {
+            //   load: function () {
+            //       var label = this.renderer.label('Chart loaded', 100, 120)
+            //           .attr({
+            //               // fill: HighCharts.getOptions().colors[0],
+            //               padding: 10,
+            //               r: 5,
+            //               zIndex: 8
+            //           })
+            //           .css({
+            //               color: '#FFFFFF'
+            //           })
+            //           .add();
+
+            //       setTimeout(function () {
+            //           label.fadeOut();
+            //       }, 1000);
+            //   }
+            // }
+          },
+          title: {
+              text: "Project Summary of " + tgl.getDay() +" " + monthNames[tgl.getMonth()] + ' ' + tgl.getFullYear(),
+              style: {
+                fontSize: '15px'
+              }
+          },
+          credits: {
+            enabled: false
+          },
+          xAxis: {
+             categories: ["W1-Jan-2018","W2-Jan-2018","W3-Jan-2018","W4-Jan-2018","W5-Jan-2018","W1-Feb-2018","W2-Feb-2018","W3-Feb-2018","W4-Feb-2018","W5-Feb-2018","W1-Mar-2018","W2-Mar-2018","W3-Mar-2018","W4-Mar-2018","W5-Mar-2018","W1-Apr-2018","W2-Apr-2018","W3-Apr-2018","W4-Apr-2018","W5-Apr-2018","W6-Apr-2018","W1-May-2018","W2-May-2018","W3-May-2018","W4-May-2018","W5-May-2018","W1-Jun-2018","W2-Jun-2018","W3-Jun-2018","W4-Jun-2018","W5-Jun-2018","W1-Jul-2018","W2-Jul-2018","W3-Jul-2018","W4-Jul-2018","W5-Jul-2018","W6-Jul-2018","W1-Aug-2018","W2-Aug-2018","W3-Aug-2018","W4-Aug-2018","W5-Aug-2018","W1-Sep-2018","W2-Sep-2018","W3-Sep-2018","W4-Sep-2018","W5-Sep-2018","W1-Oct-2018","W2-Oct-2018","W3-Oct-2018","W4-Oct-2018","W5-Oct-2018","W1-Nov-2018","W2-Nov-2018","W3-Nov-2018"],
+              // categories:aryCtg,
+              labels: {
+                  overflow: 'justify'
+              }
+          },
+          yAxis: {
+              title: {
+                text: 'Total Project'
+              }
+          },
+          tooltip: {
+              valueSuffix: ' '
+          },
+          plotOptions: {
+              spline: {
+                lineWidth: 3,
+                states: {
+                    hover: {
+                        lineWidth: 5
+                    }
+                },
+                marker: {
+                    enabled: false
+                }
+              }
+          },
+          series: [{
+                // type: 'spline',
+                name: 'Target RFI',
+                data: [null,null,null,null,null,null,null,null,null,null,null],
+                // data: aryTarget_RFI,
+                color:'#2c303e',
+                //fillOpacity: 0.5
+            }, {
+                // type: 'spline',
+                name: 'Actual RFI',
+                data: [null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
+                // data: aryActual_RFI,
+                color:'#a50500',
+                //fillOpacity: 0.5
+          }, {
+                type: 'column',
+                name: 'Target',
+                data: [0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
+                // data: aryTarget,
+                color:'#2F69C5'
+          }, {
+                type: 'column',
+                name: 'Actual',
+                data: [0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                // data: aryActual,
+                color:'#FF9735'
+          }],
+          navigation: {
+              menuItemStyle: {
+                  fontSize: '10px'
+              }
+          }
+      });
+  }
+  // private dsh1_InitChart(){
+
+  //     var option={
+  //             chart: {
+  //               renderTo:'dsh1-b2cChart',
+  //               zoomType: 'x',
+  //               panning: true,
+  //               panKey: 'shift',
+  //               type:'areaspline'
+  //             },
+  //             title: {
+  //               text: 'CPU Usage'
+  //             },
+  //             credits: {
+  //               enabled: false
+  //             },
+  //             xAxis: {
+  //                 labels: {
+  //                     overflow: 'justify'
+  //                 }
+  //             },
+  //             yAxis: {
+  //                 title: {
+  //                   text: 'Total Project'
+  //                 }
+  //             },
+  //             tooltip: {
+  //                 valueSuffix: ' '
+  //             },
+  //             plotOptions: {
+  //                 spline: {
+  //                   lineWidth: 3,
+  //                   states: {
+  //                       hover: {
+  //                           lineWidth: 5
+  //                       }
+  //                   },
+  //                   marker: {
+  //                       enabled: false
+  //                   }
+  //                 }
+  //             },
+  //             navigation: {
+  //                 menuItemStyle: {
+  //                     fontSize: '10px'
+  //                 }
+  //             },
+  //             series: [{}]
+  //           };
+  //           var chart1;
+  //           option.series[0]= [{
+  //            data: [null,null,null,null,null,null,null,null,null,null,null,16,61,302,382,394,411,421,873,885,886,900,1195,1233,1251,1401,1422,1447,1449,1459,1461,1461,1487,1487,1489,1530,1560,1564,1577,1586,1606,1610,1610,1613,1613,1613,1615,1650,1650,1654,1712,1716,1716,1721],
+  //           }];
+  //           chart1 = new heHighcharts.Chart(option);
+  // }
 
 
   private initClickEvent(){

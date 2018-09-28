@@ -23,9 +23,9 @@ interface aryPageSetting{
 
 @Injectable()
 export class DashboardAllProvider {
-  private url: string ="http://180.250.19.206/";
+  // private url: string ="http://180.250.19.206/";
   // private url: string ="http://mproject.mitratel.int/";
-  // private url: string ="http://192.168.100.8/";
+  private url: string ="http://127.0.0.1/";
   // private url: string ="http://192.168.1.7/";
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
