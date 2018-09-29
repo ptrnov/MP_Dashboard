@@ -23,9 +23,9 @@ interface aryPageSetting{
 
 @Injectable()
 export class DashboardAllProvider {
-  // private url: string ="http://180.250.19.206/";
+  private url: string ="http://180.250.19.206/";
   // private url: string ="http://mproject.mitratel.int/";
-  private url: string ="http://127.0.0.1/";
+  // private url: string ="http://127.0.0.1/";
   // private url: string ="http://192.168.1.7/";
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
@@ -315,7 +315,35 @@ export class DashboardAllProvider {
         });
     }
 
-    /* All Project
+    /* MAP DATA PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapData():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapproject").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA (ID,GRP,BULAN,TAHUN,LAT,LONG,RADIUS) VALUES (?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.ID,
+              element.GRP,
+              element.BULAN,
+              element.TAHUN,
+              element.LAT,
+              element.LONG,
+              element.RADIUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* APP SETTING
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
     * SQLite    : Live Mobile Storage.

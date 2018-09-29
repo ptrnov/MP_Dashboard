@@ -49,7 +49,10 @@ var dsh1_4card_2content_click=0;
 var dsh1_4card_3content_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
-
+var map1: any;
+// directionsService = new google.maps.DirectionsService;
+// directionsDisplay = new google.maps.DirectionsRenderer;
+var mapOptions1:any;
 
 //Google Variable
 declare var google;
@@ -65,11 +68,11 @@ export class HomePage {
   private dsh1_subscription2;
   private cardValue_Header;
   //MAP
-  @ViewChild('map1') mapElement2: ElementRef;
-  map1: any;
-  // directionsService = new google.maps.DirectionsService;
-  // directionsDisplay = new google.maps.DirectionsRenderer;
-  mapOptions1:any;
+  // @ViewChild('map1') mapElement2: ElementRef;
+  // map1: any;
+  // // directionsService = new google.maps.DirectionsService;
+  // // directionsDisplay = new google.maps.DirectionsRenderer;
+  // mapOptions1:any;
 
   constructor(
       // private storage: Storage,
@@ -82,11 +85,7 @@ export class HomePage {
       private menu: MenuController,
       public loadingCtrl: LoadingController
   ){
-    this.mapOptions1={
-      zoom: 4,
-      // center: new google.maps.LatLng(-2.209764,117.114258),
-      styles: this.database._defaultNewStyle
-    };
+
   }
 
   ionViewDidEnter(){
@@ -103,6 +102,7 @@ export class HomePage {
     this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
       this.dashboarAll.getAllPrj();
+      this.dashboarAll.getMapData();
     });
   }
    /**
@@ -129,9 +129,9 @@ export class HomePage {
     document.getElementById("dsh1[2]").hidden=false;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-    this.initMap();
+    this.dsh1_initMap();
     this.dsh1_InitChart();
-    this.dsh1_UpdateDataChart();
+    // this.dsh1_UpdateDataChart();
     console.log('ionViewDidLoad Dsh2HomePage');
     // if (chkInit==true){
 
@@ -388,9 +388,107 @@ export class HomePage {
     // }
   }
 
-  initMap(){
-    // this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
-    // this.directionsDisplay.setMap(this.map1);
+  dsh1_initMap(){
+    var mapOptions={
+      zoom: 4,
+      center: new google.maps.LatLng(-2.209764,117.114258),
+      styles: this.database._defaultNewStyle
+    };
+    map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+    var rsltAryMap=[];
+    var myCity;
+    var myCh;
+    var myLatlng;
+    var contentString;
+
+    var querySql ="SELECT DISTINCT ID,GRP,BULAN,TAHUN,LAT,LONG,RADIUS FROM TBL_PETA "// WHERE GRP='test' "
+                  // +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
+                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+        this.database.selectData(querySql).then(data=>{
+        rsltAryMap=[];
+        rsltAryMap.push(data);
+
+        for (var i = 0; i < rsltAryMap[0].length; i++) {
+          contentString = '<div id="content">' +
+                          '<div id="siteNotice">' +
+                          '</div>' +
+                          '<div id="bodyContent">' +
+                          '<table>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Project ID</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Site Name</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Area</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Regional</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>SOW</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<tr>' +
+                          '<td><font color="black"><b>Status</b></font></td>' +
+                          '<td style="width:6%"><font color="black">:</font></td>' +
+                          '<td><font color="black">' + status + '</font></td>' +
+                          '</tr>' +
+                          '<tr>' +
+                          '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                          '</tr>' +
+                          '</table>' +
+                          '</div>';
+          var myInfoWindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+          // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+          myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+          myCity = new google.maps.Circle({
+            center: myLatlng,
+            radius: 10000,
+            strokeColor: "#ffa500", //color_status,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#449af0",
+            fillOpacity: 0.4,
+            infowindow: myInfoWindow
+          });
+
+          myCh = new google.maps.Circle({
+              center: myLatlng,
+              radius: 80,
+              strokeColor: "#ffa500", //color_status,
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "red",
+              fillOpacity: 0.4
+          });
+          myCh.setMap(map1);
+          myCity.setMap(map1);
+            google.maps.event.addListener(myCity, 'click', function(ev) {
+              this.infowindow.setPosition(ev.latLng);
+              this.infowindow.open(this.map1, this);
+            });
+       }
+    // },500);
+    });
   }
 
   public alertModalNoRelease(){

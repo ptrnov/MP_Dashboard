@@ -273,19 +273,24 @@ export class Dsh2HomePage {
 
   private dsh2_UpdateDataChart(){
     var rsltAryChart=[];
+    var aryCtg:[];
+    var aryTarget_RFI:[];
+    var aryActual_RFI:[];
+    var aryTarget:[];
+    var aryActual:[];
     var querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
         this.database.selectData(querySql).then(data=>{
 
-        rsltAryChart=[];
+        rsltAryChart=[];aryTarget_RFI=[]; aryActual_RFI=[]; aryTarget=[]; aryActual=[];
         rsltAryChart.push(data);
         // if (rsltAryChart.length!==0){
-        var aryCtg:[] =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
-        var aryTarget_RFI:[] =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-        var aryActual_RFI:[] =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-        var aryTarget:[] =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-        var aryActual:[] =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+        aryCtg =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+        aryTarget_RFI =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+        aryActual_RFI =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+        aryTarget =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+        aryActual =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
         // console.log(aryTarget_RFI);
           // setTimeout(() => {
             charting.update({
