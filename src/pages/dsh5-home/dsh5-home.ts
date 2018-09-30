@@ -246,7 +246,7 @@ export class Dsh5HomePage {
     var dsh5_aryActual_RFI=[];
     var dsh5_aryTarget=[];
     var dsh5_aryActual=[];
-    var dsh5_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    var dsh5_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
     this.database.selectData(dsh5_querySql).then(data=>{
@@ -257,7 +257,7 @@ export class Dsh5HomePage {
           dsh5_aryActual=[];
           dsh5_rsltAryChart.push(data);
         if(dsh5_rsltAryChart !== undefined || dsh5_rsltAryChart.length > 0){
-          dsh5_aryCtg =dsh5_rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+          dsh5_aryCtg =dsh5_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
           dsh5_aryTarget_RFI =dsh5_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
           dsh5_aryActual_RFI =dsh5_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
           dsh5_aryTarget =dsh5_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
@@ -316,8 +316,7 @@ export class Dsh5HomePage {
             enabled: false
           },
           xAxis: {
-             categories: ["W1-Jan-2018","W2-Jan-2018","W3-Jan-2018","W4-Jan-2018","W5-Jan-2018","W1-Feb-2018","W2-Feb-2018","W3-Feb-2018","W4-Feb-2018","W5-Feb-2018","W1-Mar-2018","W2-Mar-2018","W3-Mar-2018","W4-Mar-2018","W5-Mar-2018","W1-Apr-2018","W2-Apr-2018","W3-Apr-2018","W4-Apr-2018","W5-Apr-2018","W6-Apr-2018","W1-May-2018","W2-May-2018","W3-May-2018","W4-May-2018","W5-May-2018","W1-Jun-2018","W2-Jun-2018","W3-Jun-2018","W4-Jun-2018","W5-Jun-2018","W1-Jul-2018","W2-Jul-2018","W3-Jul-2018","W4-Jul-2018","W5-Jul-2018","W6-Jul-2018","W1-Aug-2018","W2-Aug-2018","W3-Aug-2018","W4-Aug-2018","W5-Aug-2018","W1-Sep-2018","W2-Sep-2018","W3-Sep-2018","W4-Sep-2018","W5-Sep-2018","W1-Oct-2018","W2-Oct-2018","W3-Oct-2018","W4-Oct-2018","W5-Oct-2018","W1-Nov-2018","W2-Nov-2018","W3-Nov-2018"],
-              // categories:aryCtg,
+              categories:[null,null,null,null,null,null,null,null,null,null,null],
               labels: {
                   overflow: 'justify'
               }

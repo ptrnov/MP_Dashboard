@@ -295,7 +295,7 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/chartdata").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_CHART (ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL) VALUES (?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_CHART (ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
           data.chart.forEach(element => {
             this.database.insertData(qry,[
@@ -304,7 +304,7 @@ export class DashboardAllProvider {
               element.TAHUN,
               element.NM_CHART,
               element.TITLE,
-              element.CATEGORIES,
+              element.KTG,
               element.TARGET_RFI,
               element.ACTUAL_RFI,
               element.TARGET,
@@ -327,16 +327,22 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/mapproject").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA (ID,GRP,BULAN,TAHUN,LAT,LONG,RADIUS) VALUES (?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
-              element.ID,
               element.GRP,
+              element.PROJECT_ID,
               element.BULAN,
               element.TAHUN,
+              element.AREA,
               element.LAT,
               element.LONG,
-              element.RADIUS
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
             ]);
           });
           console.log("success load Api - MAP Data Project");

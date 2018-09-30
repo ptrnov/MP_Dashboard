@@ -389,7 +389,15 @@ export class HomePage {
     // }
   }
 
-  dsh1_initMap(){
+  textClick(){
+    var sqlData;
+    sqlData ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA WHERE PROJECT_ID!='2'"
+                  // +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
+                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    this.dsh1_initMap(sqlData);
+  }
+
+  dsh1_initMap(qry:any=null){
     var mapOptions={
       zoom: 4,
       center: new google.maps.LatLng(-2.209764,117.114258),
@@ -401,14 +409,20 @@ export class HomePage {
     var myCh;
     var myLatlng;
     var contentString;
-
-    var querySql ="SELECT DISTINCT ID,GRP,BULAN,TAHUN,LAT,LONG,RADIUS FROM TBL_PETA "// WHERE GRP='test' "
+    var querySql;
+      querySql='';
+    if (qry==null){
+      querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
                   // +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-        this.database.selectData(querySql).then(data=>{
+    }else if(qry!=null){
+      querySql=qry;
+    }
+       this.database.selectData(querySql).then(data=>{
         rsltAryMap=[];
         rsltAryMap.push(data);
-        // if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+        if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+          setTimeout(()=>{
             for (var i = 0; i < rsltAryMap[0].length; i++) {
               contentString = '<div id="content">' +
                               '<div id="siteNotice">' +
@@ -418,38 +432,38 @@ export class HomePage {
                               '<tr>' +
                               '<td><font color="black"><b>Project ID</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Site Name</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Nama Tenant</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Area</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Regional</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>SOW</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Status</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + status + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
@@ -488,8 +502,8 @@ export class HomePage {
                   this.infowindow.open(this.map1, this);
                 });
           }
-         // },500);
-        // }
+        },500);
+      }
     });
   }
 
@@ -596,12 +610,12 @@ export class HomePage {
     var dsh1_aryActual_RFI=[];
     var dsh1_aryTarget=[];
     var dsh1_aryActual=[];
-    var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
     this.database.selectData(dsh1_querySql).then(data=>{
       dsh1_rsltAryChart=[];
-      dsh1_rsltAryChart=[];
+      dsh1_aryCtg=[];
       dsh1_aryTarget_RFI=[];
       dsh1_aryActual_RFI=[];
       dsh1_aryTarget=[];
@@ -609,20 +623,20 @@ export class HomePage {
       dsh1_rsltAryChart.push(data);
       // if (rsltAryChart.length!==0){
       if(dsh1_rsltAryChart !== undefined || dsh1_rsltAryChart.length > 0){
-        dsh1_aryCtg =dsh1_rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+        // dsh1_aryCtg =dsh1_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
         dsh1_aryTarget_RFI =dsh1_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
         dsh1_aryActual_RFI =dsh1_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
         dsh1_aryTarget =dsh1_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
         dsh1_aryActual =dsh1_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
         // console.log(aryTarget_RFI);
-          // setTimeout(() => {
+          setTimeout(() => {
             dsh1_charting.update({
-              xAxis: {
+              xAxis: [{
                 categories:dsh1_aryCtg,
                 labels: {
                      overflow: 'justify'
                 }
-              },
+              }],
               series: [{
                 name: 'Target RFI',
                 data: dsh1_aryTarget_RFI,
@@ -642,7 +656,7 @@ export class HomePage {
               }
             ]
             });
-          // }, 200);
+          }, 500);
       }
     });
   }
