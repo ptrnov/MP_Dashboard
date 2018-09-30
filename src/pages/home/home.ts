@@ -17,7 +17,7 @@ import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
-import { toArray } from "rxjs/operators";
+// import { toArray } from "rxjs/operators";
 
 // import HighCharts from 'highcharts'
 // import addMore from "highcharts/highcharts-more";
@@ -57,7 +57,7 @@ var mapOptions1:any;
 //Google Variable
 declare var google;
 // var marker = [];
-var charting;
+var dsh1_charting;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -102,7 +102,7 @@ export class HomePage {
     this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
       console.log('run-Disply');
       this.dashboarAll.getAllPrj();
-      this.dashboarAll.getMapData();
+      // this.dashboarAll.getMapData();
     });
   }
    /**
@@ -154,9 +154,10 @@ export class HomePage {
                   //+" WHERE BULAN='08' AND TAHUN='2018'";
                   +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
-         rsltAry=[];
-         rsltAry.push(data);
-         if (rsltAry[0].length!==0){
+        rsltAry=[];
+        rsltAry.push(data);
+        //  if (rsltAry[0].length!==0){
+        if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
               // console.log(rsltAry);
               ary_Header=[];
@@ -407,87 +408,88 @@ export class HomePage {
         this.database.selectData(querySql).then(data=>{
         rsltAryMap=[];
         rsltAryMap.push(data);
+        // if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+            for (var i = 0; i < rsltAryMap[0].length; i++) {
+              contentString = '<div id="content">' +
+                              '<div id="siteNotice">' +
+                              '</div>' +
+                              '<div id="bodyContent">' +
+                              '<table>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Project ID</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Site Name</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Area</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Regional</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>SOW</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Status</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + status + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                              '</tr>' +
+                              '</table>' +
+                              '</div>';
+              var myInfoWindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+              myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              myCity = new google.maps.Circle({
+                center: myLatlng,
+                radius: 10000,
+                strokeColor: "#ffa500", //color_status,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#449af0",
+                fillOpacity: 0.4,
+                infowindow: myInfoWindow
+              });
 
-        for (var i = 0; i < rsltAryMap[0].length; i++) {
-          contentString = '<div id="content">' +
-                          '<div id="siteNotice">' +
-                          '</div>' +
-                          '<div id="bodyContent">' +
-                          '<table>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Project ID</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Site Name</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Area</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Regional</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>SOW</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + rsltAryMap[0][i]['LAT'] + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<tr>' +
-                          '<td><font color="black"><b>Status</b></font></td>' +
-                          '<td style="width:6%"><font color="black">:</font></td>' +
-                          '<td><font color="black">' + status + '</font></td>' +
-                          '</tr>' +
-                          '<tr>' +
-                          '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-                          '</tr>' +
-                          '</table>' +
-                          '</div>';
-          var myInfoWindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-          // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-          myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-          myCity = new google.maps.Circle({
-            center: myLatlng,
-            radius: 10000,
-            strokeColor: "#ffa500", //color_status,
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#449af0",
-            fillOpacity: 0.4,
-            infowindow: myInfoWindow
-          });
-
-          myCh = new google.maps.Circle({
-              center: myLatlng,
-              radius: 80,
-              strokeColor: "#ffa500", //color_status,
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: "red",
-              fillOpacity: 0.4
-          });
-          myCh.setMap(map1);
-          myCity.setMap(map1);
-            google.maps.event.addListener(myCity, 'click', function(ev) {
-              this.infowindow.setPosition(ev.latLng);
-              this.infowindow.open(this.map1, this);
-            });
-       }
-    // },500);
+              myCh = new google.maps.Circle({
+                  center: myLatlng,
+                  radius: 80,
+                  strokeColor: "#ffa500", //color_status,
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: "red",
+                  fillOpacity: 0.4
+              });
+              myCh.setMap(map1);
+              myCity.setMap(map1);
+                google.maps.event.addListener(myCity, 'click', function(ev) {
+                  this.infowindow.setPosition(ev.latLng);
+                  this.infowindow.open(this.map1, this);
+                });
+          }
+         // },500);
+        // }
     });
   }
 
@@ -588,37 +590,67 @@ export class HomePage {
   }
 
   private dsh1_UpdateDataChart(){
-    var rsltAryChart=[];
-    var querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    var dsh1_rsltAryChart=[];
+    var dsh1_aryCtg=[];
+    var dsh1_aryTarget_RFI=[];
+    var dsh1_aryActual_RFI=[];
+    var dsh1_aryTarget=[];
+    var dsh1_aryActual=[];
+    var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-        this.database.selectData(querySql).then(data=>{
-
-        rsltAryChart=[];
-        rsltAryChart.push(data);
-        // if (rsltAryChart.length!==0){
-        var aryCtg:[] =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
-        var aryTarget_RFI:[] =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-        var aryActual_RFI:[] =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-        var aryTarget:[] =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-        var aryActual:[] =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+    this.database.selectData(dsh1_querySql).then(data=>{
+      dsh1_rsltAryChart=[];
+      dsh1_rsltAryChart=[];
+      dsh1_aryTarget_RFI=[];
+      dsh1_aryActual_RFI=[];
+      dsh1_aryTarget=[];
+      dsh1_aryActual=[];
+      dsh1_rsltAryChart.push(data);
+      // if (rsltAryChart.length!==0){
+      if(dsh1_rsltAryChart !== undefined || dsh1_rsltAryChart.length > 0){
+        dsh1_aryCtg =dsh1_rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+        dsh1_aryTarget_RFI =dsh1_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+        dsh1_aryActual_RFI =dsh1_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+        dsh1_aryTarget =dsh1_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+        dsh1_aryActual =dsh1_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
         // console.log(aryTarget_RFI);
           // setTimeout(() => {
-            charting.update({
+            dsh1_charting.update({
+              xAxis: {
+                categories:dsh1_aryCtg,
+                labels: {
+                     overflow: 'justify'
+                }
+              },
               series: [{
                 name: 'Target RFI',
-                data: aryTarget_RFI,
+                data: dsh1_aryTarget_RFI,
                 color:'#2c303e',
-              }]
+              },{
+                name: 'Actual RFI',
+                data: dsh1_aryActual_RFI,
+                color:'#a50500',
+              },{
+                name: 'Target',
+                data: dsh1_aryTarget,
+                color:'#2F69C5',
+              },{
+                name: 'Actual',
+                data: dsh1_aryActual,
+                color:'#FF9735',
+              }
+            ]
             });
           // }, 200);
-        });
+      }
+    });
   }
 
   private dsh1_InitChart(){
-      const tgl = new Date();
-      const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-      charting=HighCharts.chart({
+      const dsh1_tgl = new Date();
+      const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+      dsh1_charting=HighCharts.chart({
           chart: {
             renderTo:'dsh1-b2cChart',
             zoomType: 'x',
@@ -649,7 +681,7 @@ export class HomePage {
             // }
           },
           title: {
-              text: "Project Summary of " + tgl.getDay() +" " + monthNames[tgl.getMonth()] + ' ' + tgl.getFullYear(),
+              text: "Project Summary of " + dsh1_tgl.getDay() +" " + dsh1_monthNames[dsh1_tgl.getMonth()] + ' ' + dsh1_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }
@@ -658,7 +690,7 @@ export class HomePage {
             enabled: false
           },
           xAxis: {
-             categories: ["W1-Jan-2018","W2-Jan-2018","W3-Jan-2018","W4-Jan-2018","W5-Jan-2018","W1-Feb-2018","W2-Feb-2018","W3-Feb-2018","W4-Feb-2018","W5-Feb-2018","W1-Mar-2018","W2-Mar-2018","W3-Mar-2018","W4-Mar-2018","W5-Mar-2018","W1-Apr-2018","W2-Apr-2018","W3-Apr-2018","W4-Apr-2018","W5-Apr-2018","W6-Apr-2018","W1-May-2018","W2-May-2018","W3-May-2018","W4-May-2018","W5-May-2018","W1-Jun-2018","W2-Jun-2018","W3-Jun-2018","W4-Jun-2018","W5-Jun-2018","W1-Jul-2018","W2-Jul-2018","W3-Jul-2018","W4-Jul-2018","W5-Jul-2018","W6-Jul-2018","W1-Aug-2018","W2-Aug-2018","W3-Aug-2018","W4-Aug-2018","W5-Aug-2018","W1-Sep-2018","W2-Sep-2018","W3-Sep-2018","W4-Sep-2018","W5-Sep-2018","W1-Oct-2018","W2-Oct-2018","W3-Oct-2018","W4-Oct-2018","W5-Oct-2018","W1-Nov-2018","W2-Nov-2018","W3-Nov-2018"],
+             categories: [null,null,null,null,null,null,null,null,null,null,null],
               // categories:aryCtg,
               labels: {
                   overflow: 'justify'
@@ -695,20 +727,20 @@ export class HomePage {
             }, {
                 // type: 'spline',
                 name: 'Actual RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryActual_RFI,
                 color:'#a50500',
                 //fillOpacity: 0.5
           }, {
                 type: 'column',
                 name: 'Target',
-                data: [0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryTarget,
                 color:'#2F69C5'
           }, {
                 type: 'column',
                 name: 'Actual',
-                data: [0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryActual,
                 color:'#FF9735'
           }],

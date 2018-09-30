@@ -23,7 +23,7 @@ var dsh2_0card_3footer_click=0;
 var defaultUrlImg="assets/img/new/";
 /** INIT ONE OPEN NEW STATUS */
 var chkInit=0;
-var charting;
+var dsh2_charting;
 
 @IonicPage()
 @Component({
@@ -113,8 +113,10 @@ export class Dsh2HomePage {
                 //  +" WHERE BULAN='09' AND TAHUN='2018'"
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
-         rsltAry.push(data);
-         if (rsltAry[0].length!==0){
+        rsltAry=[];
+        rsltAry.push(data);
+        //  if (rsltAry[0].length!==0){
+        if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
               console.log(rsltAry);
               ary_Header=[];
@@ -272,42 +274,65 @@ export class Dsh2HomePage {
 
 
   private dsh2_UpdateDataChart(){
-    var rsltAryChart=[];
-    var aryCtg:[];
-    var aryTarget_RFI:[];
-    var aryActual_RFI:[];
-    var aryTarget:[];
-    var aryActual:[];
-    var querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    var dsh2_rsltAryChart=[];
+    var dsh2_aryCtg=[];
+    var dsh2_aryTarget_RFI=[];
+    var dsh2_aryActual_RFI=[];
+    var dsh2_aryTarget=[];
+    var dsh2_aryActual=[];
+    var dsh2_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-        this.database.selectData(querySql).then(data=>{
-
-        rsltAryChart=[];aryTarget_RFI=[]; aryActual_RFI=[]; aryTarget=[]; aryActual=[];
-        rsltAryChart.push(data);
-        // if (rsltAryChart.length!==0){
-        aryCtg =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
-        aryTarget_RFI =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-        aryActual_RFI =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-        aryTarget =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-        aryActual =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
-        // console.log(aryTarget_RFI);
-          // setTimeout(() => {
-            charting.update({
-              series: [{
-                name: 'Target RFI',
-                data: aryTarget_RFI,
-                color:'#2c303e',
-              }]
-            });
-          // }, 200);
-        });
+    this.database.selectData(dsh2_querySql).then(data=>{
+          dsh2_rsltAryChart=[];
+          dsh2_aryTarget_RFI=[];
+          dsh2_aryActual_RFI=[];
+          dsh2_aryTarget=[];
+          dsh2_aryActual=[];
+          dsh2_rsltAryChart.push(data);
+        if(dsh2_rsltAryChart !== undefined || dsh2_rsltAryChart.length > 0){
+          dsh2_aryCtg =dsh2_rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+          dsh2_aryTarget_RFI =dsh2_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+          dsh2_aryActual_RFI =dsh2_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+          dsh2_aryTarget =dsh2_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+          dsh2_aryActual =dsh2_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+          // console.log(aryTarget_RFI);
+            // setTimeout(() => {
+              dsh2_charting.update({
+                xAxis: {
+                  categories:dsh2_aryCtg,
+                  labels: {
+                       overflow: 'justify'
+                  }
+                },
+                series: [{
+                  name: 'Target RFI',
+                  data: dsh2_aryTarget_RFI,
+                  color:'#2c303e',
+                },{
+                  name: 'Actual RFI',
+                  data: dsh2_aryActual_RFI,
+                  color:'#a50500',
+                },{
+                  name: 'Target',
+                  data: dsh2_aryTarget,
+                  color:'#2F69C5',
+                },{
+                  name: 'Actual',
+                  data: dsh2_aryActual,
+                  color:'#FF9735',
+                }
+              ]
+              });
+            // }, 200);
+        }
+    });
   }
 
   private dsh2_InitChart(){
-      const tgl = new Date();
-      const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-      charting=HighCharts.chart({
+      const dsh2_tgl = new Date();
+      const dsh2_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+      dsh2_charting=HighCharts.chart({
           chart: {
             renderTo:'dsh2-b2cChart',
             zoomType: 'x',
@@ -316,7 +341,7 @@ export class Dsh2HomePage {
             type:'areaspline'
           },
           title: {
-              text: "Project Summary of " + tgl.getDay() +" " + monthNames[tgl.getMonth()] + ' ' + tgl.getFullYear(),
+              text: "Project Summary of " + dsh2_tgl.getDay() +" " + dsh2_monthNames[dsh2_tgl.getMonth()] + ' ' + dsh2_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }
@@ -362,20 +387,20 @@ export class Dsh2HomePage {
             }, {
                 // type: 'spline',
                 name: 'Actual RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryActual_RFI,
                 color:'#a50500',
                 //fillOpacity: 0.5
           }, {
                 type: 'column',
                 name: 'Target',
-                data: [0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryTarget,
                 color:'#2F69C5'
           }, {
                 type: 'column',
                 name: 'Actual',
-                data: [0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
                 // data: aryActual,
                 color:'#FF9735'
           }],

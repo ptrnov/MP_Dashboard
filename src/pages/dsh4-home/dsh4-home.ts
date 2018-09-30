@@ -19,7 +19,7 @@ var dsh4_0card_2footer_click=0;
 var dsh4_0card_3footer_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
-var charting;
+var dsh4_charting;
 @IonicPage()
 @Component({
   selector: 'page-dsh4-home',
@@ -110,8 +110,10 @@ export class Dsh4HomePage {
     var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,FO,RFI,ARFI_NILAI2 FROM MCP_PRJ "// WHERE GRP='test' "
                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
-         rsltAry.push(data);
-         if (rsltAry[0].length!==0){
+        rsltAry=[];
+        rsltAry.push(data);
+        //  if (rsltAry[0].length!==0){
+        if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
               // console.log(rsltAry);
               ary_Header=[];
@@ -253,37 +255,65 @@ export class Dsh4HomePage {
   }
 
   private dsh4_UpdateDataChart(){
-    var rsltAryChart=[];
-    var querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    var dsh4_rsltAryChart=[];
+    var dsh4_aryCtg=[];
+    var dsh4_aryTarget_RFI=[];
+    var dsh4_aryActual_RFI=[];
+    var dsh4_aryTarget=[];
+    var dsh4_aryActual=[];
+    var dsh4_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,CATEGORIES,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
                   +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-        this.database.selectData(querySql).then(data=>{
-
-        rsltAryChart=[];
-        rsltAryChart.push(data);
-        // if (rsltAryChart.length!==0){
-        var aryCtg:[] =rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
-        var aryTarget_RFI:[] =rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-        var aryActual_RFI:[] =rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-        var aryTarget:[] =rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-        var aryActual:[] =rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
-        // console.log(aryTarget_RFI);
-          // setTimeout(() => {
-            charting.update({
-              series: [{
-                name: 'Target RFI',
-                data: aryTarget_RFI,
-                color:'#2c303e',
-              }]
-            });
-          // }, 200);
-        });
+    this.database.selectData(dsh4_querySql).then(data=>{
+          dsh4_rsltAryChart=[];
+          dsh4_aryTarget_RFI=[];
+          dsh4_aryActual_RFI=[];
+          dsh4_aryTarget=[];
+          dsh4_aryActual=[];
+          dsh4_rsltAryChart.push(data);
+        if(dsh4_rsltAryChart !== undefined || dsh4_rsltAryChart.length > 0){
+          dsh4_aryCtg =dsh4_rsltAryChart[0][0]['CATEGORIES'].split(","); //Split value string string
+          dsh4_aryTarget_RFI =dsh4_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+          dsh4_aryActual_RFI =dsh4_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+          dsh4_aryTarget =dsh4_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+          dsh4_aryActual =dsh4_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+          // console.log(aryTarget_RFI);
+            // setTimeout(() => {
+              dsh4_charting.update({
+                xAxis: {
+                  categories:dsh4_aryCtg,
+                  labels: {
+                       overflow: 'justify'
+                  }
+                },
+                series: [{
+                  name: 'Target RFI',
+                  data: dsh4_aryTarget_RFI,
+                  color:'#2c303e',
+                },{
+                  name: 'Actual RFI',
+                  data: dsh4_aryActual_RFI,
+                  color:'#a50500',
+                },{
+                  name: 'Target',
+                  data: dsh4_aryTarget,
+                  color:'#2F69C5',
+                },{
+                  name: 'Actual',
+                  data: dsh4_aryActual,
+                  color:'#FF9735',
+                }
+              ]
+              });
+            // }, 200);
+        }
+    });
   }
 
   private dsh4_InitChart(){
-      const tgl = new Date();
-      const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-      charting=HighCharts.chart({
+      const dsh4_tgl = new Date();
+      const dsh4_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+      dsh4_charting=HighCharts.chart({
           chart: {
             renderTo:'dsh4-b2cChart',
             zoomType: 'x',
@@ -292,7 +322,7 @@ export class Dsh4HomePage {
             type:'areaspline'
           },
           title: {
-              text: "Project Summary of " + tgl.getDay() +" " + monthNames[tgl.getMonth()] + ' ' + tgl.getFullYear(),
+              text: "Project Summary of " + dsh4_tgl.getDay() +" " + dsh4_monthNames[dsh4_tgl.getMonth()] + ' ' + dsh4_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }
