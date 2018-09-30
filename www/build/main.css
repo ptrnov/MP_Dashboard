@@ -37639,14 +37639,15 @@ page-dsh2-home .card-box-map {
 
 page-dsh2-home .map-rfi {
   background-color: transparent;
-  margin-left: -20px;
-  margin-right: -10px;
-  width: 100px;
+  margin-left: -10px;
+  margin-right: 0px;
+  width: 80px;
+  margin-bottom: -16px;
 }
 
 page-dsh2-home .map-rfi .checkbox {
-  margin-left: -60px;
-  margin-right: -10px;
+  margin-left: -62px;
+  margin-right: -5px;
 }
 
 page-dsh2-home .map-rfi .toggle-icon {
@@ -37668,13 +37669,14 @@ page-dsh2-home .map-rfi .font-lbl {
 page-dsh2-home .map-release {
   background-color: transparent;
   margin-left: -40px;
-  margin-right: -10px;
+  margin-right: 0px;
   width: 100px;
+  margin-bottom: -16px;
 }
 
 page-dsh2-home .map-release .checkbox {
-  margin-left: -25px;
-  margin-right: -15px;
+  margin-left: -26px;
+  margin-right: -9px;
 }
 
 page-dsh2-home .map-release .toggle-icon {
@@ -37686,21 +37688,23 @@ page-dsh2-home .map-release .toggle-icon .toggle-inner {
 }
 
 page-dsh2-home .map-release .font-lbl {
-  font-size: 10px;
+  margin-left: -5px;
+  font-size: 11px;
   font-weight: bold;
   text-align: center;
 }
 
 page-dsh2-home .map-notrelease {
   background-color: transparent;
-  margin-left: -60px;
+  margin-left: -45px;
   margin-right: -70px;
   width: 150px;
+  margin-bottom: -16px;
 }
 
 page-dsh2-home .map-notrelease .checkbox {
   margin-left: -25px;
-  margin-right: -5px;
+  margin-right: 5px;
 }
 
 page-dsh2-home .map-notrelease .toggle-icon {
@@ -37712,6 +37716,7 @@ page-dsh2-home .map-notrelease .toggle-icon .toggle-inner {
 }
 
 page-dsh2-home .map-notrelease .font-lbl {
+  margin-left: -10px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -37722,6 +37727,8 @@ page-dsh2-home .map-area {
   width: 100px;
   margin-left: -20px;
   margin-right: -30px;
+  margin-top: -10px;
+  margin-bottom: -15px;
 }
 
 page-dsh2-home .map-area .item-inner {
@@ -37730,7 +37737,6 @@ page-dsh2-home .map-area .item-inner {
   font-size: 12px;
   font-weight: bold;
   text-align: right;
-  margin-top: 2px;
 }
 
 page-dsh2-home .map-area .font-lbl {
@@ -38067,14 +38073,15 @@ page-dsh3-home .cardPop .font {
 
 page-dsh3-home .map-rfi {
   background-color: transparent;
-  margin-left: -20px;
-  margin-right: -10px;
-  width: 100px;
+  margin-left: -10px;
+  margin-right: 0px;
+  width: 80px;
+  margin-bottom: -16px;
 }
 
 page-dsh3-home .map-rfi .checkbox {
-  margin-left: -60px;
-  margin-right: -10px;
+  margin-left: -62px;
+  margin-right: -5px;
 }
 
 page-dsh3-home .map-rfi .toggle-icon {
@@ -38096,13 +38103,14 @@ page-dsh3-home .map-rfi .font-lbl {
 page-dsh3-home .map-release {
   background-color: transparent;
   margin-left: -40px;
-  margin-right: -10px;
+  margin-right: 0px;
   width: 100px;
+  margin-bottom: -16px;
 }
 
 page-dsh3-home .map-release .checkbox {
-  margin-left: -25px;
-  margin-right: -15px;
+  margin-left: -26px;
+  margin-right: -9px;
 }
 
 page-dsh3-home .map-release .toggle-icon {
@@ -38114,21 +38122,23 @@ page-dsh3-home .map-release .toggle-icon .toggle-inner {
 }
 
 page-dsh3-home .map-release .font-lbl {
-  font-size: 10px;
+  margin-left: -5px;
+  font-size: 11px;
   font-weight: bold;
   text-align: center;
 }
 
 page-dsh3-home .map-notrelease {
   background-color: transparent;
-  margin-left: -60px;
+  margin-left: -45px;
   margin-right: -70px;
   width: 150px;
+  margin-bottom: -16px;
 }
 
 page-dsh3-home .map-notrelease .checkbox {
   margin-left: -25px;
-  margin-right: -5px;
+  margin-right: 5px;
 }
 
 page-dsh3-home .map-notrelease .toggle-icon {
@@ -38140,6 +38150,7 @@ page-dsh3-home .map-notrelease .toggle-icon .toggle-inner {
 }
 
 page-dsh3-home .map-notrelease .font-lbl {
+  margin-left: -10px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -38150,6 +38161,8 @@ page-dsh3-home .map-area {
   width: 100px;
   margin-left: -20px;
   margin-right: -30px;
+  margin-top: -10px;
+  margin-bottom: -15px;
 }
 
 page-dsh3-home .map-area .item-inner {
@@ -38158,7 +38171,6 @@ page-dsh3-home .map-area .item-inner {
   font-size: 12px;
   font-weight: bold;
   text-align: right;
-  margin-top: 2px;
 }
 
 page-dsh3-home .map-area .font-lbl {
@@ -38495,14 +38507,15 @@ page-dsh4-home .cardPop .font {
 
 page-dsh4-home .map-rfi {
   background-color: transparent;
-  margin-left: -20px;
-  margin-right: -10px;
-  width: 100px;
+  margin-left: -10px;
+  margin-right: 0px;
+  width: 80px;
+  margin-bottom: -16px;
 }
 
 page-dsh4-home .map-rfi .checkbox {
-  margin-left: -60px;
-  margin-right: -10px;
+  margin-left: -62px;
+  margin-right: -5px;
 }
 
 page-dsh4-home .map-rfi .toggle-icon {
@@ -38524,13 +38537,14 @@ page-dsh4-home .map-rfi .font-lbl {
 page-dsh4-home .map-release {
   background-color: transparent;
   margin-left: -40px;
-  margin-right: -10px;
+  margin-right: 0px;
   width: 100px;
+  margin-bottom: -16px;
 }
 
 page-dsh4-home .map-release .checkbox {
-  margin-left: -25px;
-  margin-right: -15px;
+  margin-left: -26px;
+  margin-right: -9px;
 }
 
 page-dsh4-home .map-release .toggle-icon {
@@ -38542,21 +38556,23 @@ page-dsh4-home .map-release .toggle-icon .toggle-inner {
 }
 
 page-dsh4-home .map-release .font-lbl {
-  font-size: 10px;
+  margin-left: -5px;
+  font-size: 11px;
   font-weight: bold;
   text-align: center;
 }
 
 page-dsh4-home .map-notrelease {
   background-color: transparent;
-  margin-left: -60px;
+  margin-left: -45px;
   margin-right: -70px;
   width: 150px;
+  margin-bottom: -16px;
 }
 
 page-dsh4-home .map-notrelease .checkbox {
   margin-left: -25px;
-  margin-right: -5px;
+  margin-right: 5px;
 }
 
 page-dsh4-home .map-notrelease .toggle-icon {
@@ -38568,6 +38584,7 @@ page-dsh4-home .map-notrelease .toggle-icon .toggle-inner {
 }
 
 page-dsh4-home .map-notrelease .font-lbl {
+  margin-left: -10px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -38578,6 +38595,8 @@ page-dsh4-home .map-area {
   width: 100px;
   margin-left: -20px;
   margin-right: -30px;
+  margin-top: -10px;
+  margin-bottom: -15px;
 }
 
 page-dsh4-home .map-area .item-inner {
@@ -38586,7 +38605,6 @@ page-dsh4-home .map-area .item-inner {
   font-size: 12px;
   font-weight: bold;
   text-align: right;
-  margin-top: 2px;
 }
 
 page-dsh4-home .map-area .font-lbl {
@@ -38923,14 +38941,15 @@ page-dsh5-home .cardPop .font {
 
 page-dsh5-home .map-rfi {
   background-color: transparent;
-  margin-left: -20px;
-  margin-right: -10px;
-  width: 100px;
+  margin-left: -10px;
+  margin-right: 0px;
+  width: 80px;
+  margin-bottom: -16px;
 }
 
 page-dsh5-home .map-rfi .checkbox {
-  margin-left: -60px;
-  margin-right: -10px;
+  margin-left: -62px;
+  margin-right: -5px;
 }
 
 page-dsh5-home .map-rfi .toggle-icon {
@@ -38952,13 +38971,14 @@ page-dsh5-home .map-rfi .font-lbl {
 page-dsh5-home .map-release {
   background-color: transparent;
   margin-left: -40px;
-  margin-right: -10px;
+  margin-right: 0px;
   width: 100px;
+  margin-bottom: -16px;
 }
 
 page-dsh5-home .map-release .checkbox {
-  margin-left: -25px;
-  margin-right: -15px;
+  margin-left: -26px;
+  margin-right: -9px;
 }
 
 page-dsh5-home .map-release .toggle-icon {
@@ -38970,21 +38990,23 @@ page-dsh5-home .map-release .toggle-icon .toggle-inner {
 }
 
 page-dsh5-home .map-release .font-lbl {
-  font-size: 10px;
+  margin-left: -5px;
+  font-size: 11px;
   font-weight: bold;
   text-align: center;
 }
 
 page-dsh5-home .map-notrelease {
   background-color: transparent;
-  margin-left: -60px;
+  margin-left: -45px;
   margin-right: -70px;
   width: 150px;
+  margin-bottom: -16px;
 }
 
 page-dsh5-home .map-notrelease .checkbox {
   margin-left: -25px;
-  margin-right: -5px;
+  margin-right: 5px;
 }
 
 page-dsh5-home .map-notrelease .toggle-icon {
@@ -38996,6 +39018,7 @@ page-dsh5-home .map-notrelease .toggle-icon .toggle-inner {
 }
 
 page-dsh5-home .map-notrelease .font-lbl {
+  margin-left: -10px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -39006,6 +39029,8 @@ page-dsh5-home .map-area {
   width: 100px;
   margin-left: -20px;
   margin-right: -30px;
+  margin-top: -10px;
+  margin-bottom: -15px;
 }
 
 page-dsh5-home .map-area .item-inner {
@@ -39014,7 +39039,6 @@ page-dsh5-home .map-area .item-inner {
   font-size: 12px;
   font-weight: bold;
   text-align: right;
-  margin-top: 2px;
 }
 
 page-dsh5-home .map-area .font-lbl {
@@ -39491,14 +39515,15 @@ page-home .cardPop .font {
 
 page-home .map-rfi {
   background-color: transparent;
-  margin-left: -20px;
-  margin-right: -10px;
-  width: 100px;
+  margin-left: -10px;
+  margin-right: 0px;
+  width: 80px;
+  margin-bottom: -16px;
 }
 
 page-home .map-rfi .checkbox {
-  margin-left: -60px;
-  margin-right: -10px;
+  margin-left: -62px;
+  margin-right: -5px;
 }
 
 page-home .map-rfi .toggle-icon {
@@ -39520,13 +39545,14 @@ page-home .map-rfi .font-lbl {
 page-home .map-release {
   background-color: transparent;
   margin-left: -40px;
-  margin-right: -10px;
+  margin-right: 0px;
   width: 100px;
+  margin-bottom: -16px;
 }
 
 page-home .map-release .checkbox {
-  margin-left: -25px;
-  margin-right: -15px;
+  margin-left: -26px;
+  margin-right: -9px;
 }
 
 page-home .map-release .toggle-icon {
@@ -39538,21 +39564,23 @@ page-home .map-release .toggle-icon .toggle-inner {
 }
 
 page-home .map-release .font-lbl {
-  font-size: 10px;
+  margin-left: -5px;
+  font-size: 11px;
   font-weight: bold;
   text-align: center;
 }
 
 page-home .map-notrelease {
   background-color: transparent;
-  margin-left: -60px;
+  margin-left: -45px;
   margin-right: -70px;
   width: 150px;
+  margin-bottom: -16px;
 }
 
 page-home .map-notrelease .checkbox {
   margin-left: -25px;
-  margin-right: -5px;
+  margin-right: 5px;
 }
 
 page-home .map-notrelease .toggle-icon {
@@ -39564,6 +39592,7 @@ page-home .map-notrelease .toggle-icon .toggle-inner {
 }
 
 page-home .map-notrelease .font-lbl {
+  margin-left: -10px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -39574,6 +39603,8 @@ page-home .map-area {
   width: 100px;
   margin-left: -20px;
   margin-right: -30px;
+  margin-top: -10px;
+  margin-bottom: -15px;
 }
 
 page-home .map-area .item-inner {
@@ -39582,7 +39613,6 @@ page-home .map-area .item-inner {
   font-size: 12px;
   font-weight: bold;
   text-align: right;
-  margin-top: 2px;
 }
 
 page-home .map-area .font-lbl {
