@@ -143,7 +143,7 @@ export class HomePage {
     this.dsh1_GetData();
     this.dsh1_initMap();
     this.dsh1_InitChart();
-    this.dsh1_UpdateDataChart();
+    // this.dsh1_UpdateDataChart();
     // this.dsh1_UpdateDataChart();
     console.log('ionViewDidLoad Dsh2HomePage');
     // if (chkInit==true){
