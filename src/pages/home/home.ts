@@ -140,7 +140,9 @@ export class HomePage {
     document.getElementById("dsh1[2]").hidden=false;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-    this.dsh1_GetData();
+    // setTimeout(()=>{
+    //   this.dsh1_GetData(); //blank
+    // },100);
     this.dsh1_initMap();
     this.dsh1_InitChart();
     // this.dsh1_UpdateDataChart();

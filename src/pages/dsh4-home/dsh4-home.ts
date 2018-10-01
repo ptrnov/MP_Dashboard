@@ -20,6 +20,14 @@ var dsh4_0card_3footer_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
 var dsh4_charting;
+var map4: any;
+let mapArrayStt = [
+  {nama: "RFI", value:false},
+  {nama: "RELEASE", value:false},
+  {nama: "NOTRELEASE", value:false},
+  {nama: "AREA", value:0}
+];
+
 @IonicPage()
 @Component({
   selector: 'page-dsh4-home',
@@ -27,13 +35,7 @@ var dsh4_charting;
 })
 export class Dsh4HomePage {
 
-  @ViewChild('map4') mapElement4: ElementRef;
-  map4: any;
-  start = 'chicago, il';
-  end = 'chicago, il';
-  // directionsService = new google.maps.DirectionsService;
-  directionsDisplay1 = new google.maps.DirectionsRenderer;
-  mapOptions4:any;
+  // @ViewChild('map4') mapElement4: ElementRef;
   private dsh4_subscription1;
   private dsh4_subscription2;
 
@@ -43,11 +45,7 @@ export class Dsh4HomePage {
     private database: DatabaseProvider,
     private dashboarAll: DashboardAllProvider,
   ) {
-    this.mapOptions4={
-      zoom: 5,
-      center: new google.maps.LatLng(-2.209764,117.114258),
-      styles: this.database._defaultNewStyle
-    };
+
   }
 
 
@@ -64,10 +62,10 @@ export class Dsh4HomePage {
     document.getElementById("dsh4_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh4_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh4_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
-    this.initMap();
+    this.map4_initMap();
     this.dsh4_InitChart();
     this.dsh4_UpdateDataChart();
-    console.log('ionViewDidLoad Dsh2HomePage');
+    console.log('ionViewDidLoad map4HomePage');
     // if (chkInit==true){
       // this.drilldown();
       //chkInit=false;
@@ -241,13 +239,201 @@ export class Dsh4HomePage {
     }
   }
 
-  initMap() {
+  public rfiChange(event: Event){
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.map4_initMap(mapArrayStt);
+  }
 
+  public releaseChange(event: Event){
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.map4_initMap(mapArrayStt);
+  }
 
-    // this.map = new google.maps.Map(this.mapElement.nativeElement, {
-    this.map4 = new google.maps.Map(document.getElementById("map4"),this.mapOptions4);
+  public notReleaseChange(event: Event) {
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.map4_initMap(mapArrayStt);
+  }
 
-    // this.directionsDisplay.setMap(this.map);
+  public areaChange(event: Event) {
+    var objIndex;
+    var intOption;
+    intOption=event;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
+    mapArrayStt[objIndex].value = intOption;
+    this.map4_initMap(mapArrayStt);
+  }
+
+  map4_initMap(qryWhere:any=null){
+    var mapOptions={
+      zoom: 4,
+      center: new google.maps.LatLng(-2.209764,117.114258),
+      styles: this.database._defaultNewStyle
+    };
+    map4 = new google.maps.Map(document.getElementById("map4"),mapOptions);
+    var rsltAryMap=[];
+    var myRFI;
+    var myRelease;
+    var myNotRelease;
+    var myLatlngRFI;
+    var myLatlngRELEASE;
+    var myLatlngNOTRELEASE;
+    var contentString;
+    var querySql;
+    querySql='';
+    if (qryWhere==null){
+      querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_MCP "
+    }else if(qryWhere!=null){
+    var concatSql;
+        concatSql='';
+    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_MCP "
+      // querySql=querySql + " WHERE " + qryWhere;
+      // console.log("test1=",qryWhere);
+      // console.log("test2=",qryWhere[0]['nama']);
+
+      var filter_GRP=[];
+      var filter_AREA;
+          filter_AREA='';
+      qryWhere.forEach(el=>{
+        if (el.value==true){
+          filter_GRP.push("'"+el.nama+"'");
+        }
+        if (el.value!=0){
+          filter_AREA=" AND AREA='" + el.value + "'";
+        }
+      })
+      if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
+        concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
+      }
+      if(qryWhere[3]['value']!=0){
+        concatSql=concatSql + filter_AREA;
+      }
+      querySql=sqlDefault + concatSql;
+      console.log("concat=", filter_GRP);
+
+    }
+       this.database.selectData(querySql).then(data=>{
+        rsltAryMap=[];
+        rsltAryMap.push(data);
+        if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+          setTimeout(()=>{
+            for (var i = 0; i < rsltAryMap[0].length; i++) {
+              contentString = '<div id="content">' +
+                              '<div id="siteNotice">' +
+                              '</div>' +
+                              '<div id="bodyContent">' +
+                              '<table>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Project ID</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Site Name</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Area</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Regional</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>SOW</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<tr>' +
+                              '<td><font color="black"><b>Status</b></font></td>' +
+                              '<td style="width:6%"><font color="black">:</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
+                              '</tr>' +
+                              '<tr>' +
+                              '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                              '</tr>' +
+                              '</table>' +
+                              '</div>';
+              var myInfoWindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+              if (rsltAryMap[0][i]['GRP']=='RFI'){
+                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              }
+              if (rsltAryMap[0][i]['GRP']=='RELEASE'){
+                myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              }
+              if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
+                myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              }
+
+              myRFI = new google.maps.Circle({
+                center: myLatlngRFI,
+                radius: 10000,
+                strokeColor: "rgb(19, 148, 40)", //color_status,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#449af0",
+                fillOpacity: 0.4,
+                infowindow: myInfoWindow
+              });
+
+              myRelease = new google.maps.Circle({
+                  center: myLatlngRELEASE,
+                  radius: 10000,
+                  strokeColor: "rgb(240, 205, 10)", //color_status,
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: "#449af0",
+                  infowindow: myInfoWindow
+              });
+
+              myNotRelease = new google.maps.Circle({
+                center: myLatlngNOTRELEASE,
+                radius: 10000,
+                strokeColor: "rgb(243, 9, 9)", //color_status,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#449af0",
+                fillOpacity: 0.4,
+                infowindow: myInfoWindow
+            });
+
+              myRFI.setMap(map4);
+              myRelease.setMap(map4);
+              myNotRelease.setMap(map4);
+                google.maps.event.addListener(myRFI, 'click', function(ev) {
+                  this.infowindow.setPosition(ev.latLng);
+                  this.infowindow.open(this.map4, this);
+                });
+                google.maps.event.addListener(myRelease, 'click', function(ev) {
+                  this.infowindow.setPosition(ev.latLng);
+                  this.infowindow.open(this.map4, this);
+                });
+                google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+                  this.infowindow.setPosition(ev.latLng);
+                  this.infowindow.open(this.map4, this);
+                });
+          }
+        },500);
+      }
+    });
   }
 
   goToAccount() {
@@ -262,7 +448,7 @@ export class Dsh4HomePage {
     var dsh4_aryTarget=[];
     var dsh4_aryActual=[];
     var dsh4_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
-                  +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
+                  +" WHERE ID_CHART='mp004' AND BULAN='09' AND TAHUN='2018'";
                   // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
     this.database.selectData(dsh4_querySql).then(data=>{
           dsh4_rsltAryChart=[];

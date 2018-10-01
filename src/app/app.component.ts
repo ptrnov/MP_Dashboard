@@ -12,7 +12,7 @@ import { Dsh3HomePage} from '../pages/dsh3-home/dsh3-home';
 import { Dsh4HomePage} from '../pages/dsh4-home/dsh4-home';
 import { Dsh5HomePage} from '../pages/dsh5-home/dsh5-home';
 import { Dsh6HomePage} from '../pages/dsh6-home/dsh6-home';
-import { Dsh7HomePage} from '../pages/dsh7-home/dsh7-home';
+// import { Dsh7HomePage} from '../pages/dsh7-home/dsh7-home';
 
 export interface MenuItem {
     title: string;

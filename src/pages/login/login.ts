@@ -31,6 +31,11 @@ export class LoginPage {
     this.dashboarAll.getChartData();
     this.dashboarAll.getSetting();
     this.dashboarAll.getMapData();
+    this.dashboarAll.getMapB2s();
+    this.dashboarAll.getMapCore();
+    this.dashboarAll.getMapMcp();
+    this.dashboarAll.getMapSp();
+    this.dashboarAll.getUser();
   }
   // go to register page
   register() {

@@ -1158,26 +1158,26 @@
             <ion-col col-3 class="full-width">
                 <ion-item class="map-rfi">
                   <ion-label class="font-lbl">RFI</ion-label>
-                  <ion-toggle color="rfi" class="checkbox" checked="false"></ion-toggle>
+                  <ion-toggle (ionChange)="rfiChange($event)" color="rfi" class="checkbox" checked="false"></ion-toggle>
                 </ion-item>
             </ion-col>
             <ion-col col-3 class="full-width">
                 <ion-item class="map-release">
                   <ion-label class="font-lbl" >Release</ion-label>
-                  <ion-toggle color="release" class="checkbox" checked="false"></ion-toggle>
+                  <ion-toggle (ionChange)="releaseChange($event)" color="release" class="checkbox" checked="false"></ion-toggle>
                 </ion-item>
             </ion-col>
             <ion-col col-3 class="full-width">
                 <ion-item class="map-notrelease">
                   <ion-label class="font-lbl" >Not Release</ion-label>
-                  <ion-toggle color="notrelease" class="checkbox" checked="false"></ion-toggle>
+                  <ion-toggle (ionChange)="notReleaseChange($event)" (ionChange)="notReleaseChange($event)" color="notrelease" class="checkbox" checked="false"></ion-toggle>
                 </ion-item>
             </ion-col>
             <ion-col cal-3 class="labelarea full-width">
               <ion-row>
                 <ion-label class=" font-lbl">Area : </ion-label>
                 <ion-item class="map-area full-width">
-                    <ion-select [(ngModel)]="area" cancelText="Cancel" okText="OK">
+                    <ion-select (ionChange)="areaChange($event)"  [(ngModel)]="area" cancelText="Cancel" okText="OK">
                       <ion-option value="0" selected="true">All</ion-option>
                       <ion-option value="1">Area 1</ion-option>
                       <ion-option value="2">Area 2</ion-option>

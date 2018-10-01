@@ -315,7 +315,7 @@ export class DashboardAllProvider {
         });
     }
 
-    /* MAP DATA PROJECT
+    /* MAP DATA ALL PROJECT
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
     * SQLite    : Live Mobile Storage.
@@ -349,6 +349,169 @@ export class DashboardAllProvider {
         });
     }
 
+    /* MAP DATA B2S PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapB2s():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapb2c").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_B2S (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.BULAN,
+              element.TAHUN,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* MAP DATA CORE PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapCore():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapcore").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.BULAN,
+              element.TAHUN,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* MAP DATA MICROCEL PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+    getMapMcp():void {
+      // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+      var x1=this.http.get(this.url + "Mobile_Dashboard/mapmicrocell").map(res => res.json());
+          x1.subscribe(data => {
+            // var data=res.json();
+            var qry="INSERT OR REPLACE INTO TBL_PETA_MCP (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            data.Release.forEach(element => {
+              this.database.insertData(qry,[
+                element.GRP,
+                element.PROJECT_ID,
+                element.BULAN,
+                element.TAHUN,
+                element.AREA,
+                element.LAT,
+                element.LONG,
+                element.RADIUS,
+                element.SITE_NM,
+                element.TENAN_NM,
+                element.REGIONAL,
+                element.SOW,
+                element.STATUS
+              ]);
+            });
+            console.log("success load Api - MAP Data Project");
+          });
+    }
+
+    /* MAP DATA SPECIAL PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapSp():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapsp").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_SP (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.BULAN,
+              element.TAHUN,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+  }
+
+
+  /* MAP USER
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getUser():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/user").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_USER (USER_ID,USERNAME,PASSWORD,REAL_NAME,EMAIL,USER_GROUP) VALUES (?,?,?,?,?,?)";
+          data.user.forEach(element => {
+            this.database.insertData(qry,[
+              element.USER_ID,
+              element.USERNAME,
+              element.PASSWORD,
+              element.REAL_NAME,
+              element.EMAIL,
+              element.USER_GROUP
+            ]);
+          });
+          console.log("success load Api - User");
+        });
+  }
     /* APP SETTING
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
