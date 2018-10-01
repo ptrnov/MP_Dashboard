@@ -36,4 +36,6 @@ ver 1.0.0
 13. issue: application error the connection to the server was unsuccessful file:///android_asset/www/index.html)
     soluation add in config.eml
     <preference name="loadUrlTimeoutValue" value="700000" />
+release
+ionic cordova build android --prod --release
 ````
