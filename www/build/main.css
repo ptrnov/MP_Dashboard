@@ -39184,6 +39184,167 @@ page-dsh6-home .cardArea2 {
   vertical-align: middle;
 }
 
+page-dsh6-home .box-ref1 {
+  background-color: #39495E;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+}
+
+page-dsh6-home .box-ref1 .hdr_lbl {
+  margin-top: -10px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  margin-left: -5px;
+  font-size: 9px;
+  text-align: center;
+}
+
+page-dsh6-home .box-ref1 .content_lbl {
+  margin-top: -15px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  font-size: 22px;
+}
+
+page-dsh6-home .box-ref2 {
+  background-color: #EF4D49;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 50px;
+  height: 50px;
+  margin-top: -5px;
+}
+
+page-dsh6-home .box-ref2 .hdr_lbl {
+  margin-top: -10px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  margin-left: -5px;
+  font-size: 9px;
+  text-align: center;
+}
+
+page-dsh6-home .box-ref2 .content_lbl {
+  margin-top: -15px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  font-size: 22px;
+}
+
+page-dsh6-home .box-ref3 {
+  background-color: #A45BB0;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 50px;
+  height: 50px;
+  margin-top: -5px;
+}
+
+page-dsh6-home .box-ref3 .hdr_lbl {
+  margin-top: -10px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  margin-left: -5px;
+  font-size: 9px;
+  text-align: center;
+}
+
+page-dsh6-home .box-ref3 .content_lbl {
+  margin-top: -15px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  font-size: 22px;
+}
+
+page-dsh6-home .box-ref4 {
+  background-color: #3D99D5;
+  border-radius: 7px 7px 7px 7px;
+  border: 1px solid #e2e2e2;
+  width: 50px;
+  height: 50px;
+  margin-top: -5px;
+  margin-bottom: 50px;
+}
+
+page-dsh6-home .box-ref4 .hdr_lbl {
+  margin-top: -10px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  margin-left: -5px;
+  font-size: 9px;
+  text-align: center;
+}
+
+page-dsh6-home .box-ref4 .content_lbl {
+  margin-top: -15px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  font-size: 22px;
+}
+
+page-dsh6-home .dcrip_lbl {
+  color: black;
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial;
+  text-align: left;
+  width: 100%;
+}
+
+page-dsh6-home .flowButton {
+  width: 100%;
+  text-align: center;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #a4e271;
+  box-shadow: inset 0px 1px 0px 0px #a4e271;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #89c403), to(#77a809));
+  background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+  background-color: #89c403;
+  border-radius: 6px;
+  border: 1px solid #74b807;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #528009;
+}
+
+page-dsh6-home .flowButton:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #77a809), to(#89c403));
+  background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
+  background-color: #77a809;
+}
+
+page-dsh6-home .flowButton:active {
+  position: relative;
+  top: 1px;
+}
+
 page-dsh7-home ion-scroll {
   width: 100%;
   font-size: 40px;

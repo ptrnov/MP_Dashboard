@@ -4,7 +4,8 @@ import {SettingsPage} from "../settings/settings";
 import { SelectSearchableComponent  } from 'ionic-select-searchable';
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
-import * as HighCharts from "highcharts";
+import * as Highcharts from "highcharts";
+import addMore from "highcharts/highcharts-more";
 
 // var aryListMitra=[];
 
@@ -305,11 +306,11 @@ export class Dsh6HomePage {
   }
 
   getCharting(){
-    var charting=HighCharts.chart({
+    Highcharts.chart({
       chart: {
         renderTo:"chartDonut",
-        // plotBackgroundColor: null,
-        // plotBorderWidth: null,
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
         plotShadow: false,
         type: 'pie'
       },
@@ -327,14 +328,14 @@ export class Dsh6HomePage {
             enabled: true,
             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
             style: {
-              color: 'black'
+              color:'(Highcharts && Highcharts.theme.contrastTextColor)' || 'black'
             }
           }
         }
       },
       series: [{
           name: 'Brands',
-          colorByPoint: true,
+          // colorByPoint: true,
           data: [{
             name: 'Progress Is 100% -',
             y: 0,
