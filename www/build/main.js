@@ -4346,6 +4346,10 @@ var Dsh5HomePage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_database_database__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_highcharts__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_highcharts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_highcharts__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4358,37 +4362,371 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
+// var aryListMitra=[];
 var Port = (function () {
     function Port() {
     }
     return Port;
 }());
+var setTotal = 0;
+var clk_b2s = 0;
+var clk_core = 0;
+var clk_micro = 0;
+var clk_sp = 0;
+var clk_b2sArea1;
+var clk_b2sArea2;
+var clk_b2sArea3;
+var clk_b2sArea4;
+var clk_coreArea1;
+var clk_coreArea2;
+var clk_coreArea3;
+var clk_coreArea4;
+var clk_microArea1;
+var clk_microArea2;
+var clk_microArea3;
+var clk_microArea4;
+var clk_spArea1;
+var clk_spArea2;
+var clk_spArea3;
+var clk_spArea4;
+var charting;
 var Dsh6HomePage = (function () {
-    function Dsh6HomePage(navCtrl, navParams) {
+    function Dsh6HomePage(navCtrl, navParams, dashboarAll, database) {
+        // this.ports = [
+        //   { id: 1, name: 'Tokai' },
+        //   { id: 2, name: 'Vladivostok' },
+        //   { id: 3, name: 'Navlakhi' }
+        // ];
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.ports = [
-            { id: 1, name: 'Tokai' },
-            { id: 2, name: 'Vladivostok' },
-            { id: 3, name: 'Navlakhi' }
-        ];
+        this.dashboarAll = dashboarAll;
+        this.database = database;
     }
-    Dsh6HomePage.prototype.portChange = function (event) {
-        console.log('port:', event.value);
-    };
     Dsh6HomePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad Dsh6HomePage');
+        document.getElementById("b2s_area").hidden = true;
+        document.getElementById("core_area").hidden = true;
+        document.getElementById("micro_area").hidden = true;
+        document.getElementById("special_area").hidden = true;
+        document.getElementById("card-view").hidden = true;
+        this.getCharting();
+        this.getListMitra();
+    };
+    Dsh6HomePage.prototype.getListMitra = function () {
+        var _this = this;
+        var aryRslt = [];
+        aryRslt = [];
+        var querySql = "SELECT DISTINCT VENDOR_ID,VENDOR_NM FROM TBL_MITRALIST ORDER BY VENDOR_NM ASC";
+        this.database.selectData(querySql).then(function (data) {
+            aryRslt.push(data);
+            _this.aryListMitra = aryRslt[0];
+        });
+    };
+    Dsh6HomePage.prototype.portChange = function (event) {
+        console.log('port:', event.value);
     };
     Dsh6HomePage.prototype.goToAccount = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
     };
+    Dsh6HomePage.prototype.setTotalClick = function (event) {
+        if (setTotal == 0) {
+            document.getElementById("card-view").hidden = false;
+            setTotal = 1;
+        }
+        else {
+            document.getElementById("card-view").hidden = true;
+            setTotal = 0;
+        }
+    };
+    Dsh6HomePage.prototype.setB2sClick = function () {
+        if (clk_b2s == 0) {
+            document.getElementById("b2s_area").hidden = false;
+            document.getElementById("b2s_area1").hidden = true;
+            document.getElementById("b2s_area2").hidden = true;
+            document.getElementById("b2s_area3").hidden = true;
+            document.getElementById("b2s_area4").hidden = true;
+            clk_b2s = 1;
+        }
+        else {
+            document.getElementById("b2s_area").hidden = true;
+            clk_b2s = 0;
+        }
+    };
+    /** B2S-AREA CLICK */
+    Dsh6HomePage.prototype.b2sArea1 = function () {
+        if (clk_b2sArea1 == 0) {
+            document.getElementById("b2s_area1").hidden = false;
+            clk_b2sArea1 = 1;
+        }
+        else {
+            document.getElementById("b2s_area1").hidden = true;
+            clk_b2sArea1 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.b2sArea2 = function () {
+        if (clk_b2sArea2 == 0) {
+            document.getElementById("b2s_area2").hidden = false;
+            clk_b2sArea2 = 1;
+        }
+        else {
+            document.getElementById("b2s_area2").hidden = true;
+            clk_b2sArea2 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.b2sArea3 = function () {
+        if (clk_b2sArea3 == 0) {
+            document.getElementById("b2s_area3").hidden = false;
+            clk_b2sArea3 = 1;
+        }
+        else {
+            document.getElementById("b2s_area3").hidden = true;
+            clk_b2sArea3 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.b2sArea4 = function () {
+        if (clk_b2sArea4 == 0) {
+            document.getElementById("b2s_area4").hidden = false;
+            clk_b2sArea4 = 1;
+        }
+        else {
+            document.getElementById("b2s_area4").hidden = true;
+            clk_b2sArea4 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.setCoreClick = function () {
+        if (clk_core == 0) {
+            document.getElementById("core_area").hidden = false;
+            document.getElementById("core_area1").hidden = true;
+            document.getElementById("core_area2").hidden = true;
+            document.getElementById("core_area3").hidden = true;
+            document.getElementById("core_area4").hidden = true;
+            clk_core = 1;
+        }
+        else {
+            document.getElementById("core_area").hidden = true;
+            clk_core = 0;
+        }
+    };
+    /** CORE-AREA CLICK */
+    Dsh6HomePage.prototype.coreArea1 = function () {
+        if (clk_coreArea1 == 0) {
+            document.getElementById("core_area1").hidden = false;
+            clk_coreArea1 = 1;
+        }
+        else {
+            document.getElementById("core_area1").hidden = true;
+            clk_coreArea1 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.coreArea2 = function () {
+        if (clk_coreArea2 == 0) {
+            document.getElementById("core_area2").hidden = false;
+            clk_coreArea2 = 1;
+        }
+        else {
+            document.getElementById("core_area2").hidden = true;
+            clk_coreArea2 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.coreArea3 = function () {
+        if (clk_coreArea3 == 0) {
+            document.getElementById("core_area3").hidden = false;
+            clk_coreArea3 = 1;
+        }
+        else {
+            document.getElementById("core_area3").hidden = true;
+            clk_coreArea3 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.coreArea4 = function () {
+        if (clk_coreArea4 == 0) {
+            document.getElementById("core_area4").hidden = false;
+            clk_coreArea4 = 1;
+        }
+        else {
+            document.getElementById("core_area4").hidden = true;
+            clk_coreArea4 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.setMicroClick = function () {
+        if (clk_micro == 0) {
+            document.getElementById("micro_area").hidden = false;
+            document.getElementById("micro_area1").hidden = true;
+            document.getElementById("micro_area2").hidden = true;
+            document.getElementById("micro_area3").hidden = true;
+            document.getElementById("micro_area4").hidden = true;
+            clk_micro = 1;
+        }
+        else {
+            document.getElementById("micro_area").hidden = true;
+            clk_micro = 0;
+        }
+    };
+    /** Micro-AREA CLICK */
+    Dsh6HomePage.prototype.microArea1 = function () {
+        if (clk_microArea1 == 0) {
+            document.getElementById("micro_area1").hidden = false;
+            clk_microArea1 = 1;
+        }
+        else {
+            document.getElementById("micro_area1").hidden = true;
+            clk_microArea1 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.microArea2 = function () {
+        if (clk_microArea2 == 0) {
+            document.getElementById("micro_area2").hidden = false;
+            clk_microArea2 = 1;
+        }
+        else {
+            document.getElementById("micro_area2").hidden = true;
+            clk_microArea2 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.microArea3 = function () {
+        if (clk_microArea3 == 0) {
+            document.getElementById("micro_area3").hidden = false;
+            clk_microArea3 = 1;
+        }
+        else {
+            document.getElementById("micro_area3").hidden = true;
+            clk_microArea3 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.microArea4 = function () {
+        if (clk_microArea4 == 0) {
+            document.getElementById("micro_area4").hidden = false;
+            clk_microArea4 = 1;
+        }
+        else {
+            document.getElementById("micro_area4").hidden = true;
+            clk_microArea4 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.setSpClick = function () {
+        if (clk_sp == 0) {
+            document.getElementById("special_area").hidden = false;
+            document.getElementById("sp_area1").hidden = true;
+            document.getElementById("sp_area2").hidden = true;
+            document.getElementById("sp_area3").hidden = true;
+            document.getElementById("sp_area4").hidden = true;
+            clk_sp = 1;
+        }
+        else {
+            document.getElementById("special_area").hidden = true;
+            clk_sp = 0;
+        }
+    };
+    /** Special-AREA CLICK */
+    Dsh6HomePage.prototype.spArea1 = function () {
+        if (clk_spArea1 == 0) {
+            document.getElementById("sp_area1").hidden = false;
+            clk_spArea1 = 1;
+        }
+        else {
+            document.getElementById("sp_area1").hidden = true;
+            clk_spArea1 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.spArea2 = function () {
+        if (clk_spArea2 == 0) {
+            document.getElementById("sp_area2").hidden = false;
+            clk_spArea2 = 1;
+        }
+        else {
+            document.getElementById("sp_area2").hidden = true;
+            clk_spArea2 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.spArea3 = function () {
+        if (clk_spArea3 == 0) {
+            document.getElementById("sp_area3").hidden = false;
+            clk_spArea3 = 1;
+        }
+        else {
+            document.getElementById("sp_area3").hidden = true;
+            clk_spArea3 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.spArea4 = function () {
+        if (clk_spArea4 == 0) {
+            document.getElementById("sp_area4").hidden = false;
+            clk_spArea4 = 1;
+        }
+        else {
+            document.getElementById("sp_area4").hidden = true;
+            clk_spArea4 = 0;
+        }
+    };
+    Dsh6HomePage.prototype.getCharting = function () {
+        var charting = __WEBPACK_IMPORTED_MODULE_5_highcharts__["chart"]({
+            chart: {
+                renderTo: "chartDonut",
+                // plotBackgroundColor: null,
+                // plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Activity Status by Mitra'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: [{
+                            name: 'Progress Is 100% -',
+                            y: 0,
+                            color: 'blue',
+                            sliced: true,
+                            selected: true
+                        }, {
+                            color: 'gray',
+                            name: 'Progress Is Null',
+                            y: 0
+                        }, {
+                            color: 'green',
+                            name: 'Approve',
+                            y: 0
+                        }, {
+                            color: 'orange',
+                            name: 'Need Approval',
+                            y: 0
+                        }, {
+                            color: 'red',
+                            name: 'Reject',
+                            y: 0
+                        }
+                    ]
+                }]
+        });
+    };
     Dsh6HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dsh6-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Mitra Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n            <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n                <ion-row>\n                    <ion-col col-12>\n                        <ion-card class="box1 full-width">\n                          <ion-row>\n                            <ion-item style="margin-left:10px;background-color:white">\n                            <ion-label>Data Filter</ion-label>\n                            <select-searchable\n                              item-content\n                              headerColor="primary"\n                              groupColor="white"\n                              [(ngModel)]="port"\n                              [items]="ports"\n                              itemValueField="id"\n                              itemTextField="name"\n                              [canSearch]="true"\n                              [hasVirtualScroll]="true"\n                              (onChange)="portChange($event)">\n                            </select-searchable>\n                          </ion-item>\n                        </ion-row>\n                        </ion-card>\n                      </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col col-12 style="margin-top: -10px">\n                    <ion-card class="box1 full-width">\n                      asd\n                    </ion-card>\n                  </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/,
+            selector: 'page-dsh6-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Mitra Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n            <ion-grid class="common-bg" style="margin-left: -10px; margin-top: -5px">\n                <ion-row>\n                    <ion-col col-12>\n                        <ion-card class="box1 full-width">\n                              <ion-row>\n                                <ion-item style="margin-left:10px;background-color:white">\n                                <ion-label>Data Filter</ion-label>\n                                <select-searchable\n                                  item-content\n                                  [(ngModel)]="port"\n                                  [items]="aryListMitra"\n                                  itemValueField="VENDOR_ID"\n                                  itemTextField="VENDOR_NM"\n                                  [canSearch]="true"\n                                  [hasVirtualScroll]="true"\n                                  (onChange)="portChange($event)">\n                                </select-searchable>\n                              </ion-item>\n                            </ion-row>\n                            <ion-row class="full-width">\n                              <button class="mitraButton1"  (click)="setTotalClick($event)">Total Project</button>\n                            </ion-row>\n                        </ion-card>\n                      </ion-col>\n                </ion-row>\n                <ion-row id="card-view">\n                    <ion-col col-3 style="margin-top: -10px">\n                      <ion-card class="cardHead" (click)="setB2sClick()">\n                        B2S\n                      </ion-card>\n                    </ion-col>\n                    <ion-col col-3 style="margin-top: -10px">\n                      <ion-card class="cardHead" (click)="setCoreClick()">\n                        Core\n                      </ion-card>\n                    </ion-col>\n                    <ion-col col-3 style="margin-top: -10px">\n                      <ion-card class="cardHead" (click)="setMicroClick()">\n                        Micro\n                      </ion-card>\n                    </ion-col>\n                    <ion-col col-3 style="margin-top: -10px">\n                      <ion-card class="cardHead" (click)="setSpClick()">\n                        Special\n                      </ion-card>\n                    </ion-col>\n                </ion-row>\n                <!-- B2S - Area -->\n                <ion-row>\n                    <ion-col col-3 style="margin-top: -10px">\n                      <div class="full-width" id="b2s_area">\n                        <ion-card class="cardArea1" id="b2s_area[0]"  (click)="b2sArea1()">\n                          Area 1\n                        </ion-card>\n                        <div style="margin-top:-10px" id="b2s_area1">\n                            <ion-card class="cardArea2">\n                                SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                CME(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFI(0)\n                              </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="b2s_area[1]" (click)="b2sArea2()">\n                          Area 2\n                        </ion-card>\n                        <div style="margin-top:-10px"  id="b2s_area2">\n                            <ion-card class="cardArea2">\n                                SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                CME(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFI(0)\n                              </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="b2s_area[2]" (click)="b2sArea3()">\n                          Area 3\n                        </ion-card>\n                        <div style="margin-top:-10px"  id="b2s_area3">\n                            <ion-card class="cardArea2">\n                                SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                CME(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFI(0)\n                              </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="b2s_area[3]" (click)="b2sArea4()">\n                          Area 4\n                        </ion-card>\n                        <div style="margin-top:-10px"  id="b2s_area4">\n                            <ion-card class="cardArea2">\n                                SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                CME(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                RFI(0)\n                              </ion-card>\n                        </div>\n                      </div>\n                  </ion-col>\n\n                  <!-- CORE - Area -->\n                  <ion-col col-3 style="margin-top: -10px">\n                      <div class="full-width" id="core_area">\n                        <ion-card class="cardArea1" id="core_area[0]" (click)="coreArea1()">\n                          Area 1\n                        </ion-card>\n                        <div style="margin-top:-10px" id="core_area1">\n                            <ion-card class="cardArea2">\n                                S&SITAC(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                CME(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                RFI(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                BAUT(0)\n                            </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="core_area[1]" (click)="coreArea2()">\n                          Area 2\n                        </ion-card>\n                        <div style="margin-top:-10px" id="core_area2">\n                            <ion-card class="cardArea2">\n                                S&SITAC(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                CME(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                RFI(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                BAUT(0)\n                            </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="core_area[2]" (click)="coreArea3()">\n                          Area 3\n                        </ion-card>\n                        <div style="margin-top:-10px" id="core_area3">\n                            <ion-card class="cardArea2">\n                                S&SITAC(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                CME(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                RFI(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                BAUT(0)\n                            </ion-card>\n                        </div>\n                        <ion-card class="cardArea1" id="core_area[3]" (click)="coreArea4()">\n                          Area 4\n                        </ion-card>\n                        <div style="margin-top:-10px" id="core_area4">\n                            <ion-card class="cardArea2">\n                                S&SITAC(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                CME(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                RFI(0)\n                            </ion-card>\n                            <ion-card class="cardArea2">\n                                BAUT(0)\n                            </ion-card>\n                        </div>\n                      </div>\n                  </ion-col>\n\n                  <!-- Micro - Area -->\n                  <ion-col col-3 style="margin-top: -10px">\n                      <div class="full-width" id="micro_area">\n                        <ion-card class="cardArea1" id="micro_area[0]"  (click)="microArea1()">\n                          Area 1\n                        </ion-card>\n                          <div style="margin-top:-10px" id="micro_area1">\n                              <ion-card class="cardArea2">\n                                  SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CME Pole(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  FO (0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CMBTSR(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFI(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="micro_area[1]"   (click)="microArea2()">\n                          Area 2\n                        </ion-card>\n                          <div style="margin-top:-10px" id="micro_area2">\n                              <ion-card class="cardArea2">\n                                  SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CME Pole(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  FO (0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CMBTSR(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFI(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="micro_area[2]" (click)="microArea3()">\n                          Area 3\n                        </ion-card>\n                          <div style="margin-top:-10px" id="micro_area3">\n                              <ion-card class="cardArea2">\n                                  SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CME Pole(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  FO (0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CMBTSR(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFI(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="micro_area[3]"  (click)="microArea4()">\n                          Area 4\n                        </ion-card>\n                          <div style="margin-top:-10px" id="micro_area4">\n                              <ion-card class="cardArea2">\n                                  SIS(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-1(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  SITAC-2(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CME Pole(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFC(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  FO (0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  CMBTSR(0)\n                              </ion-card>\n                              <ion-card class="cardArea2">\n                                  RFI(0)\n                              </ion-card>\n                          </div>\n                      </div>\n                  </ion-col>\n                  <!-- Special - Area -->\n                  <ion-col col-3 style="margin-top: -10px">\n                      <div class="full-width" id="special_area">\n                        <ion-card class="cardArea1" id="special_area[0]" (click)="spArea1()">\n                          Area 1\n                        </ion-card>\n                          <div style="margin-top:-10px" id="sp_area1">\n                              <ion-card class="cardArea2">\n                                  BAST(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="special_area[1]" (click)="spArea2()">\n                          Area 2\n                        </ion-card>\n                          <div style="margin-top:-10px" id="sp_area2">\n                              <ion-card class="cardArea2">\n                                  BAST(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="special_area[2]" (click)="spArea3()">\n                          Area 3\n                        </ion-card>\n                          <div style="margin-top:-10px" id="sp_area3">\n                              <ion-card class="cardArea2">\n                                  BAST(0)\n                              </ion-card>\n                          </div>\n                        <ion-card class="cardArea1" id="special_area[3]" (click)="spArea4()">\n                          Area 4\n                        </ion-card>\n                          <div style="margin-top:-10px" id="sp_area4">\n                              <ion-card class="cardArea2">\n                                  BAST(0)\n                              </ion-card>\n                          </div>\n                      </div>\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col col-12 style="margin-top: -10px">\n                    <ion-card class="box2 full-width" id="chartDonut">\n                    </ion-card>\n                  </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh6-home\dsh6-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_dashboard_all_dashboard_all__["a" /* DashboardAllProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_database_database__["a" /* DatabaseProvider */]) === "function" && _d || Object])
     ], Dsh6HomePage);
     return Dsh6HomePage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=dsh6-home.js.map
@@ -4429,31 +4767,31 @@ var map = {
 		9
 	],
 	"../pages/dsh1-second-rfi/dsh1-second-rfi.module": [
-		722,
+		716,
 		8
 	],
 	"../pages/dsh2-home/dsh2-home.module": [
-		716,
+		717,
 		7
 	],
 	"../pages/dsh3-home/dsh3-home.module": [
-		717,
+		718,
 		6
 	],
 	"../pages/dsh4-home/dsh4-home.module": [
-		718,
+		719,
 		5
 	],
 	"../pages/dsh5-home/dsh5-home.module": [
-		719,
+		720,
 		4
 	],
 	"../pages/dsh6-home/dsh6-home.module": [
-		720,
+		721,
 		3
 	],
 	"../pages/dsh7-home/dsh7-home.module": [
-		721,
+		722,
 		2
 	],
 	"../pages/peta/peta.module": [
@@ -5270,9 +5608,10 @@ var Dsh7HomePage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-dsh7-home',template:/*ion-inline-start:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh7-home\dsh7-home.html"*/'<ion-header color="primary">\n    <ion-navbar color="primary">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n          <div style="width:100%; text-align: center">\n              <div class="norepease-logo"></div>\n              <ion-label>Summary Dashboard</ion-label>\n          </div>\n      </ion-title>\n      <ion-buttons end>\n        <!-- <button ion-button tappable (click)="presentNotifications($event)"> -->\n        <!-- <button ion-button  class="circle"> -->\n            <!-- <img class="home-indikator" src="../assets/img/circle_btn_red"> -->\n          <!-- <ion-icon name="notifications"></ion-icon> -->\n        <!-- </button> -->\n        <!-- <button ion-button tappable>\n            <img class="home-satelit" src="assets/img/satellite.png">\n        </button> -->\n        <button ion-button tappable (click)="goToAccount()">\n            <ion-icon name="cog"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content class="common-bg">\n      <ion-scroll scrollY="true">\n        <ion-row>\n\n\n        </ion-row>\n      </ion-scroll>\n  </ion-content>\n'/*ion-inline-end:"E:\ionicProject\MP_Dashboard\MP_Dashboard\src\pages\dsh7-home\dsh7-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object])
     ], Dsh7HomePage);
     return Dsh7HomePage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=dsh7-home.js.map
@@ -5434,13 +5773,13 @@ var AppModule = (function () {
                         { loadChildren: '../pages/dsh1-second-afterrfi/dsh1-second-afterrfi.module#Dsh1SecondAfterrfiPageModule', name: 'Dsh1SecondAfterrfiPage', segment: 'dsh1-second-afterrfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-norelease/dsh1-second-norelease.module#Dsh1SecondNoreleasePageModule', name: 'Dsh1SecondNoreleasePage', segment: 'dsh1-second-norelease', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh1-second-prjonpipe/dsh1-second-prjonpipe.module#Dsh1SecondPrjonpipePageModule', name: 'Dsh1SecondPrjonpipePage', segment: 'dsh1-second-prjonpipe', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh2-home/dsh2-home.module#Dsh2HomePageModule', name: 'Dsh2HomePage', segment: 'dsh2-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh3-home/dsh3-home.module#Dsh3HomePageModule', name: 'Dsh3HomePage', segment: 'dsh3-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh4-home/dsh4-home.module#Dsh4HomePageModule', name: 'Dsh4HomePage', segment: 'dsh4-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh5-home/dsh5-home.module#Dsh5HomePageModule', name: 'Dsh5HomePage', segment: 'dsh5-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh6-home/dsh6-home.module#Dsh6HomePageModule', name: 'Dsh6HomePage', segment: 'dsh6-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dsh7-home/dsh7-home.module#Dsh7HomePageModule', name: 'Dsh7HomePage', segment: 'dsh7-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dsh1-second-rfi/dsh1-second-rfi.module#Dsh1SecondRfiPageModule', name: 'Dsh1SecondRfiPage', segment: 'dsh1-second-rfi', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/peta/peta.module#PetaPageModule', name: 'PetaPage', segment: 'peta', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                     ]
@@ -5584,6 +5923,12 @@ var GET_STRING_TABLE = [
         NAME: "CREATE USER",
         TABEL: "CREATE TABLE IF NOT EXISTS TBL_USER(USER_ID TEXT,USERNAME TEXT,PASSWORD TEXT,REAL_NAME TEXT,EMAIL TEXT,USER_GROUP TEXT)",
         UNIQUE: "CREATE UNIQUE INDEX IF NOT EXISTS TBL_PETA_SP_UNIQ_ID ON TBL_PETA_SP (USER_ID,USERNAME)",
+    },
+    {
+        ID: 15,
+        NAME: "CREATE MITRA LIST",
+        TABEL: "CREATE TABLE IF NOT EXISTS TBL_MITRALIST(VENDOR_ID TEXT,VENDOR_NM TEXT)",
+        UNIQUE: "CREATE UNIQUE INDEX IF NOT EXISTS TBL_MITRALIST_UNIQ_ID ON TBL_MITRALIST (VENDOR_ID)",
     }
 ];
 //# sourceMappingURL=tabel.js.map
@@ -7000,6 +7345,29 @@ var DashboardAllProvider = (function () {
       * WebSql    : Develompent debug database,table,query.
       * Author    : ptr.nov@gmail.com
       */
+    DashboardAllProvider.prototype.getMitraList = function () {
+        var _this = this;
+        // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+        var x1 = this.http.get(this.url + "Mobile_Dashboard/mitralist").map(function (res) { return res.json(); });
+        x1.subscribe(function (data) {
+            // var data=res.json();
+            var qry = "INSERT OR REPLACE INTO TBL_MITRALIST (VENDOR_ID,VENDOR_NM) VALUES (?,?)";
+            data.user.forEach(function (element) {
+                _this.database.insertData(qry, [
+                    element.VENDOR_ID,
+                    element.VENDOR_NM
+                ]);
+            });
+            console.log("success load Api - User");
+        });
+    };
+    /* MAP USER
+      * Event     : ViewLoad & ViewInit (Observable)
+      * Rest Api  : Request & respon
+      * SQLite    : Live Mobile Storage.
+      * WebSql    : Develompent debug database,table,query.
+      * Author    : ptr.nov@gmail.com
+      */
     DashboardAllProvider.prototype.getUser = function () {
         var _this = this;
         // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
@@ -7261,10 +7629,10 @@ var RestProvider = (function () {
     };
     RestProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]) === "function" && _b || Object])
     ], RestProvider);
     return RestProvider;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=rest.js.map
@@ -9335,6 +9703,7 @@ var LoginPage = (function () {
         this.dashboarAll.getMapMcp();
         this.dashboarAll.getMapSp();
         this.dashboarAll.getUser();
+        this.dashboarAll.getMitraList();
     };
     // go to register page
     LoginPage.prototype.register = function () {

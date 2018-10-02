@@ -37,5 +37,5 @@ ver 1.0.0
     soluation add in config.eml
     <preference name="loadUrlTimeoutValue" value="700000" />
 release
-ionic cordova build android --prod --release
+ionic cordova build android --minifycss --optimizejs --minifyjs --release
 ````

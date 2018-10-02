@@ -36,6 +36,7 @@ export class LoginPage {
     this.dashboarAll.getMapMcp();
     this.dashboarAll.getMapSp();
     this.dashboarAll.getUser();
+    this.dashboarAll.getMitraList();
   }
   // go to register page
   register() {

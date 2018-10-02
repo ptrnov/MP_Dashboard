@@ -23,9 +23,7 @@ var Dsh1SecondAfterrfiPageModule = (function () {
     }
     Dsh1SecondAfterrfiPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__dsh1_second_afterrfi__["a" /* Dsh1SecondAfterrfiPage */],
-            ],
+            declarations: [],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dsh1_second_afterrfi__["a" /* Dsh1SecondAfterrfiPage */]),
             ],

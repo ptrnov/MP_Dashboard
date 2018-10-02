@@ -358,7 +358,7 @@ export class DashboardAllProvider {
     */
    getMapB2s():void {
     // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
-    var x1=this.http.get(this.url + "Mobile_Dashboard/mapb2c").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapb2s").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
           var qry="INSERT OR REPLACE INTO TBL_PETA_B2S (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -485,6 +485,29 @@ export class DashboardAllProvider {
         });
   }
 
+
+  /* MAP USER
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMitraList():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mitralist").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_MITRALIST(VENDOR_ID,VENDOR_NM) VALUES (?,?)";
+          data.mitra.forEach(element => {
+            this.database.insertData(qry,[
+              element.VENDOR_ID,
+              element.VENDOR_NM
+            ]);
+          });
+          console.log("success load Api - User");
+        });
+  }
 
   /* MAP USER
     * Event     : ViewLoad & ViewInit (Observable)
