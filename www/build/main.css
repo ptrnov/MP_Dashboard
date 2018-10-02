@@ -39140,6 +39140,7 @@ page-dsh6-home .box2 {
   border: 1px solid #e2e2e2;
   width: 100%;
   height: 250px;
+  margin-top: -5px;
 }
 
 page-dsh6-home .cardHead {
@@ -39180,7 +39181,7 @@ page-dsh6-home .cardArea2 {
   font-size: 10px;
   padding-left: 2px;
   padding-top: 5px;
-  margin-bottom: -3px;
+  margin-bottom: 0px;
   vertical-align: middle;
 }
 
@@ -39309,6 +39310,7 @@ page-dsh6-home .dcrip_lbl {
   font-family: Arial;
   text-align: left;
   width: 100%;
+  padding-left: 15px;
 }
 
 page-dsh6-home .flowButton {
