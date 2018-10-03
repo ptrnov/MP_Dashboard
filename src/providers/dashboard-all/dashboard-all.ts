@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
-import { Http } from "@angular/http";
+import { Http, Headers } from "@angular/http";
 // import { Platform } from 'ionic-angular';
 // import {map,first,reduce } from 'rxjs/operators';
 // import 'rxjs/add/operator/first';
@@ -33,7 +33,6 @@ export class DashboardAllProvider {
   private caba:any;
   // public getPageSetting_FilterManthYear:{}=defaultDataSetting.filter;
   // public getAllProject_first:{}=defaultDataCardAll.dsh1;
-
   constructor(
       // public httpClient: HttpClient,
       private http: Http,
@@ -603,4 +602,19 @@ export class DashboardAllProvider {
   //   });
 
   // }
+
+  postData(credentials) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
+      this.http.get(this.url + "Mobile_Dashboard/login/"+ credentials)
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+    });
+
+  }
+
 }

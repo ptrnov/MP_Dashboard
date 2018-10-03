@@ -12,7 +12,6 @@ import { Dsh3HomePage} from '../pages/dsh3-home/dsh3-home';
 import { Dsh4HomePage} from '../pages/dsh4-home/dsh4-home';
 import { Dsh5HomePage} from '../pages/dsh5-home/dsh5-home';
 import { Dsh6HomePage} from '../pages/dsh6-home/dsh6-home';
-// import { Dsh7HomePage} from '../pages/dsh7-home/dsh7-home';
 
 export interface MenuItem {
     title: string;
@@ -29,18 +28,18 @@ export class MyApp {
 
   showSplash = true;
   rootPage: any = LoginPage;
-
+  profileData:any;//=[{"email": "","password": "","real_name": "Piter Parker","user_group": "","user_id": "","username": ""}];
   appMenuItems: Array<MenuItem>;
  
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public keyboard: Keyboard,
-    // private database: DatabaseProvider
+    public keyboard: Keyboard
   ) {
+   
+   
     this.initializeApp();
-
     this.appMenuItems = [
       {title: 'All Mitratel Project', component: HomePage, icon: 'ios-list'},
       {title: 'Build To Suit', component: Dsh2HomePage, icon: 'ios-checkmark-circle-outline'},
@@ -51,7 +50,10 @@ export class MyApp {
     //   {title: 'Summary ', component: Dsh7HomePage, icon: 'ios-checkmark-circle-outline'}
     ];
   }
-
+  ngOnInit() {
+    const data = JSON.parse(localStorage.getItem('profile'));
+    this.profileData=data.login;
+  }
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

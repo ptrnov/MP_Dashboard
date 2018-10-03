@@ -95,9 +95,7 @@ export class HomePage {
       private database: DatabaseProvider,
       private menu: MenuController,
       public loadingCtrl: LoadingController
-  ){
-
-  }
+  ){}
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);

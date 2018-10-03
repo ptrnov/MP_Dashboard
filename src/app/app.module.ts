@@ -121,7 +121,7 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     SQLite,   
     DashboardAllProvider, 
     DatabaseProvider,   
-    RestProvider,    
+    RestProvider, 
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

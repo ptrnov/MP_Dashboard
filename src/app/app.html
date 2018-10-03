@@ -9,11 +9,11 @@
                 <img src="assets/img/avatar.png">
               </div>
           </ion-col>
-          <ion-col padding-top col-8>
-            <h3 ion-text class="no-margin bold text-white">
-              Piter Novian
+          <ion-col padding-top col-8 *ngFor="let item of profileData">
+            <h3 ion-text class="no-margin bold text-white" >
+             {{item.real_name}}
             </h3>
-            <span ion-text color="putih">Super Admin</span><br>
+            <span ion-text color="putih">{{item.user_group}}</span><br>
             <!-- <span ion-text color="putih">Area</span> -->
           </ion-col>
 

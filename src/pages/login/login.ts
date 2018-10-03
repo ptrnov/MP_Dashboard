@@ -9,7 +9,8 @@ import { DashboardAllProvider } from '../../providers/dashboard-all/dashboard-al
   templateUrl: 'login.html'
 })
 export class LoginPage {
-
+  public responseData : any;
+  userData = {"username": "","password": "", "name": "","email": ""};
   constructor(
       public nav: NavController,
       public forgotCtrl: AlertController,
@@ -45,7 +46,55 @@ export class LoginPage {
 
   // login and go to home page
   login() {
-    this.nav.setRoot(HomePage);
+    let toastSukses = this.toastCtrl.create({
+      message: 'wait a moment',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    this.dashboarAll.postData(this.userData['username'] +"/"+ this.userData['password']).then((result) => {
+      this.responseData = result;
+      if(this.responseData.login){
+        console.log(this.responseData);
+        if(this.responseData.login[0]['STATUS']!=false){
+            toastSukses.present();
+            toastSukses.onDidDismiss(() => {
+              localStorage.setItem('profile', JSON.stringify(this.responseData));
+              this.nav.setRoot(HomePage);
+            });
+        }else{
+          this.salahUserPasswordToast();
+        }
+      }
+    }, (err) => {
+      this.koneksiMasalahToast();
+        console.log("jaringan bermasalah");
+    });
+    // this.nav.setRoot(HomePage);
+  }
+
+  salahUserPasswordToast() {
+    let toast = this.toastCtrl.create({
+      message: 'User or Password incorrect.',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+  }
+
+  koneksiMasalahToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Network is not connected. Make sure your network is installed',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
   }
 
   forgotPass() {
