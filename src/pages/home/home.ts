@@ -1,5 +1,5 @@
 import {Component,ViewChild, ElementRef  } from "@angular/core";
-import {LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController} from "ionic-angular";
+import {LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
 // import {NotificationsPage} from "../notifications/notifications";
@@ -17,6 +17,7 @@ import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
+// import { Geolocation } from 'ionic-native';
 // import { toArray } from "rxjs/operators";
 
 // import HighCharts from 'highcharts'
@@ -68,6 +69,8 @@ let mapArrayStt = [
   {nama: "NOTRELEASE", value:false},
   {nama: "AREA", value:0}
 ];
+var circles=[];
+
 
 @Component({
   selector: 'page-home',
@@ -78,12 +81,19 @@ export class HomePage {
   private dsh1_subscription1;
   private dsh1_subscription2;
   private cardValue_Header;
+  private responseData;
   //MAP
-  // @ViewChild('map1') mapElement2: ElementRef;
+  //  @ViewChild('map1') mapElement2: ElementRef;
   // map1: any;
   // // directionsService = new google.maps.DirectionsService;
   // // directionsDisplay = new google.maps.DirectionsRenderer;
   // mapOptions1:any;
+
+  loadingMap = this.loadingCtrl.create({
+    // cssClass:"map-spinner",
+    spinner:'ios',
+    content: 'Please wait...'
+  });
 
   constructor(
       // private storage: Storage,
@@ -94,66 +104,88 @@ export class HomePage {
       public modalCtrl: ModalController,
       private database: DatabaseProvider,
       private menu: MenuController,
-      public loadingCtrl: LoadingController
-  ){}
+      public loadingCtrl: LoadingController,
+      public config:Config
+  ){
+
+
+
+  }
 
   ionViewDidEnter(){
-    // this.menu.swipeEnable(false);
-    this.dsh1_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
-       this.dsh1_GetData();
-       this.dsh1_UpdateDataChart();
-    });
+    // // this.menu.swipeEnable(false);
+    // this.dsh1_subscription2 = Observable.timer(10000, 10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //     this.dsh1_GetData();
+    //     this.dsh1_UpdateDataChart();
+    // });
   }
 
   /** API */
   ngOnInit() {
-    this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
-      this.dashboarAll.getAllPrj();
-      this.dashboarAll.getMapData();
-    });
+    //Second Load DOM.
+    this.loadingMap.present();
+    this.dsh1_InitChart();
+    this.dsh1_UpdateDataChart();
+    setTimeout(() => {
+      var mapOptions={
+        zoom: 4,
+        center: new google.maps.LatLng(-2.209764,117.114258),
+        styles: this.database._defaultNewStyle
+      };
+      map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+      this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
+        this.responseData=result;
+            console.log("length=",this.responseData.length);
+            this.dsh1_initMap();
+            // localStorage.setItem('profile', JSON.stringify(this.responseData));
+      }, (err) => {
+        // this.koneksiMasalahToast();
+          console.log("jaringan bermasalah");
+      });
+      this.initMouseOverOut();
+      this.initClickEvent();
+      document.getElementById("dsh1[1]").hidden=false;
+      document.getElementById("dsh1[2]").hidden=false;
+      document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+      document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+      this.tampilkanNilai();
+
+    }, 100);
+
+    // this.dsh1_GetData();
+    // this.dsh1_UpdateDataChart();
+    // this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //   this.dashboarAll.getAllPrj();
+    //   this.dashboarAll.getMapData();
+    // });
   }
+
+  ionViewDidLoad() {
+    //Fist Load DOM
+    document.getElementById("dsh1[1]").hidden=false;
+    document.getElementById("dsh1[2]").hidden=false;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+    this.tampilkanNilai();
+  }
+
    /**
    * Event Back / close Page
    */
   ionViewWillUnload() {
-    console.log("Previus page")
-    this.dsh1_subscription1.unsubscribe();
-    this.dsh1_subscription2.unsubscribe();
+    circles=[];
+    // console.log("Previus page")
+    // this.dsh1_subscription1.unsubscribe();
+    // this.dsh1_subscription2.unsubscribe();
   }
 
   private goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
 
-  ionViewDidLoad() {
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
-    this.initMouseOverOut();
-    this.initClickEvent();
-    document.getElementById("dsh1[1]").hidden=false;
-    document.getElementById("dsh1[2]").hidden=false;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-    // setTimeout(()=>{
-    //   this.dsh1_GetData(); //blank
-    // },100);
-    this.dsh1_initMap();
-    this.dsh1_InitChart();
-    // this.dsh1_UpdateDataChart();
-    // this.dsh1_UpdateDataChart();
-    console.log('ionViewDidLoad Dsh2HomePage');
-    // if (chkInit==true){
 
-      //chkInit=false;
-    // }
-    this.tampilkanNilai();
-
-    loading.dismiss();
-  }
 
   private dsh1_GetData(){
     var ary_Header=[];
@@ -471,185 +503,358 @@ export class HomePage {
   }
 
   dsh1_initMap(qryWhere:any=null){
-    var mapOptions={
-      zoom: 4,
-      center: new google.maps.LatLng(-2.209764,117.114258),
-      styles: this.database._defaultNewStyle
-    };
-    map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
     var rsltAryMap=[];
     var myRFI;
     var myRelease;
     var myNotRelease;
-    var myLatlngRFI;
-    var myLatlngRELEASE;
-    var myLatlngNOTRELEASE;
+    var mylatlngRFI;
+    var mylatlngRELEASE;
+    var mylatlngNOTRELEASE;
     var contentString;
-    var querySql;
-      querySql='';
-    if (qryWhere==null){
-      querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
-    }else if(qryWhere!=null){
-      var concatSql;
-          concatSql='';
-      var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
-      // querySql=querySql + " WHERE " + qryWhere;
-      console.log("test1=",qryWhere);
-      console.log("test2=",qryWhere[0]['nama']);
-       //concatSql=" WHERE TAHUN='2018'";
-      // if(qryWhere[0]['value']==true){
-      //   concatSql=concatSql + " AND GRP='"+ qryWhere[0]['nama'] + "'"; //GRP='RFI'";
-      // }
-      // if(qryWhere[1]['value']==true){
-      //   concatSql=concatSql + " AND GRP='"+ qryWhere[1]['nama'] + "'"; //GRP='RELEASE'";
-      // }
-      // if(qryWhere[2]['value']==true){
-      //   concatSql=concatSql + " AND GRP='" + qryWhere[2]['nama'] +"'"; //GRP='NOTRELEASE'";
-      // }
-      // if(qryWhere[3]['value']==true){
-      //   concatSql=concatSql + " AND AREA="+ qryWhere[3]['nama'];
-      // }
-      var filter_GRP=[];
-      var filter_AREA;
-          filter_AREA='';
-      qryWhere.forEach(el=>{
-        if (el.value==true){
-          filter_GRP.push("'"+el.nama+"'");
-        }
-        if (el.value!=0){
-          filter_AREA=" AND AREA='" + el.value + "'";
-        }
-      })
-      if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
-        concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
+    this.loadingMap.present();
+    this.loadingMap.setContent('Load Map');
+    this.loadingMap.setSpinner('bubbles');
+    // let loadingMap = this.loadingCtrl.create({
+    //   // cssClass:"map-spinner",
+    //   content: 'Please wait...'
+    // });
+    // loadingMap.present();
+
+    /** CLEAR ALL Circle in MAP*/
+    if (circles.length>0){
+      for(var i in circles) {
+        circles[i].setMap(null);
       }
-      if(qryWhere[3]['value']!=0){
-        concatSql=concatSql + filter_AREA;
-      }
-
-      // concatSql=concatSql + filter_AREA;
-
-      querySql=sqlDefault + concatSql;
-      console.log("concat=", filter_GRP);
-
+      circles = [];
     }
-       this.database.selectData(querySql).then(data=>{
-        rsltAryMap=[];
-        rsltAryMap.push(data);
-        if(rsltAryMap !== undefined || rsltAryMap.length > 0){
-          setTimeout(()=>{
-            for (var i = 0; i < rsltAryMap[0].length; i++) {
-              contentString = '<div id="content">' +
-                              '<div id="siteNotice">' +
-                              '</div>' +
-                              '<div id="bodyContent">' +
-                              '<table>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Project ID</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Site Name</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Area</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Regional</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>SOW</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Status</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-                              '</tr>' +
-                              '</table>' +
-                              '</div>';
-              var myInfoWindow = new google.maps.InfoWindow({
-                content: contentString
-              });
-              // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-              if (rsltAryMap[0][i]['GRP']=='RFI'){
-                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-              }
-              if (rsltAryMap[0][i]['GRP']=='RELEASE'){
-                myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-              }
-              if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
-                myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-              }
 
-              myRFI = new google.maps.Circle({
-                center: myLatlngRFI,
-                radius: 10000,
-                strokeColor: "rgb(19, 148, 40)", //color_status,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#449af0",
-                fillOpacity: 0.4,
-                infowindow: myInfoWindow
-              });
 
-              myRelease = new google.maps.Circle({
-                  center: myLatlngRELEASE,
-                  radius: 10000,
-                  strokeColor: "rgb(240, 205, 10)", //color_status,
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: "#449af0",
-                  infowindow: myInfoWindow
-              });
+    /** Waktu Tunggu sampai data siap di prosess */
+    setTimeout(()=>{
 
-              myNotRelease = new google.maps.Circle({
-                center: myLatlngNOTRELEASE,
-                radius: 10000,
-                strokeColor: "rgb(243, 9, 9)", //color_status,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#449af0",
-                fillOpacity: 0.4,
-                infowindow: myInfoWindow
-            });
+      var kosongin = new google.maps.Circle();
+      kosongin.setMap(null);
 
-              myRFI.setMap(map1);
-              myRelease.setMap(map1);
-              myNotRelease.setMap(map1);
-                google.maps.event.addListener(myRFI, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map1, this);
-                });
-                google.maps.event.addListener(myRelease, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map1, this);
-                });
-                google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map1, this);
-                });
-          }
-        },500);
-      }
-    });
+      this.responseData.forEach(rslt=>{
+        // console.log("latlog1=",rslt.lat,rslt.long);
+        mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
+
+          if(mapArrayStt[0]['value']==false){
+            myRFI = new google.maps.Circle({
+            center: mylatlngRFI,
+            radius: 10000,
+            strokeColor: "rgb(19, 148, 40)", //color_status,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#449af0",
+            fillOpacity: 1        // infowindow: myInfoWindow
+          });
+        }else{
+
+          myRFI = new google.maps.Circle({
+              center: mylatlngRFI,
+              radius: 10000,
+              strokeColor: "rgb(240, 205, 10)", //color_status,
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "black",
+              fillOpacity: 1
+          });
+        }
+        myRFI.setMap(map1);
+        circles.push(myRFI);
+      })
+      this.loadingMap.dismiss();
+    },500);
+    // responseData=[];
+    // setTimeout(()=>{
+    // console.log("net error=",JSON.stringify(this.responseData.Release));
+    //         this.responseData.Release.forEach(rslt=>{
+    //           // loading.present();
+    //         // for (var i = 0; i < rsltAryMap.length; i++) {
+    //           contentString = '<div id="content">' +
+    //                           '<div id="siteNotice">' +
+    //                           '</div>' +
+    //                           '<div id="bodyContent">' +
+    //                           '<table>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.project_id + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.site_nm + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.tenan_nm + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>area</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.area + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>regional</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.regional + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>sow</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.sow + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Status</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.status + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+    //                           '</tr>' +
+    //                           '</table>' +
+    //                           '</div>';
+    //           var myInfoWindow = new google.maps.InfoWindow({
+    //             content: contentString
+    //           });
+    //           // var mylatlng = new google.maps.latLng(-6.324000,106.626076);
+    //           if (rslt.grp=='RFI'){
+    //             mylatlngRFI = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+    //           if (rslt.grp=='RELEASE'){
+    //             mylatlngRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+    //           if (rslt.grp=='NOTRELEASE'){
+    //             mylatlngNOTRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+
+    //           myRFI = new google.maps.Circle({
+    //             center: mylatlngRFI,
+    //             radius: 10000,
+    //             strokeColor: "rgb(19, 148, 40)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //           });
+
+    //           myRelease = new google.maps.Circle({
+    //               center: mylatlngRELEASE,
+    //               radius: 10000,
+    //               strokeColor: "rgb(240, 205, 10)", //color_status,
+    //               strokeOpacity: 0.8,
+    //               strokeWeight: 2,
+    //               fillColor: "#449af0",
+    //               infowindow: myInfoWindow
+    //           });
+
+    //           myNotRelease = new google.maps.Circle({
+    //             center: mylatlngNOTRELEASE,
+    //             radius: 10000,
+    //             strokeColor: "rgb(243, 9, 9)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //         });
+
+    //           myRFI.setMap(map1);
+    //           myRelease.setMap(map1);
+    //           myNotRelease.setMap(map1);
+    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //       })
+    //     },2000);
+
+    // var rsltAryMap=[];
+    // var myRFI;
+    // var myRelease;
+    // var myNotRelease;
+    // var myLatlngRFI;
+    // var myLatlngRELEASE;
+    // var myLatlngNOTRELEASE;
+    // var contentString;
+    // var querySql;
+    //   querySql='';
+    // if (qryWhere==null){
+    //   querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
+    // }else if(qryWhere!=null){
+    //   var concatSql;
+    //       concatSql='';
+    //   var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
+    //   // querySql=querySql + " WHERE " + qryWhere;
+    //   console.log("test1=",qryWhere);
+    //   console.log("test2=",qryWhere[0]['nama']);
+    //    //concatSql=" WHERE TAHUN='2018'";
+    //   // if(qryWhere[0]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[0]['nama'] + "'"; //GRP='RFI'";
+    //   // }
+    //   // if(qryWhere[1]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[1]['nama'] + "'"; //GRP='RELEASE'";
+    //   // }
+    //   // if(qryWhere[2]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='" + qryWhere[2]['nama'] +"'"; //GRP='NOTRELEASE'";
+    //   // }
+    //   // if(qryWhere[3]['value']==true){
+    //   //   concatSql=concatSql + " AND AREA="+ qryWhere[3]['nama'];
+    //   // }
+    //   var filter_GRP=[];
+    //   var filter_AREA;
+    //       filter_AREA='';
+    //   qryWhere.forEach(el=>{
+    //     if (el.value==true){
+    //       filter_GRP.push("'"+el.nama+"'");
+    //     }
+    //     if (el.value!=0){
+    //       filter_AREA=" AND AREA='" + el.value + "'";
+    //     }
+    //   })
+    //   if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
+    //     concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
+    //   }
+    //   if(qryWhere[3]['value']!=0){
+    //     concatSql=concatSql + filter_AREA;
+    //   }
+
+    //   // concatSql=concatSql + filter_AREA;
+
+    //   querySql=sqlDefault + concatSql;
+    //   console.log("concat=", filter_GRP);
+
+    // }
+    //    this.database.selectData(querySql).then(data=>{
+    //     rsltAryMap=[];
+    //     rsltAryMap.push(data);
+    //     if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+    //       setTimeout(()=>{
+    //         for (var i = 0; i < rsltAryMap[0].length; i++) {
+    //           contentString = '<div id="content">' +
+    //                           '<div id="siteNotice">' +
+    //                           '</div>' +
+    //                           '<div id="bodyContent">' +
+    //                           '<table>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Area</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Regional</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>SOW</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Status</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+    //                           '</tr>' +
+    //                           '</table>' +
+    //                           '</div>';
+    //           var myInfoWindow = new google.maps.InfoWindow({
+    //             content: contentString
+    //           });
+    //           // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+    //           if (rsltAryMap[0][i]['GRP']=='RFI'){
+    //             myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+    //           if (rsltAryMap[0][i]['GRP']=='RELEASE'){
+    //             myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+    //           if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
+    //             myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+
+    //           myRFI = new google.maps.Circle({
+    //             center: myLatlngRFI,
+    //             radius: 10000,
+    //             strokeColor: "rgb(19, 148, 40)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //           });
+
+    //           myRelease = new google.maps.Circle({
+    //               center: myLatlngRELEASE,
+    //               radius: 10000,
+    //               strokeColor: "rgb(240, 205, 10)", //color_status,
+    //               strokeOpacity: 0.8,
+    //               strokeWeight: 2,
+    //               fillColor: "#449af0",
+    //               infowindow: myInfoWindow
+    //           });
+
+    //           myNotRelease = new google.maps.Circle({
+    //             center: myLatlngNOTRELEASE,
+    //             radius: 10000,
+    //             strokeColor: "rgb(243, 9, 9)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //         });
+
+    //           myRFI.setMap(map1);
+    //           myRelease.setMap(map1);
+    //           myNotRelease.setMap(map1);
+    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //       }
+    //     },500);
+    //   }
+    // });
   }
 
   public alertModalNoRelease(){
@@ -749,6 +954,8 @@ export class HomePage {
   }
 
   private dsh1_UpdateDataChart(){
+    this.loadingMap.present();
+    this.loadingMap.setContent("Load Chart");
     var dsh1_rsltAryChart=[];
     var dsh1_aryCtg=[];
     var dsh1_aryTarget_RFI=[];
@@ -2041,6 +2248,15 @@ export class HomePage {
               dsh1_0card_3footer.style.backgroundColor="#E9E9E9";
             }
           }
+  }
+
+  public getConfig(){
+    var q=this.config.get('real_name');
+    alert(q);
+  }
+
+  public setConfig(){
+    this.config.set('bulan',1);
   }
 }
 

@@ -76,11 +76,11 @@ export class Dsh3HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.dsh3_subscription2 = Observable.timer(6000, 6000).subscribe(x => {
-      console.log('run-Disply');
-       this.dsh3_getData();
-       this.dsh3_UpdateDataChart();
-    });
+    // this.dsh3_subscription2 = Observable.timer(6000, 6000).subscribe(x => {
+    //   console.log('run-Disply');
+    //    this.dsh3_getData();
+    //    this.dsh3_UpdateDataChart();
+    // });
   }
 
   ionViewWillUnload() {
@@ -90,11 +90,13 @@ export class Dsh3HomePage {
   }
 
   ngOnInit() {
-    this.dsh3_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
-      this.dashboarAll.getCorePrj();
-      // this.dashboarAll.getSetting();
-    });
+    // this.dsh3_getData();
+    // this.dsh3_UpdateDataChart();
+    // this.dsh3_subscription1 = Observable.timer(40000,40000).subscribe(x => {
+    //   console.log('run-Disply');
+    //   this.dashboarAll.getCorePrj();
+    //   // this.dashboarAll.getSetting();
+    // });
   }
 
   private dsh3_UpdateDataChart(){

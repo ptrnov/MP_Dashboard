@@ -107,7 +107,8 @@ export class DashboardAllProvider {
     * Author    : ptr.nov@gmail.com
     */
    getAllPrj():void {
-    var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
+    // var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/dshAll/10/2018").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
           var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -323,25 +324,23 @@ export class DashboardAllProvider {
     */
    getMapData():void {
     // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
-    var x1=this.http.get(this.url + "Mobile_Dashboard/mapproject").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/dshmap").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
-              element.GRP,
-              element.PROJECT_ID,
-              element.BULAN,
-              element.TAHUN,
-              element.AREA,
-              element.LAT,
-              element.LONG,
-              element.RADIUS,
-              element.SITE_NM,
-              element.TENAN_NM,
-              element.REGIONAL,
-              element.SOW,
-              element.STATUS
+              element.grp,
+              element.project_id,
+              element.area,
+              element.lat,
+              element.long,
+              element.radius,
+              element.site_nm,
+              element.tenan_nm,
+              element.regional,
+              element.sow,
+              element.status
             ]);
           });
           console.log("success load Api - MAP Data Project");
@@ -360,13 +359,11 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/mapb2s").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA_B2S (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA_B2S (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
               element.GRP,
               element.PROJECT_ID,
-              element.BULAN,
-              element.TAHUN,
               element.AREA,
               element.LAT,
               element.LONG,
@@ -394,13 +391,11 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/mapcore").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
               element.GRP,
               element.PROJECT_ID,
-              element.BULAN,
-              element.TAHUN,
               element.AREA,
               element.LAT,
               element.LONG,
@@ -428,13 +423,11 @@ export class DashboardAllProvider {
       var x1=this.http.get(this.url + "Mobile_Dashboard/mapmicrocell").map(res => res.json());
           x1.subscribe(data => {
             // var data=res.json();
-            var qry="INSERT OR REPLACE INTO TBL_PETA_MCP (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            var qry="INSERT OR REPLACE INTO TBL_PETA_MCP (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
             data.Release.forEach(element => {
               this.database.insertData(qry,[
                 element.GRP,
                 element.PROJECT_ID,
-                element.BULAN,
-                element.TAHUN,
                 element.AREA,
                 element.LAT,
                 element.LONG,
@@ -462,13 +455,11 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/mapsp").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA_SP (GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA_SP (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
               element.GRP,
               element.PROJECT_ID,
-              element.BULAN,
-              element.TAHUN,
               element.AREA,
               element.LAT,
               element.LONG,
@@ -517,7 +508,7 @@ export class DashboardAllProvider {
     */
    getUser():void {
     // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
-    var x1=this.http.get(this.url + "Mobile_Dashboard/user").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/listuser").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
           var qry="INSERT OR REPLACE INTO TBL_USER (USER_ID,USERNAME,PASSWORD,REAL_NAME,EMAIL,USER_GROUP) VALUES (?,?,?,?,?,?)";
@@ -608,6 +599,20 @@ export class DashboardAllProvider {
       let headers = new Headers();
       // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
       this.http.get(this.url + "Mobile_Dashboard/login/"+ credentials)
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+    });
+
+  }
+
+  postDatax(activity,credentials) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
+      this.http.get(this.url + activity + credentials)
         .subscribe(res => {
           resolve(res.json());
         }, (err) => {

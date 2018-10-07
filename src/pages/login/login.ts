@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, AlertController, ToastController, MenuController} from "ionic-angular";
+import {NavController, AlertController, ToastController, MenuController,Config,Events} from "ionic-angular";
 import {HomePage} from "../home/home";
 import {RegisterPage} from "../register/register";
 import { DatabaseProvider } from '../../providers/database/database';
@@ -18,6 +18,8 @@ export class LoginPage {
       public toastCtrl: ToastController,
       private database: DatabaseProvider,
       private dashboarAll: DashboardAllProvider,
+      public config:Config,
+      public events: Events
   ){
     this.menu.swipeEnable(false);
     // this.dashboarAll.initData();
@@ -25,19 +27,19 @@ export class LoginPage {
   }
   ngOnInit() {
     this.dashboarAll.getAllPrj();
-    this.dashboarAll.getB2SPrj();
-    this.dashboarAll.getCorePrj();
-    this.dashboarAll.getMcpPrj()
-    this.dashboarAll.getSpPrj();
-    this.dashboarAll.getChartData();
-    this.dashboarAll.getSetting();
-    this.dashboarAll.getMapData();
-    this.dashboarAll.getMapB2s();
-    this.dashboarAll.getMapCore();
-    this.dashboarAll.getMapMcp();
-    this.dashboarAll.getMapSp();
-    this.dashboarAll.getUser();
-    this.dashboarAll.getMitraList();
+    // this.dashboarAll.getB2SPrj();
+    // this.dashboarAll.getCorePrj();
+    // this.dashboarAll.getMcpPrj()
+    // this.dashboarAll.getSpPrj();
+    // this.dashboarAll.getChartData();
+    // this.dashboarAll.getSetting();
+    // this.dashboarAll.getMapData();
+    // this.dashboarAll.getMapB2s();
+    // this.dashboarAll.getMapCore();
+    // this.dashboarAll.getMapMcp();
+    // this.dashboarAll.getMapSp();
+    // this.dashboarAll.getUser();
+    // this.dashboarAll.getMitraList();
   }
   // go to register page
   register() {
@@ -52,7 +54,7 @@ export class LoginPage {
       position: 'middle'
     });
 
-    this.dashboarAll.postData(this.userData['username'] +"/"+ this.userData['password']).then((result) => {
+    this.dashboarAll.postData(this.userData.username +"/"+ this.userData.password).then((result) => {
       this.responseData = result;
       if(this.responseData.login){
         console.log(this.responseData);
@@ -60,6 +62,9 @@ export class LoginPage {
             toastSukses.present();
             toastSukses.onDidDismiss(() => {
               localStorage.setItem('profile', JSON.stringify(this.responseData));
+              this.config.set('real_name',this.responseData.login[0]['real_name']);
+              this.config.set('user_group',this.responseData.login[0]['user_group']);
+              this.events.publish('profileLogin',this.responseData);
               this.nav.setRoot(HomePage);
             });
         }else{

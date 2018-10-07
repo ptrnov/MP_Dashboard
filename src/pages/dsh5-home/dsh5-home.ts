@@ -67,11 +67,11 @@ export class Dsh5HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.dsh5_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
-       this.dsh5_getData();
-       this.dsh5_UpdateDataChart();
-    });
+    // this.dsh5_subscription2 = Observable.timer(30000, 30000).subscribe(x => {
+    //   console.log('run-Disply');
+    //    this.dsh5_getData();
+    //    this.dsh5_UpdateDataChart();
+    // });
   }
 
   ionViewWillUnload() {
@@ -82,10 +82,12 @@ export class Dsh5HomePage {
 
   /** API */
   ngOnInit() {
-    this.dsh5_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
-      this.dashboarAll.getSpPrj();
-    });
+    // this.dsh5_getData();
+    // this.dsh5_UpdateDataChart();
+    // this.dsh5_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //   this.dashboarAll.getSpPrj();
+    // });
   }
   private dsh5_getData(){
     var ary_Header=[];

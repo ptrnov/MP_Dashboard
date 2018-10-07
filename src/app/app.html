@@ -1,3 +1,4 @@
+<!-- <ion-menu side="left" id="authenticated" [content]="content" (ionClose)="menuClosed()" (ionOpen)="menuOpened()"> -->
 <ion-menu side="left" id="authenticated" [content]="content">
   <ion-header>
     <ion-toolbar class="user-profile">
@@ -6,7 +7,7 @@
         <ion-row>
           <ion-col col-4>
               <div class="user-avatar">
-                <img src="assets/img/avatar.png">
+                <img src="assets/img/avatar.jpg">
               </div>
           </ion-col>
           <ion-col padding-top col-8 *ngFor="let item of profileData">
@@ -27,7 +28,7 @@
             </button> -->
           </ion-col>
           <ion-col no-padding class="column">
-            <button ion-button icon-left small full  menuClose (click)="logout()">
+            <button ion-button icon-left small full  menuClose (click)="logout() ">
               <ion-icon class="fa fa-power-off"></ion-icon>
               Log Out
             </button>
@@ -39,12 +40,13 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content color="hitam">
+  <ion-content>
     <!-- <ion-scroll scrollY="true"> -->
             <ion-list class="user-list" >
-                <button ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)">
-                    <ion-icon item-left [name]="menuItem.icon" style="color:antiquewhite"></ion-icon>
-                    <span ion-text color="putih">{{menuItem.title}}</span>
+                <button [id]="menuItem.id" ion-item menuClose color="{{menuItem.color}}" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)" >
+                <!-- <button [id]="menuItem.id" ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)" [class.active]="checkActivePage(p)"> -->
+                    <ion-icon item-left  [name]="menuItem.icon"></ion-icon>
+                    <span ion-text>{{menuItem.title}}</span>
                 </button>
             </ion-list>
     <!-- </ion-scroll> -->

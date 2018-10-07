@@ -506,6 +506,31 @@ page-home {
         background-color: color($colors, secondary, base) !important;
             //button bg color
     }
+
+    .map-spinner{
+      background-color:blue;
+      ion-backdrop {
+        background-color: white !important;
+      }
+      .loading-wrapper {
+          justify-content: center !important;
+          opacity: 0.8 !important;
+          background-color: white !important;
+          width: 100% !important;
+          height: 100% !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+      }
+
+      .spinner-crescent circle {
+          stroke: green !important;
+      }
+
+      .spinner-ios line,
+      .spinner-ios-small line {
+          stroke: green !important;
+      }
+    }
   }
     // .alert-message {
     //     color: white; // text color for confirm alerts

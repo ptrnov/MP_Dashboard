@@ -4,10 +4,13 @@ import { Dsh1SecondNoreleasePage } from './dsh1-second-norelease';
 
 @NgModule({
   declarations: [
-    Dsh1SecondNoreleasePage,
+    // Dsh1SecondNoreleasePage,
   ],
   imports: [
-    IonicPageModule.forChild(Dsh1SecondNoreleasePage),
+    // IonicPageModule.forChild(Dsh1SecondNoreleasePage),
   ],
+  entryComponents: [
+    // Dsh1SecondNoreleasePage
+  ]
 })
 export class Dsh1SecondNoreleasePageModule {}

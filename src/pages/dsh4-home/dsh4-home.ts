@@ -75,26 +75,28 @@ export class Dsh4HomePage {
 
   ionViewDidEnter(){
     // this.menu.swipeEnable(false);
-    this.dsh4_subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
-       this.dsh4_GetData();
-       this.dsh4_UpdateDataChart();
-    });
+    // this.dsh4_subscription2 = Observable.timer(50000, 50000).subscribe(x => {
+    //   console.log('run-Disply');
+    //     this.dsh4_GetData();
+    //    this.dsh4_UpdateDataChart();
+    // });
   }
 
   ionViewWillUnload() {
-    console.log("Previus page");
-    this.dsh4_subscription1.unsubscribe();
-    this.dsh4_subscription2.unsubscribe();
+    // console.log("Previus page");
+    // this.dsh4_subscription1.unsubscribe();
+    // this.dsh4_subscription2.unsubscribe();
   }
 
   /** API LOAD */
   ngOnInit() {
-    this.dsh4_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
-      this.dashboarAll.getMcpPrj();
-      // this.dashboarAll.getSetting();
-    });
+    // this.dsh4_GetData();
+    // this.dsh4_UpdateDataChart();
+    // this.dsh4_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //   this.dashboarAll.getMcpPrj();
+    //   // this.dashboarAll.getSetting();
+    // });
   }
 
   private dsh4_GetData(){

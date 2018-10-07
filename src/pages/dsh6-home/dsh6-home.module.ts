@@ -4,10 +4,13 @@ import { Dsh6HomePage } from './dsh6-home';
 
 @NgModule({
   declarations: [
-    Dsh6HomePage,
+    // Dsh6HomePage,
   ],
   imports: [
-    IonicPageModule.forChild(Dsh6HomePage),
+    // IonicPageModule.forChild(Dsh6HomePage),
   ],
+  entryComponents: [
+    // Dsh6HomePage
+  ]
 })
 export class Dsh6HomePageModule {}

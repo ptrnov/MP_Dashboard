@@ -4,10 +4,13 @@ import { Dsh1SecondRfiPage } from './dsh1-second-rfi';
 
 @NgModule({
   declarations: [
-    Dsh1SecondRfiPage,
+    // Dsh1SecondRfiPage,
   ],
   imports: [
-    IonicPageModule.forChild(Dsh1SecondRfiPage),
+    // IonicPageModule.forChild(Dsh1SecondRfiPage),
   ],
+  entryComponents: [
+    // Dsh1SecondRfiPage
+  ]
 })
 export class Dsh1SecondRfiPageModule {}
