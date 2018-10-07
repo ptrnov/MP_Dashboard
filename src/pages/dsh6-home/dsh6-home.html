@@ -32,33 +32,453 @@
                 <ion-row>
                     <ion-col col-12>
                         <ion-card class="box1 full-width">
-                          <ion-row>
-                            <ion-item style="margin-left:10px;background-color:white">
-                            <ion-label>Data Filter</ion-label>
-                            <select-searchable
-                              item-content
-                              headerColor="primary"
-                              groupColor="white"
-                              [(ngModel)]="port"
-                              [items]="ports"
-                              itemValueField="id"
-                              itemTextField="name"
-                              [canSearch]="true"
-                              [hasVirtualScroll]="true"
-                              (onChange)="portChange($event)">
-                            </select-searchable>
-                          </ion-item>
-                        </ion-row>
+                              <ion-row>
+                                <ion-item style="margin-left:10px;background-color:white">
+                                <ion-label>Data Filter</ion-label>
+                                <select-searchable
+                                  item-content
+                                  [(ngModel)]="port"
+                                  [items]="aryListMitra"
+                                  itemValueField="VENDOR_ID"
+                                  itemTextField="VENDOR_NM"
+                                  [canSearch]="true"
+                                  [hasVirtualScroll]="true"
+                                  (onChange)="portChange($event)">
+                                </select-searchable>
+                              </ion-item>
+                            </ion-row>
+                            <ion-row class="full-width">
+                              <button class="mitraButton1"  (click)="setTotalClick($event)">Total Project</button>
+                            </ion-row>
                         </ion-card>
                       </ion-col>
                 </ion-row>
+                <ion-row id="card-view">
+                    <ion-col col-3 style="margin-top: -10px">
+                      <ion-card class="cardHead" (click)="setB2sClick()">
+                        B2S
+                      </ion-card>
+                    </ion-col>
+                    <ion-col col-3 style="margin-top: -10px">
+                      <ion-card class="cardHead" (click)="setCoreClick()">
+                        Core
+                      </ion-card>
+                    </ion-col>
+                    <ion-col col-3 style="margin-top: -10px">
+                      <ion-card class="cardHead" (click)="setMicroClick()">
+                        Micro
+                      </ion-card>
+                    </ion-col>
+                    <ion-col col-3 style="margin-top: -10px">
+                      <ion-card class="cardHead" (click)="setSpClick()">
+                        Special
+                      </ion-card>
+                    </ion-col>
+                </ion-row>
+                <!-- B2S - Area -->
+                <ion-row>
+                    <ion-col col-3 style="margin-top: -10px">
+                      <div class="full-width" id="b2s_area">
+                        <ion-card class="cardArea1" id="b2s_area[0]"  (click)="b2sArea1()">
+                          Area 1
+                        </ion-card>
+                        <div style="margin-top:-10px" id="b2s_area1">
+                            <ion-card class="cardArea2">
+                                SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                CME(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFI(0)
+                              </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="b2s_area[1]" (click)="b2sArea2()">
+                          Area 2
+                        </ion-card>
+                        <div style="margin-top:-10px"  id="b2s_area2">
+                            <ion-card class="cardArea2">
+                                SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                CME(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFI(0)
+                              </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="b2s_area[2]" (click)="b2sArea3()">
+                          Area 3
+                        </ion-card>
+                        <div style="margin-top:-10px"  id="b2s_area3">
+                            <ion-card class="cardArea2">
+                                SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                CME(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFI(0)
+                              </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="b2s_area[3]" (click)="b2sArea4()">
+                          Area 4
+                        </ion-card>
+                        <div style="margin-top:-10px"  id="b2s_area4">
+                            <ion-card class="cardArea2">
+                                SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                CME(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                RFI(0)
+                              </ion-card>
+                        </div>
+                      </div>
+                  </ion-col>
+
+                  <!-- CORE - Area -->
+                  <ion-col col-3 style="margin-top: -10px">
+                      <div class="full-width" id="core_area">
+                        <ion-card class="cardArea1" id="core_area[0]" (click)="coreArea1()">
+                          Area 1
+                        </ion-card>
+                        <div style="margin-top:-10px" id="core_area1">
+                            <ion-card class="cardArea2">
+                                S&SITAC(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                BAUT(0)
+                            </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="core_area[1]" (click)="coreArea2()">
+                          Area 2
+                        </ion-card>
+                        <div style="margin-top:-10px" id="core_area2">
+                            <ion-card class="cardArea2">
+                                S&SITAC(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                BAUT(0)
+                            </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="core_area[2]" (click)="coreArea3()">
+                          Area 3
+                        </ion-card>
+                        <div style="margin-top:-10px" id="core_area3">
+                            <ion-card class="cardArea2">
+                                S&SITAC(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                BAUT(0)
+                            </ion-card>
+                        </div>
+                        <ion-card class="cardArea1" id="core_area[3]" (click)="coreArea4()">
+                          Area 4
+                        </ion-card>
+                        <div style="margin-top:-10px" id="core_area4">
+                            <ion-card class="cardArea2">
+                                S&SITAC(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI(0)
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                BAUT(0)
+                            </ion-card>
+                        </div>
+                      </div>
+                  </ion-col>
+
+                  <!-- Micro - Area -->
+                  <ion-col col-3 style="margin-top: -10px">
+                      <div class="full-width" id="micro_area">
+                        <ion-card class="cardArea1" id="micro_area[0]"  (click)="microArea1()">
+                          Area 1
+                        </ion-card>
+                          <div style="margin-top:-10px" id="micro_area1">
+                              <ion-card class="cardArea2">
+                                  SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CME Pole(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  FO (0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CMBTSR(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFI(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="micro_area[1]"   (click)="microArea2()">
+                          Area 2
+                        </ion-card>
+                          <div style="margin-top:-10px" id="micro_area2">
+                              <ion-card class="cardArea2">
+                                  SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CME Pole(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  FO (0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CMBTSR(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFI(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="micro_area[2]" (click)="microArea3()">
+                          Area 3
+                        </ion-card>
+                          <div style="margin-top:-10px" id="micro_area3">
+                              <ion-card class="cardArea2">
+                                  SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CME Pole(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  FO (0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CMBTSR(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFI(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="micro_area[3]"  (click)="microArea4()">
+                          Area 4
+                        </ion-card>
+                          <div style="margin-top:-10px" id="micro_area4">
+                              <ion-card class="cardArea2">
+                                  SIS(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-1(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  SITAC-2(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CME Pole(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFC(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  FO (0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  CMBTSR(0)
+                              </ion-card>
+                              <ion-card class="cardArea2">
+                                  RFI(0)
+                              </ion-card>
+                          </div>
+                      </div>
+                  </ion-col>
+                  <!-- Special - Area -->
+                  <ion-col col-3 style="margin-top: -10px">
+                      <div class="full-width" id="special_area">
+                        <ion-card class="cardArea1" id="special_area[0]" (click)="spArea1()">
+                          Area 1
+                        </ion-card>
+                          <div style="margin-top:-10px" id="sp_area1">
+                              <ion-card class="cardArea2">
+                                  BAST(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="special_area[1]" (click)="spArea2()">
+                          Area 2
+                        </ion-card>
+                          <div style="margin-top:-10px" id="sp_area2">
+                              <ion-card class="cardArea2">
+                                  BAST(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="special_area[2]" (click)="spArea3()">
+                          Area 3
+                        </ion-card>
+                          <div style="margin-top:-10px" id="sp_area3">
+                              <ion-card class="cardArea2">
+                                  BAST(0)
+                              </ion-card>
+                          </div>
+                        <ion-card class="cardArea1" id="special_area[3]" (click)="spArea4()">
+                          Area 4
+                        </ion-card>
+                          <div style="margin-top:-10px" id="sp_area4">
+                              <ion-card class="cardArea2">
+                                  BAST(0)
+                              </ion-card>
+                          </div>
+                      </div>
+                  </ion-col>
+                </ion-row>
                 <ion-row>
                   <ion-col col-12 style="margin-top: -10px">
-                    <ion-card class="box1 full-width">
-                      asd
+                    <ion-card class="box2 full-width" id="chartDonut">
                     </ion-card>
                   </ion-col>
                 </ion-row>
+                <ion-row class="full-width" style="width:100%;margin-top: -30px">
+                    <ion-col col-12 style="margin-left: 10px">
+                      <button class="flowButton" (click)="viewFlowClick()">Click to view Approval Flow</button>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-2 style="margin-top: -10px">
+                        <ion-card class="box-ref1">
+                              <ion-card-header class="hdr_lbl">
+                                    Total
+                              </ion-card-header>
+                              <ion-card-content>
+                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                              </ion-card-content>
+                          </ion-card>
+                      </ion-col>
+                      <ion-col col-7>
+                          <ion-label class="dcrip_lbl">Progress</ion-label>
+                      </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-2 style="margin-top: -10px">
+                        <ion-card class="box-ref2">
+                              <ion-card-header class="hdr_lbl">
+                                    Total
+                              </ion-card-header>
+                              <ion-card-content>
+                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                              </ion-card-content>
+                          </ion-card>
+                      </ion-col>
+                      <ion-col col-7>
+                          <ion-label class="dcrip_lbl">Waiting For Waspang Approval</ion-label>
+                      </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-2 style="margin-top: -10px">
+                        <ion-card class="box-ref3">
+                              <ion-card-header class="hdr_lbl">
+                                    Total
+                              </ion-card-header>
+                              <ion-card-content>
+                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                              </ion-card-content>
+                          </ion-card>
+                      </ion-col>
+                      <ion-col col-7>
+                          <ion-label class="dcrip_lbl">Waiting For PM Approval</ion-label>
+                      </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-2 style="margin-top: -10px">
+                        <ion-card class="box-ref4">
+                              <ion-card-header class="hdr_lbl">
+                                    Total
+                              </ion-card-header>
+                              <ion-card-content>
+                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                              </ion-card-content>
+                          </ion-card>
+                      </ion-col>
+                      <ion-col col-7>
+                          <ion-label class="dcrip_lbl">Approved By PM</ion-label>
+                      </ion-col>
+                </ion-row>
+
             </ion-grid>
         </ion-row>
       </ion-scroll>

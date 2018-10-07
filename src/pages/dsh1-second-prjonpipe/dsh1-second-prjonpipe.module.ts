@@ -4,10 +4,13 @@ import { Dsh1SecondPrjonpipePage } from './dsh1-second-prjonpipe';
 
 @NgModule({
   declarations: [
-    Dsh1SecondPrjonpipePage,
+    // Dsh1SecondPrjonpipePage,
   ],
   imports: [
-    IonicPageModule.forChild(Dsh1SecondPrjonpipePage),
+    // IonicPageModule.forChild(Dsh1SecondPrjonpipePage),
   ],
+  entryComponents: [
+    // Dsh1SecondPrjonpipePage
+  ]
 })
 export class Dsh1SecondPrjonpipePageModule {}

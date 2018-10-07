@@ -1,14 +1,12 @@
 webpackJsonp([3],{
 
-/***/ 719:
+/***/ 721:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Dsh6HomePageModule", function() { return Dsh6HomePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Dsh7HomePageModule", function() { return Dsh7HomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dsh6_home__ = __webpack_require__(170);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16,25 +14,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
-
-
-var Dsh6HomePageModule = (function () {
-    function Dsh6HomePageModule() {
+var Dsh7HomePageModule = (function () {
+    function Dsh7HomePageModule() {
     }
-    Dsh6HomePageModule = __decorate([
+    Dsh7HomePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__dsh6_home__["a" /* Dsh6HomePage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dsh6_home__["a" /* Dsh6HomePage */]),
-            ],
+            declarations: [],
+            imports: [],
+            entryComponents: []
         })
-    ], Dsh6HomePageModule);
-    return Dsh6HomePageModule;
+    ], Dsh7HomePageModule);
+    return Dsh7HomePageModule;
 }());
 
-//# sourceMappingURL=dsh6-home.module.js.map
+//# sourceMappingURL=dsh7-home.module.js.map
 
 /***/ })
 

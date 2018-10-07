@@ -1,5 +1,5 @@
 import {Component,ViewChild, ElementRef  } from "@angular/core";
-import {NavController, PopoverController,AlertController,ModalController,MenuController} from "ionic-angular";
+import {LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
 // import {NotificationsPage} from "../notifications/notifications";
@@ -17,6 +17,8 @@ import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
+// import { Geolocation } from 'ionic-native';
+// import { toArray } from "rxjs/operators";
 
 // import HighCharts from 'highcharts'
 // import addMore from "highcharts/highcharts-more";
@@ -48,10 +50,27 @@ var dsh1_4card_2content_click=0;
 var dsh1_4card_3content_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
+var map1: any;
+// directionsService = new google.maps.DirectionsService;
+// directionsDisplay = new google.maps.DirectionsRenderer;
+var mapOptions1:any;
 
 //Google Variable
 declare var google;
 // var marker = [];
+var dsh1_charting;
+var mapStt_RFI:boolean=false;
+var mapStt_Release:boolean=false;
+var mapStt_NotRelease:boolean=false;
+var mapStt_area;
+let mapArrayStt = [
+  {nama: "RFI", value:false},
+  {nama: "RELEASE", value:false},
+  {nama: "NOTRELEASE", value:false},
+  {nama: "AREA", value:0}
+];
+var circles=[];
+
 
 @Component({
   selector: 'page-home',
@@ -59,16 +78,23 @@ declare var google;
 })
 
 export class HomePage {
-  private subscription1;
-  private subscription2;
+  private dsh1_subscription1;
+  private dsh1_subscription2;
   private cardValue_Header;
+  private responseData;
   //MAP
-  @ViewChild('map1') mapElement2: ElementRef;
-  map1: any;
-  // directionsService = new google.maps.DirectionsService;
-  // directionsDisplay = new google.maps.DirectionsRenderer;
-  mapOptions1:any;
-  charting;
+  //  @ViewChild('map1') mapElement2: ElementRef;
+  // map1: any;
+  // // directionsService = new google.maps.DirectionsService;
+  // // directionsDisplay = new google.maps.DirectionsRenderer;
+  // mapOptions1:any;
+
+  loadingMap = this.loadingCtrl.create({
+    // cssClass:"map-spinner",
+    spinner:'ios',
+    content: 'Please wait...'
+  });
+
   constructor(
       // private storage: Storage,
       public navCtrl: NavController,
@@ -77,65 +103,91 @@ export class HomePage {
       public alertCtrl: AlertController,
       public modalCtrl: ModalController,
       private database: DatabaseProvider,
-      private menu: MenuController
+      private menu: MenuController,
+      public loadingCtrl: LoadingController,
+      public config:Config
   ){
-    this.mapOptions1={
-      zoom: 4,
-      // center: new google.maps.LatLng(-2.209764,117.114258),
-      styles: this.database._defaultNewStyle
-    };
+
+
+
   }
 
   ionViewDidEnter(){
-    // this.menu.swipeEnable(false);
-    this.subscription2 = Observable.timer(3000, 3000).subscribe(x => {
-      console.log('run-Disply');
-       this.getData();
-    });
+    // // this.menu.swipeEnable(false);
+    // this.dsh1_subscription2 = Observable.timer(10000, 10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //     this.dsh1_GetData();
+    //     this.dsh1_UpdateDataChart();
+    // });
   }
 
+  /** API */
   ngOnInit() {
-    this.subscription1 = Observable.timer(10000,10000).subscribe(x => {
-      console.log('run-Disply');
-      this.dashboarAll.getAllPrj();
-      // this.dashboarAll.getSetting();
-    });
+    //Second Load DOM.
+    this.loadingMap.present();
+    this.dsh1_InitChart();
+    this.dsh1_UpdateDataChart();
+    setTimeout(() => {
+      var mapOptions={
+        zoom: 4,
+        center: new google.maps.LatLng(-2.209764,117.114258),
+        styles: this.database._defaultNewStyle
+      };
+      map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+      this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
+        this.responseData=result;
+            console.log("length=",this.responseData.length);
+            this.dsh1_initMap();
+            // localStorage.setItem('profile', JSON.stringify(this.responseData));
+      }, (err) => {
+        // this.koneksiMasalahToast();
+          console.log("jaringan bermasalah");
+      });
+      this.initMouseOverOut();
+      this.initClickEvent();
+      document.getElementById("dsh1[1]").hidden=false;
+      document.getElementById("dsh1[2]").hidden=false;
+      document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+      document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+      this.tampilkanNilai();
+
+    }, 100);
+
+    // this.dsh1_GetData();
+    // this.dsh1_UpdateDataChart();
+    // this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
+    //   console.log('run-Disply');
+    //   this.dashboarAll.getAllPrj();
+    //   this.dashboarAll.getMapData();
+    // });
   }
+
+  ionViewDidLoad() {
+    //Fist Load DOM
+    document.getElementById("dsh1[1]").hidden=false;
+    document.getElementById("dsh1[2]").hidden=false;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+    this.tampilkanNilai();
+  }
+
    /**
    * Event Back / close Page
    */
   ionViewWillUnload() {
-    console.log("Previus page")
-    this.subscription1.unsubscribe();
-    this.subscription2.unsubscribe();
+    circles=[];
+    // console.log("Previus page")
+    // this.dsh1_subscription1.unsubscribe();
+    // this.dsh1_subscription2.unsubscribe();
   }
 
   private goToAccount() {
     this.navCtrl.push(SettingsPage);
   }
 
-  ionViewDidLoad() {
-    this.initMouseOverOut();
-    this.initClickEvent();
-    document.getElementById("dsh1[1]").hidden=false;
-    document.getElementById("dsh1[2]").hidden=false;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
 
-    // document.getElementById("dsh1[3]").hidden=true;
-    // document.getElementById("dsh1[4]").hidden=true;
-    // document.getElementById("dsh1[5]").hidden=true;
-    // document.getElementById("dsh1[6]").hidden=true;
-    this.initMap();
-    console.log('ionViewDidLoad Dsh2HomePage');
-    // if (chkInit==true){
-      this.drilldown();
-      //chkInit=false;
-    // }
-    this.tampilkanNilai();
-  }
 
-  private getData(){
+  private dsh1_GetData(){
     var ary_Header=[];
     var rsltAry=[];
     var grpNotRelease=[];
@@ -144,12 +196,13 @@ export class HomePage {
     var area_RFI=[];
     var area_ARFI=[];
     var querySql ="SELECT DISTINCT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
-                  +" WHERE BULAN='08' AND TAHUN='2018'";
+                  //+" WHERE BULAN='08' AND TAHUN='2018'";
                   +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
       this.database.selectData(querySql).then(data=>{
-         rsltAry=[];
-         rsltAry.push(data);
-         if (rsltAry[0].length!==0){
+        rsltAry=[];
+        rsltAry.push(data);
+        //  if (rsltAry[0].length!==0){
+        if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
               // console.log(rsltAry);
               ary_Header=[];
@@ -320,7 +373,7 @@ export class HomePage {
   tampilkanNilai(){
   //  var a:[];
   //setTimeout(()=>{
-    console.log(this.getData());
+    // console.log(this.dsh1_GetData());
   //},1000);
   //  a.push(a.filter(function(headerObj){
   //           return headerObj.SEQ.indexOf("HEADER") > -1
@@ -381,9 +434,427 @@ export class HomePage {
     // }
   }
 
-  initMap(){
-    // this.map1 = new google.maps.Map(document.getElementById("map1"),this.mapOptions1);
-    // this.directionsDisplay.setMap(this.map1);
+  public rfiChange(event: Event){
+    var objIndex;
+    var sqlWhere;
+    // console.log(mapStt_RFI);
+    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
+
+    // mapStt_RFI=event['checked'];
+    // if(mapStt_Release==true && mapStt_NotRelease==true){
+    //   sqlWhere =" GRP='RFI' AND GRP='RELEASE' AND "
+    // }
+
+    // this.dsh1_initMap(sqlWhere);
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
+    //Log object to Console.
+    //console.log("Before update: ", mapArrayStt[objIndex]);
+    //Update object's name property.
+    mapArrayStt[objIndex].value = event['checked'];
+    //console.log("After update: ",mapArrayStt);
+
+    this.dsh1_initMap(mapArrayStt);
+  }
+
+  public releaseChange(event: Event){
+    var objIndex;
+    // this.dsh1_initMap(sqlWhere);
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
+    //Log object to Console.
+    //console.log("Before update: ", mapArrayStt[objIndex]);
+    //Update object's name property.
+    mapArrayStt[objIndex].value = event['checked'];
+    //console.log("After update: ",mapArrayStt);
+
+    this.dsh1_initMap(mapArrayStt);
+    // mapStt_Release=event['checked'];
+    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
+  }
+
+  public notReleaseChange(event: Event) {
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
+    //Log object to Console.
+    //console.log("Before update: ", mapArrayStt[objIndex]);
+    //Update object's name property.
+    mapArrayStt[objIndex].value = event['checked'];
+    //console.log("After update: ",mapArrayStt);
+
+    this.dsh1_initMap(mapArrayStt);
+    // mapStt_NotRelease=event['checked'];
+    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
+  }
+
+  public areaChange(event: Event) {
+    // console.log(event);
+    var objIndex;
+    var intOption;
+    intOption=event;
+    // this.dsh1_initMap(sqlWhere);
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
+    //Log object to Console.
+    // console.log("Before update: ", mapArrayStt[objIndex]);
+    //Update object's name property.
+    mapArrayStt[objIndex].value = intOption;
+    // console.log("After update: ",mapArrayStt);
+    // mapStt_area=event;
+    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
+    this.dsh1_initMap(mapArrayStt);
+  }
+
+  dsh1_initMap(qryWhere:any=null){
+    var rsltAryMap=[];
+    var myRFI;
+    var myRelease;
+    var myNotRelease;
+    var mylatlngRFI;
+    var mylatlngRELEASE;
+    var mylatlngNOTRELEASE;
+    var contentString;
+    this.loadingMap.present();
+    this.loadingMap.setContent('Load Map');
+    this.loadingMap.setSpinner('bubbles');
+    // let loadingMap = this.loadingCtrl.create({
+    //   // cssClass:"map-spinner",
+    //   content: 'Please wait...'
+    // });
+    // loadingMap.present();
+
+    /** CLEAR ALL Circle in MAP*/
+    if (circles.length>0){
+      for(var i in circles) {
+        circles[i].setMap(null);
+      }
+      circles = [];
+    }
+
+
+    /** Waktu Tunggu sampai data siap di prosess */
+    setTimeout(()=>{
+
+      var kosongin = new google.maps.Circle();
+      kosongin.setMap(null);
+
+      this.responseData.forEach(rslt=>{
+        // console.log("latlog1=",rslt.lat,rslt.long);
+        mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
+
+          if(mapArrayStt[0]['value']==false){
+            myRFI = new google.maps.Circle({
+            center: mylatlngRFI,
+            radius: 10000,
+            strokeColor: "rgb(19, 148, 40)", //color_status,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#449af0",
+            fillOpacity: 1        // infowindow: myInfoWindow
+          });
+        }else{
+
+          myRFI = new google.maps.Circle({
+              center: mylatlngRFI,
+              radius: 10000,
+              strokeColor: "rgb(240, 205, 10)", //color_status,
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "black",
+              fillOpacity: 1
+          });
+        }
+        myRFI.setMap(map1);
+        circles.push(myRFI);
+      })
+      this.loadingMap.dismiss();
+    },500);
+    // responseData=[];
+    // setTimeout(()=>{
+    // console.log("net error=",JSON.stringify(this.responseData.Release));
+    //         this.responseData.Release.forEach(rslt=>{
+    //           // loading.present();
+    //         // for (var i = 0; i < rsltAryMap.length; i++) {
+    //           contentString = '<div id="content">' +
+    //                           '<div id="siteNotice">' +
+    //                           '</div>' +
+    //                           '<div id="bodyContent">' +
+    //                           '<table>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.project_id + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.site_nm + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.tenan_nm + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>area</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.area + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>regional</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.regional + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>sow</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.sow + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Status</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rslt.status + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+    //                           '</tr>' +
+    //                           '</table>' +
+    //                           '</div>';
+    //           var myInfoWindow = new google.maps.InfoWindow({
+    //             content: contentString
+    //           });
+    //           // var mylatlng = new google.maps.latLng(-6.324000,106.626076);
+    //           if (rslt.grp=='RFI'){
+    //             mylatlngRFI = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+    //           if (rslt.grp=='RELEASE'){
+    //             mylatlngRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+    //           if (rslt.grp=='NOTRELEASE'){
+    //             mylatlngNOTRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
+    //           }
+
+    //           myRFI = new google.maps.Circle({
+    //             center: mylatlngRFI,
+    //             radius: 10000,
+    //             strokeColor: "rgb(19, 148, 40)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //           });
+
+    //           myRelease = new google.maps.Circle({
+    //               center: mylatlngRELEASE,
+    //               radius: 10000,
+    //               strokeColor: "rgb(240, 205, 10)", //color_status,
+    //               strokeOpacity: 0.8,
+    //               strokeWeight: 2,
+    //               fillColor: "#449af0",
+    //               infowindow: myInfoWindow
+    //           });
+
+    //           myNotRelease = new google.maps.Circle({
+    //             center: mylatlngNOTRELEASE,
+    //             radius: 10000,
+    //             strokeColor: "rgb(243, 9, 9)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //         });
+
+    //           myRFI.setMap(map1);
+    //           myRelease.setMap(map1);
+    //           myNotRelease.setMap(map1);
+    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //       })
+    //     },2000);
+
+    // var rsltAryMap=[];
+    // var myRFI;
+    // var myRelease;
+    // var myNotRelease;
+    // var myLatlngRFI;
+    // var myLatlngRELEASE;
+    // var myLatlngNOTRELEASE;
+    // var contentString;
+    // var querySql;
+    //   querySql='';
+    // if (qryWhere==null){
+    //   querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
+    // }else if(qryWhere!=null){
+    //   var concatSql;
+    //       concatSql='';
+    //   var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
+    //   // querySql=querySql + " WHERE " + qryWhere;
+    //   console.log("test1=",qryWhere);
+    //   console.log("test2=",qryWhere[0]['nama']);
+    //    //concatSql=" WHERE TAHUN='2018'";
+    //   // if(qryWhere[0]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[0]['nama'] + "'"; //GRP='RFI'";
+    //   // }
+    //   // if(qryWhere[1]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[1]['nama'] + "'"; //GRP='RELEASE'";
+    //   // }
+    //   // if(qryWhere[2]['value']==true){
+    //   //   concatSql=concatSql + " AND GRP='" + qryWhere[2]['nama'] +"'"; //GRP='NOTRELEASE'";
+    //   // }
+    //   // if(qryWhere[3]['value']==true){
+    //   //   concatSql=concatSql + " AND AREA="+ qryWhere[3]['nama'];
+    //   // }
+    //   var filter_GRP=[];
+    //   var filter_AREA;
+    //       filter_AREA='';
+    //   qryWhere.forEach(el=>{
+    //     if (el.value==true){
+    //       filter_GRP.push("'"+el.nama+"'");
+    //     }
+    //     if (el.value!=0){
+    //       filter_AREA=" AND AREA='" + el.value + "'";
+    //     }
+    //   })
+    //   if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
+    //     concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
+    //   }
+    //   if(qryWhere[3]['value']!=0){
+    //     concatSql=concatSql + filter_AREA;
+    //   }
+
+    //   // concatSql=concatSql + filter_AREA;
+
+    //   querySql=sqlDefault + concatSql;
+    //   console.log("concat=", filter_GRP);
+
+    // }
+    //    this.database.selectData(querySql).then(data=>{
+    //     rsltAryMap=[];
+    //     rsltAryMap.push(data);
+    //     if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+    //       setTimeout(()=>{
+    //         for (var i = 0; i < rsltAryMap[0].length; i++) {
+    //           contentString = '<div id="content">' +
+    //                           '<div id="siteNotice">' +
+    //                           '</div>' +
+    //                           '<div id="bodyContent">' +
+    //                           '<table>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Area</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Regional</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>SOW</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<tr>' +
+    //                           '<td><font color="black"><b>Status</b></font></td>' +
+    //                           '<td style="width:6%"><font color="black">:</font></td>' +
+    //                           '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
+    //                           '</tr>' +
+    //                           '<tr>' +
+    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+    //                           '</tr>' +
+    //                           '</table>' +
+    //                           '</div>';
+    //           var myInfoWindow = new google.maps.InfoWindow({
+    //             content: contentString
+    //           });
+    //           // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+    //           if (rsltAryMap[0][i]['GRP']=='RFI'){
+    //             myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+    //           if (rsltAryMap[0][i]['GRP']=='RELEASE'){
+    //             myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+    //           if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
+    //             myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+    //           }
+
+    //           myRFI = new google.maps.Circle({
+    //             center: myLatlngRFI,
+    //             radius: 10000,
+    //             strokeColor: "rgb(19, 148, 40)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //           });
+
+    //           myRelease = new google.maps.Circle({
+    //               center: myLatlngRELEASE,
+    //               radius: 10000,
+    //               strokeColor: "rgb(240, 205, 10)", //color_status,
+    //               strokeOpacity: 0.8,
+    //               strokeWeight: 2,
+    //               fillColor: "#449af0",
+    //               infowindow: myInfoWindow
+    //           });
+
+    //           myNotRelease = new google.maps.Circle({
+    //             center: myLatlngNOTRELEASE,
+    //             radius: 10000,
+    //             strokeColor: "rgb(243, 9, 9)", //color_status,
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#449af0",
+    //             fillOpacity: 0.4,
+    //             infowindow: myInfoWindow
+    //         });
+
+    //           myRFI.setMap(map1);
+    //           myRelease.setMap(map1);
+    //           myNotRelease.setMap(map1);
+    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+    //               this.infowindow.setPosition(ev.latLng);
+    //               this.infowindow.open(this.map1, this);
+    //             });
+    //       }
+    //     },500);
+    //   }
+    // });
   }
 
   public alertModalNoRelease(){
@@ -482,17 +953,101 @@ export class HomePage {
     alert1.present();
   }
 
-  private drilldown(){
-        this.charting=HighCharts.chart({
+  private dsh1_UpdateDataChart(){
+    this.loadingMap.present();
+    this.loadingMap.setContent("Load Chart");
+    var dsh1_rsltAryChart=[];
+    var dsh1_aryCtg=[];
+    var dsh1_aryTarget_RFI=[];
+    var dsh1_aryActual_RFI=[];
+    var dsh1_aryTarget=[];
+    var dsh1_aryActual=[];
+    var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+                  +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
+                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    this.database.selectData(dsh1_querySql).then(data=>{
+      dsh1_rsltAryChart=[];
+      dsh1_aryCtg=[];
+      dsh1_aryTarget_RFI=[];
+      dsh1_aryActual_RFI=[];
+      dsh1_aryTarget=[];
+      dsh1_aryActual=[];
+      dsh1_rsltAryChart.push(data);
+      // if (rsltAryChart.length!==0){
+      if(dsh1_rsltAryChart !== undefined || dsh1_rsltAryChart.length > 0){
+        // dsh1_aryCtg =dsh1_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
+        dsh1_aryTarget_RFI =dsh1_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+        dsh1_aryActual_RFI =dsh1_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+        dsh1_aryTarget =dsh1_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+        dsh1_aryActual =dsh1_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+        // console.log(aryTarget_RFI);
+          // setTimeout(() => {
+            dsh1_charting.update({
+              xAxis: [{
+                categories:dsh1_aryCtg,
+                labels: {
+                     overflow: 'justify'
+                }
+              }],
+              series: [{
+                name: 'Target RFI',
+                data: dsh1_aryTarget_RFI,
+                color:'#2c303e',
+              },{
+                name: 'Actual RFI',
+                data: dsh1_aryActual_RFI,
+                color:'#a50500',
+              },{
+                name: 'Target',
+                data: dsh1_aryTarget,
+                color:'#2F69C5',
+              },{
+                name: 'Actual',
+                data: dsh1_aryActual,
+                color:'#FF9735',
+              }
+            ]
+            });
+          // }, 500);
+      }
+    });
+  }
+
+  private dsh1_InitChart(){
+      const dsh1_tgl = new Date();
+      const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+      dsh1_charting=HighCharts.chart({
           chart: {
             renderTo:'dsh1-b2cChart',
             zoomType: 'x',
             panning: true,
             panKey: 'shift',
-            type:'areaspline'
+            type:'areaspline',
+            // events:{
+            //   data: (function () {
+            // },
+            // events: {
+            //   load: function () {
+            //       var label = this.renderer.label('Chart loaded', 100, 120)
+            //           .attr({
+            //               // fill: HighCharts.getOptions().colors[0],
+            //               padding: 10,
+            //               r: 5,
+            //               zIndex: 8
+            //           })
+            //           .css({
+            //               color: '#FFFFFF'
+            //           })
+            //           .add();
+
+            //       setTimeout(function () {
+            //           label.fadeOut();
+            //       }, 1000);
+            //   }
+            // }
           },
           title: {
-              text: "Project Summary of 10 September 2018",
+              text: "Project Summary of " + dsh1_tgl.getDay() +" " + dsh1_monthNames[dsh1_tgl.getMonth()] + ' ' + dsh1_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }
@@ -501,7 +1056,8 @@ export class HomePage {
             enabled: false
           },
           xAxis: {
-             categories: ["W1-Jan-2018","W2-Jan-2018","W3-Jan-2018","W4-Jan-2018","W5-Jan-2018","W1-Feb-2018","W2-Feb-2018","W3-Feb-2018","W4-Feb-2018","W5-Feb-2018","W1-Mar-2018","W2-Mar-2018","W3-Mar-2018","W4-Mar-2018","W5-Mar-2018","W1-Apr-2018","W2-Apr-2018","W3-Apr-2018","W4-Apr-2018","W5-Apr-2018","W6-Apr-2018","W1-May-2018","W2-May-2018","W3-May-2018","W4-May-2018","W5-May-2018","W1-Jun-2018","W2-Jun-2018","W3-Jun-2018","W4-Jun-2018","W5-Jun-2018","W1-Jul-2018","W2-Jul-2018","W3-Jul-2018","W4-Jul-2018","W5-Jul-2018","W6-Jul-2018","W1-Aug-2018","W2-Aug-2018","W3-Aug-2018","W4-Aug-2018","W5-Aug-2018","W1-Sep-2018","W2-Sep-2018","W3-Sep-2018","W4-Sep-2018","W5-Sep-2018","W1-Oct-2018","W2-Oct-2018","W3-Oct-2018","W4-Oct-2018","W5-Oct-2018","W1-Nov-2018","W2-Nov-2018","W3-Nov-2018"],
+             categories: [null,null,null,null,null,null,null,null,null,null,null],
+              // categories:aryCtg,
               labels: {
                   overflow: 'justify'
               }
@@ -530,24 +1086,28 @@ export class HomePage {
           series: [{
                 // type: 'spline',
                 name: 'Target RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null,16,61,302,382,394,411,421,873,885,886,900,1195,1233,1251,1401,1422,1447,1449,1459,1461,1461,1487,1487,1489,1530,1560,1564,1577,1586,1606,1610,1610,1613,1613,1613,1615,1650,1650,1654,1712,1716,1716,1721],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
+                // data: aryTarget_RFI,
                 color:'#2c303e',
                 //fillOpacity: 0.5
             }, {
                 // type: 'spline',
                 name: 'Actual RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null,22,56,123,206,209,259,303,331,339,343,343,350,353,354,356,357,359,362,362,362,363,367,372,399,403,408,456],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
+                // data: aryActual_RFI,
                 color:'#a50500',
                 //fillOpacity: 0.5
           }, {
                 type: 'column',
                 name: 'Target',
-                data: [0,0,0,0,0,0,0,0,0,0,0,16,45,241,80,12,17,10,452,12,1,14,295,38,18,150,21,25,2,10,2,0,26,0,2,41,30,4,13,9,20,4,0,3,0,0,2,35,0,4,58,4,0,5,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
+                // data: aryTarget,
                 color:'#2F69C5'
           }, {
                 type: 'column',
                 name: 'Actual',
-                data: [0,0,0,0,0,0,0,0,0,0,0,22,34,67,83,3,50,44,28,8,4,0,7,3,1,2,1,2,3,0,0,1,4,5,27,4,5,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                data: [null,null,null,null,null,null,null,null,null,null,null],
+                // data: aryActual,
                 color:'#FF9735'
           }],
           navigation: {
@@ -555,8 +1115,63 @@ export class HomePage {
                   fontSize: '10px'
               }
           }
-    });
+      });
   }
+  // private dsh1_InitChart(){
+
+  //     var option={
+  //             chart: {
+  //               renderTo:'dsh1-b2cChart',
+  //               zoomType: 'x',
+  //               panning: true,
+  //               panKey: 'shift',
+  //               type:'areaspline'
+  //             },
+  //             title: {
+  //               text: 'CPU Usage'
+  //             },
+  //             credits: {
+  //               enabled: false
+  //             },
+  //             xAxis: {
+  //                 labels: {
+  //                     overflow: 'justify'
+  //                 }
+  //             },
+  //             yAxis: {
+  //                 title: {
+  //                   text: 'Total Project'
+  //                 }
+  //             },
+  //             tooltip: {
+  //                 valueSuffix: ' '
+  //             },
+  //             plotOptions: {
+  //                 spline: {
+  //                   lineWidth: 3,
+  //                   states: {
+  //                       hover: {
+  //                           lineWidth: 5
+  //                       }
+  //                   },
+  //                   marker: {
+  //                       enabled: false
+  //                   }
+  //                 }
+  //             },
+  //             navigation: {
+  //                 menuItemStyle: {
+  //                     fontSize: '10px'
+  //                 }
+  //             },
+  //             series: [{}]
+  //           };
+  //           var chart1;
+  //           option.series[0]= [{
+  //            data: [null,null,null,null,null,null,null,null,null,null,null,16,61,302,382,394,411,421,873,885,886,900,1195,1233,1251,1401,1422,1447,1449,1459,1461,1461,1487,1487,1489,1530,1560,1564,1577,1586,1606,1610,1610,1613,1613,1613,1615,1650,1650,1654,1712,1716,1716,1721],
+  //           }];
+  //           chart1 = new heHighcharts.Chart(option);
+  // }
 
 
   private initClickEvent(){
@@ -1633,6 +2248,15 @@ export class HomePage {
               dsh1_0card_3footer.style.backgroundColor="#E9E9E9";
             }
           }
+  }
+
+  public getConfig(){
+    var q=this.config.get('real_name');
+    alert(q);
+  }
+
+  public setConfig(){
+    this.config.set('bulan',1);
   }
 }
 

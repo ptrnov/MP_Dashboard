@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
-import { Http } from "@angular/http";
+import { Http, Headers } from "@angular/http";
 // import { Platform } from 'ionic-angular';
 // import {map,first,reduce } from 'rxjs/operators';
 // import 'rxjs/add/operator/first';
@@ -25,7 +25,7 @@ interface aryPageSetting{
 export class DashboardAllProvider {
   private url: string ="http://180.250.19.206/";
   // private url: string ="http://mproject.mitratel.int/";
-  // private url: string ="http://192.168.100.8/";
+  // private url: string ="http://127.0.0.1/";
   // private url: string ="http://192.168.1.7/";
   // private url: string ="http://172.20.10.9/";
   // private subscription1;
@@ -33,7 +33,6 @@ export class DashboardAllProvider {
   private caba:any;
   // public getPageSetting_FilterManthYear:{}=defaultDataSetting.filter;
   // public getAllProject_first:{}=defaultDataCardAll.dsh1;
-
   constructor(
       // public httpClient: HttpClient,
       private http: Http,
@@ -108,7 +107,8 @@ export class DashboardAllProvider {
     * Author    : ptr.nov@gmail.com
     */
    getAllPrj():void {
-    var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
+    // var x1=this.http.get(this.url + "Mobile_Dashboard/allproject").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/dshAll/10/2018").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
           var qry="INSERT OR REPLACE INTO ALL_PRJ (URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -249,7 +249,7 @@ export class DashboardAllProvider {
         });
     }
 
-    /* MICROCELL Project
+    /* SPECIAL Project
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
     * SQLite    : Live Mobile Storage.
@@ -283,7 +283,249 @@ export class DashboardAllProvider {
         });
     }
 
-    /* All Project
+    /* CHART DATA PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getChartData():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/chartdata").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_CHART (ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+          data.chart.forEach(element => {
+            this.database.insertData(qry,[
+              element.ID_CHART,
+              element.BULAN,
+              element.TAHUN,
+              element.NM_CHART,
+              element.TITLE,
+              element.KTG,
+              element.TARGET_RFI,
+              element.ACTUAL_RFI,
+              element.TARGET,
+              element.ACTUAL
+            ]);
+          });
+          console.log("success load Api - Chart Data Project");
+        });
+    }
+
+    /* MAP DATA ALL PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapData():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/dshmap").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.grp,
+              element.project_id,
+              element.area,
+              element.lat,
+              element.long,
+              element.radius,
+              element.site_nm,
+              element.tenan_nm,
+              element.regional,
+              element.sow,
+              element.status
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* MAP DATA B2S PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapB2s():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapb2s").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_B2S (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* MAP DATA CORE PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapCore():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapcore").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+    }
+
+    /* MAP DATA MICROCEL PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+    getMapMcp():void {
+      // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+      var x1=this.http.get(this.url + "Mobile_Dashboard/mapmicrocell").map(res => res.json());
+          x1.subscribe(data => {
+            // var data=res.json();
+            var qry="INSERT OR REPLACE INTO TBL_PETA_MCP (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            data.Release.forEach(element => {
+              this.database.insertData(qry,[
+                element.GRP,
+                element.PROJECT_ID,
+                element.AREA,
+                element.LAT,
+                element.LONG,
+                element.RADIUS,
+                element.SITE_NM,
+                element.TENAN_NM,
+                element.REGIONAL,
+                element.SOW,
+                element.STATUS
+              ]);
+            });
+            console.log("success load Api - MAP Data Project");
+          });
+    }
+
+    /* MAP DATA SPECIAL PROJECT
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMapSp():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mapsp").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_PETA_SP (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
+          data.Release.forEach(element => {
+            this.database.insertData(qry,[
+              element.GRP,
+              element.PROJECT_ID,
+              element.AREA,
+              element.LAT,
+              element.LONG,
+              element.RADIUS,
+              element.SITE_NM,
+              element.TENAN_NM,
+              element.REGIONAL,
+              element.SOW,
+              element.STATUS
+            ]);
+          });
+          console.log("success load Api - MAP Data Project");
+        });
+  }
+
+
+  /* MAP USER
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getMitraList():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/mitralist").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_MITRALIST(VENDOR_ID,VENDOR_NM) VALUES (?,?)";
+          data.mitra.forEach(element => {
+            this.database.insertData(qry,[
+              element.VENDOR_ID,
+              element.VENDOR_NM
+            ]);
+          });
+          console.log("success load Api - User");
+        });
+  }
+
+  /* MAP USER
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Rest Api  : Request & respon
+    * SQLite    : Live Mobile Storage.
+    * WebSql    : Develompent debug database,table,query.
+    * Author    : ptr.nov@gmail.com
+    */
+   getUser():void {
+    // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/listuser").map(res => res.json());
+        x1.subscribe(data => {
+          // var data=res.json();
+          var qry="INSERT OR REPLACE INTO TBL_USER (USER_ID,USERNAME,PASSWORD,REAL_NAME,EMAIL,USER_GROUP) VALUES (?,?,?,?,?,?)";
+          data.user.forEach(element => {
+            this.database.insertData(qry,[
+              element.USER_ID,
+              element.USERNAME,
+              element.PASSWORD,
+              element.REAL_NAME,
+              element.EMAIL,
+              element.USER_GROUP
+            ]);
+          });
+          console.log("success load Api - User");
+        });
+  }
+    /* APP SETTING
     * Event     : ViewLoad & ViewInit (Observable)
     * Rest Api  : Request & respon
     * SQLite    : Live Mobile Storage.
@@ -351,4 +593,33 @@ export class DashboardAllProvider {
   //   });
 
   // }
+
+  postData(credentials) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
+      this.http.get(this.url + "Mobile_Dashboard/login/"+ credentials)
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+    });
+
+  }
+
+  postDatax(activity,credentials) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
+      this.http.get(this.url + activity + credentials)
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+    });
+
+  }
+
 }

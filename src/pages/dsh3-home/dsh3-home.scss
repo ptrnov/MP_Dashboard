@@ -325,4 +325,104 @@ page-dsh3-home {
       font-size: 9px;
     }
   }
+
+
+  .map-rfi{
+    background-color: transparent;
+    margin-left: -10px;
+    margin-right: 0px;
+    width: 80px;
+    margin-bottom: -16px;
+    .checkbox{
+     // width: 50px;
+      margin-left: -62px;
+      margin-right: -5px;
+
+    }
+    .toggle-icon {
+      background-color: rgb(70, 192, 223); // this changes the background, ie the grey stripe.
+      text-align: right;
+      .toggle-inner {
+        background-color: rgb(19, 148, 40); // this changes the backgroundcolor of the toggle dot.
+      }
+    }
+    .font-lbl{
+      font-size: 11px;
+      font-weight: bold;
+      text-align:center;
+      margin-left: -40px;
+      // text-align: left;
+    }
+  }
+  .map-release{
+    background-color: transparent;
+    margin-left: -40px;
+    margin-right: 0px;
+    width: 100px;
+    margin-bottom: -16px;
+    .checkbox{
+      margin-left: -26px;
+      margin-right: -9px;
+    }
+    .toggle-icon {
+      background-color: rgb(70, 192, 223); // this changes the background, ie the grey stripe.
+      .toggle-inner {
+        background-color: rgb(240, 205, 10); // this changes the backgroundcolor of the toggle dot.
+      }
+    }
+    .font-lbl{
+      margin-left: -5px;
+      font-size: 11px;
+      font-weight: bold;
+      text-align:center;
+    }
+  }
+  .map-notrelease{
+    background-color: transparent;
+    margin-left: -45px;
+    margin-right: -70px;
+    width: 150px;
+    margin-bottom: -16px;
+    .checkbox{
+     // width: 50px;
+      margin-left: -25px;
+      margin-right: 5px;
+
+    }
+    .toggle-icon {
+      background-color: rgb(70, 192, 223); // this changes the background, ie the grey stripe.
+      .toggle-inner {
+        background-color: rgb(243, 9, 9); // this changes the backgroundcolor of the toggle dot.
+      }
+    }
+    .font-lbl{
+      margin-left: -10px;
+      font-size: 12px;
+      font-weight: bold;
+      text-align:center;
+    }
+  }
+
+  .map-area{
+    background-color: transparent;
+    width:100px;
+    margin-left: -20px;
+    margin-right: -30px;
+    margin-top: -10px;
+    margin-bottom: -15px;
+    .item-inner{
+      margin-left: -20px;
+      margin-right: -120px;
+      font-size: 12px;
+      font-weight: bold;
+      text-align:right;
+
+    }
+    .font-lbl{
+      font-size: 12px;
+      font-weight: bold;
+      text-align:center;
+    }
+  }
+
 }

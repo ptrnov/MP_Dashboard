@@ -37,6 +37,7 @@ import { Dsh4HomePage} from '../pages/dsh4-home/dsh4-home';
 import { Dsh5HomePage} from '../pages/dsh5-home/dsh5-home';
 import { Dsh6HomePage} from '../pages/dsh6-home/dsh6-home';
 import { Dsh7HomePage} from '../pages/dsh7-home/dsh7-home';
+import { Dsh7ModalFlowPage} from '../pages/dsh7-modal-flow/dsh7-modal-flow';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DatabaseProvider } from '../providers/database/database';
 import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
@@ -70,7 +71,8 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     Dsh4HomePage,
     Dsh5HomePage,
     Dsh6HomePage,
-    Dsh7HomePage
+    Dsh7HomePage,
+    Dsh7ModalFlowPage
   ],
   imports: [
     BrowserModule,
@@ -80,14 +82,14 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: true,
-      autoFocusAssist: false
+      autoFocusAssist: false,
+      bulan: 10,
+      tahun: 2018,
+      real_name:'none',
+      user_group:'none'
+
     }),
     SelectSearchableModule
-    // IonicStorageModule.forRoot({
-    //   name: '__ionic3_start_theme',
-    //     driverOrder: ['indexeddb', 'sqlite', 'websql']
-    // })
-    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -111,7 +113,8 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     Dsh4HomePage,
     Dsh5HomePage,
     Dsh6HomePage,
-    Dsh7HomePage
+    Dsh7HomePage,
+    Dsh7ModalFlowPage
   ],
   providers: [
     StatusBar,
@@ -121,7 +124,7 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     SQLite,   
     DashboardAllProvider, 
     DatabaseProvider,   
-    RestProvider,    
+    RestProvider, 
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

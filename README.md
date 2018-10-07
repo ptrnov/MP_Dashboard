@@ -36,4 +36,23 @@ ver 1.0.0
 13. issue: application error the connection to the server was unsuccessful file:///android_asset/www/index.html)
     soluation add in config.eml
     <preference name="loadUrlTimeoutValue" value="700000" />
+14. Release APK
+#keytool -genkey -v -keystore codo.dashboard.keystore -alias codo.dashboard -keyalg RSA -keysize 2048 -validity 10000
+pass: Sp1d3rm4n4
+first * last name : piter novian
+organizational: programmer
+organizational name: cudo
+City: tangerang
+provincy: banten
+cunty code : 62
+
+ionic cordova build android --release --prod
+	
+
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore codo.dashboard.keystore E:/ionicProject/MP_Dashboard/MP_Dashboard/platforms/android/build/outputs/apk/release/android-release-unsigned.apk codo.dashboard
+
+to playstore
+#zipalign -v -p 4 android-release-unsigned.apk newdemoapp.apk
+Other
+ionic cordova build android --minifycss --optimizejs --minifyjs --release
 ````
