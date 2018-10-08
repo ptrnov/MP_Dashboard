@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
@@ -38,18 +38,43 @@ export class Dsh4HomePage {
   // @ViewChild('map4') mapElement4: ElementRef;
   private dsh4_subscription1;
   private dsh4_subscription2;
+  loadingSpinner = this.loadingCtrl.create({
+    // cssClass:"map-spinner",
+    spinner:'ios',
+    content: 'Please wait...'
+  });
+  private responseDataChart;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private database: DatabaseProvider,
     private dashboarAll: DashboardAllProvider,
-  ) {
+    public loadingCtrl: LoadingController,
+  ){}
 
+  /** First Innit Component  */
+  ngOnInit() {
+    //Second Load DOM.
+    this.loadingSpinner.present();
+
+    /** CHARTING */
+    setTimeout(() => {
+      this.dsh4_initCard();
+      this.dsh4_InitChart();
+      this.dsh4_initMap();
+    }, 100);
+
+     /** MAP */
+    setTimeout(() => {
+      this.dsh4_UpdateCard();
+      this.dsh4_UpdateDataChart();
+      this.dsh4_UpdateDataMap();
+    }, 200);
   }
 
-
-  ionViewDidLoad() {
+  /** INIT CARD */
+  private dsh4_initCard(){
     this.initMouseOverOut();
     this.initClickEvent();
     document.getElementById("dsh4[1]").hidden=true;
@@ -62,44 +87,9 @@ export class Dsh4HomePage {
     document.getElementById("dsh4_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh4_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh4_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
-    this.map4_initMap();
-    this.dsh4_InitChart();
-    this.dsh4_UpdateDataChart();
-    console.log('ionViewDidLoad map4HomePage');
-    // if (chkInit==true){
-      // this.drilldown();
-      //chkInit=false;
-    // }
-    // this.tampilkanNilai();
   }
 
-  ionViewDidEnter(){
-    // this.menu.swipeEnable(false);
-    // this.dsh4_subscription2 = Observable.timer(50000, 50000).subscribe(x => {
-    //   console.log('run-Disply');
-    //     this.dsh4_GetData();
-    //    this.dsh4_UpdateDataChart();
-    // });
-  }
-
-  ionViewWillUnload() {
-    // console.log("Previus page");
-    // this.dsh4_subscription1.unsubscribe();
-    // this.dsh4_subscription2.unsubscribe();
-  }
-
-  /** API LOAD */
-  ngOnInit() {
-    // this.dsh4_GetData();
-    // this.dsh4_UpdateDataChart();
-    // this.dsh4_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-    //   console.log('run-Disply');
-    //   this.dashboarAll.getMcpPrj();
-    //   // this.dashboarAll.getSetting();
-    // });
-  }
-
-  private dsh4_GetData(){
+  private dsh4_UpdateCard(){
     var ary_Header=[];
     var rsltAry=[];
     var grpMCP=[];
@@ -245,21 +235,21 @@ export class Dsh4HomePage {
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.map4_initMap(mapArrayStt);
+    this.dsh4_UpdateDataMap(mapArrayStt);
   }
 
   public releaseChange(event: Event){
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.map4_initMap(mapArrayStt);
+    this.dsh4_UpdateDataMap(mapArrayStt);
   }
 
   public notReleaseChange(event: Event) {
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.map4_initMap(mapArrayStt);
+    this.dsh4_UpdateDataMap(mapArrayStt);
   }
 
   public areaChange(event: Event) {
@@ -268,16 +258,18 @@ export class Dsh4HomePage {
     intOption=event;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
     mapArrayStt[objIndex].value = intOption;
-    this.map4_initMap(mapArrayStt);
+    this.dsh4_UpdateDataMap(mapArrayStt);
   }
 
-  map4_initMap(qryWhere:any=null){
+  private dsh4_initMap(){
     var mapOptions={
       zoom: 4,
       center: new google.maps.LatLng(-2.209764,117.114258),
       styles: this.database._defaultNewStyle
     };
     map4 = new google.maps.Map(document.getElementById("map4"),mapOptions);
+  }
+  private dsh4_UpdateDataMap(qryWhere:any=null){
     var rsltAryMap=[];
     var myRFI;
     var myRelease;
@@ -433,6 +425,7 @@ export class Dsh4HomePage {
                   this.infowindow.open(this.map4, this);
                 });
           }
+          this.loadingSpinner.dismiss();
         },500);
       }
     });
@@ -443,38 +436,38 @@ export class Dsh4HomePage {
   }
 
   private dsh4_UpdateDataChart(){
-    var dsh4_rsltAryChart=[];
+    this.loadingSpinner.present();
+    this.loadingSpinner.setContent("Load Chart");
     var dsh4_aryCtg=[];
     var dsh4_aryTarget_RFI=[];
     var dsh4_aryActual_RFI=[];
     var dsh4_aryTarget=[];
     var dsh4_aryActual=[];
-    var dsh4_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
-                  +" WHERE ID_CHART='mp004' AND BULAN='09' AND TAHUN='2018'";
-                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-    this.database.selectData(dsh4_querySql).then(data=>{
-          dsh4_rsltAryChart=[];
-          dsh4_aryTarget_RFI=[];
-          dsh4_aryActual_RFI=[];
-          dsh4_aryTarget=[];
-          dsh4_aryActual=[];
-          dsh4_rsltAryChart.push(data);
-        if(dsh4_rsltAryChart !== undefined || dsh4_rsltAryChart.length > 0){
-          dsh4_aryCtg =dsh4_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
-          dsh4_aryTarget_RFI =dsh4_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-          dsh4_aryActual_RFI =dsh4_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-          dsh4_aryTarget =dsh4_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-          dsh4_aryActual =dsh4_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
-          // console.log(aryTarget_RFI);
-            // setTimeout(() => {
-              dsh4_charting.update({
-                xAxis: {
-                  categories:dsh4_aryCtg,
-                  labels: {
-                       overflow: 'justify'
-                  }
-                },
-                series: [{
+
+      this.dashboarAll.postDatax("Mobile_Dashboard/dshChart","").then((result) => {
+        this.responseDataChart=result;
+        dsh4_aryCtg=[];
+        dsh4_aryTarget_RFI=[];
+        dsh4_aryActual_RFI=[];
+        dsh4_aryTarget=[];
+        dsh4_aryActual=[];
+        // console.log("length=",this.responseDataChart.chart.length);
+        console.log("data chart=",this.responseDataChart.chart);
+        var data=this.responseDataChart.chart;
+            dsh4_aryCtg =data['equence'];
+            dsh4_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
+            dsh4_aryActual_RFI =data['actual'];//.split(",").map(Number);
+            dsh4_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
+            dsh4_aryActual =data['actual_nonkumulatif'];//.split(",").map(Number);
+            dsh4_charting.update({
+              xAxis: [{
+                categories:dsh4_aryCtg,
+                labels: {
+                    overflow: 'justify'
+                }
+              }],
+              series: [
+                {
                   name: 'Target RFI',
                   data: dsh4_aryTarget_RFI,
                   color:'#2c303e',
@@ -492,10 +485,12 @@ export class Dsh4HomePage {
                   color:'#FF9735',
                 }
               ]
-              });
-            // }, 200);
-        }
-    });
+            });
+            // this.loadingSpinner.dismiss();
+      }, (err) => {
+        // this.koneksiMasalahToast();
+          console.log("jaringan bermasalah");
+      });
   }
 
   private dsh4_InitChart(){
@@ -510,7 +505,7 @@ export class Dsh4HomePage {
             type:'areaspline'
           },
           title: {
-              text: "Project Summary of " + dsh4_tgl.getDay() +" " + dsh4_monthNames[dsh4_tgl.getMonth()] + ' ' + dsh4_tgl.getFullYear(),
+              text: "Project Summary of " + dsh4_tgl.getDate() +" " + dsh4_monthNames[dsh4_tgl.getMonth()] + ' ' + dsh4_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }
