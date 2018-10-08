@@ -1053,8 +1053,9 @@ export class HomePage {
     var dsh1_aryTarget=[];
     var dsh1_aryActual=[];
 
-    this.dashboarAll.postDatax("Mobile_Dashboard/chartdata","").then((result) => {
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshChart","").then((result) => {
       this.responseDataChart=result;
+      dsh1_aryCtg=[];
       dsh1_aryTarget_RFI=[];
       dsh1_aryActual_RFI=[];
       dsh1_aryTarget=[];
@@ -1062,10 +1063,11 @@ export class HomePage {
       // console.log("length=",this.responseDataChart.chart.length);
       console.log("data chart=",this.responseDataChart.chart);
       var data=this.responseDataChart.chart;
-          dsh1_aryTarget_RFI =data[0]['TARGET_RFI'];//.split(",").map(Number); //Split default value Number
-          dsh1_aryActual_RFI =data[0]['ACTUAL_RFI'];//.split(",").map(Number);
-          dsh1_aryTarget =data[0]['TARGET'];//.split(",").map(Number);
-          dsh1_aryActual =data[0]['ACTUAL'];//.split(",").map(Number);
+          dsh1_aryCtg =data['equence'];
+          dsh1_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
+          dsh1_aryActual_RFI =data['actual'];//.split(",").map(Number);
+          dsh1_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
+          dsh1_aryActual =data['actual_nonkumulatif'];//.split(",").map(Number);
           dsh1_charting.update({
             xAxis: [{
               categories:dsh1_aryCtg,
