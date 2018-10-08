@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Platform,NavController,AlertController} from "ionic-angular";
+import {Platform,NavController,AlertController,Events} from "ionic-angular";
 import {LoginPage} from "../login/login";
 import { DashboardAllProvider } from "../../providers/dashboard-all/dashboard-all";
 import { DatabaseProvider } from '../../providers/database/database';
@@ -32,14 +32,15 @@ export class SettingsPage {
     public nav: NavController,
     private dashboarAll: DashboardAllProvider,
     private database: DatabaseProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public events: Events
   ){
     this.valAryFilterYearMonth=this.database.getPageSetting_FilterManthYear;
-    this.ports = [
-      { id: 1, name: 'Tokai' },
-      { id: 2, name: 'Vladivostok' },
-      { id: 3, name: 'Navlakhi' }
-    ];
+    // this.ports = [
+    //   { id: 1, name: 'Tokai' },
+    //   { id: 2, name: 'Vladivostok' },
+    //   { id: 3, name: 'Navlakhi' }
+    // ];
     // platform.ready().then(() => {
       // var querySql ="SELECT SORT,GRP,NAME,NILAI,STT_ACTIVE FROM APPSETTING"
       // +" ORDER BY GRP,SORT ASC";
@@ -62,13 +63,16 @@ export class SettingsPage {
       // });
     // });
   }
-
-  portChange(event: {
-    component: SelectSearchableComponent,
-    value: any
-  }) {
-      console.log('port:', event.value);
+  filterTglChange($event){
+    console.log("filter Tanggal=",$event);
+    this.events.publish('filterTgl',$event);
   }
+  // portChange(event: {
+  //   component: SelectSearchableComponent,
+  //   value: any
+  // }) {
+  //     console.log('port:', event.value);
+  // }
 
   alertInfo(){
     let alert1= this.alertCtrl.create({

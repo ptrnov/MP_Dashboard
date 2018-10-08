@@ -1,60 +1,70 @@
 export let defaultDataSetting={
-    filter:[
+  "filter": [
       {
-        SORT :1,
-        GRP :"BulanTahun",
-        NAME :"Jan - 2018",
-        NILAI :"01-2018",
-        STT_ACTIVE: false
+          "SORT": "0",
+          "NAME": "All",
+          "NILAI": "0-0000",
+          "STT_ACTIVE": false
       },
       {
-        SORT :2,
-        GRP :"BulanTahun",
-        NAME :"Feb - 2018",
-        NILAI :"02-2018",
-        STT_ACTIVE: false
+          "SORT": "1",
+          "NAME": "Jan - 2018",
+          "NILAI": "1-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :3,
-        GRP :"BulanTahun",
-        NAME :"Mar - 2018",
-        NILAI :"03-2018",
-        STT_ACTIVE: false
+          "SORT": "2",
+          "NAME": "Feb - 2018",
+          "NILAI": "2-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :4,
-        GRP :"BulanTahun",
-        NAME :"Apr - 2018",
-        NILAI :"04-2018",
-        STT_ACTIVE: false
+          "SORT": "3",
+          "NAME": "Mar - 2018",
+          "NILAI": "3-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :5,
-        GRP :"BulanTahun",
-        NAME :"Mei - 2018",
-        NILAI :"05-2018",
-        STT_ACTIVE: false
+          "SORT": "4",
+          "NAME": "Apr - 2018",
+          "NILAI": "4-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :6,
-        GRP :"BulanTahun",
-        NAME :"Jun - 2018",
-        NILAI :"06-2018",
-        STT_ACTIVE: false
+          "SORT": "5",
+          "NAME": "Mei - 2018",
+          "NILAI": "5-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :7,
-        GRP :"BulanTahun",
-        NAME :"Jul - 2018",
-        NILAI :"07-2018",
-        STT_ACTIVE: false
+          "SORT": "6",
+          "NAME": "Jun - 2018",
+          "NILAI": "6-2018",
+          "STT_ACTIVE": false
       },
       {
-        SORT :8,
-        GRP :"BulanTahun",
-        NAME :"Aug - 2018",
-        NILAI :"08-2018",
-        STT_ACTIVE: true
+          "SORT": "7",
+          "NAME": "Jul - 2018",
+          "NILAI": "7-2018",
+          "STT_ACTIVE": false
+      },
+      {
+          "SORT": "8",
+          "NAME": "Aug - 2018",
+          "NILAI": "8-2018",
+          "STT_ACTIVE": false
+      },
+      {
+          "SORT": "9",
+          "NAME": "Sep - 2018",
+          "NILAI": "9-2018",
+          "STT_ACTIVE": false
+      },
+      {
+          "SORT": "10",
+          "NAME": "Okt - 2018",
+          "NILAI": "10-2018",
+          "STT_ACTIVE": true
       }
     ]
   };

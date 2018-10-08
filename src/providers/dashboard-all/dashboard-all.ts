@@ -536,11 +536,10 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/setting").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO APPSETTING(SORT,GRP,NAME,NILAI,STT_ACTIVE) VALUES (?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO APPSETTING(SORT,NAME,NILAI,STT_ACTIVE) VALUES (?,?,?,?)";
           data.filter.forEach(element => {
             this.database.insertData(qry,[
               element.SORT,
-              element.GRP,
               element.NAME,
               element.NILAI,
               element.STT_ACTIVE
