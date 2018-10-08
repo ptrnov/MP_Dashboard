@@ -1,5 +1,5 @@
 import {Component,ViewChild, ElementRef  } from "@angular/core";
-import {LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
+import {Events,LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
 // import {NotificationsPage} from "../notifications/notifications";
@@ -82,6 +82,7 @@ export class HomePage {
   private dsh1_subscription2;
   private cardValue_Header;
   private responseData;
+  private responseDataChart;
   //MAP
   //  @ViewChild('map1') mapElement2: ElementRef;
   // map1: any;
@@ -105,61 +106,143 @@ export class HomePage {
       private database: DatabaseProvider,
       private menu: MenuController,
       public loadingCtrl: LoadingController,
-      public config:Config
+      public config:Config,
+      public events: Events
   ){
-
-
-
-  }
-
-  ionViewDidEnter(){
-    // // this.menu.swipeEnable(false);
-    // this.dsh1_subscription2 = Observable.timer(10000, 10000).subscribe(x => {
-    //   console.log('run-Disply');
-    //     this.dsh1_GetData();
-    //     this.dsh1_UpdateDataChart();
-    // });
+    /** Event date setting*/
+    this.events.subscribe('filterTgl', (data) =>{
+      var bulanYearSplit=data.split("-");
+      var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+      console.log("Param Filter Bulan Tahun=",param);
+      this.dsh1_UpdateCard(param);
+    });
   }
 
   /** API */
   ngOnInit() {
     //Second Load DOM.
     this.loadingMap.present();
-    this.dsh1_InitChart();
-    this.dsh1_UpdateDataChart();
-    setTimeout(() => {
-      var mapOptions={
-        zoom: 4,
-        center: new google.maps.LatLng(-2.209764,117.114258),
-        styles: this.database._defaultNewStyle
-      };
-      map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
-      this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
-        this.responseData=result;
-            console.log("length=",this.responseData.length);
-            this.dsh1_initMap();
-            // localStorage.setItem('profile', JSON.stringify(this.responseData));
-      }, (err) => {
-        // this.koneksiMasalahToast();
-          console.log("jaringan bermasalah");
-      });
-      this.initMouseOverOut();
-      this.initClickEvent();
-      document.getElementById("dsh1[1]").hidden=false;
-      document.getElementById("dsh1[2]").hidden=false;
-      document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
-      document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-      this.tampilkanNilai();
 
+    /** CHARTING */
+    setTimeout(() => {
+      this.dsh1_initCard();
+      this.dsh1_InitChart();
+      this.dsh1_initMap();
     }, 100);
 
-    // this.dsh1_GetData();
-    // this.dsh1_UpdateDataChart();
-    // this.dsh1_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-    //   console.log('run-Disply');
-    //   this.dashboarAll.getAllPrj();
-    //   this.dashboarAll.getMapData();
-    // });
+     /** MAP */
+    setTimeout(() => {
+      this.dsh1_UpdateCard();
+      this.dsh1_UpdateDataChart();
+      this.dsh1_UpdateDataMap();
+    }, 200);
+  }
+
+  /** INIT CARD */
+  private dsh1_initCard(){
+    this.initMouseOverOut();
+    this.initClickEvent();
+    document.getElementById("dsh1[1]").hidden=false;
+    document.getElementById("dsh1[2]").hidden=false;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
+    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
+    for (var x1=1; x1<=20; x1++){
+      document.getElementById("dsh1["+x1+"]").hidden=true;
+    }
+  }
+
+  /** INIT MAP */
+  private dsh1_initMap(){
+    var mapOptions={
+      zoom: 4,
+      center: new google.maps.LatLng(-2.209764,117.114258),
+      styles: this.database._defaultNewStyle
+    };
+    map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+  }
+
+  /** INIT CHART */
+  private dsh1_InitChart(){
+    const dsh1_tgl = new Date();
+    const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    dsh1_charting=HighCharts.chart({
+        chart: {
+          renderTo:'dsh1-b2cChart',
+          zoomType: 'x',
+          panning: true,
+          panKey: 'shift',
+          type:'areaspline'
+        },
+        title: {
+            text: "Project Summary of " + dsh1_tgl.getDay() +" " + dsh1_monthNames[dsh1_tgl.getMonth()] + ' ' + dsh1_tgl.getFullYear(),
+            style: {
+              fontSize: '15px'
+            }
+        },
+        credits: {
+          enabled: false
+        },
+        xAxis: {
+           categories: [null,null,null,null,null,null,null,null,null,null,null],
+            // categories:aryCtg,
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        yAxis: {
+            title: {
+              text: 'Total Project'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' '
+        },
+        plotOptions: {
+            spline: {
+              lineWidth: 3,
+              states: {
+                  hover: {
+                      lineWidth: 5
+                  }
+              },
+              marker: {
+                  enabled: false
+              }
+            }
+        },
+        series: [{
+              // type: 'spline',
+              name: 'Target RFI',
+              data: [null,null,null,null,null,null,null,null,null,null,null],
+              // data: aryTarget_RFI,
+              color:'#2c303e',
+              //fillOpacity: 0.5
+          }, {
+              // type: 'spline',
+              name: 'Actual RFI',
+              data: [null,null,null,null,null,null,null,null,null,null,null],
+              // data: aryActual_RFI,
+              color:'#a50500',
+              //fillOpacity: 0.5
+        }, {
+              type: 'column',
+              name: 'Target',
+              data: [null,null,null,null,null,null,null,null,null,null,null],
+              // data: aryTarget,
+              color:'#2F69C5'
+        }, {
+              type: 'column',
+              name: 'Actual',
+              data: [null,null,null,null,null,null,null,null,null,null,null],
+              // data: aryActual,
+              color:'#FF9735'
+        }],
+        navigation: {
+            menuItemStyle: {
+                fontSize: '10px'
+            }
+        }
+    });
   }
 
   ionViewDidLoad() {
@@ -168,7 +251,7 @@ export class HomePage {
     document.getElementById("dsh1[2]").hidden=false;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
     document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-    this.tampilkanNilai();
+    // this.tampilkanNilai();
   }
 
    /**
@@ -185,9 +268,7 @@ export class HomePage {
     this.navCtrl.push(SettingsPage);
   }
 
-
-
-  private dsh1_GetData(){
+  private dsh1_UpdateCard($param='0/0000'){
     var ary_Header=[];
     var rsltAry=[];
     var grpNotRelease=[];
@@ -195,12 +276,18 @@ export class HomePage {
     var area_POP=[];
     var area_RFI=[];
     var area_ARFI=[];
-    var querySql ="SELECT DISTINCT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
-                  //+" WHERE BULAN='08' AND TAHUN='2018'";
-                  +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
+
+    // var querySql ="SELECT DISTINCT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4 FROM ALL_PRJ "// WHERE GRP='test' "
+    //               //+" WHERE BULAN='08' AND TAHUN='2018'";
+    //               +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.database.selectData(querySql).then(data=>{
+
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshAll/",$param).then((result) => {
+        this.responseData=result;
+        console.log("length=",this.responseData.length);
+
         rsltAry=[];
-        rsltAry.push(data);
+        rsltAry.push(result['dsh1']);
         //  if (rsltAry[0].length!==0){
         if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
@@ -373,7 +460,7 @@ export class HomePage {
   tampilkanNilai(){
   //  var a:[];
   //setTimeout(()=>{
-    // console.log(this.dsh1_GetData());
+    // console.log(this.dsh1_UpdateCard());
   //},1000);
   //  a.push(a.filter(function(headerObj){
   //           return headerObj.SEQ.indexOf("HEADER") > -1
@@ -381,9 +468,9 @@ export class HomePage {
   //   console.log(a);
 
     //--HIDE CARD
-    for (var x1=1; x1<=20; x1++){
-      document.getElementById("dsh1["+x1+"]").hidden=true;
-    }
+    // for (var x1=1; x1<=20; x1++){
+    //   document.getElementById("dsh1["+x1+"]").hidden=true;
+    // }
 
     /** All Project */
     // document.getElementById("dsh1_headcard[0]content[1]-properties-lbl").innerHTML=(99+13).toString();
@@ -453,7 +540,7 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_initMap(mapArrayStt);
+    this.dsh1_UpdateDataMap(mapArrayStt);
   }
 
   public releaseChange(event: Event){
@@ -466,7 +553,7 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_initMap(mapArrayStt);
+    this.dsh1_UpdateDataMap(mapArrayStt);
     // mapStt_Release=event['checked'];
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
   }
@@ -480,7 +567,7 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_initMap(mapArrayStt);
+    this.dsh1_UpdateDataMap(mapArrayStt);
     // mapStt_NotRelease=event['checked'];
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
   }
@@ -499,10 +586,10 @@ export class HomePage {
     // console.log("After update: ",mapArrayStt);
     // mapStt_area=event;
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
-    this.dsh1_initMap(mapArrayStt);
+    this.dsh1_UpdateDataMap(mapArrayStt);
   }
 
-  dsh1_initMap(qryWhere:any=null){
+  private dsh1_UpdateDataMap(qryWhere:any=null){
     var rsltAryMap=[];
     var myRFI;
     var myRelease;
@@ -514,58 +601,62 @@ export class HomePage {
     this.loadingMap.present();
     this.loadingMap.setContent('Load Map');
     this.loadingMap.setSpinner('bubbles');
-    // let loadingMap = this.loadingCtrl.create({
-    //   // cssClass:"map-spinner",
-    //   content: 'Please wait...'
-    // });
-    // loadingMap.present();
 
-    /** CLEAR ALL Circle in MAP*/
-    if (circles.length>0){
-      for(var i in circles) {
-        circles[i].setMap(null);
-      }
-      circles = [];
-    }
+    /** GET API DATA */
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
+      this.responseData=result;
+        console.log("length=",this.responseData.length);
+          /** CLEAR ALL Circle in MAP*/
+          if (circles.length>0){
+            for(var i in circles) {
+              circles[i].setMap(null);
+            }
+            circles = [];
+          }
+          /** Waktu Tunggu sampai data siap di prosess */
+          setTimeout(()=>{
+            var kosongin = new google.maps.Circle();
+            kosongin.setMap(null);
+
+            this.responseData.forEach(rslt=>{
+              // console.log("latlog1=",rslt.lat,rslt.long);
+              mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
+
+                if(mapArrayStt[0]['value']==false){
+                  myRFI = new google.maps.Circle({
+                  center: mylatlngRFI,
+                  radius: 10000,
+                  strokeColor: "rgb(19, 148, 40)", //color_status,
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: "#449af0",
+                  fillOpacity: 1        // infowindow: myInfoWindow
+                });
+              }else{
+
+                myRFI = new google.maps.Circle({
+                    center: mylatlngRFI,
+                    radius: 10000,
+                    strokeColor: "rgb(240, 205, 10)", //color_status,
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "black",
+                    fillOpacity: 1
+                });
+              }
+              myRFI.setMap(map1);
+              circles.push(myRFI);
+            })
+            this.loadingMap.dismiss();
+          },500);
+
+          // localStorage.setItem('profile', JSON.stringify(this.responseData));
+    }, (err) => {
+      // this.koneksiMasalahToast();
+        console.log("jaringan bermasalah");
+    });
 
 
-    /** Waktu Tunggu sampai data siap di prosess */
-    setTimeout(()=>{
-
-      var kosongin = new google.maps.Circle();
-      kosongin.setMap(null);
-
-      this.responseData.forEach(rslt=>{
-        // console.log("latlog1=",rslt.lat,rslt.long);
-        mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
-
-          if(mapArrayStt[0]['value']==false){
-            myRFI = new google.maps.Circle({
-            center: mylatlngRFI,
-            radius: 10000,
-            strokeColor: "rgb(19, 148, 40)", //color_status,
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#449af0",
-            fillOpacity: 1        // infowindow: myInfoWindow
-          });
-        }else{
-
-          myRFI = new google.maps.Circle({
-              center: mylatlngRFI,
-              radius: 10000,
-              strokeColor: "rgb(240, 205, 10)", //color_status,
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: "black",
-              fillOpacity: 1
-          });
-        }
-        myRFI.setMap(map1);
-        circles.push(myRFI);
-      })
-      this.loadingMap.dismiss();
-    },500);
     // responseData=[];
     // setTimeout(()=>{
     // console.log("net error=",JSON.stringify(this.responseData.Release));
@@ -956,40 +1047,36 @@ export class HomePage {
   private dsh1_UpdateDataChart(){
     this.loadingMap.present();
     this.loadingMap.setContent("Load Chart");
-    var dsh1_rsltAryChart=[];
     var dsh1_aryCtg=[];
     var dsh1_aryTarget_RFI=[];
     var dsh1_aryActual_RFI=[];
     var dsh1_aryTarget=[];
     var dsh1_aryActual=[];
-    var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
-                  +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
-                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-    this.database.selectData(dsh1_querySql).then(data=>{
-      dsh1_rsltAryChart=[];
+
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshChart","").then((result) => {
+      this.responseDataChart=result;
       dsh1_aryCtg=[];
       dsh1_aryTarget_RFI=[];
       dsh1_aryActual_RFI=[];
       dsh1_aryTarget=[];
       dsh1_aryActual=[];
-      dsh1_rsltAryChart.push(data);
-      // if (rsltAryChart.length!==0){
-      if(dsh1_rsltAryChart !== undefined || dsh1_rsltAryChart.length > 0){
-        // dsh1_aryCtg =dsh1_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
-        dsh1_aryTarget_RFI =dsh1_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-        dsh1_aryActual_RFI =dsh1_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-        dsh1_aryTarget =dsh1_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-        dsh1_aryActual =dsh1_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
-        // console.log(aryTarget_RFI);
-          // setTimeout(() => {
-            dsh1_charting.update({
-              xAxis: [{
-                categories:dsh1_aryCtg,
-                labels: {
-                     overflow: 'justify'
-                }
-              }],
-              series: [{
+      // console.log("length=",this.responseDataChart.chart.length);
+      console.log("data chart=",this.responseDataChart.chart);
+      var data=this.responseDataChart.chart;
+          dsh1_aryCtg =data['equence'];
+          dsh1_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
+          dsh1_aryActual_RFI =data['actual'];//.split(",").map(Number);
+          dsh1_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
+          dsh1_aryActual =data['actual_nonkumulatif'];//.split(",").map(Number);
+          dsh1_charting.update({
+            xAxis: [{
+              categories:dsh1_aryCtg,
+              labels: {
+                   overflow: 'justify'
+              }
+            }],
+            series: [
+              {
                 name: 'Target RFI',
                 data: dsh1_aryTarget_RFI,
                 color:'#2c303e',
@@ -1007,116 +1094,65 @@ export class HomePage {
                 color:'#FF9735',
               }
             ]
-            });
-          // }, 500);
-      }
+          });
+
+    }, (err) => {
+      // this.koneksiMasalahToast();
+        console.log("jaringan bermasalah");
     });
+
+    // var dsh1_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
+    //               +" WHERE ID_CHART='mp001' AND BULAN='09' AND TAHUN='2018'";
+    //               // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    // this.database.selectData(dsh1_querySql).then(data=>{
+    //   dsh1_rsltAryChart=[];
+    //   dsh1_aryCtg=[];
+    //   dsh1_aryTarget_RFI=[];
+    //   dsh1_aryActual_RFI=[];
+    //   dsh1_aryTarget=[];
+    //   dsh1_aryActual=[];
+    //   dsh1_rsltAryChart.push(data);
+    //   // if (rsltAryChart.length!==0){
+    //   if(dsh1_rsltAryChart !== undefined || dsh1_rsltAryChart.length > 0){
+    //     // dsh1_aryCtg =dsh1_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
+    //     dsh1_aryTarget_RFI =dsh1_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
+    //     dsh1_aryActual_RFI =dsh1_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
+    //     dsh1_aryTarget =dsh1_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
+    //     dsh1_aryActual =dsh1_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
+    //     // console.log(aryTarget_RFI);
+    //       // setTimeout(() => {
+    //         dsh1_charting.update({
+    //           xAxis: [{
+    //             categories:dsh1_aryCtg,
+    //             labels: {
+    //                  overflow: 'justify'
+    //             }
+    //           }],
+    //           series: [{
+    //             name: 'Target RFI',
+    //             data: dsh1_aryTarget_RFI,
+    //             color:'#2c303e',
+    //           },{
+    //             name: 'Actual RFI',
+    //             data: dsh1_aryActual_RFI,
+    //             color:'#a50500',
+    //           },{
+    //             name: 'Target',
+    //             data: dsh1_aryTarget,
+    //             color:'#2F69C5',
+    //           },{
+    //             name: 'Actual',
+    //             data: dsh1_aryActual,
+    //             color:'#FF9735',
+    //           }
+    //         ]
+    //         });
+    //       // }, 500);
+    //   }
+    // });
   }
 
-  private dsh1_InitChart(){
-      const dsh1_tgl = new Date();
-      const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-      dsh1_charting=HighCharts.chart({
-          chart: {
-            renderTo:'dsh1-b2cChart',
-            zoomType: 'x',
-            panning: true,
-            panKey: 'shift',
-            type:'areaspline',
-            // events:{
-            //   data: (function () {
-            // },
-            // events: {
-            //   load: function () {
-            //       var label = this.renderer.label('Chart loaded', 100, 120)
-            //           .attr({
-            //               // fill: HighCharts.getOptions().colors[0],
-            //               padding: 10,
-            //               r: 5,
-            //               zIndex: 8
-            //           })
-            //           .css({
-            //               color: '#FFFFFF'
-            //           })
-            //           .add();
 
-            //       setTimeout(function () {
-            //           label.fadeOut();
-            //       }, 1000);
-            //   }
-            // }
-          },
-          title: {
-              text: "Project Summary of " + dsh1_tgl.getDay() +" " + dsh1_monthNames[dsh1_tgl.getMonth()] + ' ' + dsh1_tgl.getFullYear(),
-              style: {
-                fontSize: '15px'
-              }
-          },
-          credits: {
-            enabled: false
-          },
-          xAxis: {
-             categories: [null,null,null,null,null,null,null,null,null,null,null],
-              // categories:aryCtg,
-              labels: {
-                  overflow: 'justify'
-              }
-          },
-          yAxis: {
-              title: {
-                text: 'Total Project'
-              }
-          },
-          tooltip: {
-              valueSuffix: ' '
-          },
-          plotOptions: {
-              spline: {
-                lineWidth: 3,
-                states: {
-                    hover: {
-                        lineWidth: 5
-                    }
-                },
-                marker: {
-                    enabled: false
-                }
-              }
-          },
-          series: [{
-                // type: 'spline',
-                name: 'Target RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null],
-                // data: aryTarget_RFI,
-                color:'#2c303e',
-                //fillOpacity: 0.5
-            }, {
-                // type: 'spline',
-                name: 'Actual RFI',
-                data: [null,null,null,null,null,null,null,null,null,null,null],
-                // data: aryActual_RFI,
-                color:'#a50500',
-                //fillOpacity: 0.5
-          }, {
-                type: 'column',
-                name: 'Target',
-                data: [null,null,null,null,null,null,null,null,null,null,null],
-                // data: aryTarget,
-                color:'#2F69C5'
-          }, {
-                type: 'column',
-                name: 'Actual',
-                data: [null,null,null,null,null,null,null,null,null,null,null],
-                // data: aryActual,
-                color:'#FF9735'
-          }],
-          navigation: {
-              menuItemStyle: {
-                  fontSize: '10px'
-              }
-          }
-      });
-  }
   // private dsh1_InitChart(){
 
   //     var option={
@@ -2248,15 +2284,6 @@ export class HomePage {
               dsh1_0card_3footer.style.backgroundColor="#E9E9E9";
             }
           }
-  }
-
-  public getConfig(){
-    var q=this.config.get('real_name');
-    alert(q);
-  }
-
-  public setConfig(){
-    this.config.set('bulan',1);
   }
 }
 

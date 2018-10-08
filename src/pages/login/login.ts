@@ -32,7 +32,7 @@ export class LoginPage {
     // this.dashboarAll.getMcpPrj()
     // this.dashboarAll.getSpPrj();
     // this.dashboarAll.getChartData();
-    // this.dashboarAll.getSetting();
+     this.dashboarAll.getSetting();
     // this.dashboarAll.getMapData();
     // this.dashboarAll.getMapB2s();
     // this.dashboarAll.getMapCore();
