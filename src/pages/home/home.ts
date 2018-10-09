@@ -779,8 +779,11 @@ export class HomePage {
     }
 
     /** GET API DATA */
-    this.dashboarAll.postDatax("Mobile_Dashboard/dshmap",""). ((result) => {
+    var cntRow;
+    var inc=0;
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
       this.responseData=result;
+      cntRow=this.responseData.length;
         console.log("length=",this.responseData.length);
 
           /** Waktu Tunggu sampai data siap di prosess */
@@ -789,6 +792,7 @@ export class HomePage {
             // kosongin.setMap(null);
 
             this.responseData.forEach(rslt=>{
+              inc=inc +1;
               // console.log("latlog1=",rslt.lat,rslt.long);
               mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
 
@@ -817,7 +821,10 @@ export class HomePage {
               myRFI.setMap(map1);
               circles.push(myRFI);
             })
-            this.loadingMap.dismiss();
+            if (cntRow==inc){
+              this.loadingMap.dismiss();
+            }
+
             // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
           },2000);
 

@@ -21,6 +21,7 @@ var dsh4_0card_3footer_click=0;
 var defaultUrlImg="assets/img/new/";
 var dsh4_charting;
 var map4: any;
+var circles=[];
 let mapArrayStt = [
   {nama: "RFI", value:false},
   {nama: "RELEASE", value:false},
@@ -281,15 +282,20 @@ export class Dsh4HomePage {
     var querySql;
     querySql='';
     if (qryWhere==null){
-      querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_MCP "
+      querySql ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "
     }else if(qryWhere!=null){
     var concatSql;
         concatSql='';
-    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_MCP "
+    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "
       // querySql=querySql + " WHERE " + qryWhere;
       // console.log("test1=",qryWhere);
       // console.log("test2=",qryWhere[0]['nama']);
-
+      if (circles.length>0){
+        for(var i in circles) {
+          circles[i].setMap(null);
+        }
+        circles = [];
+      }
       var filter_GRP=[];
       var filter_AREA;
           filter_AREA='';
@@ -311,6 +317,9 @@ export class Dsh4HomePage {
       console.log("concat=", filter_GRP);
 
     }
+    var myLatlng;
+    var strokeColor;
+    var fillColor;
        this.database.selectData(querySql).then(data=>{
         rsltAryMap=[];
         rsltAryMap.push(data);
@@ -369,58 +378,34 @@ export class Dsh4HomePage {
               // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
               if (rsltAryMap[0][i]['GRP']=='RFI'){
                 myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(19, 148, 40)";
+                fillColor= "#449af0";
               }
               if (rsltAryMap[0][i]['GRP']=='RELEASE'){
-                myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(240, 205, 10)";
+                fillColor= "#449af0";
               }
               if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
-                myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(243, 9, 9)";
+                fillColor= "#449af0";
               }
 
               myRFI = new google.maps.Circle({
                 center: myLatlngRFI,
                 radius: 10000,
-                strokeColor: "rgb(19, 148, 40)", //color_status,
+                strokeColor: strokeColor, //color_status,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: "#449af0",
+                fillColor: fillColor,
                 fillOpacity: 0.4,
                 infowindow: myInfoWindow
               });
-
-              myRelease = new google.maps.Circle({
-                  center: myLatlngRELEASE,
-                  radius: 10000,
-                  strokeColor: "rgb(240, 205, 10)", //color_status,
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: "#449af0",
-                  infowindow: myInfoWindow
-              });
-
-              myNotRelease = new google.maps.Circle({
-                center: myLatlngNOTRELEASE,
-                radius: 10000,
-                strokeColor: "rgb(243, 9, 9)", //color_status,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#449af0",
-                fillOpacity: 0.4,
-                infowindow: myInfoWindow
-            });
 
               myRFI.setMap(map4);
-              myRelease.setMap(map4);
-              myNotRelease.setMap(map4);
+              circles.push(myRFI);
                 google.maps.event.addListener(myRFI, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map4, this);
-                });
-                google.maps.event.addListener(myRelease, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map4, this);
-                });
-                google.maps.event.addListener(myNotRelease, 'click', function(ev) {
                   this.infowindow.setPosition(ev.latLng);
                   this.infowindow.open(this.map4, this);
                 });
