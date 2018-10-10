@@ -1,5 +1,5 @@
-import {Component,ViewChild, ElementRef  } from "@angular/core";
-import {Events,LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
+import {Component,ViewChild, ElementRef } from "@angular/core";
+import {Platform,ToastController,Events,LoadingController,NavController, PopoverController,AlertController,ModalController,MenuController,Config} from "ionic-angular";
 // import {Storage} from '@ionic/storage';
 // import { DOCUMENT} from '@angular/common';
 // import {NotificationsPage} from "../notifications/notifications";
@@ -13,10 +13,12 @@ import { Dsh1SecondNoreleasePage} from '../dsh1-second-norelease/dsh1-second-nor
 import { Dsh1SecondPrjonpipePage } from '../dsh1-second-prjonpipe/dsh1-second-prjonpipe';
 import { Dsh1SecondRfiPage} from '../dsh1-second-rfi/dsh1-second-rfi';
 import { Dsh1SecondAfterrfiPage} from '../dsh1-second-afterrfi/dsh1-second-afterrfi';
+import {GoogleMaps,GoogleMap,LatLng,GoogleMapsEvent} from '@ionic-native/google-maps';
 import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
+
 // import { Geolocation } from 'ionic-native';
 // import { toArray } from "rxjs/operators";
 
@@ -84,8 +86,9 @@ export class HomePage {
   private responseData;
   private responseDataChart;
   //MAP
-  //  @ViewChild('map1') mapElement2: ElementRef;
-  // map1: any;
+  @ViewChild('map1') mapElement2: ElementRef;
+  // private map1:GoogleMap;
+  // private location:LatLng;
   // // directionsService = new google.maps.DirectionsService;
   // // directionsDisplay = new google.maps.DirectionsRenderer;
   // mapOptions1:any;
@@ -97,6 +100,7 @@ export class HomePage {
   });
 
   constructor(
+      private platform: Platform,
       // private storage: Storage,
       public navCtrl: NavController,
       public popoverCtrl: PopoverController,
@@ -107,7 +111,9 @@ export class HomePage {
       private menu: MenuController,
       public loadingCtrl: LoadingController,
       public config:Config,
-      public events: Events
+      public events: Events,
+      public toastCtrl: ToastController,
+      private googleMaps: GoogleMaps
   ){
     /** Event date setting*/
     this.events.subscribe('filterTgl', (data) =>{
@@ -116,7 +122,9 @@ export class HomePage {
       console.log("Param Filter Bulan Tahun=",param);
       this.dsh1_UpdateCard(param);
     });
+    // this.location = new LatLng(-2.209764,117.114258);
   }
+
 
   /** First Innit Component  */
   ngOnInit() {
@@ -125,6 +133,7 @@ export class HomePage {
 
     /** CHARTING */
     setTimeout(() => {
+
       this.dsh1_initCard();
       this.dsh1_InitChart();
       this.dsh1_initMap();
@@ -138,14 +147,8 @@ export class HomePage {
     }, 200);
   }
 
-  ionViewDidLoad() {
-    //Fist Load DOM
-    document.getElementById("dsh1[1]").hidden=false;
-    document.getElementById("dsh1[2]").hidden=false;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[0]").hidden=true;
-    document.getElementById("dsh1_headcard[0]footer-properties-lbl[1]").hidden=true;
-    // this.tampilkanNilai();
-  }
+
+
 
    /**
    * Event Back / close Page
@@ -262,7 +265,8 @@ export class HomePage {
       styles: this.database._defaultNewStyle,
       scrollwheel: false,
     };
-    map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+    // map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+    map1 = new google.maps.Map(this.mapElement2.nativeElement,mapOptions);
   }
 
 
@@ -575,7 +579,7 @@ export class HomePage {
               }
             ]
           });
-          // this.loadingMap.dismiss();
+          this.loadingMap.dismiss();
     }, (err) => {
       // this.koneksiMasalahToast();
         console.log("jaringan bermasalah");
@@ -766,10 +770,12 @@ export class HomePage {
     var mylatlngRELEASE;
     var mylatlngNOTRELEASE;
     var contentString;
-    // this.loadingMap.present();
-    // this.loadingMap.setContent('Load Map');
-    // this.loadingMap.setSpinner('bubbles');
-
+    var spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Loading Map, Please wait...'
+    });
+    spinnerMap.present();
     /** CLEAR ALL Circle in MAP*/
     if (circles.length>0){
       for(var i in circles) {
@@ -793,11 +799,11 @@ export class HomePage {
 
             this.responseData.forEach(rslt=>{
               inc=inc +1;
-              // console.log("latlog1=",rslt.lat,rslt.long);
-              mylatlngRFI = new google.maps.LatLng(rslt.lat,rslt.long);
+              console.log("latlog1=",rslt.lat,rslt.long);
+              mylatlngRFI =  new google.maps.LatLng(rslt.lat,rslt.long);
 
-                if(mapArrayStt[0]['value']==false){
-                  myRFI = new google.maps.Circle({
+              if(mapArrayStt[0]['value']==false){
+                  myRFI =  new google.maps.Circle({
                   center: mylatlngRFI,
                   radius: 10000,
                   strokeColor: "rgb(19, 148, 40)", //color_status,
@@ -808,7 +814,7 @@ export class HomePage {
                 });
               }else{
 
-                myRFI = new google.maps.Circle({
+                myRFI =  new google.maps.Circle({
                     center: mylatlngRFI,
                     radius: 10000,
                     strokeColor: "rgb(240, 205, 10)", //color_status,
@@ -821,16 +827,25 @@ export class HomePage {
               myRFI.setMap(map1);
               circles.push(myRFI);
             })
-            if (cntRow==inc){
-              this.loadingMap.dismiss();
-            }
-
+            // if (cntRow==inc){
+              spinnerMap.dismiss();
+            // }
+            console.log("inc=",inc);
+            console.log("cntRow=",cntRow);
             // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
           },2000);
 
           // localStorage.setItem('profile', JSON.stringify(this.responseData));
-    }, (err) => {
-      // this.koneksiMasalahToast();
+    },(err) => {
+        spinnerMap.dismiss();
+        spinnerMap.onDidDismiss(()=>{
+          let toastError = this.toastCtrl.create({
+            message: 'Network issues ! Make sure your network is installed to get the perfect map.',
+            duration: 3000,
+            position: 'middle'
+          });
+          toastError.present();
+        });
         console.log("jaringan bermasalah");
     });
 
@@ -1161,7 +1176,7 @@ export class HomePage {
       //var data = { message : 'hello world' };
       var ModalAdduser = this.modalCtrl.create(Dsh1SecondPrjonpipePage);
       ModalAdduser.onDidDismiss(() => {
-        this.ionViewDidLoad();
+        // this.ionViewDidLoad();
       });
       ModalAdduser.present();
   }

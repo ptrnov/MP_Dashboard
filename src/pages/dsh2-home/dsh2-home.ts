@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Events, LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
@@ -50,6 +50,7 @@ export class Dsh2HomePage {
     spinner:'ios',
     content: 'Please wait...'
   });
+  private responseData;
   private responseDataChart;
 
   constructor(
@@ -58,7 +59,17 @@ export class Dsh2HomePage {
     private database: DatabaseProvider,
     private dashboarAll: DashboardAllProvider,
     public loadingCtrl: LoadingController,
-  ){}
+    public events: Events,
+  ){
+     /** Event date setting*/
+     this.events.subscribe('filterTgl', (data) =>{
+      var bulanYearSplit=data.split("-");
+      var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+      console.log("Param Filter Bulan Tahun=",param);
+      // this.dsh2_UpdateCard(param);
+    });
+
+  }
 
   /** First Innit Component  */
   ngOnInit() {
@@ -97,7 +108,7 @@ export class Dsh2HomePage {
 
   }
 
-  private dsh2_UpdateCard(){
+  private dsh2_UpdateCard($param='0/0000'){
     var ary_Header=[];
     var rsltAry=[];
     var grpB2S=[];
@@ -105,12 +116,19 @@ export class Dsh2HomePage {
     var area_POP=[];
     var area_RFI=[];
     var  area_ARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI,ARFI_NILAI2 FROM B2S_PRJ "// WHERE GRP='test' "
-                //  +" WHERE BULAN='09' AND TAHUN='2018'"
-                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
-        rsltAry=[];
-        rsltAry.push(data);
+
+    // var querySql ="SELECT URUTAN,SEQ,GRP,BULAN,TAHUN,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SIS,SITAC1,SITAC2,CME,RFC,RFI,ARFI_NILAI2 FROM B2S_PRJ "// WHERE GRP='test' "
+    //             //  +" WHERE BULAN='09' AND TAHUN='2018'"
+    //              +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.database.selectData(querySql).then(data=>{
+    //     rsltAry=[];
+    //     rsltAry.push(data);
+        this.dashboarAll.postDatax("Mobile_Dashboard/dshB2s/",$param).then((result) => {
+          this.responseData=result;
+          console.log("length=",this.responseData.length);
+
+          rsltAry=[];
+          rsltAry.push(result['dsh2']);
         //  if (rsltAry[0].length!==0){
         if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");
@@ -350,6 +368,7 @@ private dsh2_UpdateDataChart(){
       // this.koneksiMasalahToast();
         console.log("jaringan bermasalah");
     });
+    this.loadingSpinner.dismiss();
   }
 
   public rfiChange(event: Event){
@@ -401,12 +420,17 @@ private dsh2_UpdateDataChart(){
     var contentString;
     var querySql;
     querySql='';
+
+    // this.loadingSpinner.present();
+    // this.loadingSpinner.setContent('Load Map');
+    // this.loadingSpinner.setSpinner('bubbles');
+
     if (qryWhere==null){
-      querySql ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "// WHERE GRP='test' "
+      querySql ="SELECT DISTINCT grp ,project_id ,area ,lat ,long ,radius ,site_nm ,tenan_nm ,regional ,sow ,status FROM TBL_PETA_CORE "// WHERE GRP='test' "
     }else if(qryWhere!=null){
     var concatSql;
         concatSql='';
-    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "// WHERE GRP='test' "
+    var sqlDefault ="SELECT DISTINCT grp ,project_id ,area ,lat ,long ,radius ,site_nm ,tenan_nm ,regional ,sow ,status FROM TBL_PETA_CORE "// WHERE GRP='test' "
       // querySql=querySql + " WHERE " + qryWhere;
       // console.log("test1=",qryWhere);
       // console.log("test2=",qryWhere[0]['nama']);
@@ -456,38 +480,38 @@ private dsh2_UpdateDataChart(){
                               '<tr>' +
                               '<td><font color="black"><b>Project ID</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['project_id'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Site Name</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['site_nm'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Nama Tenant</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['tenan_nm'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Area</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['area'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Regional</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['regional'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>SOW</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['sow'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<tr>' +
                               '<td><font color="black"><b>Status</b></font></td>' +
                               '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
+                              '<td><font color="black">' + rsltAryMap[0][i]['status'] + '</font></td>' +
                               '</tr>' +
                               '<tr>' +
                               '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
@@ -498,18 +522,18 @@ private dsh2_UpdateDataChart(){
                 content: contentString
               });
               // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-              if (rsltAryMap[0][i]['GRP']=='RFI'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              if (rsltAryMap[0][i]['grp']=='RFI'){
+                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
                 strokeColor= "rgb(19, 148, 40)";
                 fillColor= "#449af0";
               }
-              if (rsltAryMap[0][i]['GRP']=='RELEASE'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              if (rsltAryMap[0][i]['grp']=='RELEASE'){
+                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
                 strokeColor= "rgb(240, 205, 10)";
                 fillColor= "#449af0";
               }
-              if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+              if (rsltAryMap[0][i]['grp']=='NOTRELEASE'){
+                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
                 strokeColor= "rgb(243, 9, 9)";
                 fillColor= "#449af0";
               }
@@ -563,9 +587,9 @@ private dsh2_UpdateDataChart(){
                 //   this.infowindow.setPosition(ev.latLng);
                 //   this.infowindow.open(this.map2, this);
                 // });
-          }
-          this.loadingSpinner.dismiss();
-        },500);
+          };
+          // this.loadingSpinner.dismiss();
+        },1000);
       }
     });
   }

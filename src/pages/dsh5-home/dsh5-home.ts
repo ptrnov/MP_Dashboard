@@ -38,6 +38,8 @@ export class Dsh5HomePage {
   // @ViewChild('map5') mapElement5: ElementRef;
   private dsh5_subscription1;
   private dsh5_subscription2;
+  private responseData;
+
   loadingSpinner = this.loadingCtrl.create({
     // cssClass:"map-spinner",
     spinner:'ios',
@@ -89,7 +91,7 @@ export class Dsh5HomePage {
     document.getElementById("dsh5_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
   }
 
-  private dsh5_UpdateCard(){
+  private dsh5_UpdateCard($param='0/0000'){
     var ary_Header=[];
     var rsltAry=[];
     var grpSP=[];
@@ -97,11 +99,17 @@ export class Dsh5HomePage {
     var area_POP=[];
     var area_RFI=[];
     var area_ARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2 FROM SP_PRJ "// WHERE GRP='test' "
-                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
-        rsltAry=[];
-        rsltAry.push(data);
+    // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2 FROM SP_PRJ "// WHERE GRP='test' "
+    //              +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.database.selectData(querySql).then(data=>{
+    //     rsltAry=[];
+    //     rsltAry.push(data);
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshCore/",$param).then((result) => {
+      this.responseData=result;
+      console.log("length=",this.responseData.length);
+
+      rsltAry=[];
+      rsltAry.push(result['dsh2']);
         //  if (rsltAry[0].length!==0){
         if (rsltAry != undefined || rsltAry.length!=0){
               // console.log("data ada");

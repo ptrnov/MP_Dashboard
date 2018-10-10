@@ -41,6 +41,7 @@ import { Dsh7ModalFlowPage} from '../pages/dsh7-modal-flow/dsh7-modal-flow';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DatabaseProvider } from '../providers/database/database';
 import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
+import { GoogleMaps } from '@ionic-native/google-maps';
 // import { ChartingService } from '../services/charting-service';
 // import services
 // end import services
@@ -125,6 +126,7 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     DashboardAllProvider, 
     DatabaseProvider,   
     RestProvider, 
+    GoogleMaps,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

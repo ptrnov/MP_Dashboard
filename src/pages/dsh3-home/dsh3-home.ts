@@ -46,7 +46,7 @@ export class Dsh3HomePage {
     content: 'Please wait...'
   });
   private responseDataChart;
-
+  private responseData;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -65,7 +65,7 @@ export class Dsh3HomePage {
       this.dsh3_initCard();
       this.dsh3_InitChart();
       this.dsh3_initMap();
-    }, 100);
+    }, 50);
 
      /** MAP */
     setTimeout(() => {
@@ -232,7 +232,7 @@ private dsh3_UpdateDataChart(){
     });
   }
 
-  private dsh3_UpdateCard(){
+  private dsh3_UpdateCard($param='0/0000'){
     var ary_Header=[];
     var rsltAry=[];
     var grpCore=[];
@@ -240,11 +240,18 @@ private dsh3_UpdateDataChart(){
     var areaPOP=[];
     var areaRFI=[];
     var  areaARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT,ARFI_NILAI2 FROM CORE_PRJ "// WHERE GRP='test' "
-                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
-        rsltAry=[];
-        rsltAry.push(data);
+    // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,SurveySITAC,CME,RFI,BAUT,ARFI_NILAI2 FROM CORE_PRJ "// WHERE GRP='test' "
+    //              +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.database.selectData(querySql).then(data=>{
+      //  rsltAry=[];
+      //   rsltAry.push(data);
+      this.dashboarAll.postDatax("Mobile_Dashboard/dshCore/",$param).then((result) => {
+          this.responseData=result;
+          console.log("length=",this.responseData.length);
+
+          rsltAry=[];
+          rsltAry.push(result['dsh2']);
+
         //  if (rsltAry[0].length!==0){
         if (rsltAry !== undefined || rsltAry.length!==0){
               // console.log("data ada");

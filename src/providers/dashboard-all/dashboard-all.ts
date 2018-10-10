@@ -386,25 +386,26 @@ export class DashboardAllProvider {
     * WebSql    : Develompent debug database,table,query.
     * Author    : ptr.nov@gmail.com
     */
-   getMapCore():void {
+   getMapCore(){
     // var x1=this.http.get(this.url + "/dashboard/get_chart_project_summary").map(res => res.json());
-    var x1=this.http.get(this.url + "Mobile_Dashboard/mapcore").map(res => res.json());
+    var x1=this.http.get(this.url + "Mobile_Dashboard/dshMap").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?)";
-          data.Release.forEach(element => {
+          var qry="INSERT INTO TBL_PETA_CORE (grp,project_id,area,lat,long,radius,site_nm,tenan_nm,regional,sow,status) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          // var qry="INSERT OR REPLACE INTO TBL_PETA_CORE (grp,project_id,area,lat,long,radius,site_nm,tenan_nm,regional,sow,status) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          data.forEach(element => {
             this.database.insertData(qry,[
-              element.GRP,
-              element.PROJECT_ID,
-              element.AREA,
-              element.LAT,
-              element.LONG,
-              element.RADIUS,
-              element.SITE_NM,
-              element.TENAN_NM,
-              element.REGIONAL,
-              element.SOW,
-              element.STATUS
+              element.grp,
+              element.project_id,
+              element.area,
+              element.lat,
+              element.long,
+              element.radius,
+              element.site_nm,
+              element.tenan_nm,
+              element.regional,
+              element.sow,
+              element.status
             ]);
           });
           console.log("success load Api - MAP Data Project");
