@@ -60,8 +60,8 @@ class Mobile_Dashboard extends CI_Controller {
 			'bulan' => str_replace("%20","",$bulan),
 			'tahun' => str_replace("%20","",$year)
 		];
-		$result=$this->M_MobileDashboard->dashB2S($request);
-		echo json_encode(["dsh2"=>$result], JSON_PRETTY_PRINT); 
+		$result=$this->M_MobileDashboard->dashCore($request);
+		echo json_encode(["dsh3"=>$result], JSON_PRETTY_PRINT); 
 	}
 
 	/**
@@ -72,8 +72,8 @@ class Mobile_Dashboard extends CI_Controller {
 			'bulan' => str_replace("%20","",$bulan),
 			'tahun' => str_replace("%20","",$year)
 		];
-		$result=$this->M_MobileDashboard->dashB2S($request);
-		echo json_encode(["dsh2"=>$result], JSON_PRETTY_PRINT); 
+		$result=$this->M_MobileDashboard->dashMcp($request);
+		echo json_encode(["dsh4"=>$result], JSON_PRETTY_PRINT); 
 	}
 
 	/**
@@ -84,8 +84,8 @@ class Mobile_Dashboard extends CI_Controller {
 			'bulan' => str_replace("%20","",$bulan),
 			'tahun' => str_replace("%20","",$year)
 		];
-		$result=$this->M_MobileDashboard->dashB2S($request);
-		echo json_encode(["dsh2"=>$result], JSON_PRETTY_PRINT); 
+		$result=$this->M_MobileDashboard->dashSpl($request);
+		echo json_encode(["dsh5"=>$result], JSON_PRETTY_PRINT); 
 	}
 
 	/**

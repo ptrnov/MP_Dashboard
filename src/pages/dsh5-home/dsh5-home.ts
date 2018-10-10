@@ -104,16 +104,16 @@ export class Dsh5HomePage {
     //   this.database.selectData(querySql).then(data=>{
     //     rsltAry=[];
     //     rsltAry.push(data);
-    this.dashboarAll.postDatax("Mobile_Dashboard/dshCore/",$param).then((result) => {
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshSpl/",$param).then((result) => {
       this.responseData=result;
       console.log("length=",this.responseData.length);
 
       rsltAry=[];
-      rsltAry.push(result['dsh2']);
+      rsltAry.push(result['dsh5']);
         //  if (rsltAry[0].length!==0){
         if (rsltAry != undefined || rsltAry.length!=0){
               // console.log("data ada");
-              // console.log(rsltAry);
+              console.log(rsltAry);
               ary_Header=[];
               ary_Header.push(rsltAry[0].filter(function(headerObj){
                 return headerObj.SEQ=="HEADER";

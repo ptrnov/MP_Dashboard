@@ -651,7 +651,656 @@ class M_MobileDashboard extends CI_Model
                 $dataSub['BULAN'] = 0;
                 $dataSub['TAHUN'] = 0;
             $dataJoin[]=$dataSub;
-        return $dataJoin;    }
+        return $dataJoin;    
+    }
+
+    /* DASHBOARD CORE
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Controller: Mobile_Dashboard
+    * Activity  : allproject
+    * Rest Api  : Request & respon
+    * Filter    : B2S,Core,Microcell,Special.
+    * Author    : ptr.nov@gmail.com
+    */
+    public function dashCore($request){
+        $wo = $this->db->query("SELECT tot FROM dashboard_all_project WHERE ubis='B2S';")->row();
+        $tot_ubis = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='NOT RELEASE' LIMIT 1;")->row();
+        $tot_pop = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='ON PIPE' LIMIT 1;")->row();
+        $tot_rfi = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='RFI' LIMIT 1;")->row();
+
+        $persen_ubis =round(($tot_ubis->tot_ubis/$wo->tot)* 100);
+        $persen_pop =round(($tot_pop->tot_ubis/$wo->tot)* 100);
+        $persen_rfi =round(($tot_rfi->tot_ubis/$wo->tot)* 100);
+
+                $dataSub['URUTAN'] = 0;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ALL_PRJ";
+                $dataSub['NILAI'] = $wo->tot;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 1;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="NOT_RELEASE";
+                $dataSub['NILAI'] = $tot_ubis->tot_ubis;
+                $dataSub['PERSEN'] = $persen_ubis;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 2;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="PRJ_ON_PIPE";
+                $dataSub['NILAI'] = $tot_pop->tot_ubis;
+                $dataSub['PERSEN'] = $persen_pop;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="RFI";
+                $dataSub['NILAI'] = $tot_rfi->tot_ubis;
+                $dataSub['PERSEN'] =$persen_rfi;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 4;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;                
+            $dataJoin[]=$dataSub;   
+                //Ubis-Area - NOT_RELEASE
+                $areaNotRelease = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='NOT RELEASE' ORDER BY area ASC")->result();              
+                foreach($areaNotRelease as $row => $value){
+                        //$dataSub['AREA'.($row+1)] = $value->tot_area;
+                        $dataSub['URUTAN'] = $row;
+                        $dataSub['SEQ'] ="CORE";
+                        $dataSub['GRP'] ="NOT_RELEASE";
+                        $dataSub['NILAI'] = $value->tot_area;
+                        $dataSub['PERSEN'] = 0;                
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SurveySITAC'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['BAUT'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                //Ubis-Area - POP
+                $areaPop = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='ON PIPE' ORDER BY area ASC;")->result();              
+                foreach($areaPop as $rowPop => $valuePop){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;
+                        $sis = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SIS'")->row();
+                        $sitac1= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC1'")->row();
+                        $sitac2 = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC2'")->row();
+                        $cme= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'CME'")->row();
+                        $rfc = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFC'")->row();
+                        $rfi = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFI'")->row();
+
+                        $dataSub['URUTAN'] = $rowPop;
+                        $dataSub['SEQ'] ="CORE";
+                        $dataSub['GRP'] ="POP";
+                        $dataSub['NILAI'] = $valuePop->tot_area;
+                        $dataSub['PERSEN'] = 0; 
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;              
+                        $dataSub['SurveySITAC'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['BAUT'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                 //Ubis-Area - RFI
+                $areaRfi = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='RFI' ORDER BY area ASC;")->result();              
+                foreach($areaRfi as $rowRfi => $valuePfi){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;                   
+                        $dataSub['URUTAN'] = $rowRfi;
+                        $dataSub['SEQ'] ="CORE";
+                        $dataSub['GRP'] ="RFI";
+                        $dataSub['NILAI'] =$valuePfi->tot_area;
+                        $dataSub['PERSEN'] = 0;
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SurveySITAC'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['BAUT'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };              
+            
+                //Ubis-Area - ARFI
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="CORE";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SurveySITAC'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['BAUT'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+        return $dataJoin;
+    }
+
+ /* DASHBOARD Microcell
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Controller: Mobile_Dashboard
+    * Activity  : allproject
+    * Rest Api  : Request & respon
+    * Filter    : B2S,Core,Microcell,Special.
+    * Author    : ptr.nov@gmail.com
+    */
+    public function dashMcp($request){
+        $wo = $this->db->query("SELECT tot FROM dashboard_all_project WHERE ubis='B2S';")->row();
+        $tot_ubis = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='NOT RELEASE' LIMIT 1;")->row();
+        $tot_pop = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='ON PIPE' LIMIT 1;")->row();
+        $tot_rfi = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='RFI' LIMIT 1;")->row();
+
+        $persen_ubis =round(($tot_ubis->tot_ubis/$wo->tot)* 100);
+        $persen_pop =round(($tot_pop->tot_ubis/$wo->tot)* 100);
+        $persen_rfi =round(($tot_rfi->tot_ubis/$wo->tot)* 100);
+
+                $dataSub['URUTAN'] = 0;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ALL_PRJ";
+                $dataSub['NILAI'] = $wo->tot;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 1;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="NOT_RELEASE";
+                $dataSub['NILAI'] = $tot_ubis->tot_ubis;
+                $dataSub['PERSEN'] = $persen_ubis;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 2;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="PRJ_ON_PIPE";
+                $dataSub['NILAI'] = $tot_pop->tot_ubis;
+                $dataSub['PERSEN'] = $persen_pop;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="RFI";
+                $dataSub['NILAI'] = $tot_rfi->tot_ubis;
+                $dataSub['PERSEN'] =$persen_rfi;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 4;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;             
+            $dataJoin[]=$dataSub;   
+                //Ubis-Area - NOT_RELEASE
+                $areaNotRelease = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='NOT RELEASE' ORDER BY area ASC")->result();              
+                foreach($areaNotRelease as $row => $value){
+                        //$dataSub['AREA'.($row+1)] = $value->tot_area;
+                        $dataSub['URUTAN'] = $row;
+                        $dataSub['SEQ'] ="MCP";
+                        $dataSub['GRP'] ="NOT_RELEASE";
+                        $dataSub['NILAI'] = $value->tot_area;
+                        $dataSub['PERSEN'] = 0;                
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SIS'] = 0;
+                        $dataSub['SITAC1'] = 0;
+                        $dataSub['SITAC2'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFC'] = 0;
+                        $dataSub['FO'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                //Ubis-Area - POP
+                $areaPop = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='ON PIPE' ORDER BY area ASC;")->result();              
+                foreach($areaPop as $rowPop => $valuePop){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;
+                        $sis = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SIS'")->row();
+                        $sitac1= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC1'")->row();
+                        $sitac2 = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC2'")->row();
+                        $cme= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'CME'")->row();
+                        $rfc = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFC'")->row();
+                        $rfi = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFI'")->row();
+
+                        $dataSub['URUTAN'] = $rowPop;
+                        $dataSub['SEQ'] ="MCP";
+                        $dataSub['GRP'] ="POP";
+                        $dataSub['NILAI'] = $valuePop->tot_area;
+                        $dataSub['PERSEN'] = 0; 
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;              
+                        $dataSub['SIS'] = 20;
+                        $dataSub['SITAC1'] = 10;
+                        $dataSub['SITAC2'] =3;
+                        $dataSub['CME'] = 04;
+                        $dataSub['RFC'] = 4;
+                        $dataSub['FO'] = 5;
+                        $dataSub['RFI'] =7;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                 //Ubis-Area - RFI
+                $areaRfi = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='RFI' ORDER BY area ASC;")->result();              
+                foreach($areaRfi as $rowRfi => $valuePfi){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;                   
+                        $dataSub['URUTAN'] = $rowRfi;
+                        $dataSub['SEQ'] ="MCP";
+                        $dataSub['GRP'] ="RFI";
+                        $dataSub['NILAI'] =$valuePfi->tot_area;
+                        $dataSub['PERSEN'] = 0;
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SIS'] = 0;
+                        $dataSub['SITAC1'] = 0;
+                        $dataSub['SITAC2'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFC'] = 0;
+                        $dataSub['FO'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };              
+            
+                //Ubis-Area - ARFI
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="MCP";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+        return $dataJoin;
+    }
+
+ /* DASHBOARD Special 
+    * Event     : ViewLoad & ViewInit (Observable)
+    * Controller: Mobile_Dashboard
+    * Activity  : allproject
+    * Rest Api  : Request & respon
+    * Filter    : B2S,Core,Microcell,Special.
+    * Author    : ptr.nov@gmail.com
+    */
+    public function dashSpl($request){
+        $wo = $this->db->query("SELECT tot FROM dashboard_all_project WHERE ubis='B2S';")->row();
+        $tot_ubis = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='NOT RELEASE' LIMIT 1;")->row();
+        $tot_pop = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='ON PIPE' LIMIT 1;")->row();
+        $tot_rfi = $this->db->query("SELECT * FROM dashboard_front WHERE  ubis = 'B2S' AND kat ='RFI' LIMIT 1;")->row();
+
+        $persen_ubis =round(($tot_ubis->tot_ubis/$wo->tot)* 100);
+        $persen_pop =round(($tot_pop->tot_ubis/$wo->tot)* 100);
+        $persen_rfi =round(($tot_rfi->tot_ubis/$wo->tot)* 100);
+
+                $dataSub['URUTAN'] = 0;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ALL_PRJ";
+                $dataSub['NILAI'] = $wo->tot;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 1;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="NOT_RELEASE";
+                $dataSub['NILAI'] = $tot_ubis->tot_ubis;
+                $dataSub['PERSEN'] = $persen_ubis;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 2;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="PRJ_ON_PIPE";
+                $dataSub['NILAI'] = $tot_pop->tot_ubis;
+                $dataSub['PERSEN'] = $persen_pop;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="RFI";
+                $dataSub['NILAI'] = $tot_rfi->tot_ubis;
+                $dataSub['PERSEN'] =$persen_rfi;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+                $dataSub['URUTAN'] = 4;
+                $dataSub['SEQ'] ="HEADER";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;             
+            $dataJoin[]=$dataSub;   
+                //Ubis-Area - NOT_RELEASE
+                $areaNotRelease = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='NOT RELEASE' ORDER BY area ASC")->result();              
+                foreach($areaNotRelease as $row => $value){
+                        //$dataSub['AREA'.($row+1)] = $value->tot_area;
+                        $dataSub['URUTAN'] = $row;
+                        $dataSub['SEQ'] ="SP";
+                        $dataSub['GRP'] ="NOT_RELEASE";
+                        $dataSub['NILAI'] = $value->tot_area;
+                        $dataSub['PERSEN'] = 0;                
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SIS'] = 0;
+                        $dataSub['SITAC1'] = 0;
+                        $dataSub['SITAC2'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFC'] = 0;
+                        $dataSub['FO'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                //Ubis-Area - POP
+                $areaPop = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='ON PIPE' ORDER BY area ASC;")->result();              
+                foreach($areaPop as $rowPop => $valuePop){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;
+                        $sis = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SIS'")->row();
+                        $sitac1= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC1'")->row();
+                        $sitac2 = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'SITAC2'")->row();
+                        $cme= $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'CME'")->row();
+                        $rfc = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFC'")->row();
+                        $rfi = $this->db->query("SELECT * FROM dashboard_op_milestone WHERE ubis = 'B2S' AND area ='A1' AND mstone = 'RFI'")->row();
+
+                        $dataSub['URUTAN'] = $rowPop;
+                        $dataSub['SEQ'] ="SP";
+                        $dataSub['GRP'] ="POP";
+                        $dataSub['NILAI'] = $valuePop->tot_area;
+                        $dataSub['PERSEN'] = 0; 
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;              
+                        $dataSub['SIS'] = 0;
+                        $dataSub['SITAC1'] = 0;
+                        $dataSub['SITAC2'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFC'] = 0;
+                        $dataSub['FO'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };
+                 //Ubis-Area - RFI
+                $areaRfi = $this->db->query("SELECT * FROM dashboard_front WHERE ubis = 'B2S' AND kat ='RFI' ORDER BY area ASC;")->result();              
+                foreach($areaRfi as $rowRfi => $valuePfi){
+                        // $dataSub['AREA'.($rowPop+1)] = $valuePop->tot_area;                   
+                        $dataSub['URUTAN'] = $rowRfi;
+                        $dataSub['SEQ'] ="SP";
+                        $dataSub['GRP'] ="RFI";
+                        $dataSub['NILAI'] =$valuePfi->tot_area;
+                        $dataSub['PERSEN'] = 0;
+                        $dataSub['AREA1'] = 0;
+                        $dataSub['AREA2'] = 0;
+                        $dataSub['AREA3'] = 0;
+                        $dataSub['AREA4'] = 0;
+                        $dataSub['SIS'] = 0;
+                        $dataSub['SITAC1'] = 0;
+                        $dataSub['SITAC2'] = 0;
+                        $dataSub['CME'] = 0;
+                        $dataSub['RFC'] = 0;
+                        $dataSub['FO'] = 0;
+                        $dataSub['RFI'] = 0;
+                        $dataSub['ARFI_NILAI2'] = 0;
+                        $dataSub['BULAN'] = 0;
+                        $dataSub['TAHUN'] = 0;
+                    $dataJoin[]=$dataSub;
+                };              
+            
+                //Ubis-Area - ARFI
+                $dataSub['URUTAN'] = 3;
+                $dataSub['SEQ'] ="SP";
+                $dataSub['GRP'] ="ARFI";
+                $dataSub['NILAI'] = 0;
+                $dataSub['PERSEN'] = 0;
+                $dataSub['AREA1'] = 0;
+                $dataSub['AREA2'] = 0;
+                $dataSub['AREA3'] = 0;
+                $dataSub['AREA4'] = 0;
+                $dataSub['SIS'] = 0;
+                $dataSub['SITAC1'] = 0;
+                $dataSub['SITAC2'] = 0;
+                $dataSub['CME'] = 0;
+                $dataSub['RFC'] = 0;
+                $dataSub['FO'] = 0;
+                $dataSub['RFI'] = 0;
+                $dataSub['ARFI_NILAI2'] = 0;
+                $dataSub['BULAN'] = 0;
+                $dataSub['TAHUN'] = 0;
+            $dataJoin[]=$dataSub;
+        return $dataJoin;
+    }
 
 
     public function mapModel(){
