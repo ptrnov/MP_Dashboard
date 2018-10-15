@@ -4549,10 +4549,6 @@ textarea::-webkit-input-placeholder {
   padding-left: 2px;
 }
 
-textarea:-ms-input-placeholder {
-  padding-left: 2px;
-}
-
 textarea::-ms-input-placeholder {
   padding-left: 2px;
 }
@@ -4717,7 +4713,7 @@ ion-input :focus {
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
@@ -20623,23 +20619,23 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-3d .swiper-slide-shadow-left {
-  background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(transparent));
-  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
 
 .swiper-container-3d .swiper-slide-shadow-right {
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(transparent));
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
 
 .swiper-container-3d .swiper-slide-shadow-top {
-  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.5)), to(transparent));
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
 
 .swiper-container-3d .swiper-slide-shadow-bottom {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(transparent));
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
 
 .swiper-container-coverflow .swiper-wrapper,
@@ -39849,6 +39845,74 @@ page-home .map-area .font-lbl {
   text-align: center;
 }
 
+page-home .mapButtonRed {
+  width: 100%;
+  text-align: center;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #e72535;
+  box-shadow: inset 0px 1px 0px 0px #e72535;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #e72535), to(#e72535));
+  background: linear-gradient(to bottom, #e72535 5%, #e72535 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e72535', endColorstr='#e72535',GradientType=0);
+  background-color: #e72535;
+  border-radius: 6px;
+  border: 1px solid #74b807;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #528009;
+}
+
+page-home .mapButtonRed:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #e72535), to(#e72535));
+  background: linear-gradient(to bottom, #e72535 5%, #e72535 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e72535', endColorstr='#e72535',GradientType=0);
+  background-color: #e72535;
+}
+
+page-home .mapButtonRed:active {
+  position: relative;
+  top: 1px;
+}
+
+page-home .mapButGreen {
+  width: 100%;
+  text-align: center;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #a4e271;
+  box-shadow: inset 0px 1px 0px 0px #a4e271;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #89c403), to(#77a809));
+  background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+  background-color: #89c403;
+  border-radius: 6px;
+  border: 1px solid #74b807;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #528009;
+}
+
+page-home .mapButGreen:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #77a809), to(#89c403));
+  background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
+  background-color: #77a809;
+}
+
+page-home .mapButGreen:active {
+  position: relative;
+  top: 1px;
+}
+
 .alertModal .alert-head {
   background-color: #B1232D;
   color: white;
@@ -39949,13 +40013,6 @@ page-search-location ion-input,
 page-search-location ion-input::-webkit-input-placeholder,
 .search-location ion-input,
 .search-location ion-input::-webkit-input-placeholder {
-  color: #fff;
-}
-
-page-search-location ion-input,
-page-search-location ion-input:-ms-input-placeholder,
-.search-location ion-input,
-.search-location ion-input:-ms-input-placeholder {
   color: #fff;
 }
 
@@ -40069,8 +40126,8 @@ page-trips .trip .background,
 page-trips .trip .background .background-filter,
 .trips .trip .background .background-filter {
   height: 16rem;
-  background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.65)));
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.65));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.65)));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
 }
 
 page-trips .trip .background .background-filter .align-bottom,

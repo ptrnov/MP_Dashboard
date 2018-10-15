@@ -10,6 +10,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import { SelectSearchableModule  } from 'ionic-select-searchable';
 import {ActivityService} from "../services/activity-service";
+import { IonicStorageModule } from '@ionic/storage';
 // import { CacheModule } from 'ionic-cache';
 // import {TripService} from "../services/trip-service";
 // import {WeatherProvider} from "../services/weather";
@@ -89,6 +90,7 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
       user_group:'none'
 
     }),
+    // IonicStorageModule.forRoot(),
     SelectSearchableModule
   ],
   bootstrap: [IonicApp],
@@ -125,6 +127,7 @@ import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
     DashboardAllProvider, 
     DatabaseProvider,   
     RestProvider, 
+    // Storage,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

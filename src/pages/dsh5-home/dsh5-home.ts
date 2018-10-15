@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
@@ -22,6 +22,7 @@ var defaultUrlImg="assets/img/new/";
 var dsh5_charting;
 
 var map5: any;
+var circles=[];
 let mapArrayStt = [
   {nama: "RFI", value:false},
   {nama: "RELEASE", value:false},
@@ -37,15 +38,45 @@ export class Dsh5HomePage {
   // @ViewChild('map5') mapElement5: ElementRef;
   private dsh5_subscription1;
   private dsh5_subscription2;
+  private responseData;
+
+  loadingSpinner = this.loadingCtrl.create({
+    // cssClass:"map-spinner",
+    spinner:'ios',
+    content: 'Please wait...'
+  });
+  private responseDataChart;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private database: DatabaseProvider,
     private dashboarAll: DashboardAllProvider,
+    public loadingCtrl: LoadingController,
   ) {}
 
-  ionViewDidLoad() {
+  /** First Innit Component  */
+  ngOnInit() {
+    //Second Load DOM.
+    this.loadingSpinner.present();
+
+    /** CHARTING */
+    setTimeout(() => {
+      this.dsh5_initCard();
+      this.dsh5_InitChart();
+      this.dsh5_initMap();
+    }, 100);
+
+     /** MAP */
+    setTimeout(() => {
+      this.dsh5_UpdateCard();
+      this.dsh5_UpdateDataChart();
+      this.dsh5_UpdateDataMap();
+    }, 200);
+  }
+
+  /** INIT CARD */
+  private dsh5_initCard(){
     this.initMouseOverOut();
     this.initClickEvent();
     document.getElementById("dsh5[1]").hidden=true;
@@ -58,38 +89,9 @@ export class Dsh5HomePage {
     document.getElementById("dsh5_headcard[0]footer-properties-lbl[1]").hidden=true;
     document.getElementById("dsh5_headcard[1]content[1]-properties-img").hidden=true;;
     document.getElementById("dsh5_headcard[1]content[1]-properties-lbl").innerHTML="SELECTED";
-    this.dsh5_initMap();
-    this.dsh5_InitChart();
-    this.dsh5_UpdateDataChart();
-    console.log('ionViewDidLoad dsh5HomePage');
-    // this.tampilkanNilai();
   }
 
-  ionViewDidEnter(){
-    // this.menu.swipeEnable(false);
-    // this.dsh5_subscription2 = Observable.timer(30000, 30000).subscribe(x => {
-    //   console.log('run-Disply');
-    //    this.dsh5_getData();
-    //    this.dsh5_UpdateDataChart();
-    // });
-  }
-
-  ionViewWillUnload() {
-    console.log("Previus page");
-    this.dsh5_subscription1.unsubscribe();
-    this.dsh5_subscription2.unsubscribe();
-  }
-
-  /** API */
-  ngOnInit() {
-    // this.dsh5_getData();
-    // this.dsh5_UpdateDataChart();
-    // this.dsh5_subscription1 = Observable.timer(10000,10000).subscribe(x => {
-    //   console.log('run-Disply');
-    //   this.dashboarAll.getSpPrj();
-    // });
-  }
-  private dsh5_getData(){
+  private dsh5_UpdateCard($param='0/0000'){
     var ary_Header=[];
     var rsltAry=[];
     var grpSP=[];
@@ -97,15 +99,21 @@ export class Dsh5HomePage {
     var area_POP=[];
     var area_RFI=[];
     var area_ARFI=[];
-    var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2 FROM SP_PRJ "// WHERE GRP='test' "
-                 +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-      this.database.selectData(querySql).then(data=>{
-        rsltAry=[];
-        rsltAry.push(data);
+    // var querySql ="SELECT URUTAN,SEQ,GRP,NILAI,PERSEN,AREA1,AREA2,AREA3,AREA4,BAST,ARFI_NILAI2 FROM SP_PRJ "// WHERE GRP='test' "
+    //              +" ORDER BY SEQ,GRP DESC,URUTAN ASC";
+    //   this.database.selectData(querySql).then(data=>{
+    //     rsltAry=[];
+    //     rsltAry.push(data);
+    this.dashboarAll.postDatax("Mobile_Dashboard/dshSpl/",$param).then((result) => {
+      this.responseData=result;
+      console.log("length=",this.responseData.length);
+
+      rsltAry=[];
+      rsltAry.push(result['dsh5']);
         //  if (rsltAry[0].length!==0){
         if (rsltAry != undefined || rsltAry.length!=0){
               // console.log("data ada");
-              // console.log(rsltAry);
+              console.log(rsltAry);
               ary_Header=[];
               ary_Header.push(rsltAry[0].filter(function(headerObj){
                 return headerObj.SEQ=="HEADER";
@@ -234,21 +242,21 @@ export class Dsh5HomePage {
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.dsh5_initMap(mapArrayStt);
+    this.dsh5_UpdateDataMap(mapArrayStt);
   }
 
   public releaseChange(event: Event){
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.dsh5_initMap(mapArrayStt);
+    this.dsh5_UpdateDataMap(mapArrayStt);
   }
 
   public notReleaseChange(event: Event) {
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
     mapArrayStt[objIndex].value = event['checked'];
-    this.dsh5_initMap(mapArrayStt);
+    this.dsh5_UpdateDataMap(mapArrayStt);
   }
 
   public areaChange(event: Event) {
@@ -257,16 +265,18 @@ export class Dsh5HomePage {
     intOption=event;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
     mapArrayStt[objIndex].value = intOption;
-    this.dsh5_initMap(mapArrayStt);
+    this.dsh5_UpdateDataMap(mapArrayStt);
   }
 
-  dsh5_initMap(qryWhere:any=null){
+  private dsh5_initMap(){
     var mapOptions={
       zoom: 4,
       center: new google.maps.LatLng(-2.209764,117.114258),
       styles: this.database._defaultNewStyle
     };
     map5 = new google.maps.Map(document.getElementById("map5"),mapOptions);
+  }
+  private dsh5_UpdateDataMap(qryWhere:any=null){
     var rsltAryMap=[];
     var myRFI;
     var myRelease;
@@ -278,15 +288,20 @@ export class Dsh5HomePage {
     var querySql;
     querySql='';
     if (qryWhere==null){
-      querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_SP "
+      querySql ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "
     }else if(qryWhere!=null){
     var concatSql;
         concatSql='';
-    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_SP "
+    var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA_B2S "
       // querySql=querySql + " WHERE " + qryWhere;
       // console.log("test1=",qryWhere);
       // console.log("test2=",qryWhere[0]['nama']);
-
+      if (circles.length>0){
+        for(var i in circles) {
+          circles[i].setMap(null);
+        }
+        circles = [];
+      }
       var filter_GRP=[];
       var filter_AREA;
           filter_AREA='';
@@ -308,6 +323,9 @@ export class Dsh5HomePage {
       console.log("concat=", filter_GRP);
 
     }
+    var myLatlng;
+    var strokeColor;
+    var fillColor;
        this.database.selectData(querySql).then(data=>{
         rsltAryMap=[];
         rsltAryMap.push(data);
@@ -366,62 +384,40 @@ export class Dsh5HomePage {
               // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
               if (rsltAryMap[0][i]['GRP']=='RFI'){
                 myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(19, 148, 40)";
+                fillColor= "#449af0";
               }
               if (rsltAryMap[0][i]['GRP']=='RELEASE'){
-                myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(240, 205, 10)";
+                fillColor= "#449af0";
               }
               if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
-                myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
+                strokeColor= "rgb(243, 9, 9)";
+                fillColor= "#449af0";
               }
 
               myRFI = new google.maps.Circle({
                 center: myLatlngRFI,
                 radius: 10000,
-                strokeColor: "rgb(19, 148, 40)", //color_status,
+                strokeColor: strokeColor, //color_status,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: "#449af0",
+                fillColor: fillColor,
                 fillOpacity: 0.4,
                 infowindow: myInfoWindow
               });
-
-              myRelease = new google.maps.Circle({
-                  center: myLatlngRELEASE,
-                  radius: 10000,
-                  strokeColor: "rgb(240, 205, 10)", //color_status,
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: "#449af0",
-                  infowindow: myInfoWindow
-              });
-
-              myNotRelease = new google.maps.Circle({
-                center: myLatlngNOTRELEASE,
-                radius: 10000,
-                strokeColor: "rgb(243, 9, 9)", //color_status,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#449af0",
-                fillOpacity: 0.4,
-                infowindow: myInfoWindow
-            });
 
               myRFI.setMap(map5);
-              myRelease.setMap(map5);
-              myNotRelease.setMap(map5);
+              circles.push(myRFI);
                 google.maps.event.addListener(myRFI, 'click', function(ev) {
                   this.infowindow.setPosition(ev.latLng);
                   this.infowindow.open(this.map5, this);
                 });
-                google.maps.event.addListener(myRelease, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map5, this);
-                });
-                google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map5, this);
-                });
+
           }
+          this.loadingSpinner.dismiss();
         },500);
       }
     });
@@ -432,38 +428,38 @@ export class Dsh5HomePage {
   }
 
   private dsh5_UpdateDataChart(){
-    var dsh5_rsltAryChart=[];
+    this.loadingSpinner.present();
+    this.loadingSpinner.setContent("Load Chart");
     var dsh5_aryCtg=[];
     var dsh5_aryTarget_RFI=[];
     var dsh5_aryActual_RFI=[];
     var dsh5_aryTarget=[];
     var dsh5_aryActual=[];
-    var dsh5_querySql ="SELECT DISTINCT ID_CHART,BULAN,TAHUN,NM_CHART,TITLE,KTG,TARGET_RFI,ACTUAL_RFI,TARGET,ACTUAL FROM TBL_CHART "// WHERE GRP='test' "
-                  +" WHERE ID_CHART='mp005' AND BULAN='09' AND TAHUN='2018'";
-                  // ?+" ORDER BY SEQ,GRP DESC,URUTAN ASC";
-    this.database.selectData(dsh5_querySql).then(data=>{
-          dsh5_rsltAryChart=[];
-          dsh5_aryTarget_RFI=[];
-          dsh5_aryActual_RFI=[];
-          dsh5_aryTarget=[];
-          dsh5_aryActual=[];
-          dsh5_rsltAryChart.push(data);
-        if(dsh5_rsltAryChart !== undefined || dsh5_rsltAryChart.length > 0){
-          dsh5_aryCtg =dsh5_rsltAryChart[0][0]['KTG'].split(","); //Split value string string
-          dsh5_aryTarget_RFI =dsh5_rsltAryChart[0][0]['TARGET_RFI'].split(",").map(Number); //Split default value Number
-          dsh5_aryActual_RFI =dsh5_rsltAryChart[0][0]['ACTUAL_RFI'].split(",").map(Number);
-          dsh5_aryTarget =dsh5_rsltAryChart[0][0]['TARGET'].split(",").map(Number);
-          dsh5_aryActual =dsh5_rsltAryChart[0][0]['ACTUAL'].split(",").map(Number);
-          // console.log(aryTarget_RFI);
-            // setTimeout(() => {
-              dsh5_charting.update({
-                xAxis: {
-                  categories:dsh5_aryCtg,
-                  labels: {
-                       overflow: 'justify'
-                  }
-                },
-                series: [{
+
+      this.dashboarAll.postDatax("Mobile_Dashboard/dshChart","").then((result) => {
+        this.responseDataChart=result;
+        dsh5_aryCtg=[];
+        dsh5_aryTarget_RFI=[];
+        dsh5_aryActual_RFI=[];
+        dsh5_aryTarget=[];
+        dsh5_aryActual=[];
+        // console.log("length=",this.responseDataChart.chart.length);
+        console.log("data chart=",this.responseDataChart.chart);
+        var data=this.responseDataChart.chart;
+            dsh5_aryCtg =data['equence'];
+            dsh5_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
+            dsh5_aryActual_RFI =data['actual'];//.split(",").map(Number);
+            dsh5_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
+            dsh5_aryActual =data['actual_nonkumulatif'];//.split(",").map(Number);
+            dsh5_charting.update({
+              xAxis: [{
+                categories:dsh5_aryCtg,
+                labels: {
+                    overflow: 'justify'
+                }
+              }],
+              series: [
+                {
                   name: 'Target RFI',
                   data: dsh5_aryTarget_RFI,
                   color:'#2c303e',
@@ -481,10 +477,12 @@ export class Dsh5HomePage {
                   color:'#FF9735',
                 }
               ]
-              });
-            // }, 200);
-        }
-    });
+            });
+            // this.loadingSpinner.dismiss();
+      }, (err) => {
+        // this.koneksiMasalahToast();
+          console.log("jaringan bermasalah");
+      });
   }
 
   private dsh5_InitChart(){
@@ -499,7 +497,7 @@ export class Dsh5HomePage {
             type:'areaspline'
           },
           title: {
-              text: "Project Summary of " + dsh5_tgl.getDay() +" " + dsh5_monthNames[dsh5_tgl.getMonth()] + ' ' + dsh5_tgl.getFullYear(),
+              text: "Project Summary of " + dsh5_tgl.getDate() +" " + dsh5_monthNames[dsh5_tgl.getMonth()] + ' ' + dsh5_tgl.getFullYear(),
               style: {
                 fontSize: '15px'
               }

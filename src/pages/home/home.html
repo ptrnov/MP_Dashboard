@@ -2939,6 +2939,11 @@
           <div id="dsh1-b2cChart" style = " display : block ; " > </div>
         </ion-col>
       </ion-row>
+      <ion-row class="full-width" style="width:100%;margin-top: -10px">
+        <ion-col col-12 style="margin-left: 10px">
+          <button id="map-button" class="mapButtonRed" (click)="loadMapClick()">Click to update data Map (5000)</button>
+        </ion-col>
+      </ion-row>
       <ion-row class="full-width">
           <ion-col col-3 class="full-width">
               <ion-item class="map-rfi">
@@ -2973,10 +2978,11 @@
             </ion-row>
           </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col cal-3>
             <ion-card class="card-box-map full-width">
-                <div id="map1" style="height: 350px"></div>
+                <div #map1 id="map1" style="height: 350px"></div>
             </ion-card>
         </ion-col>
       </ion-row>

@@ -26,7 +26,7 @@ export class LoginPage {
     // .getAllPrj();
   }
   ngOnInit() {
-    this.dashboarAll.getAllPrj();
+    // this.dashboarAll.getAllPrj();
     // this.dashboarAll.getB2SPrj();
     // this.dashboarAll.getCorePrj();
     // this.dashboarAll.getMcpPrj()
@@ -34,7 +34,7 @@ export class LoginPage {
     // this.dashboarAll.getChartData();
      this.dashboarAll.getSetting();
     // this.dashboarAll.getMapData();
-    // this.dashboarAll.getMapB2s();
+    this.dashboarAll.getMapB2s();
     // this.dashboarAll.getMapCore();
     // this.dashboarAll.getMapMcp();
     // this.dashboarAll.getMapSp();
