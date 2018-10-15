@@ -257,7 +257,7 @@ export class HomePage {
   private copyMapLocalstorage(data:any){
     return new Promise((resolve)=>{
       var itemsProcessed = 0;
-      var qry="INSERT OR REPLACE INTO TBL_PETA(project_id,area,lat,long,radius,site_name,nama_tenant,regional,sow,release_status,target_rfi,progress_status,pf_code,flag_mitra,from_pmo,flag_ventura) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      var qry="INSERT OR REPLACE INTO TBL_PETA(project_id,area,lat,long,radius,site_name,nama_tenant,regional,sow,release_status,rfi,target_rfi,progress_status,pf_code,flag_mitra,from_pmo,flag_ventura) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       data.allMap.forEach((el,index, array)=>{
         itemsProcessed++;
         console.log("data copy=",el);
@@ -274,6 +274,7 @@ export class HomePage {
           el.regional,
           el.sow,
           el.release_status!=null?el.release_status:0,
+          el.rfi,
           el.target_rfi,
           el.progress_status,
           el.pf_code,

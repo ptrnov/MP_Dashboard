@@ -50,7 +50,7 @@ export let GET_STRING_TABLE = [
   {
     ID:2,
     NAME:"CREATE MAP ALL PROJECT",
-    TABEL:"CREATE TABLE IF NOT EXISTS TBL_PETA(project_id text, area text, lat REAL, long REAL, radius REAL,site_name TEXT,nama_tenant TEXT, regional TEXT, sow TEXT,release_status REAL,target_rfi TEXT, progress_status TEXT, pf_code TEXT, flag_mitra INTEGER,from_pmo INTEGER,flag_ventura INTEGER)",
+    TABEL:"CREATE TABLE IF NOT EXISTS TBL_PETA(project_id text, area text, lat REAL, long REAL, radius REAL,site_name TEXT,nama_tenant TEXT, regional TEXT, sow TEXT,release_status REAL,rfi TEXT,target_rfi TEXT, progress_status TEXT, pf_code TEXT, flag_mitra INTEGER,from_pmo INTEGER,flag_ventura INTEGER)",
     UNIQUE:"CREATE UNIQUE INDEX IF NOT EXISTS TBL_PETA_UNIQ_ID ON TBL_PETA (project_id,area)",
     // GROUP [RFI,RELEASE, NOT-RELEASE]
     // Filter [BULAN/TAHUN]
