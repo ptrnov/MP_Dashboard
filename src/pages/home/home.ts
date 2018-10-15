@@ -1069,6 +1069,9 @@ export class HomePage {
                       var myInfoWindow = new google.maps.InfoWindow({
                         content: contentString
                       });
+                      const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+                      document.getElementById("map-periode").innerHTML=" Periode map: " + dsh1_monthNames[el.bulan-1] + " " + el.tahun;
+
                     // console.log("latlog1=",rslt.lat,rslt.long);
                     mylatlngRFI =  new google.maps.LatLng(el.lat,el.long);
                     // SPLIT COLOR BACKGROUN CIRCLE

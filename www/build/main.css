@@ -39913,6 +39913,18 @@ page-home .mapButGreen:active {
   top: 1px;
 }
 
+page-home .map-lbl-periode {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: -30px;
+  margin-bottom: 0px;
+  margin-right: 5%;
+  margin-left: 0px;
+  text-align: center;
+  color: red;
+}
+
 .alertModal .alert-head {
   background-color: #B1232D;
   color: white;

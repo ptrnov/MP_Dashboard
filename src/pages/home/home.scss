@@ -540,6 +540,17 @@ page-home {
     position:relative;
     top:1px;
   }
+  .map-lbl-periode{
+    font-size: 12px;
+    font-weight: bold;
+    text-align:right;
+    margin-top:-30px;
+    margin-bottom:0px;
+    margin-right:5%;
+    margin-left:0px;
+    text-align: center;
+    color:red;
+  }
 }
   // MODAL
   .alertModal{
@@ -615,6 +626,8 @@ page-home {
           stroke: green !important;
       }
     }
+
+
   }
     // .alert-message {
     //     color: white; // text color for confirm alerts
