@@ -26,7 +26,7 @@ export class LoginPage {
     // .getAllPrj();
   }
   ngOnInit() {
-    this.dashboarAll.getAllPrj();
+    // this.dashboarAll.getAllPrj();
     // this.dashboarAll.getB2SPrj();
     // this.dashboarAll.getCorePrj();
     // this.dashboarAll.getMcpPrj()

@@ -296,6 +296,89 @@ export class DatabaseProvider {
     });
   }
 
+  /* Pungsi Select All Data untuk WebSql Browser & Sqlite Corddova
+  * tabel    : adalah tabel yang sudah di create sebelumnya.
+  * querySql : Sql Query Syntak
+  * Author   : ptr.nov@gmail.com
+  * Promise  : Resolve data
+  * var querySql ="SELECT id, usr FROM piter ORDER BY id DESC";
+    this.database.selectData(querySql,[]).then((data)=>{
+      console.log(data);
+      this.ListUser= data;
+    });
+  * ListUser deklarasi  private ListUser: any;
+  * ListUser send to html
+  */
+ public selectObject(querySql){
+    var aryRsltInternal=[];
+    return new Promise((resolve, reject)=>{
+      this.platform.ready().then(() => {
+        if (this.platform._platforms[0] == 'cordova') {
+            console.log('START_SELECT-MODUL');
+            console.log('Flatform - CordovaMobile Sqlite');
+            console.log('COMMAND="' + querySql + '"');
+            let srcRsltData=this.database.executeSql(querySql,[]);
+            srcRsltData.then((results) => {
+              if(results.rows.length > 0) {
+                for(let i = 0; i < results.rows.length; i++) {
+                  var item = results.rows.item(i);
+                  for (var key in item) {
+                    item[key] = item[key];
+                  }
+                  aryRsltInternal.push(item);
+                    //== MANUAL COSTUMIZE===
+                    // aryRsltInternal.push({
+                    //   NAME: results.rows.item(i).NAME,
+                    //   SUMMARY: results.rows.item(i).SUMMARY,
+                    //   COMPANY: results.rows.item(i).COMPANY
+                    // });
+                  if(i== (results.rows.length-1)){
+                    console.log(aryRsltInternal);
+                    console.log('END_SELECT-MODUL: Show_Data');
+                    resolve(aryRsltInternal);
+                  }
+                };
+              }else{
+                console.log('END_SELECT-MODUL: No_Data');
+                resolve([]);
+              }
+              //console.log(JSON.stringify(aryRslt2));
+            },(error)=>{
+                console.log(error);
+            }).catch(e => console.log(e));
+        }else{
+            this._db.transaction(function (tx){
+                console.log('Flatform - WebSql Browser');
+                console.log('START_SELECT-MODUL');
+                console.log('COMMAND="' + querySql + '"');
+                tx.executeSql(querySql,[], function(tx, results) {
+                    if(results.rows.length > 0) {
+                      for(let i = 0; i < results.rows.length; i++) {
+                          var item = results.rows.item(i);
+                          for (var key in item) {
+                            item[key] = item[key];
+                          }
+                          aryRsltInternal.push(item);
+                          console.log("i=",i);
+                          console.log("dsh2 langht=",results.rows.length);
+                          if(i== (results.rows.length-1)){
+                            console.log(aryRsltInternal);
+                            console.log('END_SELECT-MODUL: Show_Data');
+                            resolve(aryRsltInternal);
+                          }
+                      }
+                    }else{
+                      console.log('END_SELECT-MODUL: No-Data');
+                      resolve([]);
+                    }
+                },function(tx, error){
+                  resolve(error);
+                });
+            });
+        }
+      });
+    });
+  }
   // public selectData1(querySql){
 
   //   return new Promise((resolve, reject)=>{

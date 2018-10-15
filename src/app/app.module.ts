@@ -10,6 +10,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import { SelectSearchableModule  } from 'ionic-select-searchable';
 import {ActivityService} from "../services/activity-service";
+import { IonicStorageModule } from '@ionic/storage';
 // import { CacheModule } from 'ionic-cache';
 // import {TripService} from "../services/trip-service";
 // import {WeatherProvider} from "../services/weather";
@@ -41,7 +42,6 @@ import { Dsh7ModalFlowPage} from '../pages/dsh7-modal-flow/dsh7-modal-flow';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DatabaseProvider } from '../providers/database/database';
 import { DashboardAllProvider } from '../providers/dashboard-all/dashboard-all';
-import { GoogleMaps } from '@ionic-native/google-maps';
 // import { ChartingService } from '../services/charting-service';
 // import services
 // end import services
@@ -90,6 +90,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
       user_group:'none'
 
     }),
+    // IonicStorageModule.forRoot(),
     SelectSearchableModule
   ],
   bootstrap: [IonicApp],
@@ -126,7 +127,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     DashboardAllProvider, 
     DatabaseProvider,   
     RestProvider, 
-    GoogleMaps,
+    // Storage,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

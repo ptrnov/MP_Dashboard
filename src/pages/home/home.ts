@@ -13,7 +13,6 @@ import { Dsh1SecondNoreleasePage} from '../dsh1-second-norelease/dsh1-second-nor
 import { Dsh1SecondPrjonpipePage } from '../dsh1-second-prjonpipe/dsh1-second-prjonpipe';
 import { Dsh1SecondRfiPage} from '../dsh1-second-rfi/dsh1-second-rfi';
 import { Dsh1SecondAfterrfiPage} from '../dsh1-second-afterrfi/dsh1-second-afterrfi';
-import {GoogleMaps,GoogleMap,LatLng,GoogleMapsEvent} from '@ionic-native/google-maps';
 import * as HighCharts from "highcharts";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
@@ -53,10 +52,11 @@ var dsh1_4card_3content_click=0;
 /** IMG SOURCE */
 var defaultUrlImg="assets/img/new/";
 var map1: any;
+var elSttMapButton=0;
 // directionsService = new google.maps.DirectionsService;
 // directionsDisplay = new google.maps.DirectionsRenderer;
 var mapOptions1:any;
-
+var sttMap;
 //Google Variable
 declare var google;
 // var marker = [];
@@ -72,8 +72,8 @@ let mapArrayStt = [
   {nama: "AREA", value:0}
 ];
 var circles=[];
-
-
+var responseDataCheck=[];
+let spinnerCopyMap;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -86,9 +86,7 @@ export class HomePage {
   private responseData;
   private responseDataChart;
   //MAP
-  @ViewChild('map1') mapElement2: ElementRef;
-  // private map1:GoogleMap;
-  // private location:LatLng;
+  // @ViewChild('map1') mapElement2: ElementRef;
   // // directionsService = new google.maps.DirectionsService;
   // // directionsDisplay = new google.maps.DirectionsRenderer;
   // mapOptions1:any;
@@ -98,6 +96,16 @@ export class HomePage {
     spinner:'ios',
     content: 'Please wait...'
   });
+
+  spinnerMap = this.loadingCtrl.create({
+    // cssClass:"map-spinner",
+    spinner:'bubbles',
+    content: 'Loading Map, Please wait...'
+  });
+
+
+  private spinnerPrepareMap;
+  // private spinnerCopyMap;
 
   constructor(
       private platform: Platform,
@@ -112,8 +120,7 @@ export class HomePage {
       public loadingCtrl: LoadingController,
       public config:Config,
       public events: Events,
-      public toastCtrl: ToastController,
-      private googleMaps: GoogleMaps
+      public toastCtrl: ToastController
   ){
     /** Event date setting*/
     this.events.subscribe('filterTgl', (data) =>{
@@ -128,28 +135,162 @@ export class HomePage {
 
   /** First Innit Component  */
   ngOnInit() {
+
     //Second Load DOM.
     this.loadingMap.present();
 
     /** CHARTING */
     setTimeout(() => {
-
+      sttMap=localStorage.getItem('dsh1SttMap')!=null?localStorage.getItem('dsh1SttMap'):0;
+      console.log("sttmap=",sttMap);
       this.dsh1_initCard();
       this.dsh1_InitChart();
       this.dsh1_initMap();
+      // sttMap=localStorage.getItem('dsh1SttMap')!=null?localStorage.getItem('dsh1SttMap'):0;
+      var elMapButton=document.getElementById("map-button");
+      if(elSttMapButton==0) {
+            elMapButton.innerHTML="Click to update data Map (5000)";
+            elMapButton.className ="mapButtonRed";
+      }else{
+            elMapButton.className ="mapButGreen";
+            elMapButton.innerHTML="Map Updated.";
+      }
     }, 100);
 
      /** MAP */
     setTimeout(() => {
       this.dsh1_UpdateCard();
       this.dsh1_UpdateDataChart();
-      this.dsh1_UpdateDataMap();
+      this.dsh1_UpdateDataMap().then((data)=>{
+        if(data==true){
+          localStorage.setItem('dsh1SttMap', '1');
+          this.spinnerMap.dismiss();
+            this.spinnerMap.onDidDismiss(()=>{
+              let toastBerhasil = this.toastCtrl.create({
+                message: 'Wait Until set Map data Finish',
+                duration: 3000,
+                position: 'middle'
+              });
+              toastBerhasil.present();
+            });
+        }
+      });
     }, 200);
   }
 
+  /** MAP Button */
+  public loadMapClick(){
+    console.log("elSttMapButton=",elSttMapButton);
+    var elMapButton=document.getElementById("map-button");
+     switch(elSttMapButton) {
+          case 0:
+              let prepareData=this.prepareMapLocalstorage();
+              prepareData.then((data)=>{
+                this.spinnerPrepareMap.dismiss();
+                this.spinnerPrepareMap.onDidDismiss(()=>{
+                  spinnerCopyMap = this.loadingCtrl.create({
+                    // cssClass:"map-spinner",
+                    spinner:'bubbles',
+                    content: 'Start copying the data map, Please wait...'
+                  });
+                  spinnerCopyMap.present();
+                  setTimeout(() => {
+                    this.copyMapLocalstorage(data).then((dataCopy)=>{
+                      spinnerCopyMap.onDidDismiss(()=>{
+                        let toastBerhasil = this.toastCtrl.create({
+                          message: ' Please wait for the database to be ready',
+                          duration: 3000,
+                          position: 'middle'
+                        });
+                        toastBerhasil.present();
+                        elSttMapButton=1;
+                        elMapButton.className ="mapButGreen";
+                        elMapButton.innerHTML="Map Updated.";
+                      });
+                    });
+                  },100);
+                  //setTimeout(() => {
+                    //this.copyMapLocalstorage(data).then((dataCopy)=>{
+                      //spinnerCopyMap.setContent( 'Copy Maps data '+ dataCopy +'. Please wait...');
+                      // if(dataCopy==true){
+                      //   spinnerCopyMap.dismiss();
+                      //   spinnerCopyMap.onDidDismiss(()=>{
+                      //     let toastBerhasil = this.toastCtrl.create({
+                      //       message: '',
+                      //       duration: 3000,
+                      //       position: 'middle'
+                      //     });
+                      //     toastBerhasil.present();
+                      //     elSttMapButton=1;
+                      //     elMapButton.className ="mapButGreen";
+                      //     elMapButton.innerHTML="Map Updated.";
+                      //   });
+                      // }
+                    //});
+                  //}, 100);
+                });
+              });
+          break;
+          case 1:
+              elSttMapButton= 0;
+              elMapButton.className ="mapButtonRed";
+              elMapButton.innerHTML="Click to update data Map (5000)";
+          break;
+        default:
+      };
+  }
 
+  private prepareMapLocalstorage(){
+    this.spinnerPrepareMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Prepare maps data, Please wait...'
+    });
+    this.spinnerPrepareMap.present();
+    return new Promise((resolve)=>{
+      this.dashboarAll.postApiMap("Mobile_Dashboard/dshAllmap","").then((result) => {
+        resolve(result);
+      });
+    });
+  }
 
+  private copyMapLocalstorage(data:any){
+    return new Promise((resolve)=>{
+      var itemsProcessed = 0;
+      var qry="INSERT OR REPLACE INTO TBL_PETA(project_id,area,lat,long,radius,site_name,nama_tenant,regional,sow,release_status,target_rfi,progress_status,pf_code,flag_mitra,from_pmo,flag_ventura) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      data.allMap.forEach((el,index, array)=>{
+        itemsProcessed++;
+        console.log("data copy=",el);
+        console.log("data length=",array.length);
+        console.log("itemsProcessed=",itemsProcessed);
+        this.database.insertData(qry,[
+          el.project_id,
+          el.area,
+          el.lat,
+          el.long,
+          el.radius,
+          el.site_name,
+          el.nama_tenant,
+          el.regional,
+          el.sow,
+          el.release_status!=null?el.release_status:0,
+          el.target_rfi,
+          el.progress_status,
+          el.pf_code,
+          el.flag_mitra!=null?1:0,
+          el.from_pmo!=null?1:0,
+          el.flag_ventura!=null?1:0
+        ]);
+        if(itemsProcessed == array.length) {
+          spinnerCopyMap.dismiss();
+          resolve(data);
+        }else{
+          resolve(false);
+        }
 
+      });
+    });
+  }
    /**
    * Event Back / close Page
    */
@@ -265,8 +406,8 @@ export class HomePage {
       styles: this.database._defaultNewStyle,
       scrollwheel: false,
     };
-    // map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
-    map1 = new google.maps.Map(this.mapElement2.nativeElement,mapOptions);
+    map1 = new google.maps.Map(document.getElementById("map1"),mapOptions);
+    // map1 = new google.maps.Map(this.mapElement2.nativeElement,mapOptions);
   }
 
 
@@ -712,7 +853,26 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_UpdateDataMap(mapArrayStt);
+    // this.dsh1_UpdateDataMap(mapArrayStt);
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.responseData=[];
+    this.dsh1_UpdateDataMap().then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Wait Until set Map data Finish',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
   }
 
   public releaseChange(event: Event){
@@ -725,7 +885,25 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_UpdateDataMap(mapArrayStt);
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.responseData=[];
+    this.dsh1_UpdateDataMap().then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Wait Until set Map data Finish',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
     // mapStt_Release=event['checked'];
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
   }
@@ -739,7 +917,25 @@ export class HomePage {
     mapArrayStt[objIndex].value = event['checked'];
     //console.log("After update: ",mapArrayStt);
 
-    this.dsh1_UpdateDataMap(mapArrayStt);
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.responseData=[];
+    this.dsh1_UpdateDataMap().then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Wait Until set Map data Finish',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
     // mapStt_NotRelease=event['checked'];
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
   }
@@ -758,7 +954,25 @@ export class HomePage {
     // console.log("After update: ",mapArrayStt);
     // mapStt_area=event;
     // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
-    this.dsh1_UpdateDataMap(mapArrayStt);
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.responseData=[];
+    this.dsh1_UpdateDataMap().then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Wait Until set Map data Finish',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
   }
 
   private dsh1_UpdateDataMap(qryWhere:any=null){
@@ -770,375 +984,89 @@ export class HomePage {
     var mylatlngRELEASE;
     var mylatlngNOTRELEASE;
     var contentString;
-    var spinnerMap = this.loadingCtrl.create({
-      // cssClass:"map-spinner",
-      spinner:'bubbles',
-      content: 'Loading Map, Please wait...'
-    });
-    spinnerMap.present();
-    /** CLEAR ALL Circle in MAP*/
-    if (circles.length>0){
-      for(var i in circles) {
-        circles[i].setMap(null);
-      }
-      circles = [];
-    }
+    console.log("responseData=",responseDataCheck);
+    return new Promise((resolve)=>{
+      if (sttMap==0){
+        this.spinnerMap.present();
 
-    /** GET API DATA */
-    var cntRow;
-    var inc=0;
-    this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
-      this.responseData=result;
-      cntRow=this.responseData.length;
-        console.log("length=",this.responseData.length);
+        /** CLEAR ALL Circle in MAP*/
+        if (circles.length>0){
+          for(var i in circles) {
+            circles[i].setMap(null);
+          }
+          circles = [];
+        }
 
-          /** Waktu Tunggu sampai data siap di prosess */
-          setTimeout(()=>{
-            // var kosongin = new google.maps.Circle();
-            // kosongin.setMap(null);
+        /** GET API DATA */
+        var cntRow;
+        var inc=0;
+        this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
+          this.responseData=result;
+          responseDataCheck.push(result);
+          cntRow=this.responseData.length;
+            console.log("length=",this.responseData.length);
 
-            this.responseData.forEach(rslt=>{
-              inc=inc +1;
-              console.log("latlog1=",rslt.lat,rslt.long);
-              mylatlngRFI =  new google.maps.LatLng(rslt.lat,rslt.long);
+              /** Waktu Tunggu sampai data siap di prosess */
+              setTimeout(()=>{
+                // var kosongin = new google.maps.Circle();
+                // kosongin.setMap(null);
 
-              if(mapArrayStt[0]['value']==false){
-                  myRFI =  new google.maps.Circle({
-                  center: mylatlngRFI,
-                  radius: 10000,
-                  strokeColor: "rgb(19, 148, 40)", //color_status,
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: "#449af0",
-                  fillOpacity: 1        // infowindow: myInfoWindow
-                });
-              }else{
+                this.responseData.forEach(rslt=>{
+                  inc=inc +1;
+                  console.log("latlog1=",rslt.lat,rslt.long);
+                  mylatlngRFI =  new google.maps.LatLng(rslt.lat,rslt.long);
 
-                myRFI =  new google.maps.Circle({
-                    center: mylatlngRFI,
-                    radius: 10000,
-                    strokeColor: "rgb(240, 205, 10)", //color_status,
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: "black",
-                    fillOpacity: 1
-                });
-              }
-              myRFI.setMap(map1);
-              circles.push(myRFI);
-            })
-            // if (cntRow==inc){
-              spinnerMap.dismiss();
-            // }
-            console.log("inc=",inc);
-            console.log("cntRow=",cntRow);
-            // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
-          },2000);
+                  if(mapArrayStt[0]['value']==false){
+                      myRFI =  new google.maps.Circle({
+                      center: mylatlngRFI,
+                      radius: 10000,
+                      strokeColor: "rgb(19, 148, 40)", //color_status,
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor: "#449af0",
+                      fillOpacity: 1        // infowindow: myInfoWindow
+                    });
+                  }else{
 
-          // localStorage.setItem('profile', JSON.stringify(this.responseData));
-    },(err) => {
-        spinnerMap.dismiss();
-        spinnerMap.onDidDismiss(()=>{
-          let toastError = this.toastCtrl.create({
-            message: 'Network issues ! Make sure your network is installed to get the perfect map.',
-            duration: 3000,
-            position: 'middle'
-          });
-          toastError.present();
+                    myRFI =  new google.maps.Circle({
+                        center: mylatlngRFI,
+                        radius: 10000,
+                        strokeColor: "rgb(240, 205, 10)", //color_status,
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: "black",
+                        fillOpacity: 1
+                    });
+                  }
+                  myRFI.setMap(map1);
+                  circles.push(myRFI);
+                })
+                if (cntRow==inc){
+                  // spinnerMap.dismiss();
+                  resolve(true);
+                }
+                console.log("inc=",inc);
+                console.log("cntRow=",cntRow);
+                // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
+              },2000);
+
+              // localStorage.setItem('profile', JSON.stringify(this.responseData));
+        },(err) => {
+            this.spinnerMap.dismiss();
+            this.spinnerMap.onDidDismiss(()=>{
+              let toastError = this.toastCtrl.create({
+                message: 'Network issues ! Make sure your network is installed to get the perfect map.',
+                duration: 3000,
+                position: 'middle'
+              });
+              toastError.present();
+            });
+            console.log("jaringan bermasalah");
         });
-        console.log("jaringan bermasalah");
+      }else{
+        resolve(false);
+      }
     });
-
-
-    // responseData=[];
-    // setTimeout(()=>{
-    // console.log("net error=",JSON.stringify(this.responseData.Release));
-    //         this.responseData.Release.forEach(rslt=>{
-    //           // loading.present();
-    //         // for (var i = 0; i < rsltAryMap.length; i++) {
-    //           contentString = '<div id="content">' +
-    //                           '<div id="siteNotice">' +
-    //                           '</div>' +
-    //                           '<div id="bodyContent">' +
-    //                           '<table>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.project_id + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.site_nm + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.tenan_nm + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>area</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.area + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>regional</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.regional + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>sow</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.sow + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Status</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rslt.status + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-    //                           '</tr>' +
-    //                           '</table>' +
-    //                           '</div>';
-    //           var myInfoWindow = new google.maps.InfoWindow({
-    //             content: contentString
-    //           });
-    //           // var mylatlng = new google.maps.latLng(-6.324000,106.626076);
-    //           if (rslt.grp=='RFI'){
-    //             mylatlngRFI = new google.maps.latLng(rslt.lat,rslt.long);
-    //           }
-    //           if (rslt.grp=='RELEASE'){
-    //             mylatlngRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
-    //           }
-    //           if (rslt.grp=='NOTRELEASE'){
-    //             mylatlngNOTRELEASE = new google.maps.latLng(rslt.lat,rslt.long);
-    //           }
-
-    //           myRFI = new google.maps.Circle({
-    //             center: mylatlngRFI,
-    //             radius: 10000,
-    //             strokeColor: "rgb(19, 148, 40)", //color_status,
-    //             strokeOpacity: 0.8,
-    //             strokeWeight: 2,
-    //             fillColor: "#449af0",
-    //             fillOpacity: 0.4,
-    //             infowindow: myInfoWindow
-    //           });
-
-    //           myRelease = new google.maps.Circle({
-    //               center: mylatlngRELEASE,
-    //               radius: 10000,
-    //               strokeColor: "rgb(240, 205, 10)", //color_status,
-    //               strokeOpacity: 0.8,
-    //               strokeWeight: 2,
-    //               fillColor: "#449af0",
-    //               infowindow: myInfoWindow
-    //           });
-
-    //           myNotRelease = new google.maps.Circle({
-    //             center: mylatlngNOTRELEASE,
-    //             radius: 10000,
-    //             strokeColor: "rgb(243, 9, 9)", //color_status,
-    //             strokeOpacity: 0.8,
-    //             strokeWeight: 2,
-    //             fillColor: "#449af0",
-    //             fillOpacity: 0.4,
-    //             infowindow: myInfoWindow
-    //         });
-
-    //           myRFI.setMap(map1);
-    //           myRelease.setMap(map1);
-    //           myNotRelease.setMap(map1);
-    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //       })
-    //     },2000);
-
-    // var rsltAryMap=[];
-    // var myRFI;
-    // var myRelease;
-    // var myNotRelease;
-    // var myLatlngRFI;
-    // var myLatlngRELEASE;
-    // var myLatlngNOTRELEASE;
-    // var contentString;
-    // var querySql;
-    //   querySql='';
-    // if (qryWhere==null){
-    //   querySql ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
-    // }else if(qryWhere!=null){
-    //   var concatSql;
-    //       concatSql='';
-    //   var sqlDefault ="SELECT DISTINCT GRP,PROJECT_ID,BULAN,TAHUN,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS FROM TBL_PETA "// WHERE GRP='test' "
-    //   // querySql=querySql + " WHERE " + qryWhere;
-    //   console.log("test1=",qryWhere);
-    //   console.log("test2=",qryWhere[0]['nama']);
-    //    //concatSql=" WHERE TAHUN='2018'";
-    //   // if(qryWhere[0]['value']==true){
-    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[0]['nama'] + "'"; //GRP='RFI'";
-    //   // }
-    //   // if(qryWhere[1]['value']==true){
-    //   //   concatSql=concatSql + " AND GRP='"+ qryWhere[1]['nama'] + "'"; //GRP='RELEASE'";
-    //   // }
-    //   // if(qryWhere[2]['value']==true){
-    //   //   concatSql=concatSql + " AND GRP='" + qryWhere[2]['nama'] +"'"; //GRP='NOTRELEASE'";
-    //   // }
-    //   // if(qryWhere[3]['value']==true){
-    //   //   concatSql=concatSql + " AND AREA="+ qryWhere[3]['nama'];
-    //   // }
-    //   var filter_GRP=[];
-    //   var filter_AREA;
-    //       filter_AREA='';
-    //   qryWhere.forEach(el=>{
-    //     if (el.value==true){
-    //       filter_GRP.push("'"+el.nama+"'");
-    //     }
-    //     if (el.value!=0){
-    //       filter_AREA=" AND AREA='" + el.value + "'";
-    //     }
-    //   })
-    //   if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
-    //     concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
-    //   }
-    //   if(qryWhere[3]['value']!=0){
-    //     concatSql=concatSql + filter_AREA;
-    //   }
-
-    //   // concatSql=concatSql + filter_AREA;
-
-    //   querySql=sqlDefault + concatSql;
-    //   console.log("concat=", filter_GRP);
-
-    // }
-    //    this.database.selectData(querySql).then(data=>{
-    //     rsltAryMap=[];
-    //     rsltAryMap.push(data);
-    //     if(rsltAryMap !== undefined || rsltAryMap.length > 0){
-    //       setTimeout(()=>{
-    //         for (var i = 0; i < rsltAryMap[0].length; i++) {
-    //           contentString = '<div id="content">' +
-    //                           '<div id="siteNotice">' +
-    //                           '</div>' +
-    //                           '<div id="bodyContent">' +
-    //                           '<table>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Project ID</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['PROJECT_ID'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Site Name</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['SITE_NM'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['TENAN_NM'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Area</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['AREA'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Regional</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['REGIONAL'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>SOW</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['SOW'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<tr>' +
-    //                           '<td><font color="black"><b>Status</b></font></td>' +
-    //                           '<td style="width:6%"><font color="black">:</font></td>' +
-    //                           '<td><font color="black">' + rsltAryMap[0][i]['STATUS'] + '</font></td>' +
-    //                           '</tr>' +
-    //                           '<tr>' +
-    //                           '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-    //                           '</tr>' +
-    //                           '</table>' +
-    //                           '</div>';
-    //           var myInfoWindow = new google.maps.InfoWindow({
-    //             content: contentString
-    //           });
-    //           // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-    //           if (rsltAryMap[0][i]['GRP']=='RFI'){
-    //             myLatlngRFI = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-    //           }
-    //           if (rsltAryMap[0][i]['GRP']=='RELEASE'){
-    //             myLatlngRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-    //           }
-    //           if (rsltAryMap[0][i]['GRP']=='NOTRELEASE'){
-    //             myLatlngNOTRELEASE = new google.maps.LatLng(rsltAryMap[0][i]['LAT'],rsltAryMap[0][i]['LONG']);
-    //           }
-
-    //           myRFI = new google.maps.Circle({
-    //             center: myLatlngRFI,
-    //             radius: 10000,
-    //             strokeColor: "rgb(19, 148, 40)", //color_status,
-    //             strokeOpacity: 0.8,
-    //             strokeWeight: 2,
-    //             fillColor: "#449af0",
-    //             fillOpacity: 0.4,
-    //             infowindow: myInfoWindow
-    //           });
-
-    //           myRelease = new google.maps.Circle({
-    //               center: myLatlngRELEASE,
-    //               radius: 10000,
-    //               strokeColor: "rgb(240, 205, 10)", //color_status,
-    //               strokeOpacity: 0.8,
-    //               strokeWeight: 2,
-    //               fillColor: "#449af0",
-    //               infowindow: myInfoWindow
-    //           });
-
-    //           myNotRelease = new google.maps.Circle({
-    //             center: myLatlngNOTRELEASE,
-    //             radius: 10000,
-    //             strokeColor: "rgb(243, 9, 9)", //color_status,
-    //             strokeOpacity: 0.8,
-    //             strokeWeight: 2,
-    //             fillColor: "#449af0",
-    //             fillOpacity: 0.4,
-    //             infowindow: myInfoWindow
-    //         });
-
-    //           myRFI.setMap(map1);
-    //           myRelease.setMap(map1);
-    //           myNotRelease.setMap(map1);
-    //             google.maps.event.addListener(myRFI, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //             google.maps.event.addListener(myRelease, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //             google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-    //               this.infowindow.setPosition(ev.latLng);
-    //               this.infowindow.open(this.map1, this);
-    //             });
-    //       }
-    //     },500);
-    //   }
-    // });
   }
 
   public alertModalNoRelease(){

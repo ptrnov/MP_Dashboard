@@ -327,7 +327,7 @@ export class DashboardAllProvider {
     var x1=this.http.get(this.url + "Mobile_Dashboard/dshmap").map(res => res.json());
         x1.subscribe(data => {
           // var data=res.json();
-          var qry="INSERT OR REPLACE INTO TBL_PETA (GRP,PROJECT_ID,AREA,LAT,LONG,RADIUS,SITE_NM,TENAN_NM,REGIONAL,SOW,STATUS) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          var qry="INSERT OR REPLACE INTO TBL_PETA(project_id,area,lat,long,radius,site_name,nama_tenant,regional,sow,release_status,target_rfi,progress_status,pf_code,flag_mitra,from_pmo,flag_ventura) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
           data.Release.forEach(element => {
             this.database.insertData(qry,[
               element.grp,
@@ -622,4 +622,16 @@ export class DashboardAllProvider {
 
   }
 
+  postApiMap(activity,credentials) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      // this.http.get("http://192.168.100.3/" + "Mobile_Dashboard/login/"+ credentials)
+      let rslt=this.http.get(this.url + activity + credentials).map(res => res.json());
+      rslt.subscribe(data => {
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 }

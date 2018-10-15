@@ -141,7 +141,7 @@ export class Dsh4HomePage {
               /** PROJECT ON PIPE - UBIS -> PER AREA */
               area_POP=[];
               area_POP.push(grpMCP[0].filter(function(pipeObj){
-                  return pipeObj.GRP=="PRJ_ON_PIPE";
+                  return pipeObj.GRP=="POP";
                 })
               );
                /** RFI - UBIS -> PER AREA */
@@ -187,8 +187,15 @@ export class Dsh4HomePage {
                   document.getElementById("dsh4[1]card["+el1.URUTAN +"]content[1]-properties-lbl").innerHTML=(el1.NILAI).toString();
               });
               area_POP[0].forEach(el2=>{
-                console.log(el2);
+                console.log("Milstone POP=",el2);
                 document.getElementById("dsh4[5]card["+el2.URUTAN +"]content[1]-properties-lbl").innerHTML=(el2.NILAI).toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[0]").innerHTML=el2.SIS.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[1]").innerHTML=el2.SITAC1.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[2]").innerHTML=el2.SITAC2.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[3]").innerHTML=el2.CME.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[4]").innerHTML=el2.RFC.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[5]").innerHTML=el2.FO.toString();
+                document.getElementById("dsh4[6]card["+el2.URUTAN +"]properties-lbl[6]").innerHTML=el2.RFI.toString();
               });
               area_FRI[0].forEach(el3=>{
                 console.log(el3);

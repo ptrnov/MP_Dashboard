@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import {Events, LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
+import {ToastController,Events, LoadingController,IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SettingsPage} from "../settings/settings";
 import * as HighCharts from "highcharts";
 import { DatabaseProvider} from "../../providers/database/database";
@@ -45,6 +45,8 @@ export class Dsh2HomePage {
   directionsDisplay = new google.maps.DirectionsRenderer;
   private dsh2_subscription1;
   private dsh2_subscription2;
+  private dsh2_spinnerPrepareMap;
+  private dsh2_spinnerSetMap;
   loadingSpinner = this.loadingCtrl.create({
     // cssClass:"map-spinner",
     spinner:'ios',
@@ -60,6 +62,7 @@ export class Dsh2HomePage {
     private dashboarAll: DashboardAllProvider,
     public loadingCtrl: LoadingController,
     public events: Events,
+    public toastCtrl: ToastController
   ){
      /** Event date setting*/
      this.events.subscribe('filterTgl', (data) =>{
@@ -421,176 +424,299 @@ private dsh2_UpdateDataChart(){
     var querySql;
     querySql='';
 
+    /** Remove circle map before set */
+    if (circles.length>0){
+      for(var i in circles) {
+        circles[i].setMap(null);
+      }
+      circles = [];
+    };
+
+
     // this.loadingSpinner.present();
     // this.loadingSpinner.setContent('Load Map');
     // this.loadingSpinner.setSpinner('bubbles');
 
-    if (qryWhere==null){
-      querySql ="SELECT DISTINCT grp ,project_id ,area ,lat ,long ,radius ,site_nm ,tenan_nm ,regional ,sow ,status FROM TBL_PETA_CORE "// WHERE GRP='test' "
-    }else if(qryWhere!=null){
-    var concatSql;
-        concatSql='';
-    var sqlDefault ="SELECT DISTINCT grp ,project_id ,area ,lat ,long ,radius ,site_nm ,tenan_nm ,regional ,sow ,status FROM TBL_PETA_CORE "// WHERE GRP='test' "
-      // querySql=querySql + " WHERE " + qryWhere;
-      // console.log("test1=",qryWhere);
-      // console.log("test2=",qryWhere[0]['nama']);
-      /** CLEAR ALL Circle in MAP*/
-      if (circles.length>0){
-        for(var i in circles) {
-          circles[i].setMap(null);
-        }
-        circles = [];
-      }
-      var filter_GRP=[];
-      var filter_AREA;
-          filter_AREA='';
-      qryWhere.forEach(el=>{
-        if (el.value==true){
-          filter_GRP.push("'"+el.nama+"'");
-        }
-        if (el.value!=0){
-          filter_AREA=" AND AREA='" + el.value + "'";
-        }
-      })
-      if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
-        concatSql=concatSql +" WHERE GRP IN (" + filter_GRP + ")";
-      }
-      if(qryWhere[3]['value']!=0){
-        concatSql=concatSql + filter_AREA;
-      }
-      querySql=sqlDefault + concatSql;
-      console.log("concat=", filter_GRP);
+    // if (qryWhere==null){
+      querySql ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA "
+    // }else if(qryWhere!=null){
+    // var concatSql;
+    //     concatSql='';
+    // var sqlDefault ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA"
+    //   // querySql=querySql + " WHERE " + qryWhere;
+    //   // console.log("test1=",qryWhere);
+    //   // console.log("test2=",qryWhere[0]['nama']);
+    //   /** CLEAR ALL Circle in MAP*/
+    //   if (circles.length>0){
+    //     for(var i in circles) {
+    //       circles[i].setMap(null);
+    //     }
+    //     circles = [];
+    //   }
+    //   var filter_GRP=[];
+    //   var filter_AREA;
+    //       filter_AREA='';
+    //   qryWhere.forEach(el=>{
+    //     if (el.value==true){
+    //       filter_GRP.push("'"+el.nama+"'");
+    //     }
+    //     if (el.value!=0){
+    //       filter_AREA=" AND AREA='" + el.value + "'";
+    //     }
+    //   })
+    //   if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
+    //     concatSql=concatSql +" WHERE GRP IN (" +   + ")";
+    //   }
+    //   if(qryWhere[3]['value']!=0){
+    //     concatSql=concatSql + filter_AREA;
+    //   }
+    //   querySql=sqlDefault + concatSql;
+    //   console.log("concat=", filter_GRP);
 
-    }
+    // }
     var myLatlng;
     var strokeColor;
     var fillColor;
-       this.database.selectData(querySql).then(data=>{
-        rsltAryMap=[];
-        rsltAryMap.push(data);
-        console.log("map=",data);
-        if(rsltAryMap !== undefined || rsltAryMap.length > 0){
-          setTimeout(()=>{
-            for (var i = 0; i < rsltAryMap[0].length; i++) {
-              contentString = '<div id="content">' +
-                              '<div id="siteNotice">' +
-                              '</div>' +
-                              '<div id="bodyContent">' +
-                              '<table>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Project ID</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['project_id'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Site Name</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['site_nm'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['tenan_nm'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Area</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['area'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Regional</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['regional'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>SOW</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['sow'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<tr>' +
-                              '<td><font color="black"><b>Status</b></font></td>' +
-                              '<td style="width:6%"><font color="black">:</font></td>' +
-                              '<td><font color="black">' + rsltAryMap[0][i]['status'] + '</font></td>' +
-                              '</tr>' +
-                              '<tr>' +
-                              '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-                              '</tr>' +
-                              '</table>' +
-                              '</div>';
-              var myInfoWindow = new google.maps.InfoWindow({
-                content: contentString
+      this.dsh2_spinnerPrepareMap= this.loadingCtrl.create({
+        spinner:'bubbles',
+        content: 'Prepare maps data, Please wait...'
+      });
+      this.dsh2_spinnerPrepareMap.present();
+      this.database.selectObject(querySql).then((data:any)=>{
+        this.dsh2_spinnerPrepareMap.dismiss();
+        this.dsh2_spinnerPrepareMap.onDidDismiss(()=>{
+          this.dsh2_spinnerSetMap=this.loadingCtrl.create({
+            spinner:'bubbles',
+            content: 'Copy maps data, Please wait...'
+          });
+          this.dsh2_spinnerSetMap.present();
+          setTimeout(() => {
+            if (data.length>0){
+              var dsh2_kondisi=0;
+              data.forEach((el,index,array)=>{
+                dsh2_kondisi++;
+                console.log("object test=",el);
+                //Google Map Definition
+                  contentString = '<div id="content">' +
+                                  '<div id="siteNotice">' +
+                                  '</div>' +
+                                  '<div id="bodyContent">' +
+                                  '<table>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Project ID</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.project_id + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Site Name</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.site_name + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.nama_tenant + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Area</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.area + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Regional</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.regional + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>SOW</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.sow + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<tr>' +
+                                  '<td><font color="black"><b>Status</b></font></td>' +
+                                  '<td style="width:6%"><font color="black">:</font></td>' +
+                                  '<td><font color="black">' + el.release_status + '</font></td>' +
+                                  '</tr>' +
+                                  '<tr>' +
+                                  '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                                  '</tr>' +
+                                  '</table>' +
+                                  '</div>';
+                  var myInfoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                  });
+                  myLatlng = new google.maps.LatLng(el.lat,el.long);
+                  strokeColor= "rgb(19, 148, 40)";
+                  fillColor= "#449af0";
+                  myRFI = new google.maps.Circle({
+                      center: myLatlng,
+                      radius: 10000,
+                      strokeColor: strokeColor,
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor: fillColor,
+                      fillOpacity: 0.4,
+                      infowindow: myInfoWindow
+                  });
+                  myRFI.setMap(map2);
+                  circles.push(myRFI);
+
+                  google.maps.event.addListener(myRFI, 'click', function(ev) {
+                    this.infowindow.setPosition(ev.latLng);
+                    this.infowindow.open(this.map2, this);
+                  });
+
+
+                if (dsh2_kondisi==array.length){
+                  this.dsh2_spinnerSetMap.dismiss();
+                  this.dsh2_spinnerSetMap.onDidDismiss(()=>{
+                    let toastTutup = this.toastCtrl.create({
+                      message: 'Set maps data, Please wait...',
+                      duration: 3000,
+                      position: 'middle'
+                    });
+                    toastTutup.present();
+                  });
+                }
               });
-              // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-              if (rsltAryMap[0][i]['grp']=='RFI'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-                strokeColor= "rgb(19, 148, 40)";
-                fillColor= "#449af0";
-              }
-              if (rsltAryMap[0][i]['grp']=='RELEASE'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-                strokeColor= "rgb(240, 205, 10)";
-                fillColor= "#449af0";
-              }
-              if (rsltAryMap[0][i]['grp']=='NOTRELEASE'){
-                myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-                strokeColor= "rgb(243, 9, 9)";
-                fillColor= "#449af0";
-              }
-
-              myRFI = new google.maps.Circle({
-                center: myLatlng,
-                radius: 10000,
-                strokeColor: strokeColor, //color_status,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: fillColor,
-                fillOpacity: 0.4,
-                infowindow: myInfoWindow
+            }else{
+              let toastBerhasil = this.toastCtrl.create({
+                message: 'Data map is empty.',
+                duration: 3000,
+                position: 'middle'
               });
+              toastBerhasil.present();
+            }
+          });
+        }, 1000);
 
-            //   myRelease = new google.maps.Circle({
-            //       center: myLatlngRELEASE,
-            //       radius: 10000,
-            //       strokeColor: "rgb(240, 205, 10)", //color_status,
-            //       strokeOpacity: 0.8,
-            //       strokeWeight: 2,
-            //       fillColor: "#449af0",
-            //       infowindow: myInfoWindow
-            //   });
 
-            //   myNotRelease = new google.maps.Circle({
-            //     center: myLatlngNOTRELEASE,
-            //     radius: 10000,
-            //     strokeColor: "rgb(243, 9, 9)", //color_status,
-            //     strokeOpacity: 0.8,
-            //     strokeWeight: 2,
-            //     fillColor: "#449af0",
-            //     fillOpacity: 0.4,
-            //     infowindow: myInfoWindow
-            // });
+        // rsltAryMap=[];
+        // rsltAryMap.push(data);
+        // console.log("map=",data);
+      //   if(rsltAryMap !== undefined || rsltAryMap.length > 0){
+      //     setTimeout(()=>{
+      //       for (var i = 0; i < rsltAryMap[0].length; i++) {
+      //         contentString = '<div id="content">' +
+      //                         '<div id="siteNotice">' +
+      //                         '</div>' +
+      //                         '<div id="bodyContent">' +
+      //                         '<table>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Project ID</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['project_id'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Site Name</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['site_name'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['nama_tenant'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Area</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['area'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Regional</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['regional'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>SOW</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['sow'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<tr>' +
+      //                         '<td><font color="black"><b>Status</b></font></td>' +
+      //                         '<td style="width:6%"><font color="black">:</font></td>' +
+      //                         '<td><font color="black">' + rsltAryMap[0][i]['release_status'] + '</font></td>' +
+      //                         '</tr>' +
+      //                         '<tr>' +
+      //                         '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+      //                         '</tr>' +
+      //                         '</table>' +
+      //                         '</div>';
+      //         var myInfoWindow = new google.maps.InfoWindow({
+      //           content: contentString
+      //         });
+      //         // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
+      //         // if (rsltAryMap[0][i]['grp']=='RFI'){
+      //           myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
+      //           strokeColor= "rgb(19, 148, 40)";
+      //           fillColor= "#449af0";
+      //         // }
+      //         // if (rsltAryMap[0][i]['grp']=='RELEASE'){
+      //         //   myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
+      //         //   strokeColor= "rgb(240, 205, 10)";
+      //         //   fillColor= "#449af0";
+      //         // }
+      //         // if (rsltAryMap[0][i]['grp']=='NOTRELEASE'){
+      //         //   myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
+      //         //   strokeColor= "rgb(243, 9, 9)";
+      //         //   fillColor= "#449af0";
+      //         // }
 
-              myRFI.setMap(map2);
-              // myRelease.setMap(map2);
-              // myNotRelease.setMap(map2);
-              circles.push(myRFI);
+      //         myRFI = new google.maps.Circle({
+      //           center: myLatlng,
+      //           radius: 10000,
+      //           strokeColor: strokeColor, //color_status,
+      //           strokeOpacity: 0.8,
+      //           strokeWeight: 2,
+      //           fillColor: fillColor,
+      //           fillOpacity: 0.4,
+      //           infowindow: myInfoWindow
+      //         });
 
-                google.maps.event.addListener(myRFI, 'click', function(ev) {
-                  this.infowindow.setPosition(ev.latLng);
-                  this.infowindow.open(this.map2, this);
-                });
-                // google.maps.event.addListener(myRelease, 'click', function(ev) {
-                //   this.infowindow.setPosition(ev.latLng);
-                //   this.infowindow.open(this.map2, this);
-                // });
-                // google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-                //   this.infowindow.setPosition(ev.latLng);
-                //   this.infowindow.open(this.map2, this);
-                // });
-          };
-          // this.loadingSpinner.dismiss();
-        },1000);
-      }
+      //       //   myRelease = new google.maps.Circle({
+      //       //       center: myLatlngRELEASE,
+      //       //       radius: 10000,
+      //       //       strokeColor: "rgb(240, 205, 10)", //color_status,
+      //       //       strokeOpacity: 0.8,
+      //       //       strokeWeight: 2,
+      //       //       fillColor: "#449af0",
+      //       //       infowindow: myInfoWindow
+      //       //   });
+
+      //       //   myNotRelease = new google.maps.Circle({
+      //       //     center: myLatlngNOTRELEASE,
+      //       //     radius: 10000,
+      //       //     strokeColor: "rgb(243, 9, 9)", //color_status,
+      //       //     strokeOpacity: 0.8,
+      //       //     strokeWeight: 2,
+      //       //     fillColor: "#449af0",
+      //       //     fillOpacity: 0.4,
+      //       //     infowindow: myInfoWindow
+      //       // });
+
+      //         myRFI.setMap(map2);
+      //         // myRelease.setMap(map2);
+      //         // myNotRelease.setMap(map2);
+      //         circles.push(myRFI);
+
+      //           google.maps.event.addListener(myRFI, 'click', function(ev) {
+      //             this.infowindow.setPosition(ev.latLng);
+      //             this.infowindow.open(this.map2, this);
+      //           });
+      //           // google.maps.event.addListener(myRelease, 'click', function(ev) {
+      //           //   this.infowindow.setPosition(ev.latLng);
+      //           //   this.infowindow.open(this.map2, this);
+      //           // });
+      //           // google.maps.event.addListener(myNotRelease, 'click', function(ev) {
+      //           //   this.infowindow.setPosition(ev.latLng);
+      //           //   this.infowindow.open(this.map2, this);
+      //           // });
+      //     };
+      //     // this.loadingSpinner.dismiss();
+      //   },1000);
+      // }
     });
   }
 
