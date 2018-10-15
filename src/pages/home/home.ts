@@ -66,10 +66,10 @@ var mapStt_Release:boolean=false;
 var mapStt_NotRelease:boolean=false;
 var mapStt_area;
 let mapArrayStt = [
-  {nama: "RFI", value:false},
-  {nama: "RELEASE", value:false},
-  {nama: "NOTRELEASE", value:false},
-  {nama: "AREA", value:0}
+  {nama: "RFI", value:true},
+  {nama: "RELEASE", value:true},
+  {nama: "NOTRELEASE", value:true},
+  {nama: "A0", value:"A0"}
 ];
 var circles=[];
 var responseDataCheck=[];
@@ -85,6 +85,7 @@ export class HomePage {
   private cardValue_Header;
   private responseData;
   private responseDataChart;
+  private responseDataMap=[];
   //MAP
   // @ViewChild('map1') mapElement2: ElementRef;
   // // directionsService = new google.maps.DirectionsService;
@@ -106,6 +107,8 @@ export class HomePage {
 
   private spinnerPrepareMap;
   // private spinnerCopyMap;
+  private param='';
+  private paramMap='';
 
   constructor(
       private platform: Platform,
@@ -125,9 +128,12 @@ export class HomePage {
     /** Event date setting*/
     this.events.subscribe('filterTgl', (data) =>{
       var bulanYearSplit=data.split("-");
-      var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
-      console.log("Param Filter Bulan Tahun=",param);
-      this.dsh1_UpdateCard(param);
+      this.param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+      this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
+
+      console.log("Param Filter Bulan Tahun=",this.param);
+      this.dsh1_UpdateCard(this.param);
+      // this.dsh1_UpdateDataMap();
     });
     // this.location = new LatLng(-2.209764,117.114258);
   }
@@ -147,14 +153,14 @@ export class HomePage {
       this.dsh1_InitChart();
       this.dsh1_initMap();
       // sttMap=localStorage.getItem('dsh1SttMap')!=null?localStorage.getItem('dsh1SttMap'):0;
-      var elMapButton=document.getElementById("map-button");
-      if(elSttMapButton==0) {
-            elMapButton.innerHTML="Click to update data Map (5000)";
-            elMapButton.className ="mapButtonRed";
-      }else{
-            elMapButton.className ="mapButGreen";
-            elMapButton.innerHTML="Map Updated.";
-      }
+      //var elMapButton=document.getElementById("map-button");
+      // if(elSttMapButton==0) {
+      //       elMapButton.innerHTML="Click to update data Map (5000)";
+      //       elMapButton.className ="mapButtonRed";
+      // }else{
+      //       elMapButton.className ="mapButGreen";
+      //       elMapButton.innerHTML="Map Updated.";
+      // }
     }, 100);
 
      /** MAP */
@@ -167,7 +173,7 @@ export class HomePage {
           this.spinnerMap.dismiss();
             this.spinnerMap.onDidDismiss(()=>{
               let toastBerhasil = this.toastCtrl.create({
-                message: 'Wait Until set Map data Finish',
+                message: 'Setting Maps, Please wait..',
                 duration: 3000,
                 position: 'middle'
               });
@@ -837,31 +843,14 @@ export class HomePage {
 
   public rfiChange(event: Event){
     var objIndex;
-    var sqlWhere;
-    // console.log(mapStt_RFI);
-    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
-
-    // mapStt_RFI=event['checked'];
-    // if(mapStt_Release==true && mapStt_NotRelease==true){
-    //   sqlWhere =" GRP='RFI' AND GRP='RELEASE' AND "
-    // }
-
-    // this.dsh1_initMap(sqlWhere);
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
-    //Log object to Console.
-    //console.log("Before update: ", mapArrayStt[objIndex]);
-    //Update object's name property.
     mapArrayStt[objIndex].value = event['checked'];
-    //console.log("After update: ",mapArrayStt);
-
-    // this.dsh1_UpdateDataMap(mapArrayStt);
     this.spinnerMap = this.loadingCtrl.create({
       // cssClass:"map-spinner",
       spinner:'bubbles',
       content: 'Filter Loading Map, Please wait...'
     });
-    this.responseData=[];
-    this.dsh1_UpdateDataMap().then((data)=>{
+    this.dsh1_UpdateDataMap(mapArrayStt).then((data)=>{
       if(data==true){
         this.spinnerMap.dismiss();
           this.spinnerMap.onDidDismiss(()=>{
@@ -878,26 +867,19 @@ export class HomePage {
 
   public releaseChange(event: Event){
     var objIndex;
-    // this.dsh1_initMap(sqlWhere);
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
-    //Log object to Console.
-    //console.log("Before update: ", mapArrayStt[objIndex]);
-    //Update object's name property.
     mapArrayStt[objIndex].value = event['checked'];
-    //console.log("After update: ",mapArrayStt);
-
     this.spinnerMap = this.loadingCtrl.create({
       // cssClass:"map-spinner",
       spinner:'bubbles',
       content: 'Filter Loading Map, Please wait...'
     });
-    this.responseData=[];
-    this.dsh1_UpdateDataMap().then((data)=>{
+    this.dsh1_UpdateDataMap(mapArrayStt).then((data)=>{
       if(data==true){
         this.spinnerMap.dismiss();
           this.spinnerMap.onDidDismiss(()=>{
             let toastBerhasil = this.toastCtrl.create({
-              message: 'Wait Until set Map data Finish',
+              message: 'Setting Maps, Please wait..',
               duration: 3000,
               position: 'middle'
             });
@@ -912,24 +894,18 @@ export class HomePage {
   public notReleaseChange(event: Event) {
     var objIndex;
     objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
-    //Log object to Console.
-    //console.log("Before update: ", mapArrayStt[objIndex]);
-    //Update object's name property.
     mapArrayStt[objIndex].value = event['checked'];
-    //console.log("After update: ",mapArrayStt);
-
     this.spinnerMap = this.loadingCtrl.create({
       // cssClass:"map-spinner",
       spinner:'bubbles',
       content: 'Filter Loading Map, Please wait...'
     });
-    this.responseData=[];
-    this.dsh1_UpdateDataMap().then((data)=>{
+    this.dsh1_UpdateDataMap(mapArrayStt).then((data)=>{
       if(data==true){
         this.spinnerMap.dismiss();
           this.spinnerMap.onDidDismiss(()=>{
             let toastBerhasil = this.toastCtrl.create({
-              message: 'Wait Until set Map data Finish',
+              message: 'Setting Maps, Please wait..',
               duration: 3000,
               position: 'middle'
             });
@@ -937,36 +913,26 @@ export class HomePage {
           });
       }
     });
-    // mapStt_NotRelease=event['checked'];
-    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
   }
 
   public areaChange(event: Event) {
-    // console.log(event);
+    console.log(event);
     var objIndex;
     var intOption;
     intOption=event;
-    // this.dsh1_initMap(sqlWhere);
-    objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
-    //Log object to Console.
-    // console.log("Before update: ", mapArrayStt[objIndex]);
-    //Update object's name property.
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "A0"));
     mapArrayStt[objIndex].value = intOption;
-    // console.log("After update: ",mapArrayStt);
-    // mapStt_area=event;
-    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
     this.spinnerMap = this.loadingCtrl.create({
       // cssClass:"map-spinner",
       spinner:'bubbles',
       content: 'Filter Loading Map, Please wait...'
     });
-    this.responseData=[];
-    this.dsh1_UpdateDataMap().then((data)=>{
+    this.dsh1_UpdateDataMap(mapArrayStt).then((data)=>{
       if(data==true){
         this.spinnerMap.dismiss();
           this.spinnerMap.onDidDismiss(()=>{
             let toastBerhasil = this.toastCtrl.create({
-              message: 'Wait Until set Map data Finish',
+              message: 'Setting Maps, Please wait..',
               duration: 3000,
               position: 'middle'
             });
@@ -985,9 +951,16 @@ export class HomePage {
     var mylatlngRELEASE;
     var mylatlngNOTRELEASE;
     var contentString;
+    var circleStrokeColor;
+    var circleFillColor;
+    var strFilterParam;
     console.log("responseData=",responseDataCheck);
     return new Promise((resolve)=>{
-      if (sttMap==0){
+      // if (sttMap==0){
+        this.spinnerMap=this.loadingCtrl.create({
+          spinner:'bubbles',
+          content: 'Prepare maps data, Please wait...'
+        });
         this.spinnerMap.present();
 
         /** CLEAR ALL Circle in MAP*/
@@ -997,57 +970,151 @@ export class HomePage {
           }
           circles = [];
         }
+        /**
+         * FILTER MANIPULATION.
+         */
+        var filterStt=[];
+        var filterArea='A0';
+        var strStt='';
+        if (qryWhere==null){
+          strFilterParam='0/0/A0';
+        }else{
+          qryWhere.forEach(el=>{
+            if (el.value==true){
+              // filterStt.push(el.nama);
+              strStt=strStt+el.nama +"-";
+              //(filterStt.toString()).replace(",","-");
+            }
+            if (el.nama=='A0'){
+              filterArea=el.value;
+            }
+          })
+
+          // var strStt2=strStt1.replace(",","-");
+          strFilterParam=strStt+"/0"+"/"+filterArea.toString();
+        }
+        console.log("BulanTahun=",this.param);
+        console.log("filterStt=",filterStt);
+        console.log("filterArea=",filterArea);
+        console.log("strFilterParam=",strFilterParam);
 
         /** GET API DATA */
-        var cntRow;
         var inc=0;
-        this.dashboarAll.postDatax("Mobile_Dashboard/dshmap","").then((result) => {
-          this.responseData=result;
-          responseDataCheck.push(result);
-          cntRow=this.responseData.length;
-            console.log("length=",this.responseData.length);
+        /**
+         * PARAM    : $bulan,$year,$status,$pf_code,$area
+         * Default  : /0/0/0/0/0"
+         * Value    : /10/2018/RFI-RELEASE-NOTRELEASE/CRE/A1"
+         */
+        var InParam=this.paramMap!=''?(this.paramMap + "/"+ strFilterParam):'0/0/'+strFilterParam;
+        console.log("InParam=",InParam);
+
+        this.dashboarAll.postDatax("Mobile_Dashboard/dshAllmap/",InParam).then((result:any) => {
+          this.responseDataMap.push(result);
+          // responseDataCheck.push(result);
+            console.log("length=",this.responseDataMap);
 
               /** Waktu Tunggu sampai data siap di prosess */
               setTimeout(()=>{
                 // var kosongin = new google.maps.Circle();
                 // kosongin.setMap(null);
+                if(result.allMap.length>0){
+                  result.allMap.forEach((el,index,array)=>{
+                    inc++;
+                    contentString = '<div id="content">' +
+                                      '<div id="siteNotice">' +
+                                      '</div>' +
+                                      '<div id="bodyContent">' +
+                                      '<table>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Project ID</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.project_id + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Site Name</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.site_name + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.nama_tenant + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Area</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.area + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Regional</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.regional + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>SOW</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.sow + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Status</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.status + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                                      '</tr>' +
+                                      '</table>' +
+                                      '</div>';
+                      var myInfoWindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+                    // console.log("latlog1=",rslt.lat,rslt.long);
+                    mylatlngRFI =  new google.maps.LatLng(el.lat,el.long);
+                    // SPLIT COLOR BACKGROUN CIRCLE
+                    if(el.status=="RFI"){
+                        circleStrokeColor="rgb(19, 148, 40)";
+                        circleFillColor="#449af0";
+                    };
+                    if(el.status=="RELEASE"){
+                        circleStrokeColor="rgb(240, 205, 10)";
+                        circleFillColor="#449af0";
+                    }
+                    if(el.status=="NOTRELEASE"){
+                        circleStrokeColor="rgb(243, 9, 9)";
+                        circleFillColor="#449af0";
+                    }
 
-                this.responseData.forEach(rslt=>{
-                  inc=inc +1;
-                  console.log("latlog1=",rslt.lat,rslt.long);
-                  mylatlngRFI =  new google.maps.LatLng(rslt.lat,rslt.long);
-
-                  if(mapArrayStt[0]['value']==false){
-                      myRFI =  new google.maps.Circle({
+                    // SET PEROPERTIES CIRCLE
+                    myRFI =  new google.maps.Circle({
                       center: mylatlngRFI,
                       radius: 10000,
-                      strokeColor: "rgb(19, 148, 40)", //color_status,
+                      strokeColor: circleStrokeColor,
                       strokeOpacity: 0.8,
                       strokeWeight: 2,
-                      fillColor: "#449af0",
-                      fillOpacity: 1        // infowindow: myInfoWindow
+                      fillColor:circleFillColor,
+                      fillOpacity: 1,
+                      infowindow: myInfoWindow
                     });
-                  }else{
 
-                    myRFI =  new google.maps.Circle({
-                        center: mylatlngRFI,
-                        radius: 10000,
-                        strokeColor: "rgb(240, 205, 10)", //color_status,
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: "black",
-                        fillOpacity: 1
+                    myRFI.setMap(map1);
+                    circles.push(myRFI);
+
+                    google.maps.event.addListener(myRFI, 'click', function(ev) {
+                      this.infowindow.setPosition(ev.latLng);
+                      this.infowindow.open(this.map1, this);
                     });
-                  }
-                  myRFI.setMap(map1);
-                  circles.push(myRFI);
-                })
-                if (cntRow==inc){
-                  // spinnerMap.dismiss();
+
+                    if (inc==array.length){
+                      //this.spinnerMap.dismiss();
+                      resolve(true);
+                    }
+                    // console.log("inc=",inc);
+                    // console.log("cntRow=",array.length);
+                  })
+                }else{
                   resolve(true);
                 }
-                console.log("inc=",inc);
-                console.log("cntRow=",cntRow);
                 // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
               },2000);
 
@@ -1064,9 +1131,9 @@ export class HomePage {
             });
             console.log("jaringan bermasalah");
         });
-      }else{
-        resolve(false);
-      }
+      // }else{
+      //   resolve(false);
+      // }
     });
   }
 

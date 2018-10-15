@@ -2939,28 +2939,28 @@
           <div id="dsh1-b2cChart" style = " display : block ; " > </div>
         </ion-col>
       </ion-row>
-      <ion-row class="full-width" style="width:100%;margin-top: -10px">
+      <!-- <ion-row class="full-width" style="width:100%;margin-top: -10px">
         <ion-col col-12 style="margin-left: 10px">
           <button id="map-button" class="mapButtonRed" (click)="loadMapClick()">Click to update data Map (5000)</button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row class="full-width">
           <ion-col col-3 class="full-width">
               <ion-item class="map-rfi">
                 <ion-label class="font-lbl">RFI</ion-label>
-                <ion-toggle (ionChange)="rfiChange($event)" color="rfi" class="checkbox" checked="false"></ion-toggle>
+                <ion-toggle (ionChange)="rfiChange($event)" color="rfi" class="checkbox" checked="true"></ion-toggle>
               </ion-item>
           </ion-col>
           <ion-col col-3 class="full-width">
               <ion-item class="map-release">
                 <ion-label class="font-lbl" >Release</ion-label>
-                <ion-toggle (ionChange)="releaseChange($event)" color="release" class="checkbox" checked="false"></ion-toggle>
+                <ion-toggle (ionChange)="releaseChange($event)" color="release" class="checkbox" checked="true"></ion-toggle>
               </ion-item>
           </ion-col>
           <ion-col col-3 class="full-width">
               <ion-item class="map-notrelease">
                 <ion-label class="font-lbl" >Not Release</ion-label>
-                <ion-toggle (ionChange)="notReleaseChange($event)" color="notrelease" class="checkbox" checked="false"></ion-toggle>
+                <ion-toggle (ionChange)="notReleaseChange($event)" color="notrelease" class="checkbox" checked="true"></ion-toggle>
               </ion-item>
           </ion-col>
           <ion-col cal-3 class="labelarea full-width">
@@ -2968,7 +2968,7 @@
               <ion-label class=" font-lbl">Area : </ion-label>
               <ion-item class="map-area full-width">
                   <ion-select (ionChange)="areaChange($event)"  [(ngModel)]="area" cancelText="Cancel" okText="OK">
-                    <ion-option value="0" selected="true">All</ion-option>
+                    <ion-option value="A0" selected="true">All</ion-option>
                     <ion-option value="A1">Area 1</ion-option>
                     <ion-option value="A2">Area 2</ion-option>
                     <ion-option value="A3">Area 3</ion-option>
