@@ -695,7 +695,7 @@ export class HomePage {
       // console.log("length=",this.responseDataChart.chart.length);
       console.log("data chart=",this.responseDataChart.chart);
       var data=this.responseDataChart.chart;
-          dsh1_aryCtg =data['equence'];
+          dsh1_aryCtg =data['sequence'];
           dsh1_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
           dsh1_aryActual_RFI =data['actual'];//.split(",").map(Number);
           dsh1_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
@@ -1070,7 +1070,7 @@ export class HomePage {
                         content: contentString
                       });
                       const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-                      document.getElementById("map-periode").innerHTML=" Periode map: " + dsh1_monthNames[el.bulan-1] + " " + el.tahun;
+                      document.getElementById("map-periode").innerHTML="[Periode map: " + dsh1_monthNames[el.bulan-1] + " " + el.tahun+"]";
 
                     // console.log("latlog1=",rslt.lat,rslt.long);
                     mylatlngRFI =  new google.maps.LatLng(el.lat,el.long);

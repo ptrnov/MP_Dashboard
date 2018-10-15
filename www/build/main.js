@@ -8718,7 +8718,7 @@ var HomePage = (function () {
             // console.log("length=",this.responseDataChart.chart.length);
             console.log("data chart=", _this.responseDataChart.chart);
             var data = _this.responseDataChart.chart;
-            dsh1_aryCtg = data['equence'];
+            dsh1_aryCtg = data['sequence'];
             dsh1_aryTarget_RFI = data['target']; //.split(",").map(Number); //Split default value Number
             dsh1_aryActual_RFI = data['actual']; //.split(",").map(Number);
             dsh1_aryTarget = data['target_nonkumulatif']; //.split(",").map(Number);
@@ -9086,7 +9086,7 @@ var HomePage = (function () {
                                 content: contentString
                             });
                             var dsh1_monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                            document.getElementById("map-periode").innerHTML = " Periode map: " + dsh1_monthNames[el.bulan - 1] + " " + el.tahun;
+                            document.getElementById("map-periode").innerHTML = "[Periode map: " + dsh1_monthNames[el.bulan - 1] + " " + el.tahun + "]";
                             // console.log("latlog1=",rslt.lat,rslt.long);
                             mylatlngRFI = new google.maps.LatLng(el.lat, el.long);
                             // SPLIT COLOR BACKGROUN CIRCLE
