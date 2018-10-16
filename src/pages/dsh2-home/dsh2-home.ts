@@ -45,8 +45,11 @@ export class Dsh2HomePage {
   directionsDisplay = new google.maps.DirectionsRenderer;
   private dsh2_subscription1;
   private dsh2_subscription2;
-  private dsh2_spinnerPrepareMap;
-  private dsh2_spinnerSetMap;
+  private spinnerMap;
+  private responseDataMap=[];
+  private param='';
+  private paramMap='';
+
   loadingSpinner = this.loadingCtrl.create({
     // cssClass:"map-spinner",
     spinner:'ios',
@@ -68,6 +71,7 @@ export class Dsh2HomePage {
      this.events.subscribe('filterTgl', (data) =>{
       var bulanYearSplit=data.split("-");
       var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+      this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
       console.log("Param Filter Bulan Tahun=",param);
       // this.dsh2_UpdateCard(param);
     });
@@ -90,7 +94,19 @@ export class Dsh2HomePage {
     setTimeout(() => {
       this.dsh2_UpdateCard();
       this.dsh2_UpdateDataChart();
-      this.dsh2_UpdateDataMap();
+      this.dsh2_UpdateDataMap().then((data)=>{
+        if(data==true){
+          this.spinnerMap.dismiss();
+            this.spinnerMap.onDidDismiss(()=>{
+              let toastBerhasil = this.toastCtrl.create({
+                message: 'Setting Maps, Please wait..',
+                duration: 3000,
+                position: 'middle'
+              });
+              toastBerhasil.present();
+            });
+        }
+      });
     }, 200);
   }
 
@@ -334,7 +350,7 @@ private dsh2_UpdateDataChart(){
       // console.log("length=",this.responseDataChart.chart.length);
       console.log("data chart=",this.responseDataChart.chart);
       var data=this.responseDataChart.chart;
-          dsh2_aryCtg =data['equence'];
+          dsh2_aryCtg =data['sequence'];
           dsh2_aryTarget_RFI =data['target'];//.split(",").map(Number); //Split default value Number
           dsh2_aryActual_RFI =data['actual'];//.split(",").map(Number);
           dsh2_aryTarget =data['target_nonkumulatif'];//.split(",").map(Number);
@@ -374,41 +390,8 @@ private dsh2_UpdateDataChart(){
     this.loadingSpinner.dismiss();
   }
 
-  public rfiChange(event: Event){
-    var objIndex;
-    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
-    mapArrayStt[objIndex].value = event['checked'];
-    mapArrayStt[objIndex].sql = " release_status<>0 AND target_rfi IS NOT NULL AND rfi IS NOT NULL";
-    this.dsh2_UpdateDataMap(" release_status<>0 AND target_rfi IS NOT NULL AND rfi IS NOT NULL ");
-  }
-
-  public releaseChange(event: Event){
-    var objIndex;
-    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
-    mapArrayStt[objIndex].value = event['checked'];
-    mapArrayStt[objIndex].sql = " release_status<>0 AND rfi IS NULL";
-    this.dsh2_UpdateDataMap(" release_status<>0 AND rfi IS NULL ");
-  }
-
-  public notReleaseChange(event: Event) {
-    var objIndex;
-    objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
-    mapArrayStt[objIndex].value = event['checked'];
-    mapArrayStt[objIndex].sql = " release_status=0 AND rfi IS NULL";
-    // this.dsh2_UpdateDataMap(mapArrayStt);
-    this.dsh2_UpdateDataMap(" release_status=0 AND rfi IS NULL");
-  }
-
-  public areaChange(event: Event) {
-    var objIndex;
-    var intOption;
-    intOption=event;
-    objIndex = mapArrayStt.findIndex((obj => obj.nama == "AREA"));
-    mapArrayStt[objIndex].value = intOption;
-    this.dsh2_UpdateDataMap(mapArrayStt);
-  }
-
-  dsh2_initMap(){
+  /** INIT MAP */
+  private dsh2_initMap(){
     var mapOptions={
       zoom: 4,
       center: new google.maps.LatLng(-2.209764,117.114258),
@@ -416,191 +399,266 @@ private dsh2_UpdateDataChart(){
       scrollwheel: false,
     };
     map2 = new google.maps.Map(document.getElementById("map2"),mapOptions);
+    // map1 = new google.maps.Map(this.mapElement2.nativeElement,mapOptions);
   }
-  dsh2_UpdateDataMap(qryWhere:any=null){
+  public rfiChange(event: Event){
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RFI"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.dsh2_UpdateDataMap(mapArrayStt).then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Setting Maps, Please wait..',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
+  }
+
+  public releaseChange(event: Event){
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "RELEASE"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.dsh2_UpdateDataMap(mapArrayStt).then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Setting Maps, Please wait..',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
+    // mapStt_Release=event['checked'];
+    // console.log("RFI STT="+mapStt_RFI+"; RELEASE STT="+mapStt_Release+"; NOTRELEASE="+mapStt_NotRelease + "; Area="+mapStt_area);
+  }
+
+  public notReleaseChange(event: Event) {
+    var objIndex;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "NOTRELEASE"));
+    mapArrayStt[objIndex].value = event['checked'];
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.dsh2_UpdateDataMap(mapArrayStt).then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Setting Maps, Please wait..',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
+  }
+
+  public areaChange(event: Event) {
+    console.log(event);
+    var objIndex;
+    var intOption;
+    intOption=event;
+    objIndex = mapArrayStt.findIndex((obj => obj.nama == "A0"));
+    mapArrayStt[objIndex].value = intOption;
+    this.spinnerMap = this.loadingCtrl.create({
+      // cssClass:"map-spinner",
+      spinner:'bubbles',
+      content: 'Filter Loading Map, Please wait...'
+    });
+    this.dsh2_UpdateDataMap(mapArrayStt).then((data)=>{
+      if(data==true){
+        this.spinnerMap.dismiss();
+          this.spinnerMap.onDidDismiss(()=>{
+            let toastBerhasil = this.toastCtrl.create({
+              message: 'Setting Maps, Please wait..',
+              duration: 3000,
+              position: 'middle'
+            });
+            toastBerhasil.present();
+          });
+      }
+    });
+  }
+
+  private dsh2_UpdateDataMap(qryWhere:any=null){
     var rsltAryMap=[];
     var myRFI;
     var myRelease;
     var myNotRelease;
-    var myLatlngRFI;
-    var myLatlngRELEASE;
-    var myLatlngNOTRELEASE;
+    var mylatlngRFI;
+    var mylatlngRELEASE;
+    var mylatlngNOTRELEASE;
     var contentString;
-    var querySql;
-    querySql='';
-    // var sqlFilter='';
-    // var sqlFilterCnt=[];
-    /** Remove circle map before set */
-    if (circles.length>0){
-      for(var i in circles) {
-        circles[i].setMap(null);
-      }
-      circles = [];
-    };
+    var circleStrokeColor;
+    var circleFillColor;
+    var strFilterParam;
+    return new Promise((resolve)=>{
+      // if (sttMap==0){
+        this.spinnerMap=this.loadingCtrl.create({
+          spinner:'bubbles',
+          content: 'Prepare maps data, Please wait...'
+        });
+        this.spinnerMap.present();
 
-    if (!qryWhere){
-      querySql ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA "
-    }else{
-      querySql ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA WHERE "
-      querySql = querySql + ' ' + qryWhere;
-      console.log("concat=",qryWhere);
-    }
+        /** CLEAR ALL Circle in MAP*/
+        if (circles.length>0){
+          for(var i in circles) {
+            circles[i].setMap(null);
+          }
+          circles = [];
+        }
+        /**
+         * FILTER MANIPULATION.
+         */
+        var filterStt=[];
+        var filterArea='A0';
+        var strStt='';
+        if (qryWhere==null){
+          strFilterParam='0/B2S/A0';
+        }else{
+          qryWhere.forEach(el=>{
+            if (el.value==true){
+              // filterStt.push(el.nama);
+              strStt=strStt+el.nama +"-";
+              //(filterStt.toString()).replace(",","-");
+            }
+            if (el.nama=='A0'){
+              filterArea=el.value;
+            }
+          })
 
-    // this.loadingSpinner.present();
-    // this.loadingSpinner.setContent('Load Map');
-    // this.loadingSpinner.setSpinner('bubbles');
+          // var strStt2=strStt1.replace(",","-");
+          strFilterParam=strStt+"/B2S"+"/"+filterArea.toString();
+        }
+        console.log("BulanTahun=",this.param);
+        console.log("filterStt=",filterStt);
+        console.log("filterArea=",filterArea);
+        console.log("strFilterParam=",strFilterParam);
 
-    // if (qryWhere.length < 0){
-    //   querySql ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA "
-    // }else if(qryWhere.length>0){
+        /** GET API DATA */
+        var inc=0;
+        /**
+         * PARAM    : $bulan,$year,$status,$pf_code,$area
+         * Default  : /0/0/0/0/0"
+         * Value    : /10/2018/RFI-RELEASE-NOTRELEASE/CRE/A1"
+         */
+        var InParam=this.paramMap!=''?(this.paramMap + "/"+ strFilterParam):'0/0/'+strFilterParam;
+        console.log("InParam=",InParam);
 
-      // console.log("qryWhere=",qryWhere);
-      // var sqlFilter='';
-      // var sqlFilterArea='';
-      // /** Indikator Prefix/Suppix */
-      // sqlFilterCnt.push(qryWhere.filter(function(arfiObj){
-      //   return arfiObj.value==true;
-      //   })
-      // );
+        this.dashboarAll.postDatax("Mobile_Dashboard/dshAllmap/",InParam).then((result:any) => {
+          this.responseDataMap.push(result);
+          // responseDataCheck.push(result);
+            console.log("length=",this.responseDataMap);
 
-      // console.log("Ary Cnt=",sqlFilterCnt);
-      // qryWhere.forEach(el=>{
-      //   if (el.value===true){
-      //     if (sqlFilterCnt.length<=1){
-      //       sqlFilter=sqlFilter + el.sql;
-      //     }else{
-      //       sqlFilter=sqlFilter + el.sql + " AND ";
-      //     }
-      //   }
-      //   if (el.value!=0){
-      //     sqlFilterArea =" AND AREA='" + el.value + "'";
-      //   }
-      // })
-      // sqlFilter = sqlFilter + sqlFilterArea;
-
-      // console.log("concat=",sqlFilter);
-
-      // querySql ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA "
-
-      // var concatSql;
-      //    concatSql='';
-      // var sqlDefault ="SELECT DISTINCT project_id ,area ,lat ,long ,radius ,site_name ,nama_tenant ,regional ,sow ,release_status FROM TBL_PETA"
-    //   // querySql=querySql + " WHERE " + qryWhere;
-    //   // console.log("test1=",qryWhere);
-    //   // console.log("test2=",qryWhere[0]['nama']);
-    //   /** CLEAR ALL Circle in MAP*/
-    //   if (circles.length>0){
-    //     for(var i in circles) {
-    //       circles[i].setMap(null);
-    //     }
-    //     circles = [];
-    //   }
-    //   var filter_GRP=[];
-    //   var filter_AREA;
-    //       filter_AREA='';
-    //   qryWhere.forEach(el=>{
-    //     if (el.value==true){
-    //       filter_GRP.push("'"+el.nama+"'");
-    //     }
-    //     if (el.value!=0){
-    //       filter_AREA=" AND AREA='" + el.value + "'";
-    //     }
-    //   })
-    //   if(qryWhere[0]['value']==true || qryWhere[1]['value']==true || qryWhere[2]['value']==true){
-    //     concatSql=concatSql +" WHERE GRP IN (" +   + ")";
-    //   }
-    //   if(qryWhere[3]['value']!=0){
-    //     concatSql=concatSql + filter_AREA;
-    //   }
-    //   querySql=sqlDefault + concatSql;
-    //   console.log("concat=", filter_GRP);
-
-    // }
-    var myLatlng;
-    var strokeColor;
-    var fillColor;
-      this.dsh2_spinnerPrepareMap= this.loadingCtrl.create({
-        spinner:'bubbles',
-        content: 'Prepare maps data, Please wait...'
-      });
-      this.dsh2_spinnerPrepareMap.present();
-      this.database.selectObject(querySql).then((data:any)=>{
-        this.dsh2_spinnerPrepareMap.dismiss();
-        this.dsh2_spinnerPrepareMap.onDidDismiss(()=>{
-          this.dsh2_spinnerSetMap=this.loadingCtrl.create({
-            spinner:'bubbles',
-            content: 'Move maps data, Please wait...'
-          });
-          this.dsh2_spinnerSetMap.present();
-          setTimeout(() => {
-            if (data.length>0){
-              var dsh2_kondisi=0;
-              data.forEach((el,index,array)=>{
-                  dsh2_kondisi++;
-                  console.log("object test=",el);
-                  //Google Map Definition
+              /** Waktu Tunggu sampai data siap di prosess */
+              setTimeout(()=>{
+                // var kosongin = new google.maps.Circle();
+                // kosongin.setMap(null);
+                if(result.allMap.length>0){
+                  result.allMap.forEach((el,index,array)=>{
+                    inc++;
                     contentString = '<div id="content">' +
-                                    '<div id="siteNotice">' +
-                                    '</div>' +
-                                    '<div id="bodyContent">' +
-                                    '<table>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Project ID</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.project_id + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Site Name</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.site_name + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.nama_tenant + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Area</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.area + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Regional</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.regional + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>SOW</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.sow + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<tr>' +
-                                    '<td><font color="black"><b>Status</b></font></td>' +
-                                    '<td style="width:6%"><font color="black">:</font></td>' +
-                                    '<td><font color="black">' + el.release_status + '</font></td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-                                    '</tr>' +
-                                    '</table>' +
-                                    '</div>';
-                    var myInfoWindow = new google.maps.InfoWindow({
-                      content: contentString
+                                      '<div id="siteNotice">' +
+                                      '</div>' +
+                                      '<div id="bodyContent">' +
+                                      '<table>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Project ID</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.project_id + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Site Name</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.site_name + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Nama Tenant</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.nama_tenant + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Area</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.area + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Regional</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.regional + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>SOW</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.sow + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<tr>' +
+                                      '<td><font color="black"><b>Status</b></font></td>' +
+                                      '<td style="width:6%"><font color="black">:</font></td>' +
+                                      '<td><font color="black">' + el.status + '</font></td>' +
+                                      '</tr>' +
+                                      '<tr>' +
+                                      '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
+                                      '</tr>' +
+                                      '</table>' +
+                                      '</div>';
+                      var myInfoWindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+                      const dsh2_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+                      document.getElementById("map-periode").innerHTML="[ MAPS PERIODE: " + dsh2_monthNames[el.bulan-1] + " " + el.tahun+" ]";
+
+                    // console.log("latlog1=",rslt.lat,rslt.long);
+                    mylatlngRFI =  new google.maps.LatLng(el.lat,el.long);
+                    // SPLIT COLOR BACKGROUN CIRCLE
+                    if(el.status=="RFI"){
+                        circleStrokeColor="rgb(19, 148, 40)";
+                        circleFillColor="#449af0";
+                    };
+                    if(el.status=="RELEASE"){
+                        circleStrokeColor="rgb(240, 205, 10)";
+                        circleFillColor="#449af0";
+                    }
+                    if(el.status=="NOTRELEASE"){
+                        circleStrokeColor="rgb(243, 9, 9)";
+                        circleFillColor="#449af0";
+                    }
+
+                    // SET PEROPERTIES CIRCLE
+                    myRFI =  new google.maps.Circle({
+                      center: mylatlngRFI,
+                      radius: 10000,
+                      strokeColor: circleStrokeColor,
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor:circleFillColor,
+                      fillOpacity: 1,
+                      infowindow: myInfoWindow
                     });
-                    myLatlng = new google.maps.LatLng(el.lat,el.long);
-                    strokeColor= "rgb(19, 148, 40)";
-                    fillColor= "#449af0";
-                    myRFI = new google.maps.Circle({
-                        center: myLatlng,
-                        radius: 10000,
-                        strokeColor: strokeColor,
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: fillColor,
-                        fillOpacity: 0.4,
-                        infowindow: myInfoWindow
-                    });
+
                     myRFI.setMap(map2);
                     circles.push(myRFI);
 
@@ -609,157 +667,33 @@ private dsh2_UpdateDataChart(){
                       this.infowindow.open(this.map2, this);
                     });
 
+                    if (inc==array.length){
+                      //this.spinnerMap.dismiss();
+                      resolve(true);
+                    }
+                    // console.log("inc=",inc);
+                    // console.log("cntRow=",array.length);
+                  })
+                }else{
+                  resolve(true);
+                }
+                // if(this.loadingMap){ this.loadingMap.dismiss(); this.loadingMap = null; }
+              },2000);
 
-                  if (dsh2_kondisi==array.length){
-                    this.dsh2_spinnerSetMap.dismiss();
-                    this.dsh2_spinnerSetMap.onDidDismiss(()=>{
-                      let toastTutup = this.toastCtrl.create({
-                        message: 'Set maps data, Please wait...',
-                        duration: 3000,
-                        position: 'middle'
-                      });
-                      toastTutup.present();
-                    });
-                  }
-                });
-              }else{
-                let toastBerhasil = this.toastCtrl.create({
-                  message: 'Data map is empty.',
-                  duration: 3000,
-                  position: 'middle'
-                });
-                toastBerhasil.present();
-              }
+              // localStorage.setItem('profile', JSON.stringify(this.responseData));
+        },(err) => {
+            this.spinnerMap.dismiss();
+            this.spinnerMap.onDidDismiss(()=>{
+              let toastError = this.toastCtrl.create({
+                message: 'Network issues ! Make sure your network is installed to get the perfect map.',
+                duration: 3000,
+                position: 'middle'
+              });
+              toastError.present();
             });
-          }, 1000);
+            console.log("jaringan bermasalah");
         });
-
-        // rsltAryMap=[];
-        // rsltAryMap.push(data);
-        // console.log("map=",data);
-      //   if(rsltAryMap !== undefined || rsltAryMap.length > 0){
-      //     setTimeout(()=>{
-      //       for (var i = 0; i < rsltAryMap[0].length; i++) {
-      //         contentString = '<div id="content">' +
-      //                         '<div id="siteNotice">' +
-      //                         '</div>' +
-      //                         '<div id="bodyContent">' +
-      //                         '<table>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Project ID</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['project_id'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Site Name</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['site_name'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Nama Tenant</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['nama_tenant'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Area</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['area'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Regional</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['regional'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>SOW</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['sow'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<tr>' +
-      //                         '<td><font color="black"><b>Status</b></font></td>' +
-      //                         '<td style="width:6%"><font color="black">:</font></td>' +
-      //                         '<td><font color="black">' + rsltAryMap[0][i]['release_status'] + '</font></td>' +
-      //                         '</tr>' +
-      //                         '<tr>' +
-      //                         '<td><a href="" target="_blank"><button class="btn btn-warning btn-detail" id="brn-detail">Detail</button></a></td>' +
-      //                         '</tr>' +
-      //                         '</table>' +
-      //                         '</div>';
-      //         var myInfoWindow = new google.maps.InfoWindow({
-      //           content: contentString
-      //         });
-      //         // var myLatlng = new google.maps.LatLng(-6.324000,106.626076);
-      //         // if (rsltAryMap[0][i]['grp']=='RFI'){
-      //           myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-      //           strokeColor= "rgb(19, 148, 40)";
-      //           fillColor= "#449af0";
-      //         // }
-      //         // if (rsltAryMap[0][i]['grp']=='RELEASE'){
-      //         //   myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-      //         //   strokeColor= "rgb(240, 205, 10)";
-      //         //   fillColor= "#449af0";
-      //         // }
-      //         // if (rsltAryMap[0][i]['grp']=='NOTRELEASE'){
-      //         //   myLatlng = new google.maps.LatLng(rsltAryMap[0][i]['lat'],rsltAryMap[0][i]['long']);
-      //         //   strokeColor= "rgb(243, 9, 9)";
-      //         //   fillColor= "#449af0";
-      //         // }
-
-      //         myRFI = new google.maps.Circle({
-      //           center: myLatlng,
-      //           radius: 10000,
-      //           strokeColor: strokeColor, //color_status,
-      //           strokeOpacity: 0.8,
-      //           strokeWeight: 2,
-      //           fillColor: fillColor,
-      //           fillOpacity: 0.4,
-      //           infowindow: myInfoWindow
-      //         });
-
-      //       //   myRelease = new google.maps.Circle({
-      //       //       center: myLatlngRELEASE,
-      //       //       radius: 10000,
-      //       //       strokeColor: "rgb(240, 205, 10)", //color_status,
-      //       //       strokeOpacity: 0.8,
-      //       //       strokeWeight: 2,
-      //       //       fillColor: "#449af0",
-      //       //       infowindow: myInfoWindow
-      //       //   });
-
-      //       //   myNotRelease = new google.maps.Circle({
-      //       //     center: myLatlngNOTRELEASE,
-      //       //     radius: 10000,
-      //       //     strokeColor: "rgb(243, 9, 9)", //color_status,
-      //       //     strokeOpacity: 0.8,
-      //       //     strokeWeight: 2,
-      //       //     fillColor: "#449af0",
-      //       //     fillOpacity: 0.4,
-      //       //     infowindow: myInfoWindow
-      //       // });
-
-      //         myRFI.setMap(map2);
-      //         // myRelease.setMap(map2);
-      //         // myNotRelease.setMap(map2);
-      //         circles.push(myRFI);
-
-      //           google.maps.event.addListener(myRFI, 'click', function(ev) {
-      //             this.infowindow.setPosition(ev.latLng);
-      //             this.infowindow.open(this.map2, this);
-      //           });
-      //           // google.maps.event.addListener(myRelease, 'click', function(ev) {
-      //           //   this.infowindow.setPosition(ev.latLng);
-      //           //   this.infowindow.open(this.map2, this);
-      //           // });
-      //           // google.maps.event.addListener(myNotRelease, 'click', function(ev) {
-      //           //   this.infowindow.setPosition(ev.latLng);
-      //           //   this.infowindow.open(this.map2, this);
-      //           // });
-      //     };
-      //     // this.loadingSpinner.dismiss();
-      //   },1000);
-      // }
-
+    });
   }
 
   goToAccount() {

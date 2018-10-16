@@ -100,6 +100,17 @@ page-home {
     margin-bottom:50px;
     // padding-right: -10px;
     margin-left: 7px;
+    .periode{
+      font-size: 12px;
+      font-weight: bold;
+      text-align:right;
+      margin-top:10px;
+      margin-bottom:10px;
+      margin-right:0%;
+      margin-left:0px;
+      text-align: center;
+      color:red;
+    }
   }
 
   .gridukuran{
@@ -540,17 +551,7 @@ page-home {
     position:relative;
     top:1px;
   }
-  .map-lbl-periode{
-    font-size: 12px;
-    font-weight: bold;
-    text-align:right;
-    margin-top:-40px;
-    margin-bottom:0px;
-    margin-right:5%;
-    margin-left:0px;
-    text-align: center;
-    color:red;
-  }
+
 }
   // MODAL
   .alertModal{

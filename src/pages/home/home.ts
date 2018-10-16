@@ -855,7 +855,7 @@ export class HomePage {
         this.spinnerMap.dismiss();
           this.spinnerMap.onDidDismiss(()=>{
             let toastBerhasil = this.toastCtrl.create({
-              message: 'Wait Until set Map data Finish',
+              message: 'Setting Maps, Please wait..',
               duration: 3000,
               position: 'middle'
             });
@@ -1070,7 +1070,7 @@ export class HomePage {
                         content: contentString
                       });
                       const dsh1_monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-                      document.getElementById("map-periode").innerHTML="[Periode map: " + dsh1_monthNames[el.bulan-1] + " " + el.tahun+"]";
+                      document.getElementById("map-periode").innerHTML="[ MAPS PERIODE: " + dsh1_monthNames[el.bulan-1] + " " + el.tahun+" ]";
 
                     // console.log("latlog1=",rslt.lat,rslt.long);
                     mylatlngRFI =  new google.maps.LatLng(el.lat,el.long);
