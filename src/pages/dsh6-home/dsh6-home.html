@@ -34,17 +34,18 @@
                         <ion-card class="box1 full-width">
                               <ion-row>
                                 <ion-item style="margin-left:10px;background-color:white">
-                                <ion-label>Data Filter</ion-label>
-                                <select-searchable
-                                  item-content
-                                  [(ngModel)]="port"
-                                  [items]="aryListMitra"
-                                  itemValueField="VENDOR_ID"
-                                  itemTextField="VENDOR_NM"
-                                  [canSearch]="true"
-                                  [hasVirtualScroll]="true"
-                                  (onChange)="portChange($event)">
-                                </select-searchable>
+                                  <ion-label floating>Mitra</ion-label>
+                                  <select-searchable
+                                    item-content
+                                    [(ngModel)]="port"
+                                    [items]="aryListMitra"
+                                    itemValueField="vendor_id"
+                                    itemTextField="vendor_name"
+                                    [canSearch]="true"
+                                    [canClear]="true"
+                                    [hasVirtualScroll]="true"
+                                    (onChange)="portChange($event)">
+                                  </select-searchable>
                               </ion-item>
                             </ion-row>
                             <ion-row class="full-width">

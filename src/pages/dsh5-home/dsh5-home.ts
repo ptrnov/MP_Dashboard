@@ -61,15 +61,31 @@ export class Dsh5HomePage {
     public toastCtrl: ToastController
   ) {
     /** Event date setting*/
-    this.events.subscribe('filterTgl', (data) =>{
-      var bulanYearSplit=data.split("-");
-      this.param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
-      this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
-      console.log("Param Filter Bulan Tahun=",this.param);
-      this.dsh5_UpdateCard(this.param);
-      // this.dsh1_UpdateDataMap();
-    });
+    // this.events.subscribe('filterTgl', (data) =>{
+    //   var bulanYearSplit=data.split("-");
+    //   this.param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+    //   this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
+    //   console.log("Param Filter Bulan Tahun=",this.param);
+    //   this.dsh5_UpdateCard(this.param);
+    //   // this.dsh1_UpdateDataMap();
+    // });
     // this.location = new LatLng(-2.209764,117.114258);
+  }
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.events.unsubscribe('filterTgl');
+    }, 100);
+    setTimeout(() => {
+      this.events.subscribe('filterTgl', (data) =>{
+        var bulanYearSplit=data.split("-");
+        this.param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+        this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
+        console.log("Param Filter Bulan Tahun=",this.param);
+        this.dsh5_UpdateCard(this.param);
+        // this.dsh1_UpdateDataMap();
+      });
+    }, 200);
   }
 
   /** First Innit Component  */

@@ -58,6 +58,15 @@ export class Dsh6HomePage {
 
 
   }
+  ngOnInit() {
+    setTimeout(() => {
+      this.dashboarAll.postDatax("Mobile_Dashboard/mitralist/","").then((result:any) => {
+        this.aryListMitra=result.listMitra;
+        console.log("result.listMitra=",result.listMitra);
+      });
+    }, 100);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad Dsh6HomePage');
     document.getElementById("b2s_area").hidden=true;
@@ -70,13 +79,13 @@ export class Dsh6HomePage {
   }
 
   getListMitra():void{
-    var aryRslt=[];
-        aryRslt=[];
-    var querySql ="SELECT DISTINCT VENDOR_ID,VENDOR_NM FROM TBL_MITRALIST ORDER BY VENDOR_NM ASC";
-    this.database.selectData(querySql).then(data=>{
-      aryRslt.push(data);
-      this.aryListMitra=aryRslt[0];
-    });
+    // var aryRslt=[];
+    //     aryRslt=[];
+    // var querySql ="SELECT DISTINCT VENDOR_ID,VENDOR_NM FROM TBL_MITRALIST ORDER BY VENDOR_NM ASC";
+    // this.database.selectData(querySql).then(data=>{
+    //   aryRslt.push(data);
+    //   this.aryListMitra=aryRslt[0];
+    // });
   }
   portChange(event: {
     component: SelectSearchableComponent,

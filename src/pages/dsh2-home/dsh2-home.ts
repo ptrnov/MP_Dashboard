@@ -68,14 +68,31 @@ export class Dsh2HomePage {
     public toastCtrl: ToastController
   ){
      /** Event date setting*/
-     this.events.subscribe('filterTgl', (data) =>{
-      var bulanYearSplit=data.split("-");
-      var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
-      this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
-      console.log("Param Filter Bulan Tahun=",param);
-      // this.dsh2_UpdateCard(param);
-    });
+    //  this.events.subscribe('filterTgl', (data) =>{
+    //   var bulanYearSplit=data.split("-");
+    //   var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+    //   this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
+    //   console.log("Param Filter Bulan Tahun=",param);
+    //   this.dsh2_UpdateCard(this.param);
+    //   // this.dsh2_UpdateCard(param);
+    // });
 
+  }
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.events.unsubscribe('filterTgl');
+    }, 100);
+    setTimeout(() => {
+      this.events.subscribe('filterTgl', (data) =>{
+        var bulanYearSplit=data.split("-");
+        var param=bulanYearSplit[0]+"/"+bulanYearSplit[1];
+        this.paramMap=(bulanYearSplit[0]).padStart(2, '0')+"/"+bulanYearSplit[1];
+        console.log("Param Filter Bulan Tahun=",param);
+        this.dsh2_UpdateCard(this.param);
+        // this.dsh2_UpdateCard(param);
+      });
+    }, 200);
   }
 
   /** First Innit Component  */
