@@ -34,30 +34,30 @@
                         <ion-card class="box1 full-width">
                               <ion-row>
                                 <ion-item style="margin-left:10px;background-color:white">
-                                  <ion-label floating>Mitra</ion-label>
-                                  <select-searchable
-                                    item-content
-                                    [(ngModel)]="port"
-                                    [items]="aryListMitra"
-                                    itemValueField="vendor_id"
-                                    itemTextField="vendor_name"
-                                    [canSearch]="true"
-                                    [canClear]="true"
-                                    [hasVirtualScroll]="true"
-                                    (onChange)="portChange($event)">
-                                  </select-searchable>
+                                <ion-label floating>Mitra</ion-label>
+                                <select-searchable
+                                  item-content
+                                  [(ngModel)]="port"
+                                  [items]="aryListMitra"
+                                  itemValueField="vendor_id"
+                                  itemTextField="vendor_name"
+                                  [canSearch]="true"
+                                  [canClear]="true"
+                                  [hasVirtualScroll]="true"
+                                  (onChange)="portChange($event)">
+                                </select-searchable>
                               </ion-item>
                             </ion-row>
                             <ion-row class="full-width">
-                              <button class="mitraButton1"  (click)="setTotalClick($event)">Total Project</button>
+                              <button class="mitraButton1"  (click)="setTotalClick($event)" id="ttl-prj">Total Project ()</button>
                             </ion-row>
                         </ion-card>
                       </ion-col>
                 </ion-row>
                 <ion-row id="card-view">
                     <ion-col col-3 style="margin-top: -10px">
-                      <ion-card class="cardHead" (click)="setB2sClick()">
-                        B2S
+                      <ion-card class="cardHead" (click)="setB2sClick()" id="b2s">
+                        B2S(0)
                       </ion-card>
                     </ion-col>
                     <ion-col col-3 style="margin-top: -10px">
@@ -83,93 +83,93 @@
                         <ion-card class="cardArea1" id="b2s_area[0]"  (click)="b2sArea1()">
                           Area 1
                         </ion-card>
-                        <div style="margin-top:-10px" id="b2s_area1">
+                        <div style="margin-top:-10px" id="b2s_area1" *ngFor="let area1 of aryb2sArea1">
                             <ion-card class="cardArea2">
-                                SIS(0)
+                                SIS({{area1.SIS}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-1(0)
+                                SITAC-1({{area1.SITAC_1}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-2(0)
+                                SITAC-2({{area1.SITAC_2}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area1.CME}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFC(0)
+                                RFC({{area1.RFC}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area1.RFI}})
                               </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="b2s_area[1]" (click)="b2sArea2()">
                           Area 2
                         </ion-card>
-                        <div style="margin-top:-10px"  id="b2s_area2">
+                        <div style="margin-top:-10px"  id="b2s_area2" *ngFor="let area2 of aryb2sArea2">
                             <ion-card class="cardArea2">
-                                SIS(0)
+                                SIS({{area2.SIS}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-1(0)
+                                SITAC-1({{area2. SITAC_1}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-2(0)
+                                SITAC-2({{area2. SITAC_2}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area2.CME}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFC(0)
+                                RFC({{area2.RFC}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area2.RFI}})
                               </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="b2s_area[2]" (click)="b2sArea3()">
                           Area 3
                         </ion-card>
-                        <div style="margin-top:-10px"  id="b2s_area3">
+                        <div style="margin-top:-10px"  id="b2s_area3" *ngFor="let area3 of aryb2sArea3">
                             <ion-card class="cardArea2">
-                                SIS(0)
+                                SIS({{area3.SIS}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-1(0)
+                                SITAC-1({{area3.SITAC_1}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-2(0)
+                                SITAC-2({{area3.SITAC_2}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area3.CME}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFC(0)
+                                RFC({{area3.RFC}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area3.RFI}})
                               </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="b2s_area[3]" (click)="b2sArea4()">
                           Area 4
                         </ion-card>
-                        <div style="margin-top:-10px"  id="b2s_area4">
+                        <div style="margin-top:-10px"  id="b2s_area4" *ngFor="let area4 of aryb2sArea4">
                             <ion-card class="cardArea2">
-                                SIS(0)
+                                SIS({{area4.SIS}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-1(0)
+                                SITAC-1({{area4.SITAC_1}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                SITAC-2(0)
+                                SITAC-2({{area4.SITAC_2}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area4.CME}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFC(0)
+                                RFC({{area4.RFC}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area4.RFI}})
                               </ion-card>
                         </div>
                       </div>
@@ -181,69 +181,69 @@
                         <ion-card class="cardArea1" id="core_area[0]" (click)="coreArea1()">
                           Area 1
                         </ion-card>
-                        <div style="margin-top:-10px" id="core_area1">
+                        <div style="margin-top:-10px" id="core_area1" *ngFor="let area1 of aryCoreArea1">
                             <ion-card class="cardArea2">
-                                S&SITAC(0)
+                                S&SITAC({{area1.S_SITAC}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area1.CME}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area1.RFI}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                BAUT(0)
+                                BAUT({{area1.BAUT}})
                             </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="core_area[1]" (click)="coreArea2()">
                           Area 2
                         </ion-card>
-                        <div style="margin-top:-10px" id="core_area2">
+                        <div style="margin-top:-10px" id="core_area2" *ngFor="let area2 of aryCoreArea2">
                             <ion-card class="cardArea2">
-                                S&SITAC(0)
+                              S&SITAC({{area2.S_SITAC}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area2.CME}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area2.RFI}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                BAUT(0)
+                                BAUT({{area2.BAUT}})
                             </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="core_area[2]" (click)="coreArea3()">
                           Area 3
                         </ion-card>
-                        <div style="margin-top:-10px" id="core_area3">
+                        <div style="margin-top:-10px" id="core_area3" *ngFor="let area3 of aryCoreArea3">
                             <ion-card class="cardArea2">
-                                S&SITAC(0)
+                                S&SITAC({{area3.S_SITAC}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area3.CME}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area3.RFI}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                BAUT(0)
+                                BAUT({{area3.BAUT}})
                             </ion-card>
                         </div>
                         <ion-card class="cardArea1" id="core_area[3]" (click)="coreArea4()">
                           Area 4
                         </ion-card>
-                        <div style="margin-top:-10px" id="core_area4">
+                        <div style="margin-top:-10px" id="core_area4" *ngFor="let area4 of aryCoreArea4">
                             <ion-card class="cardArea2">
-                                S&SITAC(0)
+                              S&SITAC({{area4.S_SITAC}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                CME(0)
+                                CME({{area4.CME}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                RFI(0)
+                                RFI({{area4.RFI}})
                             </ion-card>
                             <ion-card class="cardArea2">
-                                BAUT(0)
+                                BAUT({{area4.BAUT}})
                             </ion-card>
                         </div>
                       </div>
@@ -255,118 +255,118 @@
                         <ion-card class="cardArea1" id="micro_area[0]"  (click)="microArea1()">
                           Area 1
                         </ion-card>
-                          <div style="margin-top:-10px" id="micro_area1">
+                          <div style="margin-top:-10px" id="micro_area1" *ngFor="let area1 of aryMicroArea1">
                               <ion-card class="cardArea2">
-                                  SIS(0)
+                                  SIS({{area1.BAUT}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  SITAC-1(0)
+                                  SITAC-1({{area1.SITAC_1}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  SITAC-2(0)
+                                  SITAC-2({{area1.SITAC_2}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  CME Pole(0)
+                                  CME Pole({{area1.CME_Pole}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  RFC(0)
+                                  RFC({{area1.RFC}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  FO (0)
+                                  FO ({{area1.FO}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  CMBTSR(0)
+                                  CMBTSR({{area1.CMBTSR}})
                               </ion-card>
                               <ion-card class="cardArea2">
-                                  RFI(0)
+                                  RFI({{area1.RFI}})
                               </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="micro_area[1]"   (click)="microArea2()">
                           Area 2
                         </ion-card>
-                          <div style="margin-top:-10px" id="micro_area2">
-                              <ion-card class="cardArea2">
-                                  SIS(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-1(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-2(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CME Pole(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFC(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  FO (0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CMBTSR(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFI(0)
-                              </ion-card>
+                          <div style="margin-top:-10px" id="micro_area2" *ngFor="let area2 of aryMicroArea3">
+                            <ion-card class="cardArea2">
+                                SIS({{area2.BAUT}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-1({{area2.SITAC_1}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-2({{area2.SITAC_2}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME Pole({{area2.CME_Pole}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFC({{area2.RFC}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                FO ({{area2.FO}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CMBTSR({{area2.CMBTSR}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI({{area2.RFI}})
+                            </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="micro_area[2]" (click)="microArea3()">
                           Area 3
                         </ion-card>
-                          <div style="margin-top:-10px" id="micro_area3">
-                              <ion-card class="cardArea2">
-                                  SIS(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-1(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-2(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CME Pole(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFC(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  FO (0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CMBTSR(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFI(0)
-                              </ion-card>
+                          <div style="margin-top:-10px" id="micro_area3" *ngFor="let area3 of aryMicroArea3">
+                            <ion-card class="cardArea2">
+                              SIS({{area3.BAUT}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-1({{area3.SITAC_1}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-2({{area3.SITAC_2}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME Pole({{area3.CME_Pole}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFC({{area3.RFC}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                FO ({{area3.FO}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CMBTSR({{area3.CMBTSR}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI({{area3.RFI}})
+                            </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="micro_area[3]"  (click)="microArea4()">
                           Area 4
                         </ion-card>
-                          <div style="margin-top:-10px" id="micro_area4">
-                              <ion-card class="cardArea2">
-                                  SIS(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-1(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  SITAC-2(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CME Pole(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFC(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  FO (0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  CMBTSR(0)
-                              </ion-card>
-                              <ion-card class="cardArea2">
-                                  RFI(0)
-                              </ion-card>
+                          <div style="margin-top:-10px" id="micro_area4" *ngFor="let area4 of aryMicroArea4">
+                            <ion-card class="cardArea2">
+                              SIS({{area4.BAUT}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-1({{area4.SITAC_1}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                SITAC-2({{area4SITAC_2}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CME Pole({{area4.CME_Pole}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFC({{area4.RFC}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                FO ({{area4.FO}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                CMBTSR({{area4.CMBTSR}})
+                            </ion-card>
+                            <ion-card class="cardArea2">
+                                RFI({{area4.RFI}})
+                            </ion-card>
                           </div>
                       </div>
                   </ion-col>
@@ -376,33 +376,33 @@
                         <ion-card class="cardArea1" id="special_area[0]" (click)="spArea1()">
                           Area 1
                         </ion-card>
-                          <div style="margin-top:-10px" id="sp_area1">
+                          <div style="margin-top:-10px" id="sp_area1" *ngFor="let area1 of arySpecialArea1">
                               <ion-card class="cardArea2">
-                                  BAST(0)
+                                  BAST({{area1.BAST}})
                               </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="special_area[1]" (click)="spArea2()">
                           Area 2
                         </ion-card>
-                          <div style="margin-top:-10px" id="sp_area2">
+                          <div style="margin-top:-10px" id="sp_area2" *ngFor="let area2 of arySpecialArea2">
                               <ion-card class="cardArea2">
-                                  BAST(0)
+                                BAST({{area2.BAST}})
                               </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="special_area[2]" (click)="spArea3()">
                           Area 3
                         </ion-card>
-                          <div style="margin-top:-10px" id="sp_area3">
+                          <div style="margin-top:-10px" id="sp_area3" *ngFor="let area3 of arySpecialArea3">
                               <ion-card class="cardArea2">
-                                  BAST(0)
+                                BAST({{area3.BAST}})
                               </ion-card>
                           </div>
                         <ion-card class="cardArea1" id="special_area[3]" (click)="spArea4()">
                           Area 4
                         </ion-card>
-                          <div style="margin-top:-10px" id="sp_area4">
+                          <div style="margin-top:-10px" id="sp_area4" *ngFor="let area4 of arySpecialArea4">
                               <ion-card class="cardArea2">
-                                  BAST(0)
+                                BAST({{area4.BAST}})
                               </ion-card>
                           </div>
                       </div>
@@ -410,23 +410,30 @@
                 </ion-row>
                 <ion-row>
                   <ion-col col-12 style="margin-top: -10px">
-                    <ion-card class="box2 full-width" id="chartDonut">
+                    <ion-card class="box2 full-width" id="chart-donut">
                     </ion-card>
                   </ion-col>
                 </ion-row>
-                <ion-row class="full-width" style="width:100%;margin-top: -30px">
-                    <ion-col col-12 style="margin-left: 10px">
-                      <button class="flowButton" (click)="viewFlowClick()">Click to view Approval Flow</button>
-                    </ion-col>
+                <ion-row>
+                  <ion-col col-12 style="margin-top: 0px">
+                    <ion-card class="box-activity full-width">
+                      <ion-card-header>
+                          <ion-label class="hdr_lbl" id="ttl-activity">0</ion-label>
+                      </ion-card-header>
+                      <ion-card-content class="content_lbl">
+                          Total Activity
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col col-2 style="margin-top: -10px">
+                    <ion-col col-2 style="margin-top: -20px">
                         <ion-card class="box-ref1">
                               <ion-card-header class="hdr_lbl">
                                     Total
                               </ion-card-header>
                               <ion-card-content>
-                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                                  <ion-label class="content_lbl" id="progress-nilai">0</ion-label>
                               </ion-card-content>
                           </ion-card>
                       </ion-col>
@@ -441,7 +448,7 @@
                                     Total
                               </ion-card-header>
                               <ion-card-content>
-                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                                  <ion-label class="content_lbl" id="waspang-approval">0</ion-label>
                               </ion-card-content>
                           </ion-card>
                       </ion-col>
@@ -456,7 +463,7 @@
                                     Total
                               </ion-card-header>
                               <ion-card-content>
-                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                                  <ion-label class="content_lbl" id="waiting-pm-approval">0</ion-label>
                               </ion-card-content>
                           </ion-card>
                       </ion-col>
@@ -471,7 +478,7 @@
                                     Total
                               </ion-card-header>
                               <ion-card-content>
-                                  <ion-label class="content_lbl" id="progress-nilai">1</ion-label>
+                                  <ion-label class="content_lbl" id="pm-approval">0</ion-label>
                               </ion-card-content>
                           </ion-card>
                       </ion-col>
@@ -479,7 +486,11 @@
                           <ion-label class="dcrip_lbl">Approved By PM</ion-label>
                       </ion-col>
                 </ion-row>
-
+                <ion-row class="full-width" style="width:100%;margin-top: -60px">
+                  <ion-col col-12 style="margin-left: 10px">
+                    <button class="flowButton" (click)="viewFlowClick()">Click to view Approval Flow</button>
+                  </ion-col>
+                </ion-row>
             </ion-grid>
         </ion-row>
       </ion-scroll>
